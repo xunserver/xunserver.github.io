@@ -88,21 +88,21 @@
 
 
 
-<meta name="description" content="前言本文章属于入门级别的，图文较多，大佬勿喷。为了时效性，基本工具安装都是指向其他教程。善于记录才能提升。 要求 PC github 帐号 git  安装nodejs，githexo是基于nodejs的框架，先安装nodejs  安装教程博客需要上传到github，需要安装git  安装教程，需要注意的是安装完需要配置git 12git config --global user.name &amp;quo">
+<meta name="description" content="前言本文章属于入门级别的，图文较多，大佬勿喷。为了时效性，基本工具安装都是指向其他教程。善于记录才能提升。 要求 PC github 帐号 git  安装nodejs，githexo是基于nodejs的框架，先安装nodejs  安装教程博客需要上传到github，需要安装git  安装教程，需要注意的是安装完需要配置git 12git config --global user.name &quot;run">
 <meta name="keywords" content="blog,hexo,教程,githubpage">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hexo搭建博客（上）">
 <meta property="og:url" content="locahost/archives/7681a445.html">
 <meta property="og:site_name" content="bang">
-<meta property="og:description" content="前言本文章属于入门级别的，图文较多，大佬勿喷。为了时效性，基本工具安装都是指向其他教程。善于记录才能提升。 要求 PC github 帐号 git  安装nodejs，githexo是基于nodejs的框架，先安装nodejs  安装教程博客需要上传到github，需要安装git  安装教程，需要注意的是安装完需要配置git 12git config --global user.name &amp;quo">
+<meta property="og:description" content="前言本文章属于入门级别的，图文较多，大佬勿喷。为了时效性，基本工具安装都是指向其他教程。善于记录才能提升。 要求 PC github 帐号 git  安装nodejs，githexo是基于nodejs的框架，先安装nodejs  安装教程博客需要上传到github，需要安装git  安装教程，需要注意的是安装完需要配置git 12git config --global user.name &quot;run">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="/post-images/hexo/gui-menu.png">
 <meta property="og:image" content="/post-images/hexo/ssh-key.png">
 <meta property="og:image" content="/post-images/hexo/create-repo.png">
-<meta property="og:updated_time" content="2019-10-17T08:21:12.429Z">
+<meta property="og:updated_time" content="2019-10-17T08:56:41.409Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo搭建博客（上）">
-<meta name="twitter:description" content="前言本文章属于入门级别的，图文较多，大佬勿喷。为了时效性，基本工具安装都是指向其他教程。善于记录才能提升。 要求 PC github 帐号 git  安装nodejs，githexo是基于nodejs的框架，先安装nodejs  安装教程博客需要上传到github，需要安装git  安装教程，需要注意的是安装完需要配置git 12git config --global user.name &amp;quo">
+<meta name="twitter:description" content="前言本文章属于入门级别的，图文较多，大佬勿喷。为了时效性，基本工具安装都是指向其他教程。善于记录才能提升。 要求 PC github 帐号 git  安装nodejs，githexo是基于nodejs的框架，先安装nodejs  安装教程博客需要上传到github，需要安装git  安装教程，需要注意的是安装完需要配置git 12git config --global user.name &quot;run">
 <meta name="twitter:image" content="/post-images/hexo/gui-menu.png">
 
 
@@ -442,7 +442,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  472 字
+                  470 字
                 </span>
               
 
@@ -486,13 +486,13 @@
 <li>git</li>
 </ul>
 <h2 id="安装nodejs，git"><a href="#安装nodejs，git" class="headerlink" title="安装nodejs，git"></a>安装nodejs，git</h2><p>hexo是基于nodejs的框架，先安装nodejs  <a href="http://www.runoob.com/nodejs/nodejs-install-setup.html" target="_blank" rel="noopener">安装教程</a><br>博客需要上传到github，需要安装git  <a href="http://www.runoob.com/git/git-install-setup.html" target="_blank" rel="noopener">安装教程</a>，需要注意的是安装完需要配置git</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;runoob&quot;     </span><br><span class="line">git config --global user.email test@runoob.com</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git<span class="built_in"> config </span>--global user.name <span class="string">"runoob"</span>     </span><br><span class="line">git<span class="built_in"> config </span>--global user.email test@runoob.com</span><br></pre></td></tr></table></figure>
 <h2 id="github准备工作"><a href="#github准备工作" class="headerlink" title="github准备工作"></a>github准备工作</h2><ol>
 <li>上传SSH凭证<br>打开 <code>Git GUI</code>(可在开始菜单搜索找到) , 点击菜单中 <code>Help</code> =&gt; <code>show ssh key</code><img src="/post-images/hexo/gui-menu.png" alt="生成公钥"><br>如果没有key，点击 <code>generate Key</code> 生成公钥。复制下方生成的公钥<img src="/post-images/hexo/ssh-key.png" alt="生成公钥"><br>打开页面<a href="https://github.com/settings/keys" target="_blank" rel="noopener">https://github.com/settings/keys</a>，点击<code>New SSH Key</code> 填写刚才生成的公钥</li>
 <li>新建仓库<br>新建一个仓库来保存博客页面，到<a href="https://github.com/new" target="_blank" rel="noopener">https://github.com/new</a>,按照下图提示新建 <img src="/post-images/hexo/create-repo.png" alt="新建github repo"><br>至此准备工作完成</li>
 </ol>
-<h2 id="安装初始化hexo"><a href="#安装初始化hexo" class="headerlink" title="安装初始化hexo"></a>安装初始化hexo</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm i -g hexo  # 全局安装hexo</span><br><span class="line"># 下列步骤均在项目根目录下执行</span><br><span class="line">hexo init # 初始化hexo </span><br><span class="line">npm i # 重新安装依赖</span><br><span class="line">npm i -S hexo-deployer-git # 安装git上传工具</span><br></pre></td></tr></table></figure>
-<h2 id="配置git上传工具"><a href="#配置git上传工具" class="headerlink" title="配置git上传工具"></a>配置git上传工具</h2><p>修改根目录下<code>_config.yml</code>文件，在末尾添加下面内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">    type: git</span><br><span class="line">    repo: git@github.com:xxxx/xxxx.github.io.git    # xxxx修改为github的用户名</span><br><span class="line">    branch: master</span><br></pre></td></tr></table></figure></p>
+<h2 id="安装初始化hexo"><a href="#安装初始化hexo" class="headerlink" title="安装初始化hexo"></a>安装初始化hexo</h2><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">npm</span> i -g hexo  <span class="comment"># 全局安装hexo</span></span><br><span class="line"><span class="comment"># 下列步骤均在项目根目录下执行</span></span><br><span class="line">hexo init <span class="comment"># 初始化hexo </span></span><br><span class="line"><span class="built_in">npm</span> i <span class="comment"># 重新安装依赖</span></span><br><span class="line"><span class="built_in">npm</span> i -S hexo-deployer-git <span class="comment"># 安装git上传工具</span></span><br></pre></td></tr></table></figure>
+<h2 id="配置git上传工具"><a href="#配置git上传工具" class="headerlink" title="配置git上传工具"></a>配置git上传工具</h2><p>修改根目录下<code>_config.yml</code>文件，在末尾添加下面内容<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">deploy</span>:</span><br><span class="line">    <span class="attribute">type</span>: git</span><br><span class="line">    <span class="attribute">repo</span>: git<span class="variable">@github</span>.<span class="attribute">com</span>:xxxx/xxxx.github.io.git    # xxxx修改为github的用户名</span><br><span class="line">    <span class="attribute">branch</span>: master</span><br></pre></td></tr></table></figure></p>
 <h2 id="写博客上传"><a href="#写博客上传" class="headerlink" title="写博客上传"></a>写博客上传</h2><p>博客使用markdown来编写的。不习惯的可以去下载可视化markdown编辑器</p>
 <ol>
 <li><p>首先启动本地预览服务器<code>hexo s</code>，在<code>localhost:4000</code>可以看到预览效果</p>
@@ -1380,5 +1380,5 @@
 
   
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"log":false,"tagMode":false});</script></body>
+</body>
 </html>
