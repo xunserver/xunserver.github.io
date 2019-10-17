@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[js真值，隐形转换，比较]]></title>
+    <url>%2Farchives%2F3c778964.html</url>
+    <content type="text"><![CDATA[假值的情况 &quot;&quot;是假 数字 0，+0，-0，NaN 是假，其余是真 Symbol 是真 undefined、null 是假 除以上的情况，所有都是真值 真假值使用的情况 if语句 !取反 == 情况分析 NaN 均不== undefined和null相等 一个是boolean，另一个是Number或String， boolean转成数字 一个是对象，对象先valueOf再toString。变换成基本类型比较 关系运算符（&gt;、&lt;、==、!=…） ===、!==：同时对比类型和值，两个都为真才返回真 ==、!=: 若两边均为对象，对比它们的引用是否相同 逻辑非(!): 将其后变量或表达式转为布尔值 对比字符串：从头至尾扫描逐个比较每个字符的unicode码，直到分出大小 其他情况下，两边均转为数值类型]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[面试基础篇（二）]]></title>
+    <url>%2Farchives%2F234b714a.html</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title><![CDATA[前端常用布局 - 两列布局]]></title>
+    <url>%2Farchives%2F8930074f.html</url>
+    <content type="text"><![CDATA[前言本编主要讲常用布局 两列布局，两列布局有两种，一是左边固定右边自适应，另一种是右边固定，左边自适应。只讲我认为最优的方案 左侧固定演示12&lt;div class="main"&gt;main&lt;/div&gt;&lt;div class="slide"&gt;slide&lt;/div&gt; 123456789101112.slide &#123; float: left; width: 100px; margin-left: -100%;&#125;.main &#123; float: left; padding-left: 100px; box-sizing: border-box; width: 100%; &#125; 右侧固定演示12&lt;div class="main"&gt;main&lt;/div&gt;&lt;div class="slide"&gt;slide&lt;/div&gt; 123456789101112.slide &#123; float: left; width: 100px; margin-left: -100%;&#125;.main &#123; float: left; padding-left: 100px; box-sizing: border-box; width: 100%; &#125; flex这个方案最简单，也最容易理解使用 order + flex 属性即可 table使用table也行， 兼容性高于flex。父：display: table;子：display: table-cell; 绝对定位比较简单容易理解123456789.slide &#123; position: absolute; top: 0; bottom: 0; width: 200px;&#125;.main &#123; margin-left: 200px;&#125; float + margin1234567.slide &#123; float: left; width: 200px;&#125;.main &#123; margin-left: 200px;&#125;]]></content>
+      <categories>
+        <category>面试</category>
+      </categories>
+      <tags>
+        <tag>css</tag>
+        <tag>html</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[前端常用布局 - 三列布局]]></title>
+    <url>%2Farchives%2Fe924f8d1.html</url>
+    <content type="text"><![CDATA[前言收集了常用的3列布局方案，左右固定，中间自适应方案，其中圣杯布局和双飞翼需要慢慢琢磨原理， 琢磨不透直接记下来用。 浮动演示1234567891011&lt;div class="content"&gt; &lt;div class="left"&gt; left &lt;/div&gt; &lt;div class="right"&gt; right &lt;/div&gt; &lt;div class="main"&gt; main &lt;/div&gt;&lt;/div&gt; 123456789101112.left &#123; float: left; width: 200px;&#125;.right &#123; float: right; width: 200px;&#125;.main &#123; margin-left: 200px; margin-right: 200px;&#125; BFC演示1234567891011&lt;div class="content"&gt; &lt;div class="left"&gt; left &lt;/div&gt; &lt;div class="right"&gt; right &lt;/div&gt; &lt;div class="main"&gt; main &lt;/div&gt;&lt;/div&gt; 1234567891011.left &#123; float: left; width: 200px;&#125;.right &#123; float: right; width: 200px;&#125;.main &#123; overflow: auto;&#125; 定位演示1234567891011&lt;div class="content"&gt; &lt;div class="main"&gt; main &lt;/div&gt; &lt;div class="left"&gt; left &lt;/div&gt; &lt;div class="right"&gt; right &lt;/div&gt;&lt;/div&gt; 12345678910111213141516171819.content &#123; position: relative;&#125;.left &#123; position: absolute; top: 0; left: 0; width: 200px;&#125;.right &#123; position: absolute; top: 0; right: 0; width: 200px;&#125;.main &#123; margin-left: 200px; margin-right: 200px;&#125; 双飞翼布局演示12345&lt;div class="content"&gt; &lt;div class="main"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="left"&gt;&lt;/div&gt;&lt;div class="right"&gt;&lt;/div&gt; 1234567891011121314151617181920.left &#123; float: left; width: 200px; margin-left: -100%; &#125;.right &#123; float: right; width: 220px; margin-left: -230px&#125;.content &#123; float: left; width: 100%;&#125;.main &#123; clear: both; margin-left: 110px; margin-right: 220px;&#125; 圣杯布局演示12345&lt;div class="container"&gt; &lt;div class="main"&gt;&lt;/div&gt; &lt;div class="left"&gt;&lt;/div&gt; &lt;div class="right"&gt;&lt;/div&gt;&lt;/div&gt; 12345678910111213141516171819202122.container &#123; margin-left: 200px; margin-right: 200px;&#125;.left &#123; float: left; width: 200px; position: relative; margin-left: -100%; left: -200px;&#125;.right &#123; float: left; width: 200px; position: relative; right: -200px; margin-left: -200px&#125;.main &#123; float: left; width: 100%;&#125; flex演示12345&lt;div class="container"&gt; &lt;div class="main"&gt;main&lt;/div&gt; &lt;div class="left"&gt;left&lt;/div&gt; &lt;div class="right"&gt;right&lt;/div&gt;&lt;/div&gt; 123456789101112131415.container &#123; display: flex;&#125;.left &#123; order: 0; flex: 0 0 200px;&#125;.right &#123; order: 2; flex: 0 0 200px;&#125;.main &#123; order: 1; flex: 1 0 auto;&#125; table演示12345&lt;div class="container"&gt; &lt;div class="left"&gt;left&lt;/div&gt; &lt;div class="main"&gt;main&lt;/div&gt; &lt;div class="right"&gt;right&lt;/div&gt;&lt;/div&gt; 123456789101112131415.container &#123; display: table; width: 100%;&#125;.left &#123; display: table-cell; width: 200px;&#125;.right &#123; display: table-cell; width: 200px;&#125;.main &#123; display: table-cell;&#125;]]></content>
+      <categories>
+        <category>面试</category>
+      </categories>
+      <tags>
+        <tag>css</tag>
+        <tag>html</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[面试基础篇（一）]]></title>
+    <url>%2Farchives%2F135d9d92.html</url>
+    <content type="text"><![CDATA[前端SEO注意情况 title &gt; description &gt; keywords 搜索引擎从上到下，重要内容放前面 内容不用js动态输出 搜索引擎会跳过frame 非装饰图片使用alt post 和 put 区别put是幂等的，多次操作不会新增数据条数，可以理解为修改某条数据。post是非幂等的，多次操作会增加多条数据，理解为新增接口。建议管理系统不做区分， 都用post。 优化的一些点 静态资源分布到多域名下 控制资源大小，小文件合并。 css和js单独放置为文件 压缩图片，减少位深。 iframe问题 阻塞主页面onload事件，通过 动态添加src或更优的createElmenet的形式来添加 iframe和主页面同域共享连接池，会影响主页面资源加载 采用多个域名存储资源的原因 突破浏览器并发限制 节约cookie 带宽 节约主域名连接数 电商图片处理 小图标 雪碧图 加载缩略图 懒加载，滚动位置再加载 BFC overflow不为visible; position: absolute || fixed; display: inline-block || table-cell || flex float不为none html元素 清除浮动12345678910.clearfloat&#123; zoom:1&#125;.clearfloat:after&#123; display:block; clear:both; content:""; visibility:hidden; height:0&#125; css优先级!important &gt; 内联 &gt; id &gt; class &gt; tag 消除display: inline-block 间隙 父元素 font-size: 0; 父元素 word-spacing: 0; // 单词间隙 删除空格 letter-spacing: 0 // 字母间隙 动画间隔时间保证30fps 1000/30 = 33.333ms]]></content>
+      <categories>
+        <category>面试</category>
+      </categories>
+      <tags>
+        <tag>css</tag>
+        <tag>html</tag>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[html+css显示显示更多功能]]></title>
+    <url>%2Farchives%2Fca5e0d7a.html</url>
+    <content type="text"><![CDATA[前言需要实现文本显示不超过两行，超过的两行的部分，用显示更多按钮，点击后显示展开全部文本。用html+css实现单行效果两行效果多行效果展开效果 实现html 部分12345678910111213141516171819202122232425262728&lt;div class="pay-info"&gt; &lt;input id="onekey-payInfoCheckbox" type="checkbox" style="display: none;" /&gt; &lt;p class="pay-info-text"&gt; &lt;span class="pay-info-text-detail" &gt;###***！！气asd asd 阿斯达阿达啊1 3阿达阿斯达暗杀是大法官地方甘道夫古典风格的公司的暗杀撒旦防守对方是否是是防守对方斯蒂芬撒旦放。&lt;/span &gt; &lt;span class="pay-info-text-detail1" &gt;###***！！气asd asd 阿斯达阿达啊1 3阿达阿斯达暗杀是大法官地方甘道夫古典风格的公司的暗杀撒旦防守对方是否是是防守对方斯蒂芬撒旦放。&lt;/span &gt; &lt;span class="pay-info-shade"&gt;&lt;/span&gt; &lt;/p&gt; &lt;label for="onekey-payInfoCheckbox" class="pay-info-text-con pay-info-text-open" &gt;&lt;span class="arrow-download"&gt;&lt;/span &gt;&lt;/label&gt; &lt;label for="onekey-payInfoCheckbox" class="pay-info-text-con pay-info-text-close" &gt;&lt;span class="arrow-up"&gt;&lt;/span &gt;&lt;/label&gt;&lt;/div&gt; 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677.pay-info &#123; position: relative; margin-top: 12px;&#125;.pay-info-text &#123; /* width: 100%; */ position: relative; font-size: 14px; max-height: 40px; /* min-height: 40px; */ overflow: hidden; transition: max-height 0.25s; color: #999999;&#125;.pay-info-text-detail &#123; font-size: 14px; line-height: 1.4; color: #999999;&#125;.pay-info-text-detail1 &#123; position: absolute; top: 0; left: 0; right: 0; z-index: 101; height: 20px; font-size: 14px; line-height: 1.4; color: #999999; overflow: hidden; background: white;&#125;.pay-info-shade &#123; position: absolute; right: 0; width: 16px; height: 16px; padding: 4px; background: #fff; z-index: 99;&#125;:checked ~ .pay-info-text .pay-info-shade &#123; display: none;&#125;:checked ~ .pay-info-text &#123; max-height: 250px; /* ä¸€ä¸ªè¶³å¤Ÿå¤§çš„æœ€å¤§é«˜åº¦å€¼ */&#125;.pay-info-text-con &#123; position: absolute; right: 0; /* left: 0; */ width: 16px; height: 16px; cursor: pointer; bottom: 0; text-align: right; padding: 4px; color: #000;&#125;.pay-info-text-open &#123; background: rgba(255, 255, 255, 0.5);&#125;.pay-info-text-close &#123; display: none;&#125;:checked ~ .pay-info-text-open &#123; display: none;&#125;:checked ~ .pay-info-text-close &#123; display: inline-block; bottom: -24px;&#125;]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[高并发网站建设与思考]]></title>
+    <url>%2Farchives%2Fde85f12c.html</url>
+    <content type="text"><![CDATA[前言最近一直闲着，跟着架构师做一些分布式应用方面活路。前端新人跟着架构师入门，窥探下分布式应用的理论经验（大雾）。 我对访问网站流程的任务思考大公司有各种各样的系统，以腾讯为例。有很多 xx.qq.com 这种形式的子系统，也有 xx.qq.com/aa xx.qq.com/bb 这种子子系统，如此庞大的系统如何管理。 xx.qq.com 这种。可以在 dns 设置时解析到各个子系统上。aa.qq.com =&gt; app_A bb.qq.com =&gt; app_B xx.qq.com/aa xx.qq.com/bb 这种形式的，可以通过 api 网关来转发到各个子子系统上。 基于上面的第二点，再次思考出如何保证 api 网关不宕机，api 网关宕机所有负载的系统也就无法使用。子系统又如何做到高可用，如何优雅的实现。 探索方案 api 网关技术选型：openresty + lua，api 网关负载使用： dns 多域名解析或 nginx+Keepalived 子系统负载使用 nginx 负载均衡即可 子系统内部模块的负载，微服务的方式。 栗子业务描述企业由 3 个独立的系统 appA appB appC 组成,对应域名分别是 a.xx.com b.xx.com c.xx.com。其中 a.xx.com 通过 url 前缀不同分为了两个子系统 a.xx.com/a a.xx.com/b，分别对应 appA_a appA_b，从 3 个维度来描述高可用的集群。 管理 nginx 集群keepalived 管理域名 管理子系统集群openresty 管理子系统模块集群consul]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[记一次正则表达式的坑]]></title>
+    <url>%2Farchives%2F636ae7c5.html</url>
+    <content type="text"><![CDATA[开始问题如下123let regx = new RegExp("^[0-9]+(\.[0-9]&#123;0,2&#125;)?$") regx.test('0') // ?? =&gt; trueregx.test('0x') // ?? =&gt; true 这个结果就很奇怪了。 还以为是执行环境出错了。去查阅了一波MDN文档。有这么一句话使用 new RegExp(&quot;pattern&quot;) 的时候不要忘记将 \ 进行转义，因为 \ 在字符串里面也是一个转义字符。 1let newRegx = new RegExp("^\\b+(\.\\b&#123;0,2&#125;)?$") //解决]]></content>
+      <categories>
+        <category>疑难杂症</category>
+      </categories>
+      <tags>
+        <tag>踩坑</tag>
+        <tag>正则表达式</tag>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[javascript原型和constructor理解]]></title>
+    <url>%2Farchives%2Fd0b04a7b.html</url>
+    <content type="text"><![CDATA[前言前几日被同事问到js继承方面的东西，想来想去就知道是通过prototype来实现，具体实现也搞不清了。赶紧回去翻红宝书复习下。对原型这块的理解又更深了一步。 new 的理解：伪代码从下方可以看到 js继承是原型继承， 不是类继承。1234567 new Person("John") = &#123; var obj = &#123;&#125;; obj.__proto__ = Person.prototype; // 此时便建立了obj对象的原型链： // obj-&gt;Person.prototype-&gt;Object.prototype-&gt;null var result = Person.call(obj,"John"); // 相当于obj.Person("John") return typeof result === 'object' ? result : obj; // 如果无返回值或者返回一个非对象值，则将obj返回作为新对象&#125; function 的constructor是什么默认情况下是指的是定义本身。 是对象上一个指向构造函数的引用。用来辅助 instanceof 等关键字的实现。下方例子看一看到，没什么用。F.prototype.constructor === f.__proto__.constructor === F123456789101112 function People(name) &#123; this.name = name &#125; People.prototype.constructor === People // true console.log(new People('yangmanman')) // yangmanman // 重新指向 People.prototype.constructor = function(name) &#123; this.name = "123" &#125; console.log(new People('yangmanman').name) // yangmanman 修改没用// ---------------------- 分割线 ----------------------------- 如何理解原型继承使用的是指向和call这种东西。 参考资料 JavaScript深入之继承的多种方式和优缺点 JavaScript 原型精髓 #一篇就够系列 小邵教你玩转JS面向对象]]></content>
+      <categories>
+        <category>javascript 基础</category>
+      </categories>
+      <tags>
+        <tag>prototype</tag>
+        <tag>原型</tag>
+        <tag>constructor</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[css世界读书笔记（1）]]></title>
+    <url>%2Farchives%2Fb78f1e6b.html</url>
+    <content type="text"><![CDATA[前言上次去整了本张鑫旭大佬编的《CSS世界》，一直没有时间研读，仅记录一些之前未接触的内容。 块级元素粗略理解为 display 值为 table，block，list-item等值元素。具有独占一行水平流的功能，可以使用clear 属性。 list-item 出现项目符号理解元素可以理解为多个盒子构成，外在盒子，容器盒子（内在盒子），标记盒子（这个是list-item独有的盒子）。可以按照每种盒子具有自身的display来理解行为。block =&gt; block-flow inline-block =&gt; inline-block 理解width：auto 充分利用可用空间：表现在div，p等元素上，会尽可能扩伸。 收缩与包裹：表现在table，inline-block上面，收缩到合适。有种根据内容来设置min-width的感觉。 收缩到最小：table-layout：auto 会出现 超出限制：长连续的英文和数字会出现。还有 white-space:nowrap设置后的内联元素 元素的宽度是由什么决定的？外部尺寸指的是元素自身就能决定宽度 正常流，div，p等元素，总是尽可能扩伸。按照流来理解 position为absolute，fixed等情况下对边属性都存在时。可以理解为，自身把自身拉开 显式设置宽度 内部尺寸指的是元素的尺寸由内部元素决定 包裹性的元素：下方inline-block宽度为123宽度 12345&lt;div style="display: inline-block;"&gt; &lt;div&gt; 123 &lt;/div&gt;&lt;/div&gt; 首选最小宽度：当父元素宽度设置为0时，子元素表现出最小宽度 伪元素::after ::before 的定义命中元素的最后|最前一个子元素 宽度分离当需要限定宽度时，把宽度定义单独提取出一个元素，box-sizing: border-content功能相同 宽度100% 和 高度100%width：100% auto = 无效 height：100% auto = 无效。但是宽度这种未定义行为各个厂商把auto视为包含块的最小宽度来处理的。要明白其中的原因要先了解浏览器渲染的基本原理。首先，先下载文档内容，加载头部的样式资源（如果有的话），然后按照从上而下、自外而内的顺序渲染 DOM 内容。套用本例就是，先渲染父元素，后渲染子元素，是有先后顺序的。因此，当渲染到父元素的时候，子元素的width:100%并没有渲染，宽度就是图片加文字内容的宽度；等渲染到文字这个子元素的时候，父元素宽度已经固定，此时的 width:100%就是已经固定好的父元素的宽度。宽度不够怎么办？溢出就好了，overflow 属性就为此而生的 如何让高度支持100%position: absolute; 不过注意的是绝对定位的宽高百分比计算是相对于 padding box 的 超越! important和超越最大权重优先级 min- &gt; max- &gt; ! important 任意高度的展开动画效果通过过度 max-* 来实现效果12345678.element &#123; max-height: 0; overflow: hidden; transition: max-height .25s;&#125;.element.active &#123; max-height: 666px; /* 一个足够大的最大高度值 */&#125; 幽灵空白节点在 HTML5 文档声明中，内联元素的所有解析和渲染表现就如同每个行框盒子的前面有一个“空白节点”一样。&lt;div&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt; 高度为span空白节点的高度 内联元素的定义可以看做外在盒子是 inline 的元素]]></content>
+      <categories>
+        <category>读书笔记</category>
+      </categories>
+      <tags>
+        <tag>css</tag>
+        <tag>css元素尺寸</tag>
+        <tag>css世界</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[openssl学习笔记]]></title>
+    <url>%2Farchives%2Fc76c6f1c.html</url>
+    <content type="text"><![CDATA[概念公钥端：C 私钥端：S — RS：非对称加密 AES：对称加密公钥加密，私钥解密。 私钥数字签名私钥端：将内容（A）hash内容（A-&gt;B），私钥加密内容（B-&gt;C），将内容（A）和加密后的内容(C) 发送给公钥端公钥端：使用公钥解开加密后的内容C，获得hash内容（C-&gt;B），将内容（A）hash后检查，如果相同，表示未被修改，否则表示修改。 合格公钥构成找一个信任的第三方介入，首先第三方将自己的公钥给C端，然后第三方将S端的公钥合一些信息用自己的私钥加密发送给C端，C使用私钥解密后就能获取S端的公钥，这样就可以实现保证C端拿到的的确是S端的公钥， 防止C端拿到错误的公钥后C端被冒名顶替。 https 构成浏览器发送请求公钥请求，服务器将签名（CA中心用私钥加密的内容）发送给浏览器， 浏览器使用CA拿到的公钥解开信息，验证服务器真伪，验证通过后，浏览器端和服务器协商加密等级，确定一个 公开密钥。至此安全连接建立，应用层通信时，内容会通过这个公开密钥进行对称加密，因为对称加密的方式远远快于非对称加密。 openssl 生成公私钥 生成RSA私钥：openssl genrsa -out private.key 2048 生成RSA公钥：openssl rsa -in private.key -pubout -out rsa_public.key, 通过私钥生成公钥 使用aes方式：openssl genrsa -aes256 -passout pass:yangmanman -out rsa_aes_private.key 2048，对生成的私钥进行 aes 加密，这种方式生成公钥时需要输入密码 使用aes方式生成公钥：openssl rsa -in ./rsa_aes.private.key -passin pass:yangmanman -pubout -out rsa_aes_public.key，生成公钥需要密码 密钥操作加密私钥转换为未加密状态open rsa -in rsa_aes_private.key -passin pass:yangmanman -out rsa_private.key私钥加密open rsa -in rsa_private.key -aes256 -passout pass:yangmanman -out rsa_aes_private.key默认私钥生成 PKCS#1, 转换为PKCS#8 pkcs8 默认需要加密openssl pkcs -topk8 -in rsa_private.key -passout pass:yangmanman -out pkcs8_private.key 证书操作服务器自建证书操作过程生成自签名的CA的证书，生成服务器证书请求，使用CA的证书，私钥对服务器证书请求进行签发，输出服务器证书 自签名的CA证书，并生成密钥1openssl req -newkey rsa:2048 -nodes -keyout ca_rsa_private.key -x509 -days 365 -out ca.crt -subj &quot;/C=CN/ST=GD/L=SZ/O=vihoo/OU=dev/CN=xunserver.cn/emailAddress=xunserver.cn&quot; 使用已有密钥生成 opensll req -new -x509 -days 365 -key rsa_private.key -out ca.crt 生成服务器私钥 openssl rsa -ase256 -passout pass:yangmanman -out server_private.key 2048 生成服务器csr签名 openssl req -new -key server_private.key -out servre.csr [-subj=&quot;/C=CN/ST=GD/L=SZ/O=vihoo/OU=dev/CN=xunserver.cn/emailAddress=xunserver.cn&quot;] 使用ca证书，私钥对服务器csr签名，签发x509证书openssl x509 -req -days 3650 -in server.csr -CA ca.crt -CAkey ca_private.key -passin:yangmanman -CAcreateserial -out server.crt 至此，服务器证书完全获取到，crt是证书，csr证书签名请求（可以认为是服务器的公钥） 证书操作查看证书细节openssl x509 -in cert.crt -noout -text转换证书编码格式openssl x509 -in cert.cer -inform DER -outform PEM -out cert.pem 合成 pkcs#12 证书(含私钥) // 将 pem 证书和私钥转 pkcs#12 证书 openssl pkcs12 -export -in server.crt -inkey server.key -passin pass:111111 -password pass:111111 -out server.p12 //其中-export指导出pkcs#12 证书，-inkey 指定了私钥文件，-passin 为私钥(文件)密码(nodes为无加密)，-password 指定 p12文件的密码(导入导出) // 将 pem 证书和私钥/CA 证书 合成pkcs#12 证书 openssl pkcs12 -export -in server.crt -inkey server.key -passin pass:111111 \ -chain -CAfile ca.crt -password pass:111111 -out server-all.p12 // 其中-chain指示同时添加证书链，-CAfile 指定了CA证书，导出的p12文件将包含多个证书。(其他选项：-name可用于指定server证书别名；-caname用于指定ca证书别名) // pcks#12 提取PEM文件(含私钥) openssl pkcs12 -in server.p12 -password pass:111111 -passout pass:111111 -out out/server.pem 仅提取私钥 openssl pkcs12 -in server.p12 -password pass:111111 -passout pass:111111 -nocerts -out out/key.pem 仅提取证书 openssl pkcs12 -in server.p12 -password pass:111111 -nokeys -out out/key.pem 仅提取ca证书 openssl pkcs12 -in server-all.p12 -password pass:111111 -nokeys -cacerts -out out/cacert.pem 仅提取server证书 openssl pkcs12 -in server-all.p12 -password pass:111111 -nokeys -clcerts -out out/cert.pem openssl 命名1. 命名格式 1) asn1parse: asn1parse用于解释用ANS.1语法书写的语句(ASN一般用于定义语法的构成) 2) ca: ca用于CA的管理 openssl ca [options]: 2.1) -selfsign 使用对证书请求进行签名的密钥对来签发证书。即&quot;自签名&quot;，这种情况发生在生成证书的客户端、签发证书的CA都是同一台机器(也是我们大多数实验中的情况)，我们可以使用同一个密钥对来进行&quot;自签名&quot; 2.2) -in file 需要进行处理的PEM格式的证书 2.3) -out file 处理结束后输出的证书文件 2.4) -cert file 用于签发的根CA证书 2.5) -days arg 指定签发的证书的有效时间 2.6) -keyfile arg CA的私钥证书文件 2.7) -keyform arg CA的根私钥证书文件格式: 2.7.1) PEM 2.7.2) ENGINE 2.8) -key arg CA的根私钥证书文件的解密密码(如果加密了的话) 2.9) -config file 配置文件 example1: 利用CA证书签署请求证书 openssl ca -in server.csr -out server.crt -cert ca.crt -keyfile ca.key 1) req: X.509证书签发请求(CSR)管理 openssl req [options] &lt;infile &gt;outfile 3.1) -inform arg 输入文件格式 3.1.1) DER 3.1.2) PEM 3.2) -outform arg 输出文件格式 3.2.1) DER 3.2.2) PEM 3.3) -in arg 待处理文件 3.4) -out arg 待输出文件 3.5) -passin 用于签名待生成的请求证书的私钥文件的解密密码 3.6) -key file 用于签名待生成的请求证书的私钥文件 3.7) -keyform arg 3.7.1) DER 3.7.2) NET 3.7.3) PEM 3.8) -new 新的请求 3.9) -x509 输出一个X509格式的证书 3.10) -days X509证书的有效时间 3.11) -newkey rsa:bits 生成一个bits长度的RSA私钥文件，用于签发 3.12) -[digest] HASH算法 3.12.1) md5 3.12.2) sha1 3.12.3) md2 3.12.4) mdc2 3.12.5) md4 3.13) -config file 指定openssl配置文件 3.14) -text: text显示格式 example1: 利用CA的RSA密钥创建一个自签署的CA证书(X.509结构) openssl req -new -x509 -days 3650 -key server.key -out ca.crt example2: 用server.key生成证书签署请求CSR(这个CSR用于之外发送待CA中心等待签发) openssl req -new -key server.key -out server.csr example3: 查看CSR的细节 openssl req -noout -text -in server.csr 1) genrsa: 生成RSA参数 openssl genrsa [args] [numbits] [args] 4.1) 对生成的私钥文件是否要使用加密算法进行对称加密: 4.1.1) -des: CBC模式的DES加密 4.1.2) -des3: CBC模式的DES加密 4.1.3) -aes128: CBC模式的AES128加密 4.1.4) -aes192: CBC模式的AES192加密 4.1.5) -aes256: CBC模式的AES256加密 4.2) -passout arg: arg为对称加密(des、des、aes)的密码(使用这个参数就省去了console交互提示输入密码的环节) 4.3) -out file: 输出证书私钥文件 [numbits]: 密钥长度 example: 生成一个1024位的RSA私钥，并用DES加密(密码为1111)，保存为server.key文件 openssl genrsa -out server.key -passout pass:1111 -des3 1024 1) rsa: RSA数据管理 openssl rsa [options] &lt;infile &gt;outfile 5.1) -inform arg 输入密钥文件格式: 5.1.1) DER(ASN1) 5.1.2) NET 5.1.3) PEM(base64编码格式) 5.2) -outform arg 输出密钥文件格式 5.2.1) DER 5.2.2) NET 5.2.3) PEM 5.3) -in arg 待处理密钥文件 5.4) -passin arg 输入这个加密密钥文件的解密密钥(如果在生成这个密钥文件的时候，选择了加密算法了的话) 5.5) -out arg 待输出密钥文件 5.6) -passout arg 如果希望输出的密钥文件继续使用加密算法的话则指定密码 5.7) -des: CBC模式的DES加密 5.8) -des3: CBC模式的DES加密 5.9) -aes128: CBC模式的AES128加密 5.10) -aes192: CBC模式的AES192加密 5.11) -aes256: CBC模式的AES256加密 5.12) -text: 以text形式打印密钥key数据 5.13) -noout: 不打印密钥key数据 5.14) -pubin: 检查待处理文件是否为公钥文件 5.15) -pubout: 输出公钥文件 example1: 对私钥文件进行解密 openssl rsa -in server.key -passin pass:111 -out server_nopass.key example:2: 利用私钥文件生成对应的公钥文件 openssl rsa -in server.key -passin pass:111 -pubout -out server_public.key 1) x509: 本指令是一个功能很丰富的证书处理工具。可以用来显示证书的内容，转换其格式，给CSR签名等X.509证书的管理工作 openssl x509 [args] 6.1) -inform arg 待处理X509证书文件格式 6.1.1) DER 6.1.2) NET 6.1.3) PEM 6.2) -outform arg 待输出X509证书文件格式 6.2.1) DER 6.2.2) NET 6.2.3) PEM 6.3) -in arg 待处理X509证书文件 6.4) -out arg 待输出X509证书文件 6.5) -req 表明输入文件是一个&quot;请求签发证书文件(CSR)&quot;，等待进行签发 6.6) -days arg 表明将要签发的证书的有效时间 6.7) -CA arg 指定用于签发请求证书的根CA证书 6.8) -CAform arg 根CA证书格式(默认是PEM) 6.9) -CAkey arg 指定用于签发请求证书的CA私钥证书文件，如果这个option没有参数输入，那么缺省认为私有密钥在CA证书文件里有 6.10) -CAkeyform arg 指定根CA私钥证书文件格式(默认为PEM格式) 6.11) -CAserial arg 指定序列号文件(serial number file) 6.12) -CAcreateserial 如果序列号文件(serial number file)没有指定，则自动创建它 example1: 转换DER证书为PEM格式 openssl x509 -in cert.cer -inform DER -outform PEM -out cert.pem example2: 使用根CA证书对&quot;请求签发证书&quot;进行签发，生成x509格式证书 openssl x509 -req -days 3650 -in server.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out server.crt example3: 打印出证书的内容 openssl x509 -in server.crt -noout -text 1) crl: crl是用于管理CRL列表 openssl crl [args] 7.1) -inform arg 输入文件的格式 7.1.1) DER(DER编码的CRL对象) 7.1.2) PEM(默认的格式)(base64编码的CRL对象) 7.2) -outform arg 指定文件的输出格式 7.2.1) DER(DER编码的CRL对象) 7.2.2) PEM(默认的格式)(base64编码的CRL对象) 7.3) -text: 以文本格式来打印CRL信息值。 7.4) -in filename 指定的输入文件名。默认为标准输入。 7.5) -out filename 指定的输出文件名。默认为标准输出。 7.6) -hash 输出颁发者信息值的哈希值。这一项可用于在文件中根据颁发者信息值的哈希值来查询CRL对象。 7.7) -fingerprint 打印CRL对象的标识。 7.8) -issuer 输出颁发者的信息值。 7.9) -lastupdate 输出上一次更新的时间。 7.10) -nextupdate 打印出下一次更新的时间。 7.11) -CAfile file 指定CA文件，用来验证该CRL对象是否合法。 7.12) -verify 是否验证证书。 example1: 输出CRL文件，包括(颁发者信息HASH值、上一次更新的时间、下一次更新的时间) openssl crl -in crl.crl -text -issuer -hash -lastupdate –nextupdate example2: 将PEM格式的CRL文件转换为DER格式 openssl crl -in crl.pem -outform DER -out crl.der 1) crl2pkcs7: 用于CRL和PKCS#7之间的转换 openssl crl2pkcs7 [options] &lt;infile &gt;outfile 转换pem到spc openssl crl2pkcs7 -nocrl -certfile venus.pem -outform DER -out venus.spc https://www.openssl.org/docs/apps/crl2pkcs7.html 1) pkcs12: PKCS#12数据的管理 pkcs12文件工具，能生成和分析pkcs12文件。PKCS#12文件可以被用于多个项目，例如包含Netscape、 MSIE 和 MS Outlook openssl pkcs12 [options] http://blog.csdn.net/as3luyuan123/article/details/16105475 https://www.openssl.org/docs/apps/pkcs12.html 1) pkcs7: PCKS#7数据的管理 用于处理DER或者PEM格式的pkcs#7文件 openssl pkcs7 [options] &lt;infile &gt;outfile http://blog.csdn.net/as3luyuan123/article/details/16105407 https://www.openssl.org/docs/apps/pkcs7.html 2. openssl list-message-digest-commands(消息摘要命令) 1) dgst: dgst用于计算消息摘要 openssl dgst [args] 1.1) -hex 以16进制形式输出摘要 1.2) -binary 以二进制形式输出摘要 1.3) -sign file 以私钥文件对生成的摘要进行签名 1.4) -verify file 使用公钥文件对私钥签名过的摘要文件进行验证 1.5) -prverify file 以私钥文件对公钥签名过的摘要文件进行验证 verify a signature using private key in file 1.6) 加密处理 1.6.1) -md5: MD5 1.6.2) -md4: MD4 1.6.3) -sha1: SHA1 1.6.4) -ripemd160 example1: 用SHA1算法计算文件file.txt的哈西值，输出到stdout openssl dgst -sha1 file.txt example2: 用dss1算法验证file.txt的数字签名dsasign.bin，验证的private key为DSA算法产生的文件dsakey.pem openssl dgst -dss1 -prverify dsakey.pem -signature dsasign.bin file.txt 1) sha1: 用于进行RSA处理 openssl sha1 [args] 2.1) -sign file 用于RSA算法的私钥文件 2.2) -out file 输出文件爱你 2.3) -hex 以16进制形式输出 2.4) -binary 以二进制形式输出 example1: 用SHA1算法计算文件file.txt的HASH值,输出到文件digest.txt openssl sha1 -out digest.txt file.txt example2: 用sha1算法为文件file.txt签名,输出到文件rsasign.bin，签名的private key为RSA算法产生的文件rsaprivate.pem openssl sha1 -sign rsaprivate.pem -out rsasign.bin file.txt 3. openssl list-cipher-commands (Cipher命令的列表) 1) aes-128-cbc 2) aes-128-ecb 3) aes-192-cbc 4) aes-192-ecb 5) aes-256-cbc 6) aes-256-ecb 7) base64 8) bf 9) bf-cbc 10) bf-cfb 11) bf-ecb 12) bf-ofb 13) cast 14) cast-cbc 15) cast5-cbc 16) cast5-cfb 17) cast5-ecb 18) cast5-ofb 19) des 20) des-cbc 21) des-cfb 22) des-ecb 23) des-ede 24) des-ede-cbc 25) des-ede-cfb 26) des-ede-ofb 27) des-ede3 28) des-ede3-cbc 29) des-ede3-cfb 30) des-ede3-ofb 31) des-ofb 32) des3 33) desx 34) rc2 35) rc2-40-cbc 36) rc2-64-cbc 37) rc2-cbc 38) rc2-cfb 39) rc2-ecb 40) rc2-ofb 41) rc4 42) rc4-40]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>openssl</tag>
+        <tag>linux</tag>
+        <tag>学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[frp内网穿透]]></title>
+    <url>%2Farchives%2Fc067e7e3.html</url>
+    <content type="text"><![CDATA[下载安装github搜索frp star最多的项目，到release中根据系统下载响应压缩包 传送门，压缩包中包含frps（公网服务端），frpc（需要被穿透的客户端）.ini 结尾是配置文件，full.ini 是全部的配置文件 启动服务端和客户端./fprs -c ./frps.ini // 到公网服务器启动 ./frpc -c ./frpc.ini // 需要被穿透的机器上执行 服务器配置官网文档支持中文，更多细节查看官方文档 [common] # 通信端口 bind_port = 7000 # 外网访问端口 vhost_http_port=80 vhost_https_port=443 # 二级域名 subdomain_host=frp.xunserver.cn # 连接密码 token=adadadadad # 管理服务器 密码用户端口 dashboard_port=7500 dashboard_user=admin dashboard_pwd=adadadadad # 连接池 # max_pool_count=5 客户端管理[common] # 服务器地址 server_addr = xx.xx.xx.xx # 服务器配置中 bind_port 字段 server_port = 7000 # 本地管理 admin_addr = 127.0.0.1 admin_port = 7400 admin_user = admin admin_passwd = admin # 连接密码 token=xxxxx # 连接池 pool_count = 5 # 日志 log_file = ./frpc.log # 客户端名字，必须和其他客户端名字不同 [migu-http] type = http # 类型 local_port = 80 # 映射到本地端口 subdomain= migu # 子域名 # 同上 [migu-https] type = https local_port = 443 subdomain= migu https 配置由于frp 是全部转发，所以https的配置在应用上，可以在nginx上配置。具体参考 nginx-https配置 ssh 连接在客户端配置， 执行==ssh -oPort=6000 username@x.x.x.x== [ssh] type = tcp local_ip = 127.0.0.1 local_port = 22 remote_port = 6000]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>frp</tag>
+        <tag>内网穿透</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[ngrok内网穿透]]></title>
+    <url>%2Farchives%2F64ba60b1.html</url>
+    <content type="text"><![CDATA[下载安装github 搜索 ngrok star 最多的项目，clone 到本地，解压。 证书配置证书配置，没有证书的使用自签名证书。有证书的跳过这一步 自签名证书使用openssl 生成证书，openssl安装 查看opnessl 学习笔记 12345678910// 生成自签名证书私钥 ca.keyopenssl genrsa -out ca.key 2048// 根据 ca.key 生成自签名的CA证书openssl req -x509 -new -nodes -key ca.key -subj &quot;/CN=domain.name&quot; -days 5000 -out root.crt // 生成服务器私钥openssl genrsa -out server.key 2048// 生成服务器 csropenssl req -new -key server.key -subj &quot;/CN=domain.name&quot; -out server.csr// ca 颁发证书openssl x509 -req -in server.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out server.crt -days 5000 替换官方证书将官方证书替换掉, 官方的证书放在 assets/中, 具体替换下面3个 替换ca ———- assets/client/tls 替换服务器公钥 ———– assets/server/tls 替换服务器证书 ———— assets/server/tls 重新编译服务端和客户端编译需要安装go语言环境yum insatll golang，设置不同系统环境变量编译 1GOOS=[windows | linux] GOARCH=[386 | amd64] make [release-server | release-client] 启动服务器端123/usr/local/ngrok/bin/ngrokd [-tlsKey=/usr/local/ngrok/assets/server/tls/snakeoil.key] [-tlsCrt=/usr/local/ngrok/assets/server/tls/snakeoil.crt] -domain=xxx.xxxx.xx -httpAddr=:81 -httpsAddr=:4443 -tunnelAddr=:4445// -tlsKey 和 -tlsCrt可选，表示使用自己的证书和 key，-damain 绑定的域名； http 和https 监听的端口； -tunnelAddr 客户端通信端口 启动客户端根据平台下载对应的 ngrok程序新建配置文件，添加如下内容 12server_addr: &quot;xxx.xxxx.xxx:port&quot; // port 为服务器 -tunnelAddr 端口值 trust_host_root_certs: false // 如果是自签名证书，此项为false 新建log文件，前期调试用 log.log启动客户端,具体配置可以通过 ngrok -h 查看12ngrok -config config.cfg -log log.log -subdomain subdomainname port// ngrok -config config.cfg -log log.log -subdomain ngrok 80]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>内网穿透</tag>
+        <tag>ngrok</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[hexo搭建博客（下）]]></title>
+    <url>%2Farchives%2Fce3dc320.html</url>
+    <content type="text"><![CDATA[前言本文主要记录在安装hexo主题next中遇到的一些坑 区分两个配置文件hexo 根目录下有个_config.yml，这个叫站点配置文件，目录/themes/xx/_config.yml这个叫主题配置文件，站点配置文件只有一份，而主题配置文件按目录可见是多份。配置时候注意看配置在哪个文件中配置。 接入评论系统折腾了好几种方案，本以为gitment最为轻松，不过也是需要自己的服务器，喜欢折腾的可以参考解决gitment错误。我选用的是畅言评论，这个需要网站备案。还好网站是备案过的。在主题配置中找到 chanyan，修改如下：1234changyan: enable: true appid: xxx # 在畅言中新建应用后可以查询到id和key appkey: xxxxx 更新 valine 评论系统偶然发现一个匿名评论的好东西valine，这个可以匿名评论，不得说不说leancloud大法好。hexo中已经集成valine组件，但是主题配置中_config.yml 配置项有问题，修改如下： 12345678910valine: enable: true appid: xxxxx # 这个字段，官方默认写的是app_id 需要改成 appid appkey: xxxxx # app_key 改成 appkey notify: false # mail notifier , https://github.com/xCss/Valine/wiki verify: true # Verification code placeholder: Just go go # comment box placeholder avatar: mm # gravatar style guest_info: nick,mail,link # custom comment header pageSize: 10 # pagination size 保存系统可以新建一个私有仓库来保存hexo配置和相关内容，这样可以在多台机器上编写博客。 自定义域名 + 强制https 首先需要一个域名。国内域名大多需要备案，可以到国外购买域名，需要折腾的也可以在国内购买。 将需要定义的域名指向xxx.github.io(xxx为github用户名)。添加CNAME记录可以完成。 新建文件/source/CNAME，写入域名。重新部署。 到github仓库中设置Enforce HTTPS选项。 如果设置成功后页面无效果，清除缓存后重试即可]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>blog</tag>
+        <tag>hexo</tag>
+        <tag>教程</tag>
+        <tag>githubpage</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[hexo搭建博客（上）]]></title>
+    <url>%2Farchives%2F7681a445.html</url>
+    <content type="text"><![CDATA[前言本文章属于入门级别的，图文较多，大佬勿喷。为了时效性，基本工具安装都是指向其他教程。善于记录才能提升。 要求 PC github 帐号 git 安装nodejs，githexo是基于nodejs的框架，先安装nodejs 安装教程博客需要上传到github，需要安装git 安装教程，需要注意的是安装完需要配置git 12git config --global user.name &quot;runoob&quot; git config --global user.email test@runoob.com github准备工作 上传SSH凭证打开 Git GUI(可在开始菜单搜索找到) , 点击菜单中 Help =&gt; show ssh key如果没有key，点击 generate Key 生成公钥。复制下方生成的公钥打开页面https://github.com/settings/keys，点击New SSH Key 填写刚才生成的公钥 新建仓库新建一个仓库来保存博客页面，到https://github.com/new,按照下图提示新建 至此准备工作完成 安装初始化hexo12345npm i -g hexo # 全局安装hexo# 下列步骤均在项目根目录下执行hexo init # 初始化hexo npm i # 重新安装依赖npm i -S hexo-deployer-git # 安装git上传工具 配置git上传工具修改根目录下_config.yml文件，在末尾添加下面内容1234deploy: type: git repo: git@github.com:xxxx/xxxx.github.io.git # xxxx修改为github的用户名 branch: master 写博客上传博客使用markdown来编写的。不习惯的可以去下载可视化markdown编辑器 首先启动本地预览服务器hexo s，在localhost:4000可以看到预览效果 新建文章 hexo new xxx，xxx是博客的title，执行后在/source/_posts/下面可以看到刚生成的文章模版 编写好博客保存后，执行hexo d -g可将博客推送到github，在http://username.github.io可以看到博客已经推送到线上 后续后续记录hexo安装next主题]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>blog</tag>
+        <tag>hexo</tag>
+        <tag>教程</tag>
+        <tag>githubpage</tag>
+      </tags>
+  </entry>
+</search>
