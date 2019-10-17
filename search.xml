@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[flex教程]]></title>
+    <url>%2Farchives%2F6b020adf.html</url>
+    <content type="text"><![CDATA[语法1flex-direction: row | row-reverse | column | column-reverse]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[js真值，隐形转换，比较]]></title>
     <url>%2Farchives%2F3c778964.html</url>
     <content type="text"><![CDATA[假值的情况 &quot;&quot;是假 数字 0，+0，-0，NaN 是假，其余是真 Symbol 是真 undefined、null 是假 除以上的情况，所有都是真值 真假值使用的情况 if语句 !取反 == 情况分析 NaN 均不== undefined和null相等 一个是boolean，另一个是Number或String， boolean转成数字 一个是对象，对象先valueOf再toString。变换成基本类型比较 关系运算符（&gt;、&lt;、==、!=…） ===、!==：同时对比类型和值，两个都为真才返回真 ==、!=: 若两边均为对象，对比它们的引用是否相同 逻辑非(!): 将其后变量或表达式转为布尔值 对比字符串：从头至尾扫描逐个比较每个字符的unicode码，直到分出大小 其他情况下，两边均转为数值类型]]></content>

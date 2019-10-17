@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="locahost/"/>
-  <updated>2019-10-08T03:34:29.000Z</updated>
+  <updated>2019-10-17T06:23:33.000Z</updated>
   <id>locahost/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>flex教程</title>
+    <link href="locahost/archives/6b020adf.html"/>
+    <id>locahost/archives/6b020adf.html</id>
+    <published>2019-10-17T06:23:33.000Z</published>
+    <updated>2019-10-17T06:23:33.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flex-direction: row | row-reverse | column | column-reverse</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;语法&quot;&gt;&lt;a href=&quot;#语法&quot; class=&quot;headerlink&quot; title=&quot;语法&quot;&gt;&lt;/a&gt;语法&lt;/h2&gt;&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>js真值，隐形转换，比较</title>
@@ -359,7 +380,7 @@
     <link href="locahost/archives/ce3dc320.html"/>
     <id>locahost/archives/ce3dc320.html</id>
     <published>2019-04-16T06:41:39.000Z</published>
-    <updated>2019-04-17T06:24:23.350Z</updated>
+    <updated>2019-10-17T08:14:53.372Z</updated>
     
     <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文主要记录在安装hexo主题<a href="https://theme-next.iissnan.com/getting-started.html" target="_blank" rel="noopener">next</a>中遇到的一些坑</p><h2 id="区分两个配置文件"><a href="#区分两个配置文件" class="headerlink" title="区分两个配置文件"></a>区分两个配置文件</h2><p>hexo 根目录下有个<code>_config.yml</code>，这个叫<strong>站点配置文件</strong>，目录<code>/themes/xx/_config.yml</code>这个叫<strong>主题配置文件</strong>，站点配置文件只有一份，而主题配置文件按目录可见是多份。配置时候注意看配置在哪个文件中配置。</p><h2 id="接入评论系统"><a href="#接入评论系统" class="headerlink" title="接入评论系统"></a>接入评论系统</h2><p>折腾了好几种方案，本以为<a href="https://github.com/imsun/gitment" target="_blank" rel="noopener">gitment</a>最为轻松，不过也是需要自己的服务器，喜欢折腾的可以参考<a href="https://github.com/imsun/gitment/issues/170" target="_blank" rel="noopener">解决gitment错误</a>。我选用的是畅言评论，这个需要网站备案。还好网站是备案过的。在主题配置中找到 chanyan，修改如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">changyan:</span><br><span class="line">    enable: true</span><br><span class="line">    appid: xxx   # 在畅言中新建应用后可以查询到id和key</span><br><span class="line">    appkey: xxxxx</span><br></pre></td></tr></table></figure></p><h3 id="更新-valine-评论系统"><a href="#更新-valine-评论系统" class="headerlink" title="更新 valine 评论系统"></a>更新 valine 评论系统</h3><p>偶然发现一个匿名评论的好东西<a href="https://valine.js.org/quickstart.html" target="_blank" rel="noopener">valine</a>，这个可以匿名评论，不得说不说<a href="https://leancloud.cn/" target="_blank" rel="noopener">leancloud</a>大法好。<br>hexo中已经集成valine组件，但是主题配置中<code>_config.yml</code> 配置项有问题，修改如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">valine:</span><br><span class="line">    enable: true</span><br><span class="line">    appid: xxxxx      # 这个字段，官方默认写的是app_id 需要改成 appid</span><br><span class="line">    appkey: xxxxx     # app_key 改成 appkey</span><br><span class="line">    notify: false # mail notifier , https://github.com/xCss/Valine/wiki</span><br><span class="line">    verify: true # Verification code</span><br><span class="line">    placeholder: Just go go # comment box placeholder</span><br><span class="line">    avatar: mm # gravatar style</span><br><span class="line">    guest_info: nick,mail,link # custom comment header</span><br><span class="line">    pageSize: 10 # pagination size</span><br></pre></td></tr></table></figure><h2 id="保存系统"><a href="#保存系统" class="headerlink" title="保存系统"></a>保存系统</h2><p>可以新建一个<strong>私有仓库</strong>来保存hexo配置和相关内容，这样可以在多台机器上编写博客。</p><h2 id="自定义域名-强制https"><a href="#自定义域名-强制https" class="headerlink" title="自定义域名 + 强制https"></a>自定义域名 + 强制https</h2><ol><li>首先需要一个域名。国内域名大多需要备案，可以到国外购买域名，需要折腾的也可以在国内购买。</li><li>将需要定义的域名指向<code>xxx.github.io</code>(xxx为github用户名)。添加CNAME记录可以完成。</li><li>新建文件<code>/source/CNAME</code>，写入域名。重新部署。</li><li>到github仓库中设置<code>Enforce HTTPS</code>选项。</li></ol><p>如果设置成功后页面无效果，清除缓存后重试即可</p>]]></content>
     
@@ -390,7 +411,7 @@
     <link href="locahost/archives/7681a445.html"/>
     <id>locahost/archives/7681a445.html</id>
     <published>2019-04-16T02:10:22.000Z</published>
-    <updated>2019-04-22T01:37:53.126Z</updated>
+    <updated>2019-10-17T08:14:53.372Z</updated>
     
     <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文章属于入门级别的，图文较多，大佬勿喷。为了时效性，基本工具安装都是指向其他教程。善于记录才能提升。</p><h2 id="要求"><a href="#要求" class="headerlink" title="要求"></a>要求</h2><ul><li>PC</li><li>github 帐号</li><li>git</li></ul><h2 id="安装nodejs，git"><a href="#安装nodejs，git" class="headerlink" title="安装nodejs，git"></a>安装nodejs，git</h2><p>hexo是基于nodejs的框架，先安装nodejs  <a href="http://www.runoob.com/nodejs/nodejs-install-setup.html" target="_blank" rel="noopener">安装教程</a><br>博客需要上传到github，需要安装git  <a href="http://www.runoob.com/git/git-install-setup.html" target="_blank" rel="noopener">安装教程</a>，需要注意的是安装完需要配置git</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;runoob&quot;     </span><br><span class="line">git config --global user.email test@runoob.com</span><br></pre></td></tr></table></figure><h2 id="github准备工作"><a href="#github准备工作" class="headerlink" title="github准备工作"></a>github准备工作</h2><ol><li>上传SSH凭证<br>打开 <code>Git GUI</code>(可在开始菜单搜索找到) , 点击菜单中 <code>Help</code> =&gt; <code>show ssh key</code><img src="/post-images/hexo/gui-menu.png" alt="生成公钥"><br>如果没有key，点击 <code>generate Key</code> 生成公钥。复制下方生成的公钥<img src="/post-images/hexo/ssh-key.png" alt="生成公钥"><br>打开页面<a href="https://github.com/settings/keys" target="_blank" rel="noopener">https://github.com/settings/keys</a>，点击<code>New SSH Key</code> 填写刚才生成的公钥</li><li>新建仓库<br>新建一个仓库来保存博客页面，到<a href="https://github.com/new" target="_blank" rel="noopener">https://github.com/new</a>,按照下图提示新建 <img src="/post-images/hexo/create-repo.png" alt="新建github repo"><br>至此准备工作完成</li></ol><h2 id="安装初始化hexo"><a href="#安装初始化hexo" class="headerlink" title="安装初始化hexo"></a>安装初始化hexo</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm i -g hexo  # 全局安装hexo</span><br><span class="line"># 下列步骤均在项目根目录下执行</span><br><span class="line">hexo init # 初始化hexo </span><br><span class="line">npm i # 重新安装依赖</span><br><span class="line">npm i -S hexo-deployer-git # 安装git上传工具</span><br></pre></td></tr></table></figure><h2 id="配置git上传工具"><a href="#配置git上传工具" class="headerlink" title="配置git上传工具"></a>配置git上传工具</h2><p>修改根目录下<code>_config.yml</code>文件，在末尾添加下面内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">    type: git</span><br><span class="line">    repo: git@github.com:xxxx/xxxx.github.io.git    # xxxx修改为github的用户名</span><br><span class="line">    branch: master</span><br></pre></td></tr></table></figure></p><h2 id="写博客上传"><a href="#写博客上传" class="headerlink" title="写博客上传"></a>写博客上传</h2><p>博客使用markdown来编写的。不习惯的可以去下载可视化markdown编辑器</p><ol><li><p>首先启动本地预览服务器<code>hexo s</code>，在<code>localhost:4000</code>可以看到预览效果</p></li><li><p>新建文章 <code>hexo new xxx</code>，xxx是博客的title，执行后在/source/_posts/下面可以看到刚生成的文章模版</p></li><li><p>编写好博客保存后，执行<code>hexo d -g</code>可将博客推送到github，在<code>http://username.github.io</code>可以看到博客已经推送到线上</p></li></ol><h2 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h2><p>后续记录hexo安装next主题</p>]]></content>
     
