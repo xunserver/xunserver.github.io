@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Allow: /tags/
+Allow: /archives/
+Allow: /categories/
+Disallow: /vendors/
+Disallow: /js/
+Disallow: /css/
+Disallow: /fonts/
+Disallow: /lib/
+Sitemap: https://blog.xunserver.cn/sitemap.xml
+Sitemap: https://blog.xunserver.cn/baidusitemap.xml
