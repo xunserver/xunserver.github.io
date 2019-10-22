@@ -5,9 +5,9 @@
   <subtitle>生活总会有惊喜</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="locahost/"/>
+  <link href="https://blog.xunserver.cn/"/>
   <updated>2019-10-08T03:34:29.000Z</updated>
-  <id>locahost/</id>
+  <id>https://blog.xunserver.cn/</id>
   
   <author>
     <name>yangmanman</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>js真值，隐形转换，比较</title>
-    <link href="locahost/archives/3c778964.html"/>
-    <id>locahost/archives/3c778964.html</id>
+    <link href="https://blog.xunserver.cn/archives/3c778964.html"/>
+    <id>https://blog.xunserver.cn/archives/3c778964.html</id>
     <published>2019-10-08T03:34:29.000Z</published>
     <updated>2019-10-08T03:34:29.000Z</updated>
     
@@ -41,8 +41,8 @@
   
   <entry>
     <title>面试基础篇（二）</title>
-    <link href="locahost/archives/234b714a.html"/>
-    <id>locahost/archives/234b714a.html</id>
+    <link href="https://blog.xunserver.cn/archives/234b714a.html"/>
+    <id>https://blog.xunserver.cn/archives/234b714a.html</id>
     <published>2019-10-08T03:11:46.000Z</published>
     <updated>2019-10-08T03:11:46.000Z</updated>
     
@@ -55,8 +55,8 @@
   
   <entry>
     <title>前端常用布局 - 两列布局</title>
-    <link href="locahost/archives/8930074f.html"/>
-    <id>locahost/archives/8930074f.html</id>
+    <link href="https://blog.xunserver.cn/archives/8930074f.html"/>
+    <id>https://blog.xunserver.cn/archives/8930074f.html</id>
     <published>2019-09-25T09:36:26.000Z</published>
     <updated>2019-09-25T09:36:26.000Z</updated>
     
@@ -71,19 +71,19 @@
     
     </summary>
     
-      <category term="面试" scheme="locahost/categories/%E9%9D%A2%E8%AF%95/"/>
+      <category term="面试" scheme="https://blog.xunserver.cn/categories/%E9%9D%A2%E8%AF%95/"/>
     
     
-      <category term="css" scheme="locahost/tags/css/"/>
+      <category term="css" scheme="https://blog.xunserver.cn/tags/css/"/>
     
-      <category term="html" scheme="locahost/tags/html/"/>
+      <category term="html" scheme="https://blog.xunserver.cn/tags/html/"/>
     
   </entry>
   
   <entry>
     <title>前端常用布局 - 三列布局</title>
-    <link href="locahost/archives/e924f8d1.html"/>
-    <id>locahost/archives/e924f8d1.html</id>
+    <link href="https://blog.xunserver.cn/archives/e924f8d1.html"/>
+    <id>https://blog.xunserver.cn/archives/e924f8d1.html</id>
     <published>2019-09-24T07:59:04.000Z</published>
     <updated>2019-09-24T07:59:04.000Z</updated>
     
@@ -99,19 +99,19 @@
     
     </summary>
     
-      <category term="面试" scheme="locahost/categories/%E9%9D%A2%E8%AF%95/"/>
+      <category term="面试" scheme="https://blog.xunserver.cn/categories/%E9%9D%A2%E8%AF%95/"/>
     
     
-      <category term="css" scheme="locahost/tags/css/"/>
+      <category term="css" scheme="https://blog.xunserver.cn/tags/css/"/>
     
-      <category term="html" scheme="locahost/tags/html/"/>
+      <category term="html" scheme="https://blog.xunserver.cn/tags/html/"/>
     
   </entry>
   
   <entry>
     <title>面试基础篇（一）</title>
-    <link href="locahost/archives/135d9d92.html"/>
-    <id>locahost/archives/135d9d92.html</id>
+    <link href="https://blog.xunserver.cn/archives/135d9d92.html"/>
+    <id>https://blog.xunserver.cn/archives/135d9d92.html</id>
     <published>2019-09-24T05:58:14.000Z</published>
     <updated>2019-09-24T05:58:14.000Z</updated>
     
@@ -127,21 +127,21 @@
     
     </summary>
     
-      <category term="面试" scheme="locahost/categories/%E9%9D%A2%E8%AF%95/"/>
+      <category term="面试" scheme="https://blog.xunserver.cn/categories/%E9%9D%A2%E8%AF%95/"/>
     
     
-      <category term="css" scheme="locahost/tags/css/"/>
+      <category term="css" scheme="https://blog.xunserver.cn/tags/css/"/>
     
-      <category term="html" scheme="locahost/tags/html/"/>
+      <category term="html" scheme="https://blog.xunserver.cn/tags/html/"/>
     
-      <category term="javascript" scheme="locahost/tags/javascript/"/>
+      <category term="javascript" scheme="https://blog.xunserver.cn/tags/javascript/"/>
     
   </entry>
   
   <entry>
     <title>html+css显示显示更多功能</title>
-    <link href="locahost/archives/ca5e0d7a.html"/>
-    <id>locahost/archives/ca5e0d7a.html</id>
+    <link href="https://blog.xunserver.cn/archives/ca5e0d7a.html"/>
+    <id>https://blog.xunserver.cn/archives/ca5e0d7a.html</id>
     <published>2019-09-24T01:48:01.000Z</published>
     <updated>2019-09-24T01:48:01.000Z</updated>
     
@@ -160,31 +160,9 @@
   </entry>
   
   <entry>
-    <title>高并发网站建设与思考</title>
-    <link href="locahost/archives/de85f12c.html"/>
-    <id>locahost/archives/de85f12c.html</id>
-    <published>2019-05-20T07:26:10.000Z</published>
-    <updated>2019-05-20T07:26:10.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近一直闲着，跟着架构师做一些分布式应用方面活路。前端新人跟着架构师入门，窥探下分布式应用的理论经验（大雾）。</p><h2 id="我对访问网站流程的任务"><a href="#我对访问网站流程的任务" class="headerlink" title="我对访问网站流程的任务"></a>我对访问网站流程的任务</h2><h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>大公司有各种各样的系统，以腾讯为例。有很多 <code>xx.qq.com</code> 这种形式的子系统，也有 <code>xx.qq.com/aa</code> <code>xx.qq.com/bb</code> 这种子子系统，如此庞大的系统如何管理。</p><ol><li>xx.qq.com 这种。可以在 dns 设置时解析到各个子系统上。<code>aa.qq.com =&gt; app_A</code> <code>bb.qq.com =&gt; app_B</code></li><li>xx.qq.com/aa xx.qq.com/bb 这种形式的，可以通过 api 网关来转发到各个子子系统上。</li></ol><p>基于上面的第二点，再次思考出如何保证 api 网关不宕机，api 网关宕机所有负载的系统也就无法使用。<br>子系统又如何做到高可用，如何优雅的实现。</p><h2 id="探索方案"><a href="#探索方案" class="headerlink" title="探索方案"></a>探索方案</h2><ul><li>api 网关技术选型：openresty + lua，api 网关负载使用： dns 多域名解析或 nginx+Keepalived</li><li>子系统负载使用 nginx 负载均衡即可</li><li>子系统内部模块的负载，微服务的方式。</li></ul><h2 id="栗子"><a href="#栗子" class="headerlink" title="栗子"></a>栗子</h2><h3 id="业务描述"><a href="#业务描述" class="headerlink" title="业务描述"></a>业务描述</h3><p>企业由 3 个独立的系统 appA appB appC 组成,对应域名分别是 a.xx.com b.xx.com c.xx.com。其中 a.xx.com 通过 url 前缀不同分为了两个子系统 a.xx.com/a a.xx.com/b，分别对应 appA_a appA_b，从 3 个维度来描述高可用的集群。</p><h3 id="管理-nginx-集群"><a href="#管理-nginx-集群" class="headerlink" title="管理 nginx 集群"></a>管理 nginx 集群</h3><p>keepalived 管理域名</p><h3 id="管理子系统集群"><a href="#管理子系统集群" class="headerlink" title="管理子系统集群"></a>管理子系统集群</h3><p>openresty</p><h3 id="管理子系统模块集群"><a href="#管理子系统模块集群" class="headerlink" title="管理子系统模块集群"></a>管理子系统模块集群</h3><p>consul</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;最近一直闲着，跟着架构师做一些分布式应用方面活路。前端新人跟着架构师入门，窥探下分布式应用的理论经验（大雾）。&lt;/p&gt;
-&lt;h2 id=&quot;我对
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
     <title>记一次正则表达式的坑</title>
-    <link href="locahost/archives/636ae7c5.html"/>
-    <id>locahost/archives/636ae7c5.html</id>
+    <link href="https://blog.xunserver.cn/archives/636ae7c5.html"/>
+    <id>https://blog.xunserver.cn/archives/636ae7c5.html</id>
     <published>2019-04-22T03:15:10.000Z</published>
     <updated>2019-04-22T03:15:10.000Z</updated>
     
@@ -199,21 +177,21 @@
     
     </summary>
     
-      <category term="疑难杂症" scheme="locahost/categories/%E7%96%91%E9%9A%BE%E6%9D%82%E7%97%87/"/>
+      <category term="疑难杂症" scheme="https://blog.xunserver.cn/categories/%E7%96%91%E9%9A%BE%E6%9D%82%E7%97%87/"/>
     
     
-      <category term="踩坑" scheme="locahost/tags/%E8%B8%A9%E5%9D%91/"/>
+      <category term="踩坑" scheme="https://blog.xunserver.cn/tags/%E8%B8%A9%E5%9D%91/"/>
     
-      <category term="正则表达式" scheme="locahost/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+      <category term="正则表达式" scheme="https://blog.xunserver.cn/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
     
-      <category term="javascript" scheme="locahost/tags/javascript/"/>
+      <category term="javascript" scheme="https://blog.xunserver.cn/tags/javascript/"/>
     
   </entry>
   
   <entry>
     <title>javascript原型和constructor理解</title>
-    <link href="locahost/archives/d0b04a7b.html"/>
-    <id>locahost/archives/d0b04a7b.html</id>
+    <link href="https://blog.xunserver.cn/archives/d0b04a7b.html"/>
+    <id>https://blog.xunserver.cn/archives/d0b04a7b.html</id>
     <published>2019-04-18T07:14:33.000Z</published>
     <updated>2019-04-18T07:14:33.000Z</updated>
     
@@ -228,21 +206,21 @@
     
     </summary>
     
-      <category term="javascript 基础" scheme="locahost/categories/javascript-%E5%9F%BA%E7%A1%80/"/>
+      <category term="javascript 基础" scheme="https://blog.xunserver.cn/categories/javascript-%E5%9F%BA%E7%A1%80/"/>
     
     
-      <category term="prototype" scheme="locahost/tags/prototype/"/>
+      <category term="prototype" scheme="https://blog.xunserver.cn/tags/prototype/"/>
     
-      <category term="原型" scheme="locahost/tags/%E5%8E%9F%E5%9E%8B/"/>
+      <category term="原型" scheme="https://blog.xunserver.cn/tags/%E5%8E%9F%E5%9E%8B/"/>
     
-      <category term="constructor" scheme="locahost/tags/constructor/"/>
+      <category term="constructor" scheme="https://blog.xunserver.cn/tags/constructor/"/>
     
   </entry>
   
   <entry>
     <title>css世界读书笔记（1）</title>
-    <link href="locahost/archives/b78f1e6b.html"/>
-    <id>locahost/archives/b78f1e6b.html</id>
+    <link href="https://blog.xunserver.cn/archives/b78f1e6b.html"/>
+    <id>https://blog.xunserver.cn/archives/b78f1e6b.html</id>
     <published>2019-04-17T07:39:03.000Z</published>
     <updated>2019-04-17T07:39:03.000Z</updated>
     
@@ -258,21 +236,21 @@
     
     </summary>
     
-      <category term="读书笔记" scheme="locahost/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+      <category term="读书笔记" scheme="https://blog.xunserver.cn/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="css" scheme="locahost/tags/css/"/>
+      <category term="css" scheme="https://blog.xunserver.cn/tags/css/"/>
     
-      <category term="css元素尺寸" scheme="locahost/tags/css%E5%85%83%E7%B4%A0%E5%B0%BA%E5%AF%B8/"/>
+      <category term="css元素尺寸" scheme="https://blog.xunserver.cn/tags/css%E5%85%83%E7%B4%A0%E5%B0%BA%E5%AF%B8/"/>
     
-      <category term="css世界" scheme="locahost/tags/css%E4%B8%96%E7%95%8C/"/>
+      <category term="css世界" scheme="https://blog.xunserver.cn/tags/css%E4%B8%96%E7%95%8C/"/>
     
   </entry>
   
   <entry>
     <title>openssl学习笔记</title>
-    <link href="locahost/archives/c76c6f1c.html"/>
-    <id>locahost/archives/c76c6f1c.html</id>
+    <link href="https://blog.xunserver.cn/archives/c76c6f1c.html"/>
+    <id>https://blog.xunserver.cn/archives/c76c6f1c.html</id>
     <published>2019-04-17T05:35:07.000Z</published>
     <updated>2019-04-17T05:35:07.000Z</updated>
     
@@ -289,21 +267,21 @@
     
     </summary>
     
-      <category term="linux" scheme="locahost/categories/linux/"/>
+      <category term="linux" scheme="https://blog.xunserver.cn/categories/linux/"/>
     
     
-      <category term="openssl" scheme="locahost/tags/openssl/"/>
+      <category term="openssl" scheme="https://blog.xunserver.cn/tags/openssl/"/>
     
-      <category term="linux" scheme="locahost/tags/linux/"/>
+      <category term="linux" scheme="https://blog.xunserver.cn/tags/linux/"/>
     
-      <category term="学习笔记" scheme="locahost/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+      <category term="学习笔记" scheme="https://blog.xunserver.cn/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title>frp内网穿透</title>
-    <link href="locahost/archives/c067e7e3.html"/>
-    <id>locahost/archives/c067e7e3.html</id>
+    <link href="https://blog.xunserver.cn/archives/c067e7e3.html"/>
+    <id>https://blog.xunserver.cn/archives/c067e7e3.html</id>
     <published>2019-04-17T02:13:24.000Z</published>
     <updated>2019-04-17T02:13:24.000Z</updated>
     
@@ -318,19 +296,19 @@
     
     </summary>
     
-      <category term="linux" scheme="locahost/categories/linux/"/>
+      <category term="linux" scheme="https://blog.xunserver.cn/categories/linux/"/>
     
     
-      <category term="frp" scheme="locahost/tags/frp/"/>
+      <category term="frp" scheme="https://blog.xunserver.cn/tags/frp/"/>
     
-      <category term="内网穿透" scheme="locahost/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"/>
+      <category term="内网穿透" scheme="https://blog.xunserver.cn/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"/>
     
   </entry>
   
   <entry>
     <title>ngrok内网穿透</title>
-    <link href="locahost/archives/64ba60b1.html"/>
-    <id>locahost/archives/64ba60b1.html</id>
+    <link href="https://blog.xunserver.cn/archives/64ba60b1.html"/>
+    <id>https://blog.xunserver.cn/archives/64ba60b1.html</id>
     <published>2019-04-17T01:40:39.000Z</published>
     <updated>2019-04-17T01:40:39.000Z</updated>
     
@@ -345,21 +323,21 @@
     
     </summary>
     
-      <category term="linux" scheme="locahost/categories/linux/"/>
+      <category term="linux" scheme="https://blog.xunserver.cn/categories/linux/"/>
     
     
-      <category term="内网穿透" scheme="locahost/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"/>
+      <category term="内网穿透" scheme="https://blog.xunserver.cn/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"/>
     
-      <category term="ngrok" scheme="locahost/tags/ngrok/"/>
+      <category term="ngrok" scheme="https://blog.xunserver.cn/tags/ngrok/"/>
     
   </entry>
   
   <entry>
     <title>hexo搭建博客（下）</title>
-    <link href="locahost/archives/ce3dc320.html"/>
-    <id>locahost/archives/ce3dc320.html</id>
+    <link href="https://blog.xunserver.cn/archives/ce3dc320.html"/>
+    <id>https://blog.xunserver.cn/archives/ce3dc320.html</id>
     <published>2019-04-16T06:41:39.000Z</published>
-    <updated>2019-10-21T10:19:22.885Z</updated>
+    <updated>2019-10-22T08:54:20.745Z</updated>
     
     <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文主要记录在安装hexo主题<a href="https://theme-next.iissnan.com/getting-started.html" target="_blank" rel="noopener">next</a>中遇到的一些坑</p><h2 id="区分两个配置文件"><a href="#区分两个配置文件" class="headerlink" title="区分两个配置文件"></a>区分两个配置文件</h2><p>hexo 根目录下有个<code>_config.yml</code>，这个叫<strong>站点配置文件</strong>，目录<code>/themes/xx/_config.yml</code>这个叫<strong>主题配置文件</strong>，站点配置文件只有一份，而主题配置文件按目录可见是多份。配置时候注意看配置在哪个文件中配置。</p><h2 id="接入评论系统"><a href="#接入评论系统" class="headerlink" title="接入评论系统"></a>接入评论系统</h2><p>折腾了好几种方案，本以为<a href="https://github.com/imsun/gitment" target="_blank" rel="noopener">gitment</a>最为轻松，不过也是需要自己的服务器，喜欢折腾的可以参考<a href="https://github.com/imsun/gitment/issues/170" target="_blank" rel="noopener">解决gitment错误</a>。我选用的是畅言评论，这个需要网站备案。还好网站是备案过的。在主题配置中找到 chanyan，修改如下：<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">changyan:</span></span><br><span class="line"><span class="attr">    enable:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">    appid:</span> <span class="string">xxx</span>   <span class="comment"># 在畅言中新建应用后可以查询到id和key</span></span><br><span class="line"><span class="attr">    appkey:</span> <span class="string">xxxxx</span></span><br></pre></td></tr></table></figure></p><h3 id="更新-valine-评论系统"><a href="#更新-valine-评论系统" class="headerlink" title="更新 valine 评论系统"></a>更新 valine 评论系统</h3><p>偶然发现一个匿名评论的好东西<a href="https://valine.js.org/quickstart.html" target="_blank" rel="noopener">valine</a>，这个可以匿名评论，不得说不说<a href="https://leancloud.cn/" target="_blank" rel="noopener">leancloud</a>大法好。<br>hexo中已经集成valine组件，但是主题配置中<code>_config.yml</code> 配置项有问题，修改如下：</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">valine:</span></span><br><span class="line"><span class="attr">    enable:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">    appid:</span> <span class="string">xxxxx</span>      <span class="comment"># 这个字段，官方默认写的是app_id 需要改成 appid</span></span><br><span class="line"><span class="attr">    appkey:</span> <span class="string">xxxxx</span>     <span class="comment"># app_key 改成 appkey</span></span><br><span class="line"><span class="attr">    notify:</span> <span class="literal">false</span> <span class="comment"># mail notifier , https://github.com/xCss/Valine/wiki</span></span><br><span class="line"><span class="attr">    verify:</span> <span class="literal">true</span> <span class="comment"># Verification code</span></span><br><span class="line"><span class="attr">    placeholder:</span> <span class="string">Just</span> <span class="string">go</span> <span class="string">go</span> <span class="comment"># comment box placeholder</span></span><br><span class="line"><span class="attr">    avatar:</span> <span class="string">mm</span> <span class="comment"># gravatar style</span></span><br><span class="line"><span class="attr">    guest_info:</span> <span class="string">nick,mail,link</span> <span class="comment"># custom comment header</span></span><br><span class="line"><span class="attr">    pageSize:</span> <span class="number">10</span> <span class="comment"># pagination size</span></span><br></pre></td></tr></table></figure><h2 id="保存系统"><a href="#保存系统" class="headerlink" title="保存系统"></a>保存系统</h2><p>可以新建一个<strong>私有仓库</strong>来保存hexo配置和相关内容，这样可以在多台机器上编写博客。</p><h2 id="自定义域名-强制https"><a href="#自定义域名-强制https" class="headerlink" title="自定义域名 + 强制https"></a>自定义域名 + 强制https</h2><ol><li>首先需要一个域名。国内域名大多需要备案，可以到国外购买域名，需要折腾的也可以在国内购买。</li><li>将需要定义的域名指向<code>xxx.github.io</code>(xxx为github用户名)。添加CNAME记录可以完成。</li><li>新建文件<code>/source/CNAME</code>，写入域名。重新部署。</li><li>到github仓库中设置<code>Enforce HTTPS</code>选项。</li></ol><p>如果设置成功后页面无效果，清除缓存后重试即可</p>]]></content>
     
@@ -372,25 +350,25 @@
     
     </summary>
     
-      <category term="教程" scheme="locahost/categories/%E6%95%99%E7%A8%8B/"/>
+      <category term="教程" scheme="https://blog.xunserver.cn/categories/%E6%95%99%E7%A8%8B/"/>
     
     
-      <category term="blog" scheme="locahost/tags/blog/"/>
+      <category term="blog" scheme="https://blog.xunserver.cn/tags/blog/"/>
     
-      <category term="hexo" scheme="locahost/tags/hexo/"/>
+      <category term="hexo" scheme="https://blog.xunserver.cn/tags/hexo/"/>
     
-      <category term="教程" scheme="locahost/tags/%E6%95%99%E7%A8%8B/"/>
+      <category term="教程" scheme="https://blog.xunserver.cn/tags/%E6%95%99%E7%A8%8B/"/>
     
-      <category term="githubpage" scheme="locahost/tags/githubpage/"/>
+      <category term="githubpage" scheme="https://blog.xunserver.cn/tags/githubpage/"/>
     
   </entry>
   
   <entry>
     <title>hexo搭建博客（上）</title>
-    <link href="locahost/archives/7681a445.html"/>
-    <id>locahost/archives/7681a445.html</id>
+    <link href="https://blog.xunserver.cn/archives/7681a445.html"/>
+    <id>https://blog.xunserver.cn/archives/7681a445.html</id>
     <published>2019-04-16T02:10:22.000Z</published>
-    <updated>2019-10-21T10:19:22.885Z</updated>
+    <updated>2019-10-22T08:54:20.745Z</updated>
     
     <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文章属于入门级别的，图文较多，大佬勿喷。为了时效性，基本工具安装都是指向其他教程。善于记录才能提升。</p><h2 id="要求"><a href="#要求" class="headerlink" title="要求"></a>要求</h2><ul><li>PC</li><li>github 帐号</li><li>git</li></ul><h2 id="安装nodejs，git"><a href="#安装nodejs，git" class="headerlink" title="安装nodejs，git"></a>安装nodejs，git</h2><p>hexo是基于nodejs的框架，先安装nodejs  <a href="http://www.runoob.com/nodejs/nodejs-install-setup.html" target="_blank" rel="noopener">安装教程</a><br>博客需要上传到github，需要安装git  <a href="http://www.runoob.com/git/git-install-setup.html" target="_blank" rel="noopener">安装教程</a>，需要注意的是安装完需要配置git</p><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git<span class="built_in"> config </span>--global user.name <span class="string">"runoob"</span>     </span><br><span class="line">git<span class="built_in"> config </span>--global user.email test@runoob.com</span><br></pre></td></tr></table></figure><h2 id="github准备工作"><a href="#github准备工作" class="headerlink" title="github准备工作"></a>github准备工作</h2><ol><li>上传SSH凭证<br>打开 <code>Git GUI</code>(可在开始菜单搜索找到) , 点击菜单中 <code>Help</code> =&gt; <code>show ssh key</code><img src="/post-images/hexo/gui-menu.png" alt="生成公钥"><br>如果没有key，点击 <code>generate Key</code> 生成公钥。复制下方生成的公钥<img src="/post-images/hexo/ssh-key.png" alt="生成公钥"><br>打开页面<a href="https://github.com/settings/keys" target="_blank" rel="noopener">https://github.com/settings/keys</a>，点击<code>New SSH Key</code> 填写刚才生成的公钥</li><li>新建仓库<br>新建一个仓库来保存博客页面，到<a href="https://github.com/new" target="_blank" rel="noopener">https://github.com/new</a>,按照下图提示新建 <img src="/post-images/hexo/create-repo.png" alt="新建github repo"><br>至此准备工作完成</li></ol><h2 id="安装初始化hexo"><a href="#安装初始化hexo" class="headerlink" title="安装初始化hexo"></a>安装初始化hexo</h2><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">npm</span> i -g hexo  <span class="comment"># 全局安装hexo</span></span><br><span class="line"><span class="comment"># 下列步骤均在项目根目录下执行</span></span><br><span class="line">hexo init <span class="comment"># 初始化hexo </span></span><br><span class="line"><span class="built_in">npm</span> i <span class="comment"># 重新安装依赖</span></span><br><span class="line"><span class="built_in">npm</span> i -S hexo-deployer-git <span class="comment"># 安装git上传工具</span></span><br></pre></td></tr></table></figure><h2 id="配置git上传工具"><a href="#配置git上传工具" class="headerlink" title="配置git上传工具"></a>配置git上传工具</h2><p>修改根目录下<code>_config.yml</code>文件，在末尾添加下面内容<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">deploy</span>:</span><br><span class="line">    <span class="attribute">type</span>: git</span><br><span class="line">    <span class="attribute">repo</span>: git<span class="variable">@github</span>.<span class="attribute">com</span>:xxxx/xxxx.github.io.git    # xxxx修改为github的用户名</span><br><span class="line">    <span class="attribute">branch</span>: master</span><br></pre></td></tr></table></figure></p><h2 id="写博客上传"><a href="#写博客上传" class="headerlink" title="写博客上传"></a>写博客上传</h2><p>博客使用markdown来编写的。不习惯的可以去下载可视化markdown编辑器</p><ol><li><p>首先启动本地预览服务器<code>hexo s</code>，在<code>localhost:4000</code>可以看到预览效果</p></li><li><p>新建文章 <code>hexo new xxx</code>，xxx是博客的title，执行后在/source/_posts/下面可以看到刚生成的文章模版</p></li><li><p>编写好博客保存后，执行<code>hexo d -g</code>可将博客推送到github，在<code>http://username.github.io</code>可以看到博客已经推送到线上</p></li></ol><h2 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h2><p>后续记录hexo安装next主题</p>]]></content>
     
@@ -404,16 +382,16 @@
     
     </summary>
     
-      <category term="教程" scheme="locahost/categories/%E6%95%99%E7%A8%8B/"/>
+      <category term="教程" scheme="https://blog.xunserver.cn/categories/%E6%95%99%E7%A8%8B/"/>
     
     
-      <category term="blog" scheme="locahost/tags/blog/"/>
+      <category term="blog" scheme="https://blog.xunserver.cn/tags/blog/"/>
     
-      <category term="hexo" scheme="locahost/tags/hexo/"/>
+      <category term="hexo" scheme="https://blog.xunserver.cn/tags/hexo/"/>
     
-      <category term="教程" scheme="locahost/tags/%E6%95%99%E7%A8%8B/"/>
+      <category term="教程" scheme="https://blog.xunserver.cn/tags/%E6%95%99%E7%A8%8B/"/>
     
-      <category term="githubpage" scheme="locahost/tags/githubpage/"/>
+      <category term="githubpage" scheme="https://blog.xunserver.cn/tags/githubpage/"/>
     
   </entry>
   

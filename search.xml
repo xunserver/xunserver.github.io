@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[flex教程]]></title>
-    <url>%2Farchives%2F6b020adf.html</url>
-    <content type="text"><![CDATA[语法1flex-direction: row | row-reverse | column | column-reverse]]></content>
-  </entry>
-  <entry>
     <title><![CDATA[js真值，隐形转换，比较]]></title>
     <url>%2Farchives%2F3c778964.html</url>
     <content type="text"><![CDATA[假值的情况 &quot;&quot;是假 数字 0，+0，-0，NaN 是假，其余是真 Symbol 是真 undefined、null 是假 除以上的情况，所有都是真值 真假值使用的情况 if语句 !取反 == 情况分析 NaN 均不== undefined和null相等 一个是boolean，另一个是Number或String， boolean转成数字 一个是对象，对象先valueOf再toString。变换成基本类型比较 关系运算符（&gt;、&lt;、==、!=…） ===、!==：同时对比类型和值，两个都为真才返回真 ==、!=: 若两边均为对象，对比它们的引用是否相同 逻辑非(!): 将其后变量或表达式转为布尔值 对比字符串：从头至尾扫描逐个比较每个字符的unicode码，直到分出大小 其他情况下，两边均转为数值类型]]></content>
@@ -56,11 +51,6 @@
     <title><![CDATA[html+css显示显示更多功能]]></title>
     <url>%2Farchives%2Fca5e0d7a.html</url>
     <content type="text"><![CDATA[前言需要实现文本显示不超过两行，超过的两行的部分，用显示更多按钮，点击后显示展开全部文本。用html+css实现单行效果两行效果多行效果展开效果 实现html 部分12345678910111213141516171819202122232425262728&lt;div class="pay-info"&gt; &lt;input id="onekey-payInfoCheckbox" type="checkbox" style="display: none;" /&gt; &lt;p class="pay-info-text"&gt; &lt;span class="pay-info-text-detail" &gt;###***！！气asd asd 阿斯达阿达啊1 3阿达阿斯达暗杀是大法官地方甘道夫古典风格的公司的暗杀撒旦防守对方是否是是防守对方斯蒂芬撒旦放。&lt;/span &gt; &lt;span class="pay-info-text-detail1" &gt;###***！！气asd asd 阿斯达阿达啊1 3阿达阿斯达暗杀是大法官地方甘道夫古典风格的公司的暗杀撒旦防守对方是否是是防守对方斯蒂芬撒旦放。&lt;/span &gt; &lt;span class="pay-info-shade"&gt;&lt;/span&gt; &lt;/p&gt; &lt;label for="onekey-payInfoCheckbox" class="pay-info-text-con pay-info-text-open" &gt;&lt;span class="arrow-download"&gt;&lt;/span &gt;&lt;/label&gt; &lt;label for="onekey-payInfoCheckbox" class="pay-info-text-con pay-info-text-close" &gt;&lt;span class="arrow-up"&gt;&lt;/span &gt;&lt;/label&gt;&lt;/div&gt; 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677.pay-info &#123; position: relative; margin-top: 12px;&#125;.pay-info-text &#123; /* width: 100%; */ position: relative; font-size: 14px; max-height: 40px; /* min-height: 40px; */ overflow: hidden; transition: max-height 0.25s; color: #999999;&#125;.pay-info-text-detail &#123; font-size: 14px; line-height: 1.4; color: #999999;&#125;.pay-info-text-detail1 &#123; position: absolute; top: 0; left: 0; right: 0; z-index: 101; height: 20px; font-size: 14px; line-height: 1.4; color: #999999; overflow: hidden; background: white;&#125;.pay-info-shade &#123; position: absolute; right: 0; width: 16px; height: 16px; padding: 4px; background: #fff; z-index: 99;&#125;:checked ~ .pay-info-text .pay-info-shade &#123; display: none;&#125;:checked ~ .pay-info-text &#123; max-height: 250px; /* ä¸€ä¸ªè¶³å¤Ÿå¤§çš„æœ€å¤§é«˜åº¦å€¼ */&#125;.pay-info-text-con &#123; position: absolute; right: 0; /* left: 0; */ width: 16px; height: 16px; cursor: pointer; bottom: 0; text-align: right; padding: 4px; color: #000;&#125;.pay-info-text-open &#123; background: rgba(255, 255, 255, 0.5);&#125;.pay-info-text-close &#123; display: none;&#125;:checked ~ .pay-info-text-open &#123; display: none;&#125;:checked ~ .pay-info-text-close &#123; display: inline-block; bottom: -24px;&#125;]]></content>
-  </entry>
-  <entry>
-    <title><![CDATA[高并发网站建设与思考]]></title>
-    <url>%2Farchives%2Fde85f12c.html</url>
-    <content type="text"><![CDATA[前言最近一直闲着，跟着架构师做一些分布式应用方面活路。前端新人跟着架构师入门，窥探下分布式应用的理论经验（大雾）。 我对访问网站流程的任务思考大公司有各种各样的系统，以腾讯为例。有很多 xx.qq.com 这种形式的子系统，也有 xx.qq.com/aa xx.qq.com/bb 这种子子系统，如此庞大的系统如何管理。 xx.qq.com 这种。可以在 dns 设置时解析到各个子系统上。aa.qq.com =&gt; app_A bb.qq.com =&gt; app_B xx.qq.com/aa xx.qq.com/bb 这种形式的，可以通过 api 网关来转发到各个子子系统上。 基于上面的第二点，再次思考出如何保证 api 网关不宕机，api 网关宕机所有负载的系统也就无法使用。子系统又如何做到高可用，如何优雅的实现。 探索方案 api 网关技术选型：openresty + lua，api 网关负载使用： dns 多域名解析或 nginx+Keepalived 子系统负载使用 nginx 负载均衡即可 子系统内部模块的负载，微服务的方式。 栗子业务描述企业由 3 个独立的系统 appA appB appC 组成,对应域名分别是 a.xx.com b.xx.com c.xx.com。其中 a.xx.com 通过 url 前缀不同分为了两个子系统 a.xx.com/a a.xx.com/b，分别对应 appA_a appA_b，从 3 个维度来描述高可用的集群。 管理 nginx 集群keepalived 管理域名 管理子系统集群openresty 管理子系统模块集群consul]]></content>
   </entry>
   <entry>
     <title><![CDATA[记一次正则表达式的坑]]></title>
