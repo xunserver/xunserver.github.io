@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>京东商品选购脚本</title>
+    <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@3.15.0/dist/av-min.js"></script>
+  </head>
+  <body>
+    <div>
+      <button onclick="pre()">上一页</button>
+      <button onclick="next()">下一页</button>
+      当前页：<span id="curr">1</span>
+      共计：<span id="total"></span>
+    </div>
+    <ul id="ul"></ul>
+    <script>
+      main();
+
+      function leanInit() {
+        AV.init({
+          appId: "s25whQUhAmIzo02d4VHRBHQ8-gzGzoHsz",
+          appKey: "PKDnUuQqdzBYxIuiASziw2ha"
+          // serverURLs: "https://xxx.example.com"
+        });
+      }
+      function next() {
+        current++;
+        document.querySelector("#curr").innerText = current
+        renderUI(current);
+      }
+
+      function pre() {
+        current--;
+        document.querySelector("#curr").innerText = current
+        renderUI(current);
+      }
+
+      async function renderUI(pageNum) {
+        let goods = await getGoodsInfo(pageNum);
+        let str = "";
+        for (var i = 0; i < goods.length; i++) {
+          let { productPic, price, productName, skuId, productCode } = goods[i];
+          str += `
+                    <li>
+                        <img src="https://m.360buyimg.com/da/s252x252_${productPic}"/>
+                        <div><span>价格：</span><span>${price}</span></div>
+                        <div>${productName}</div>
+                        <div><a href="https://item.jd.com/${skuId}.html" target="__blank">京东链接</a></div>
+                        <div>购买搜索：<span>${productCode}</span></div>
+                        
+                    </li>
+                `;
+        }
+        document.getElementById("ul").innerHTML = str;
+      }
+      function getGoodsInfo(pageNum = 1) {
+        let pageSize = 10;
+        const query = new AV.Query("good");
+        return query
+          .limit(pageSize)
+          .skip((pageNum - 1) * pageSize)
+          .find()
+          .then(res => {
+            return res.map(item => item.attributes);
+          });
+      }
+
+      function getTotal() {
+        const query = new AV.Query("good");
+        return query
+          .count()
+          .then(res => {
+                document.querySelector('#total').innerText = Math.ceil(res/10)
+          });
+      }
+      function main() {
+        current = 1;
+        leanInit();
+        getTotal();
+        renderUI(current);
+      }
+    </script>
+  </body>
+</html>
