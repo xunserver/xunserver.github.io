@@ -10,10 +10,14 @@
   </head>
   <body>
     <div>
+      当前页：<input type="text" value="1" id="curr" onchange="search(this.value)">
+      共计：<span id="total"></span>
       <button onclick="pre()">上一页</button>
       <button onclick="next()">下一页</button>
-      当前页：<span id="curr">1</span>
-      共计：<span id="total"></span>
+      <br>
+      <input type="text" value id="search">
+      <button onclick="search(1)">搜索</button>
+      
     </div>
     <ul id="ul"></ul>
     <script>
@@ -27,19 +31,22 @@
         });
       }
       function next() {
+        if(current === total) {
+          return 
+        }
         current++;
-        document.querySelector("#curr").innerText = current
-        renderUI(current);
+        search(current)
       }
 
       function pre() {
+        if(current === 1) {
+          return 
+        }
         current--;
-        document.querySelector("#curr").innerText = current
-        renderUI(current);
+        search(current)
       }
 
-      async function renderUI(pageNum) {
-        let goods = await getGoodsInfo(pageNum);
+      async function renderUI(goods) {
         let str = "";
         for (var i = 0; i < goods.length; i++) {
           let { productPic, price, productName, skuId, productCode } = goods[i];
@@ -56,31 +63,39 @@
         }
         document.getElementById("ul").innerHTML = str;
       }
-      function getGoodsInfo(pageNum = 1) {
+
+      function search(pageNum) {
+        current = pageNum;
+        document.getElementById('curr').value = current;
+        var value = document.getElementById('search').value.trim();
         let pageSize = 10;
-        const query = new AV.Query("good");
+        let query = new AV.Query("good");
+        let count = new AV.Query("good");
+        if(value) {
+          console.log
+          query = query.contains('productName', value);
+          count = count.contains('productName', value);
+        }
+        count
+          .count()
+          .then(res => {
+            total = Math.ceil(res/10);
+            document.querySelector('#total').innerText = total
+          });
         return query
           .limit(pageSize)
           .skip((pageNum - 1) * pageSize)
           .find()
           .then(res => {
-            return res.map(item => item.attributes);
+            renderUI(res.map(item => item.attributes));
           });
       }
 
-      function getTotal() {
-        const query = new AV.Query("good");
-        return query
-          .count()
-          .then(res => {
-                document.querySelector('#total').innerText = Math.ceil(res/10)
-          });
-      }
-      function main() {
+      async function main() {
         current = 1;
+        total = 0
         leanInit();
-        getTotal();
-        renderUI(current);
+        search(1)
       }
     </script>
   </body>
