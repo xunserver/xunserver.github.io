@@ -7,22 +7,127 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>京东商品选购脚本</title>
     <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@3.15.0/dist/av-min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .info-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding:6px;
+        margin-bottom: 12px;
+        padding-left: 12px;
+        background: white;
+        border-bottom: 1px solid #ccc;
+      }
+      .top-search {
+        float: left;
+      }
+      .top-pagation {
+        float: right;
+      }
+      .top-type {
+        margin: 0 200px;
+      }
+      .goods-list {
+        margin-top: 36px;
+        text-align: center;
+      }
+      .goods-item {
+        display: inline-block;
+        width: 260px;
+        vertical-align: top;
+        margin: 12px;
+        padding: 8px;
+        border: 1px solid white;
+        text-align: left;
+      }
+      .goods-item:hover {
+        border: 1px solid #ccc;
+        border-radius: 3px;
+      }
+      .goods-name {
+        display: block;
+        color: #666;
+        font-size: 12px;
+        text-decoration: none;
+        min-height: 48px;
+      }
+      .goods-name:hover {
+        color: #e4393c;
+      }
+      .goods-price {
+        color: #e4393c;
+      }
+      .goods-price-text {
+        color: #999;
+      }
+      .goods-info {
+        font-size: 12px;
+        color: #999;
+      }
+    </style>
   </head>
   <body>
-    <div style="position: fixed; right: 0; top: 20% ;left: 50%;">
-      当前页：<input type="text" value="1" id="curr" onchange="search(this.value)">
-      共计：<span id="total"></span>
-      <button onclick="pre()">上一页</button>
-      <button onclick="next()">下一页</button>
-      <br>
-      <input type="text" value id="search">
-      <button onclick="search(1)">搜索</button>
-      
+    <div class="info-bar">
+      <div class="top-search">
+          <input type="text" value id="search">
+          <button onclick="doSearch()">搜索</button>
+      </div>
+      <div class="top-pagation">
+          当前页：<input type="text" value="1" id="current" onchange="search(this.value)">
+          共计：<span id="total"></span>
+          <button onclick="pre()">上一页</button>
+          <button onclick="next()">下一页</button>    
+      </div>
+      <div class="top-type">
+        分类：
+        <select id="type" onchange="doType()">
+          <option value="1">全部</option>
+          <option value="1">防寒用品</option>
+          <option value="1">防静/触电服装用品</option>
+          <option value="1">防晒用品</option>
+          <option value="1">防烧伤服装及用品</option>
+          <option value="1">防水/雨品</option>
+          <option value="1">防撞击/刺磨用品</option>
+          <option value="1">防坠落用品</option>
+          <option value="1">个人清洁用品</option>
+          <option value="1">急救用品</option>
+          <option value="1">毛巾浴巾</option>
+          <option value="1">居家拖鞋</option>
+          <option value="1">一次性用品</option>
+          <option value="1">休闲运动</option>
+          <option value="1">衬衣</option>
+          <option value="1">家庭清洁</option>
+          <option value="1">防寒服饰</option>
+          <option value="1">鞋靴</option>
+          <option value="1">冲锋衣</option>
+          <option value="1">防尘防毒</option>
+        </select>
+      </div>
     </div>
-    <ul id="ul"></ul>
+    <ul id="goods-list" class="goods-list"></ul>
     <script>
-      main();
+      var $type = document.getElementById('type');
+      var $search = document.getElementById('search');
+      var $total = document.getElementById('total');
+      var $current = document.getElementById('current');
+      var $list = document.getElementById("goods-list")
+      var params = {
+        pageNum: 1,
+        pageSize: 12,
+        search: '',
+        type: '1'
+      };
 
+      leanInit()
+      search(params)
+      
+
+      // 初始化leancloud
       function leanInit() {
         AV.init({
           appId: "s25whQUhAmIzo02d4VHRBHQ8-gzGzoHsz",
@@ -30,57 +135,74 @@
           // serverURLs: "https://xxx.example.com"
         });
       }
-      function next() {
-        if(current === total) {
-          return 
-        }
-        current++;
-        search(current)
-      }
 
-      function pre() {
-        if(current === 1) {
+      // 按钮功能
+      function doSearch() {
+        params.search = $search.value;
+        params.pageNum = 1;
+        search(params)
+      }
+      function doType() {
+        params.type = $type.value;
+        params.pageNum = 1;
+        search(params)
+      }
+      function next() {
+        if( $current.value === $total.innerText) {
           return 
         }
-        current--;
-        search(current)
+        params.pageNum++
+        search(params)
+      }
+      function pre() {
+        if($current.value === 1) {
+          return 
+        }
+        params.pageNum--;
+        search(params)
       }
 
       async function renderUI(goods) {
         let str = "";
         for (var i = 0; i < goods.length; i++) {
           let { productPic, price, productName, skuId, productCode } = goods[i];
-          str += `
-                    <li>
-                        <img src="https://m.360buyimg.com/da/s252x252_${productPic}"/>
-                        <div><span>价格：</span><span>${price}</span></div>
-                        <div>${productName}</div>
-                        <div><a href="https://item.jd.com/${skuId}.html" target="__blank">京东链接</a></div>
-                        <div>购买搜索：<span>${productCode}</span></div>
-                        
-                    </li>
-                `;
+          str += 
+          `<li class="goods-item">
+                <a class="image-wrap"  href="https://item.jd.com/${skuId}.html" target="__blank"><img src="https://m.360buyimg.com/da/s252x252_${productPic}"/></a>
+                <a class="goods-name" href="https://item.jd.com/${skuId}.html" target="__blank">${productName}</a>
+                <div class="goods-price"><span class="goods-price-text">价格：</span><span>￥${price}</span></div>
+                <div class="goods-info">购买搜索：<span>${productCode}</span></div>
+            </li>`;
         }
-        document.getElementById("ul").innerHTML = str;
+        $list.innerHTML = str;
       }
 
-      function search(pageNum) {
-        current = pageNum;
-        document.getElementById('curr').value = current;
-        var value = document.getElementById('search').value.trim();
-        let pageSize = 10;
-        let query = new AV.Query("good");
-        let count = new AV.Query("good");
-        if(value) {
-          console.log
-          query = query.contains('productName', value);
-          count = count.contains('productName', value);
+      function search(params) {
+        
+        var pageNum = params.pageNum
+        var type = params.type
+        var search = params.search
+        var pageSize = params.pageSize
+
+        $current.value = pageNum;
+        $type.value = type;
+        $search.value = search;
+
+        var query = new AV.Query("good");
+        var count = new AV.Query("good");
+        if(search) {
+          query = query.contains('productName', search);
+          count = count.contains('productName', search);
         }
+        if(type !== '1') {
+          query = query.contains('type', type);
+          count = count.contains('type', type);
+        }
+
         count
           .count()
           .then(res => {
-            total = Math.ceil(res/10);
-            document.querySelector('#total').innerText = total
+            $total.innerText = Math.ceil(res / pageSize)
           });
         return query
           .limit(pageSize)
@@ -91,12 +213,6 @@
           });
       }
 
-      async function main() {
-        current = 1;
-        total = 0
-        leanInit();
-        search(1)
-      }
     </script>
   </body>
 </html>
