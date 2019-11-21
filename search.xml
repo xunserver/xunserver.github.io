@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[开发小技巧]]></title>
+    <url>%2Farchives%2F129533de.html</url>
+    <content type="text"><![CDATA[查看端口是否开启 12345678910111213141516# Connection successful:$ timeout 1 bash -c 'cat &lt; /dev/null &gt; /dev/tcp/google.com/80'$ echo $?0# Connection failure prior to the timeout$ timeout 1 bash -c 'cat &lt; /dev/null &gt; /dev/tcp/sfsfdfdff.com/80'bash: sfsfdfdff.com: Name or service not knownbash: /dev/tcp/sfsfdfdff.com/80: Invalid argument$ echo $?1# Connection not established by the timeout$ timeout 1 bash -c 'cat &lt; /dev/null &gt; /dev/tcp/google.com/81'$ echo $?124]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[爬虫]]></title>
     <url>%2Farchives%2F7ade1d5c.html</url>
     <content type="text"><![CDATA[泄露 500, 5000, 50000 个人信息关键数据库 ！！！！脱敏]]></content>
@@ -8,7 +13,7 @@
   <entry>
     <title><![CDATA[etcd使用]]></title>
     <url>%2Farchives%2F19889329.html</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[介绍 分布式键值对存储仓库（基础使用） 配置共享和服务发现（高级场景）其他场景 使用软件版本 v3.4.3 下载解压12wget https://github.com/etcd-io/etcd/releases/download/v3.4.3/etcd-v3.4.3-linux-amd64.tar.gztar xzvf etcd-v3.4.3-linux-amd64.tar.gz 单机单节点部署1./etcd 参数说明参数支持命令行参数和 yaml 配置文件形式 1234567name // 节点名称 默认为defaultdata-dir // 存储目录 ;initial-advertise-peer -urls; // 初始化通信地址 默认 http://localhost:2380listen-peer-urls; // 通信地址 默认 http://localhost:2380initial-cluster; // 集群节点配置信息 node1=http://192.168.1.10:2380,node2=...listen-client-urls // 客户端地址advertise-client-urls // 对外公告的地址 发现模式123$ curl http://discovery.etcd.io/new?size=3http://discovery.etcd.io/3e86b59982e49066c5d813af1c2e2579cbf573de$ ./etcd -discovery http://discovery.etcd.io/3e86b59982e49066c5d813af1c2e2579cbf573de 扩展节点1234# 旧节点启动$ ./etcdctl member add node --peer-urls http://192.168.10.12# 新节点加入 initial-cluster-state 设置为 existing]]></content>
   </entry>
   <entry>
     <title><![CDATA[踩坑日记]]></title>

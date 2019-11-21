@@ -88,18 +88,18 @@
 
 
 
-<meta name="description" content="随笔">
+<meta name="description" content="介绍 分布式键值对存储仓库（基础使用） 配置共享和服务发现（高级场景）其他场景  使用软件版本 v3.4.3 下载解压12wget https://github.com/etcd-io/etcd/releases/download/v3.4.3/etcd-v3.4.3-linux-amd64.tar.gztar xzvf etcd-v3.4.3-linux-amd64.tar.gz 单机单节点部署">
 <meta name="keywords" content="博客,xunsever,bang">
 <meta property="og:type" content="article">
 <meta property="og:title" content="etcd使用">
 <meta property="og:url" content="https://blog.xunserver.cn/archives/19889329.html">
 <meta property="og:site_name" content="bang">
-<meta property="og:description" content="随笔">
+<meta property="og:description" content="介绍 分布式键值对存储仓库（基础使用） 配置共享和服务发现（高级场景）其他场景  使用软件版本 v3.4.3 下载解压12wget https://github.com/etcd-io/etcd/releases/download/v3.4.3/etcd-v3.4.3-linux-amd64.tar.gztar xzvf etcd-v3.4.3-linux-amd64.tar.gz 单机单节点部署">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-10-29T08:57:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="etcd使用">
-<meta name="twitter:description" content="随笔">
+<meta name="twitter:description" content="介绍 分布式键值对存储仓库（基础使用） 配置共享和服务发现（高级场景）其他场景  使用软件版本 v3.4.3 下载解压12wget https://github.com/etcd-io/etcd/releases/download/v3.4.3/etcd-v3.4.3-linux-amd64.tar.gztar xzvf etcd-v3.4.3-linux-amd64.tar.gz 单机单节点部署">
 
 
 
@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0 字
+                  238 字
                 </span>
               
 
@@ -453,7 +453,18 @@
       
 
       
-        
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><ol>
+<li>分布式键值对存储仓库（基础使用）</li>
+<li>配置共享和服务发现（高级场景）<br><a href="https://blog.csdn.net/bbwangj/article/details/82584988" target="_blank" rel="noopener">其他场景</a></li>
+</ol>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>软件版本 <code>v3.4.3</code></p>
+<h3 id="下载解压"><a href="#下载解压" class="headerlink" title="下载解压"></a>下载解压</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/etcd-io/etcd/releases/download/v3.4.3/etcd-v3.4.3-linux-amd64.tar.gz</span><br><span class="line">tar xzvf etcd-v3.4.3-linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
+<h3 id="单机单节点部署"><a href="#单机单节点部署" class="headerlink" title="单机单节点部署"></a>单机单节点部署</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./etcd</span><br></pre></td></tr></table></figure>
+<h3 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a>参数说明</h3><p>参数支持命令行参数和 yaml 配置文件形式</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">name  <span class="string">//</span> 节点名称 默认为default</span><br><span class="line">data-dir  <span class="string">//</span> 存储目录 ;</span><br><span class="line">initial-advertise-peer -urls; <span class="string">//</span> 初始化通信地址 默认 http:<span class="string">//localhost</span><span class="function">:2380</span></span><br><span class="line">listen-peer-urls; <span class="string">//</span> 通信地址  默认 http:<span class="string">//localhost</span><span class="function">:2380</span></span><br><span class="line">initial-cluster; <span class="string">//</span> 集群节点配置信息 node1=http:<span class="string">//192.168.1.10</span><span class="function">:2380</span>,node2=<span class="string">...</span></span><br><span class="line">listen-client-urls <span class="string">//</span> 客户端地址</span><br><span class="line">advertise-client-urls  <span class="string">//</span> 对外公告的地址</span><br></pre></td></tr></table></figure>
+<h3 id="发现模式"><a href="#发现模式" class="headerlink" title="发现模式"></a>发现模式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ curl http://discovery.etcd.io/new?size=3</span><br><span class="line">http://discovery.etcd.io/3e86b59982e49066c5d813af1c2e2579cbf573de</span><br><span class="line">$ ./etcd -discovery http://discovery.etcd.io/3e86b59982e49066c5d813af1c2e2579cbf573de</span><br></pre></td></tr></table></figure>
+<h2 id="扩展节点"><a href="#扩展节点" class="headerlink" title="扩展节点"></a>扩展节点</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 旧节点启动</span></span><br><span class="line">$ ./etcdctl member add node --peer-urls http://192.168.10.12</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新节点加入 initial-cluster-state 设置为 existing</span></span><br></pre></td></tr></table></figure>
+
       
     </div>
     
@@ -543,8 +554,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -561,7 +581,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -624,6 +644,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">2.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载解压"><span class="nav-number">2.1.</span> <span class="nav-text">下载解压</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单机单节点部署"><span class="nav-number">2.2.</span> <span class="nav-text">单机单节点部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数说明"><span class="nav-number">2.3.</span> <span class="nav-text">参数说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发现模式"><span class="nav-number">2.4.</span> <span class="nav-text">发现模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展节点"><span class="nav-number">3.</span> <span class="nav-text">扩展节点</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -651,7 +687,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">8.7k</span>
+    <span title="博客全站字数共计">9k</span>
   
 </div>
 
