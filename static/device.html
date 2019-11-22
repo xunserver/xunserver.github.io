@@ -9,7 +9,17 @@
     <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@3.15.0/dist/av-min.js"></script>
   </head>
   <body>
+    <div id="info">
+
+    </div>
+    <div id="errorInfo">
+
+    </div>
     <script>
+      window.on('error', function(e) {
+        document.querySelector('#errorInfo').innerHTML(JSON.stringify(e))
+      })
+
       // 探针收集
       var UserActionDefect = (function() {
         var paramsDe_$ = '4e5bde1f';
@@ -84,7 +94,7 @@
                 }
               }
             });
-            document.body.innerHTML = values.join('<br/>');
+            document.querySelector("#info").innerHTML = values.join('<br/>');
             var murmur = values.join('|'); //values.join('~~~');
 
             return murmur;
