@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[docker-swarm]]></title>
+    <url>%2Farchives%2F8f65.html</url>
+    <content type="text"><![CDATA[防火墙配置2377/tcp：用于客户端与 Swarm 进行安全通信。7946/tcp 与 7946/udp：用于控制面 gossip 分发。4789/udp：用于基于 VXLAN 的覆盖网络。]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[开发小技巧]]></title>
     <url>%2Farchives%2F129533de.html</url>
     <content type="text"><![CDATA[查看端口是否开启 12345678910111213141516# Connection successful:$ timeout 1 bash -c 'cat &lt; /dev/null &gt; /dev/tcp/google.com/80'$ echo $?0# Connection failure prior to the timeout$ timeout 1 bash -c 'cat &lt; /dev/null &gt; /dev/tcp/sfsfdfdff.com/80'bash: sfsfdfdff.com: Name or service not knownbash: /dev/tcp/sfsfdfdff.com/80: Invalid argument$ echo $?1# Connection not established by the timeout$ timeout 1 bash -c 'cat &lt; /dev/null &gt; /dev/tcp/google.com/81'$ echo $?124]]></content>
