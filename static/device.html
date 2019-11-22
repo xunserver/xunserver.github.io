@@ -11,3276 +11,3328 @@
   <body>
     <script>
       // 探针收集
-var UserActionDefect = (function() {
-  var paramsDe_$ = "4e5bde1f";
-  var deHash_$ = "dehash";
-  var encry_key_$ = "1232323232";
-  var version_$ = "1";
-  var seedLen = 25;
-  var upload_url_$ = "/mgsgw/pb/rs";
-  var time_Slot_$ = 0.5 * 1000;
-  var cookie_name_action_$ = "uisahkj";
-  var cookie_name_device_$ = 'kjdfggj';
-  var battery_name_$ = 'kjhsahjk';
-  var gyroscope_name_$ = 'sddgdfg';
-  var Fingerprint2 = function(options) {
-    if (!(this instanceof Fingerprint2)) {
-      return new Fingerprint2(options);
-    }
+      var UserActionDefect = (function() {
+        var paramsDe_$ = '4e5bde1f';
+        var deHash_$ = 'dehash';
+        var encry_key_$ = '1232323232';
+        var version_$ = '1';
+        var seedLen = 25;
+        var upload_url_$ = '/mgsgw/pb/rs';
+        var time_Slot_$ = 0.5 * 1000;
+        var cookie_name_action_$ = 'uisahkj';
+        var cookie_name_device_$ = 'kjdfggj';
+        var battery_name_$ = 'kjhsahjk';
+        var gyroscope_name_$ = 'sddgdfg';
+        var Fingerprint2 = function(options) {
+          if (!(this instanceof Fingerprint2)) {
+            return new Fingerprint2(options);
+          }
 
-    var defaultOptions = {
-      swfContainerId: "fingerprintjs2",
-      swfPath: "flash/compiled/FontList.swf",
-      detectScreenOrientation: true,
-      sortPluginsFor: [/palemoon/i],
-      // To ensure consistent fingerprints when users rotate their mobile devices
-      userDefinedFonts: [],
-      // DNT depends on incognito mode for some browsers (Chrome) and it's impossible to detect incognito mode
-      excludeDoNotTrack: false,
-      // devicePixelRatio depends on browser zoom, and it's impossible to detect browser zoom
-      excludePixelRatio: false,
-      // On iOS 11, audio context can only be used in response to user interaction.
-      // We require users to explicitly enable audio fingerprinting on iOS 11.
-      // See https://stackoverflow.com/questions/46363048/onaudioprocess-not-called-on-ios11#46534088
-      excludeAudioIOS11: true,
-      // Unreliable on Windows, see https://github.com/Valve/fingerprintjs2/issues/375
-      excludeEnumerateDevices: true
-    };
-    this.options = this.extend(options, defaultOptions);
-    this.nativeForEach = Array.prototype.forEach;
-    this.nativeMap = Array.prototype.map;
-  };
-  Fingerprint2.prototype = {
-    extend: function(source, target) {
-      if (source == null) {
-        return target;
-      }
-      for (var k in source) {
-        if (source[k] != null && target[k] !== source[k]) {
-          target[k] = source[k];
-        }
-      }
-      return target;
-    },
-    getKs: function() {
-      return this.ks;
-    },
-    getO: function() {
-      var values = [];
-      this.each(this.ks.data, function(pair) {
-        var value = pair.value;
-        var k = pair.key;
-        if (value && typeof value.join === "function") {
-          if (k == "canvas") {
-            values.push(hex_sha1(value.join(";")));
-          } else {
-            values.push(value.join(";"));
-          }
-        } else {
-          if (k == "canvas") {
-            values.push(hex_sha1(value));
-          } else {
-            values.push(value);
-          }
-        }
-      });
-      document.body.innerHTML = values.join('<br/>');
-      var murmur = values.join("|"); //values.join('~~~');
-     
-      return murmur;
-    },
-    get: function(done) {
-      var that = this;
-      var keys = {
-        data: [],
-        addPreprocessedComponent: function(pair) {
-          var componentValue = pair.value;
-          if (typeof that.options.preprocessor === "function") {
-            componentValue = that.options.preprocessor(
-              pair.key,
-              componentValue
-            );
-          }
-          keys.data.push({
-            key: pair.key,
-            value: componentValue
-          });
-        }
-      };
-      keys = this.userAgentKey(keys);
-      keys = this.languageKey(keys);
-      keys = this.colorDepthKey(keys);
-      keys = this.deviceMemoryKey(keys);
-      keys = this.pixelRatioKey(keys);
-      keys = this.hardwareConcurrencyKey(keys);
-      keys = this.screenResolutionKey(keys);
-      keys = this.availableScreenResolutionKey(keys);
-      keys = this.timezoneOffsetKey(keys);
-      keys = this.timezoneKey(keys);
-      keys = this.sessionStorageKey(keys);
-      keys = this.localStorageKey(keys);
-      keys = this.indexedDbKey(keys);
-      keys = this.addBehaviorKey(keys);
-      keys = this.openDatabaseKey(keys);
-      keys = this.cpuClassKey(keys);
-      keys = this.platformKey(keys);
-      keys = this.doNotTrackKey(keys);
-      keys = this.pluginsKey(keys);
-      keys = this.canvasKey(keys);
-      keys = this.adBlockKey(keys);
-      keys = this.hasLiedLanguagesKey(keys);
-      keys = this.hasLiedResolutionKey(keys);
-      keys = this.hasLiedOsKey(keys);
-      keys = this.hasLiedBrowserKey(keys);
-      keys = this.touchSupportKey(keys);
-      keys = this.customEntropyFunction(keys);
-      keys = this.webDriverKey(keys);
-      keys = this.timeTagKey(keys);
-      keys = this.batteryKey(keys);
-      keys = this.gyroscopeKey(keys);
-      keys = this.orientationKey(keys);
-        this.ks = keys;
-        that.enumerateDevicesKey(keys, function(keysWithDevices) {
-          var values = [];
-          that.each(keysWithDevices.data, function(pair) {
-            var value = pair.value;
-            var k = pair.key;
-            if (value && typeof value.join === "function") {
-              values.push(value.join(";"));
-              /*if (k == 'canvas'){
+          var defaultOptions = {
+            swfContainerId: 'fingerprintjs2',
+            swfPath: 'flash/compiled/FontList.swf',
+            detectScreenOrientation: true,
+            sortPluginsFor: [/palemoon/i],
+            // To ensure consistent fingerprints when users rotate their mobile devices
+            userDefinedFonts: [],
+            // DNT depends on incognito mode for some browsers (Chrome) and it's impossible to detect incognito mode
+            excludeDoNotTrack: false,
+            // devicePixelRatio depends on browser zoom, and it's impossible to detect browser zoom
+            excludePixelRatio: false,
+            // On iOS 11, audio context can only be used in response to user interaction.
+            // We require users to explicitly enable audio fingerprinting on iOS 11.
+            // See https://stackoverflow.com/questions/46363048/onaudioprocess-not-called-on-ios11#46534088
+            excludeAudioIOS11: true,
+            // Unreliable on Windows, see https://github.com/Valve/fingerprintjs2/issues/375
+            excludeEnumerateDevices: true
+          };
+          this.options = this.extend(options, defaultOptions);
+          this.nativeForEach = Array.prototype.forEach;
+          this.nativeMap = Array.prototype.map;
+        };
+        Fingerprint2.prototype = {
+          extend: function(source, target) {
+            if (source == null) {
+              return target;
+            }
+            for (var k in source) {
+              if (source[k] != null && target[k] !== source[k]) {
+                target[k] = source[k];
+              }
+            }
+            return target;
+          },
+          getKs: function() {
+            return this.ks;
+          },
+          getO: function() {
+            var values = [];
+            this.each(this.ks.data, function(pair) {
+              var value = pair.value;
+              var k = pair.key;
+              if (value && typeof value.join === 'function') {
+                if (k == 'canvas') {
+                  values.push(hex_sha1(value.join(';')));
+                } else {
+                  values.push(value.join(';'));
+                }
+              } else {
+                if (k == 'canvas') {
+                  values.push(hex_sha1(value));
+                } else {
+                  values.push(value);
+                }
+              }
+            });
+            document.body.innerHTML = values.join('<br/>');
+            var murmur = values.join('|'); //values.join('~~~');
+
+            return murmur;
+          },
+          get: function(done) {
+            var that = this;
+            var keys = {
+              data: [],
+              addPreprocessedComponent: function(pair) {
+                var componentValue = pair.value;
+                if (typeof that.options.preprocessor === 'function') {
+                  componentValue = that.options.preprocessor(
+                    pair.key,
+                    componentValue
+                  );
+                }
+                keys.data.push({
+                  key: pair.key,
+                  value: componentValue
+                });
+              }
+            };
+            keys = this.userAgentKey(keys);
+            keys = this.languageKey(keys);
+            keys = this.colorDepthKey(keys);
+            keys = this.deviceMemoryKey(keys);
+            keys = this.pixelRatioKey(keys);
+            keys = this.hardwareConcurrencyKey(keys);
+            keys = this.screenResolutionKey(keys);
+            keys = this.availableScreenResolutionKey(keys);
+            keys = this.timezoneOffsetKey(keys);
+            keys = this.timezoneKey(keys);
+            keys = this.sessionStorageKey(keys);
+            keys = this.localStorageKey(keys);
+            keys = this.indexedDbKey(keys);
+            keys = this.addBehaviorKey(keys);
+            keys = this.openDatabaseKey(keys);
+            keys = this.cpuClassKey(keys);
+            keys = this.platformKey(keys);
+            keys = this.doNotTrackKey(keys);
+            keys = this.pluginsKey(keys);
+            keys = this.canvasKey(keys);
+            keys = this.adBlockKey(keys);
+            keys = this.hasLiedLanguagesKey(keys);
+            keys = this.hasLiedResolutionKey(keys);
+            keys = this.hasLiedOsKey(keys);
+            keys = this.hasLiedBrowserKey(keys);
+            keys = this.touchSupportKey(keys);
+            keys = this.customEntropyFunction(keys);
+            keys = this.webDriverKey(keys);
+            keys = this.timeTagKey(keys);
+            keys = this.batteryKey(keys);
+            keys = this.gyroscopeKey(keys);
+            keys = this.orientationKey(keys);
+            this.ks = keys;
+            that.enumerateDevicesKey(keys, function(keysWithDevices) {
+              var values = [];
+              that.each(keysWithDevices.data, function(pair) {
+                var value = pair.value;
+                var k = pair.key;
+                if (value && typeof value.join === 'function') {
+                  values.push(value.join(';'));
+                  /*if (k == 'canvas'){
   originValues.push(hex_sha1(value.join(';')))
   }else{
   originValues.push(value.join(';'))
   }*/
-            } else {
-              values.push(value);
-              /*if (k == 'canvas'){
+                } else {
+                  values.push(value);
+                  /*if (k == 'canvas'){
   originValues.push(hex_sha1(value))
   }else{
   originValues.push(value)
   }*/
-            }
-          });
-          //var murmur = that.x64hash128(values.join('~~~'), 31)
-          //return done(murmur, keysWithDevices.data)
-          var t1 = new Date().getTime();
-          var murmur = ""; //values.join('~~~');
-          //window.originValue = originValues.join('|');
-          //console.log('origin:' + window.originValue);
-          var t2 = new Date().getTime();
-          return done(murmur, keysWithDevices.data);
-        });
-    },
-    batteryKey: function(keys) {
-        try {
-          if(!window[battery_name_$]) {
-            navigator.getBattery().then(function(battery) {
-              window[battery_name_$] = Math.ceil(battery.level * 100);
-            })
-          }
-        }catch(e) {
-        }
-        keys.addPreprocessedComponent({
-          key: "battery",
-          value:  window[battery_name_$]
-        });
-        return keys;
-    },
-    
-    gyroscopeKey: function(keys) {
-      try {
-        if(!window[gyroscope_name_$]) {
-          var handle = function(event){
-            window.removeEventListener('deviceorientation', handle, false)
-            window[gyroscope_name_$] =  event.alpha+','+ event.beta+','+ event.gamma
-            deo.fpObj.get(function() {});
-            deVal = deo.fpObj.getO();
-            cookiesUploader(deVal, 'deviceInfo')
-          }
-          window.addEventListener("deviceorientation", handle, false)
-        }
-      }catch(e) {
-        
-      }
-      keys.addPreprocessedComponent({
-        key: "gyroscope",
-        value: window[gyroscope_name_$]
-      });
-      return keys;
-    },
-    orientationKey(keys) {
-      var value = 'portrait'
-      try{
-          if(orientation === 90 || orientation == -90) {
-            value = 'landscape'
-          }
-      }
-      catch(error) { 
-      }
-      keys.addPreprocessedComponent({
-        key: "orientation",
-        value: value
-      });
-      return keys;
-    },
-    enumerateDevicesKey: function(keys, done) {
-      if (
-        this.options.excludeEnumerateDevices ||
-        !this.isEnumerateDevicesSupported()
-      ) {
-        return done(keys);
-      }
-
-      navigator.mediaDevices
-        .enumerateDevices()
-        .then(function(devices) {
-          var enumerateDevicesFp = [];
-          devices.forEach(function(device) {
-            enumerateDevicesFp.push(
-              "id=" +
-                device.deviceId +
-                ";gid=" +
-                device.groupId +
-                ";" +
-                device.kind +
-                ";" +
-                device.label
-            );
-          });
-          keys.addPreprocessedComponent({
-            key: "enumerate_devices",
-            value: enumerateDevicesFp
-          });
-          return done(keys);
-        })
-        .catch(function(e) {
-          return done(keys);
-        });
-    },
-    isEnumerateDevicesSupported: function() {
-      return navigator.mediaDevices && navigator.mediaDevices.enumerateDevices;
-    },
-    customEntropyFunction: function(keys) {
-      if (typeof this.options.customFunction === "function") {
-        var customKey =
-          typeof this.options.customKey === "string"
-            ? this.options.customKey
-            : "custom";
-        keys.addPreprocessedComponent({
-          key: customKey,
-          value: this.options.customFunction()
-        });
-      }
-      return keys;
-    },
-    userAgentKey: function(keys) {
-      if (!this.options.excludeUserAgent) {
-        keys.addPreprocessedComponent({
-          key: "user_agent",
-          value: this.getUserAgent()
-        });
-      }
-      return keys;
-    },
-    // for tests
-    getUserAgent: function() {
-      return navigator.userAgent;
-    },
-    languageKey: function(keys) {
-      if (!this.options.excludeLanguage) {
-        // IE 9,10 on Windows 10 does not have the `navigator.language` property any longer
-        keys.addPreprocessedComponent({
-          key: "language",
-          value:
-            navigator.language ||
-            navigator.userLanguage ||
-            navigator.browserLanguage ||
-            navigator.systemLanguage ||
-            ""
-        });
-      }
-      return keys;
-    },
-    colorDepthKey: function(keys) {
-      if (!this.options.excludeColorDepth) {
-        keys.addPreprocessedComponent({
-          key: "color_depth",
-          value: window.screen.colorDepth || -1
-        });
-      }
-      return keys;
-    },
-    deviceMemoryKey: function(keys) {
-      if (!this.options.excludeDeviceMemory) {
-        keys.addPreprocessedComponent({
-          key: "device_memory",
-          value: this.getDeviceMemory()
-        });
-      }
-      return keys;
-    },
-    getDeviceMemory: function() {
-      return navigator.deviceMemory || -1;
-    },
-    pixelRatioKey: function(keys) {
-      if (!this.options.excludePixelRatio) {
-        keys.addPreprocessedComponent({
-          key: "pixel_ratio",
-          value: this.getPixelRatio()
-        });
-      }
-      return keys;
-    },
-    getPixelRatio: function() {
-      return window.devicePixelRatio || "";
-    },
-    screenResolutionKey: function(keys) {
-      if (!this.options.excludeScreenResolution) {
-        return this.getScreenResolution(keys);
-      }
-      return keys;
-    },
-    getScreenResolution: function(keys) {
-      var resolution;
-      if (this.options.detectScreenOrientation) {
-        resolution =
-          window.screen.height > window.screen.width
-            ? [window.screen.height, window.screen.width]
-            : [window.screen.width, window.screen.height];
-      } else {
-        resolution = [window.screen.width, window.screen.height];
-      }
-      keys.addPreprocessedComponent({
-        key: "resolution",
-        value: resolution
-      });
-      return keys;
-    },
-    availableScreenResolutionKey: function(keys) {
-      if (!this.options.excludeAvailableScreenResolution) {
-        return this.getAvailableScreenResolution(keys);
-      }
-      return keys;
-    },
-    getAvailableScreenResolution: function(keys) {
-      var available;
-      if (window.screen.availWidth && window.screen.availHeight) {
-        if (this.options.detectScreenOrientation) {
-          available =
-            window.screen.availHeight > window.screen.availWidth
-              ? [window.screen.availHeight, window.screen.availWidth]
-              : [window.screen.availWidth, window.screen.availHeight];
-        } else {
-          available = [window.screen.availHeight, window.screen.availWidth];
-        }
-      }
-      if (typeof available !== "undefined") {
-        // headless browsers
-        keys.addPreprocessedComponent({  
-          key: "available_resolution",
-          value: available
-        });
-      } else {
-        keys.addPreprocessedComponent({
-          key: "available_resolution",
-          value: "undefined"
-        });
-      }
-      return keys;
-    },
-    timezoneOffsetKey: function(keys) {
-      if (!this.options.excludeTimezoneOffset) {
-        keys.addPreprocessedComponent({
-          key: "timezone_offset",
-          value: new Date().getTimezoneOffset()
-        });
-      }
-      return keys;
-    },
-    timezoneKey: function(keys) {
-      if (!this.options.excludeTimezone) {
-        var value = null;
-        if (window.Intl && window.Intl.DateTimeFormat) {
-          value = new window.Intl.DateTimeFormat().resolvedOptions().timeZone;
-        } else {
-          value = "";
-        }
-        keys.addPreprocessedComponent({
-          key: "timezone",
-          value: value
-        });
-      }
-      return keys;
-    },
-    sessionStorageKey: function(keys) {
-      if (!this.options.excludeSessionStorage && this.hasSessionStorage()) {
-        keys.addPreprocessedComponent({
-          key: "session_storage",
-          value: 1
-        });
-      } else {
-        keys.addPreprocessedComponent({
-          key: "session_storage",
-          value: 0
-        });
-      }
-      return keys;
-    },
-    localStorageKey: function(keys) {
-      if (!this.options.excludeSessionStorage && this.hasLocalStorage()) {
-        keys.addPreprocessedComponent({
-          key: "local_storage",
-          value: 1
-        });
-      } else {
-        keys.addPreprocessedComponent({
-          key: "local_storage",
-          value: 0
-        });
-      }
-      return keys;
-    },
-    indexedDbKey: function(keys) {
-      if (!this.options.excludeIndexedDB && this.hasIndexedDB()) {
-        keys.addPreprocessedComponent({
-          key: "indexed_db",
-          value: 1
-        });
-      } else {
-        keys.addPreprocessedComponent({
-          key: "indexed_db",
-          value: 0
-        });
-      }
-      return keys;
-    },
-    addBehaviorKey: function(keys) {
-      // body might not be defined at this point or removed programmatically
-      if (
-        !this.options.excludeAddBehavior &&
-        document.body &&
-        document.body.addBehavior
-      ) {
-        keys.addPreprocessedComponent({
-          key: "add_behavior",
-          value: 1
-        });
-      }
-      return keys;
-    },
-    openDatabaseKey: function(keys) {
-      if (!this.options.excludeOpenDatabase && window.openDatabase) {
-        keys.addPreprocessedComponent({
-          key: "open_database",
-          value: 1
-        });
-      } else {
-        keys.addPreprocessedComponent({
-          key: "open_database",
-          value: 0
-        });
-      }
-      return keys;
-    },
-    cpuClassKey: function(keys) {
-      if (!this.options.excludeCpuClass) {
-        keys.addPreprocessedComponent({
-          key: "cpu_class",
-          value: this.getNavigatorCpuClass()
-        });
-      }
-      return keys;
-    },
-    platformKey: function(keys) {
-      if (!this.options.excludePlatform) {
-        keys.addPreprocessedComponent({
-          key: "navigator_platform",
-          value: this.getNavigatorPlatform()
-        });
-      }
-      return keys;
-    },
-    doNotTrackKey: function(keys) {
-      if (!this.options.excludeDoNotTrack) {
-        keys.addPreprocessedComponent({
-          key: "do_not_track",
-          value: this.getDoNotTrack()
-        });
-      }
-      return keys;
-    },
-    canvasKey: function(keys) {
-      if (!this.options.excludeCanvas && this.isCanvasSupported()) {
-        keys.addPreprocessedComponent({
-          key: "canvas",
-          value: this.getCanvasFp()
-        });
-      }
-      return keys;
-    },
-    adBlockKey: function(keys) {
-      if (!this.options.excludeAdBlock) {
-        keys.addPreprocessedComponent({
-          key: "adblock",
-          value: this.getAdBlock()
-        });
-      }
-      return keys;
-    },
-    hasLiedLanguagesKey: function(keys) {
-      if (!this.options.excludeHasLiedLanguages) {
-        keys.addPreprocessedComponent({
-          key: "has_lied_languages",
-          value: this.getHasLiedLanguages()
-        });
-      }
-      return keys;
-    },
-    hasLiedResolutionKey: function(keys) {
-      if (!this.options.excludeHasLiedResolution) {
-        keys.addPreprocessedComponent({
-          key: "has_lied_resolution",
-          value: this.getHasLiedResolution()
-        });
-      }
-      return keys;
-    },
-    hasLiedOsKey: function(keys) {
-      if (!this.options.excludeHasLiedOs) {
-        keys.addPreprocessedComponent({
-          key: "has_lied_os",
-          value: this.getHasLiedOs()
-        });
-      }
-      return keys;
-    },
-    hasLiedBrowserKey: function(keys) {
-      if (!this.options.excludeHasLiedBrowser) {
-        keys.addPreprocessedComponent({
-          key: "has_lied_browser",
-          value: this.getHasLiedBrowser()
-        });
-      }
-      return keys;
-    },
-    pluginsKey: function(keys) {
-      if (!this.options.excludePlugins) {
-        if (this.isIE()) {
-          if (!this.options.excludeIEPlugins) {
-            keys.addPreprocessedComponent({
-              key: "ie_plugins",
-              value: this.getIEPlugins()
+                }
+              });
+              //var murmur = that.x64hash128(values.join('~~~'), 31)
+              //return done(murmur, keysWithDevices.data)
+              var t1 = new Date().getTime();
+              var murmur = ''; //values.join('~~~');
+              //window.originValue = originValues.join('|');
+              //console.log('origin:' + window.originValue);
+              var t2 = new Date().getTime();
+              return done(murmur, keysWithDevices.data);
             });
-          }
-        } else {
-          keys.addPreprocessedComponent({
-            key: "regular_plugins",
-            value: this.getRegularPlugins()
-          });
-        }
-      }
-      return keys;
-    },
-    getRegularPlugins: function() {
-      var plugins = [];
-      if (navigator.plugins) {
-        // plugins isn't defined in Node envs.
-        for (var i = 0, l = navigator.plugins.length; i < l; i++) {
-          if (navigator.plugins[i]) {
-            plugins.push(navigator.plugins[i]);
-          }
-        }
-      }
-      // sorting plugins only for those user agents, that we know randomize the plugins
-      // every time we try to enumerate them
-      if (this.pluginsShouldBeSorted()) {
-        plugins = plugins.sort(function(a, b) {
-          if (a.name > b.name) {
-            return 1;
-          }
-          if (a.name < b.name) {
-            return -1;
-          }
-          return 0;
-        });
-      }
-      return this.map(
-        plugins,
-        function(p) {
-          var mimeTypes = this.map(p, function(mt) {
-            return [mt.type, mt.suffixes].join("~");
-          }).join(",");
-          return [p.name, p.description, mimeTypes].join("::");
-        },
-        this
-      );
-    },
-    getIEPlugins: function() {
-      var result = [];
-      if (
-        (Object.getOwnPropertyDescriptor &&
-          Object.getOwnPropertyDescriptor(window, "ActiveXObject")) ||
-        "ActiveXObject" in window
-      ) {
-        var names = [
-          "AcroPDF.PDF", // Adobe PDF reader 7+
-          "Adodb.Stream",
-          "AgControl.AgControl", // Silverlight
-          "DevalVRXCtrl.DevalVRXCtrl.1",
-          "MacromediaFlashPaper.MacromediaFlashPaper",
-          "Msxml2.DOMDocument",
-          "Msxml2.XMLHTTP",
-          "PDF.PdfCtrl", // Adobe PDF reader 6 and earlier, brrr
-          "QuickTime.QuickTime", // QuickTime
-          "QuickTimeCheckObject.QuickTimeCheck.1",
-          "RealPlayer",
-          "RealPlayer.RealPlayer(tm) ActiveX Control (32-bit)",
-          "RealVideo.RealVideo(tm) ActiveX Control (32-bit)",
-          "Scripting.Dictionary",
-          "SWCtl.SWCtl", // ShockWave player
-          "Shell.UIHelper",
-          "ShockwaveFlash.ShockwaveFlash", // flash plugin
-          "Skype.Detection",
-          "TDCCtl.TDCCtl",
-          "WMPlayer.OCX", // Windows media player
-          "rmocx.RealPlayer G2 Control",
-          "rmocx.RealPlayer G2 Control.1"
-        ];
-        // starting to detect plugins in IE
-        result = this.map(names, function(name) {
-          try {
-            // eslint-disable-next-line no-new
-            new window.ActiveXObject(name);
-            return name;
-          } catch (e) {
-            return null;
-          }
-        });
-      }
-      if (navigator.plugins) {
-        result = result.concat(this.getRegularPlugins());
-      }
-      return result;
-    },
-    pluginsShouldBeSorted: function() {
-      var should = false;
-      for (var i = 0, l = this.options.sortPluginsFor.length; i < l; i++) {
-        var re = this.options.sortPluginsFor[i];
-        if (navigator.userAgent.match(re)) {
-          should = true;
-          break;
-        }
-      }
-      return should;
-    },
-    touchSupportKey: function(keys) {
-      if (!this.options.excludeTouchSupport) {
-        keys.addPreprocessedComponent({
-          key: "touch_support",
-          value: this.getTouchSupport()
-        });
-      }
-      return keys;
-    },
-    webDriverKey: function(keys) {
-      if (navigator.webdriver) {
-        keys.addPreprocessedComponent({
-          key: "web_driver",
-          value: "1"
-        });
-      } else {
-        keys.addPreprocessedComponent({
-          key: "web_driver",
-          value: "0"
-        });
-      }
-      return keys;
-    },
-    timeTagKey: function(keys) {
-      keys.addPreprocessedComponent({
-        key: "web_driver",
-        value: new Date().getTime()
-      });
-      return keys;
-    },
-    hardwareConcurrencyKey: function(keys) {
-      if (!this.options.excludeHardwareConcurrency) {
-        keys.addPreprocessedComponent({
-          key: "hardware_concurrency",
-          value: this.getHardwareConcurrency()
-        });
-      }
-      return keys;
-    },
-    hasSessionStorage: function() {
-      try {
-        return !!window.sessionStorage;
-      } catch (e) {
-        return true; // SecurityError when referencing it means it exists
-      }
-    },
-    // https://bugzilla.mozilla.org/show_bug.cgi?id=781447
-    hasLocalStorage: function() {
-      try {
-        return !!window.localStorage;
-      } catch (e) {
-        return true; // SecurityError when referencing it means it exists
-      }
-    },
-    hasIndexedDB: function() {
-      try {
-        return !!window.indexedDB;
-      } catch (e) {
-        return true; // SecurityError when referencing it means it exists
-      }
-    },
-    getHardwareConcurrency: function() {
-      if (navigator.hardwareConcurrency) {
-        return navigator.hardwareConcurrency;
-      }
-      return "unknown";
-    },
-    getNavigatorCpuClass: function() {
-      if (navigator.cpuClass) {
-        return navigator.cpuClass;
-      } else {
-        return "unknown";
-      }
-    },
-    getNavigatorPlatform: function() {
-      if (navigator.platform) {
-        return navigator.platform;
-      } else {
-        return "unknown";
-      }
-    },
-    getDoNotTrack: function() {
-      if (navigator.doNotTrack) {
-        return navigator.doNotTrack;
-      } else if (navigator.msDoNotTrack) {
-        return navigator.msDoNotTrack;
-      } else if (window.doNotTrack) {
-        return window.doNotTrack;
-      } else {
-        return "unknown";
-      }
-    },
-    // This is a crude and primitive touch screen detection.
-    // It's not possible to currently reliably detect the  availability of a touch screen
-    // with a JS, without actually subscribing to a touch event.
-    // http://www.stucox.com/blog/you-cant-detect-a-touchscreen/
-    // https://github.com/Modernizr/Modernizr/issues/548
-    // method returns an array of 3 values:
-    // maxTouchPoints, the success or failure of creating a TouchEvent,
-    // and the availability of the 'ontouchstart' property
-    getTouchSupport: function() {
-      var maxTouchPoints = 0;
-      var touchEvent = false;
-      if (typeof navigator.maxTouchPoints !== "undefined") {
-        maxTouchPoints = navigator.maxTouchPoints;
-      } else if (typeof navigator.msMaxTouchPoints !== "undefined") {
-        maxTouchPoints = navigator.msMaxTouchPoints;
-      }
-      try {
-        document.createEvent("TouchEvent");
-        touchEvent = true;
-      } catch (_) {
-        /* squelch */
-      }
-      var touchStart = "ontouchstart" in window;
-      return [maxTouchPoints, touchEvent, touchStart];
-    },
-    // https://www.browserleaks.com/canvas#how-does-it-work
-    getCanvasFp: function() {
-      var result = [];
-      // Very simple now, need to make it more complex (geo shapes etc)
-      var canvas = document.createElement("canvas");
-      canvas.width = 50;
-      canvas.height = 30;
-      canvas.style.display = "inline";
-      var ctx = canvas.getContext("2d");
-      // detect browser support of canvas winding
-      // http://blogs.adobe.com/webplatform/2013/01/30/winding-rules-in-canvas/
-      // https://github.com/Modernizr/Modernizr/blob/master/feature-detects/canvas/winding.js
-      ctx.rect(0, 0, 10, 10);
-      ctx.rect(2, 2, 6, 6);
-      result.push(
-        "canvas winding:" +
-          (ctx.isPointInPath(5, 5, "evenodd") === false ? "yes" : "no")
-      );
+          },
+          batteryKey: function(keys) {
+            try {
+              if (!window[battery_name_$]) {
+                navigator.getBattery().then(function(battery) {
+                  window[battery_name_$] = Math.ceil(battery.level * 100);
+                });
+              }
+            } catch (e) {}
+            keys.addPreprocessedComponent({
+              key: 'battery',
+              value: window[battery_name_$]
+            });
+            return keys;
+          },
 
-      ctx.textBaseline = "alphabetic";
-      ctx.fillStyle = "#f60";
-      ctx.fillRect(1, 1, 10, 10);
-      ctx.fillStyle = "#069";
-      // https://github.com/Valve/fingerprintjs2/issues/66
-      /*ctx.font = '8pt Arial'
+          gyroscopeKey: function(keys) {
+            try {
+              if (!window[gyroscope_name_$]) {
+                var handle = function(event) {
+                  window.removeEventListener(
+                    'deviceorientation',
+                    handle,
+                    false
+                  );
+                  window[gyroscope_name_$] =
+                    event.alpha + ',' + event.beta + ',' + event.gamma;
+                  deo.fpObj.get(function() {});
+                  deVal = deo.fpObj.getO();
+                  cookiesUploader(deVal, 'deviceInfo');
+                };
+                window.addEventListener('deviceorientation', handle, false);
+              }
+            } catch (e) {}
+            keys.addPreprocessedComponent({
+              key: 'gyroscope',
+              value: window[gyroscope_name_$]
+            });
+            return keys;
+          },
+          orientationKey(keys) {
+            var value = 'portrait';
+            try {
+              if (orientation === 90 || orientation == -90) {
+                value = 'landscape';
+              }
+            } catch (error) {}
+            keys.addPreprocessedComponent({
+              key: 'orientation',
+              value: value
+            });
+            return keys;
+          },
+          enumerateDevicesKey: function(keys, done) {
+            if (
+              this.options.excludeEnumerateDevices ||
+              !this.isEnumerateDevicesSupported()
+            ) {
+              return done(keys);
+            }
+
+            navigator.mediaDevices
+              .enumerateDevices()
+              .then(function(devices) {
+                var enumerateDevicesFp = [];
+                devices.forEach(function(device) {
+                  enumerateDevicesFp.push(
+                    'id=' +
+                      device.deviceId +
+                      ';gid=' +
+                      device.groupId +
+                      ';' +
+                      device.kind +
+                      ';' +
+                      device.label
+                  );
+                });
+                keys.addPreprocessedComponent({
+                  key: 'enumerate_devices',
+                  value: enumerateDevicesFp
+                });
+                return done(keys);
+              })
+              .catch(function(e) {
+                return done(keys);
+              });
+          },
+          isEnumerateDevicesSupported: function() {
+            return (
+              navigator.mediaDevices && navigator.mediaDevices.enumerateDevices
+            );
+          },
+          customEntropyFunction: function(keys) {
+            if (typeof this.options.customFunction === 'function') {
+              var customKey =
+                typeof this.options.customKey === 'string'
+                  ? this.options.customKey
+                  : 'custom';
+              keys.addPreprocessedComponent({
+                key: customKey,
+                value: this.options.customFunction()
+              });
+            }
+            return keys;
+          },
+          userAgentKey: function(keys) {
+            if (!this.options.excludeUserAgent) {
+              keys.addPreprocessedComponent({
+                key: 'user_agent',
+                value: this.getUserAgent()
+              });
+            }
+            return keys;
+          },
+          // for tests
+          getUserAgent: function() {
+            return navigator.userAgent;
+          },
+          languageKey: function(keys) {
+            if (!this.options.excludeLanguage) {
+              // IE 9,10 on Windows 10 does not have the `navigator.language` property any longer
+              keys.addPreprocessedComponent({
+                key: 'language',
+                value:
+                  navigator.language ||
+                  navigator.userLanguage ||
+                  navigator.browserLanguage ||
+                  navigator.systemLanguage ||
+                  ''
+              });
+            }
+            return keys;
+          },
+          colorDepthKey: function(keys) {
+            if (!this.options.excludeColorDepth) {
+              keys.addPreprocessedComponent({
+                key: 'color_depth',
+                value: window.screen.colorDepth || -1
+              });
+            }
+            return keys;
+          },
+          deviceMemoryKey: function(keys) {
+            if (!this.options.excludeDeviceMemory) {
+              keys.addPreprocessedComponent({
+                key: 'device_memory',
+                value: this.getDeviceMemory()
+              });
+            }
+            return keys;
+          },
+          getDeviceMemory: function() {
+            return navigator.deviceMemory || -1;
+          },
+          pixelRatioKey: function(keys) {
+            if (!this.options.excludePixelRatio) {
+              keys.addPreprocessedComponent({
+                key: 'pixel_ratio',
+                value: this.getPixelRatio()
+              });
+            }
+            return keys;
+          },
+          getPixelRatio: function() {
+            return window.devicePixelRatio || '';
+          },
+          screenResolutionKey: function(keys) {
+            if (!this.options.excludeScreenResolution) {
+              return this.getScreenResolution(keys);
+            }
+            return keys;
+          },
+          getScreenResolution: function(keys) {
+            var resolution;
+            if (this.options.detectScreenOrientation) {
+              resolution =
+                window.screen.height > window.screen.width
+                  ? [window.screen.height, window.screen.width]
+                  : [window.screen.width, window.screen.height];
+            } else {
+              resolution = [window.screen.width, window.screen.height];
+            }
+            keys.addPreprocessedComponent({
+              key: 'resolution',
+              value: resolution
+            });
+            return keys;
+          },
+          availableScreenResolutionKey: function(keys) {
+            if (!this.options.excludeAvailableScreenResolution) {
+              return this.getAvailableScreenResolution(keys);
+            }
+            return keys;
+          },
+          getAvailableScreenResolution: function(keys) {
+            var available;
+            if (window.screen.availWidth && window.screen.availHeight) {
+              if (this.options.detectScreenOrientation) {
+                available =
+                  window.screen.availHeight > window.screen.availWidth
+                    ? [window.screen.availHeight, window.screen.availWidth]
+                    : [window.screen.availWidth, window.screen.availHeight];
+              } else {
+                available = [
+                  window.screen.availHeight,
+                  window.screen.availWidth
+                ];
+              }
+            }
+            if (typeof available !== 'undefined') {
+              // headless browsers
+              keys.addPreprocessedComponent({
+                key: 'available_resolution',
+                value: available
+              });
+            } else {
+              keys.addPreprocessedComponent({
+                key: 'available_resolution',
+                value: 'undefined'
+              });
+            }
+            return keys;
+          },
+          timezoneOffsetKey: function(keys) {
+            if (!this.options.excludeTimezoneOffset) {
+              keys.addPreprocessedComponent({
+                key: 'timezone_offset',
+                value: new Date().getTimezoneOffset()
+              });
+            }
+            return keys;
+          },
+          timezoneKey: function(keys) {
+            if (!this.options.excludeTimezone) {
+              var value = null;
+              if (window.Intl && window.Intl.DateTimeFormat) {
+                value = new window.Intl.DateTimeFormat().resolvedOptions()
+                  .timeZone;
+              } else {
+                value = '';
+              }
+              keys.addPreprocessedComponent({
+                key: 'timezone',
+                value: value
+              });
+            }
+            return keys;
+          },
+          sessionStorageKey: function(keys) {
+            if (
+              !this.options.excludeSessionStorage &&
+              this.hasSessionStorage()
+            ) {
+              keys.addPreprocessedComponent({
+                key: 'session_storage',
+                value: 1
+              });
+            } else {
+              keys.addPreprocessedComponent({
+                key: 'session_storage',
+                value: 0
+              });
+            }
+            return keys;
+          },
+          localStorageKey: function(keys) {
+            if (!this.options.excludeSessionStorage && this.hasLocalStorage()) {
+              keys.addPreprocessedComponent({
+                key: 'local_storage',
+                value: 1
+              });
+            } else {
+              keys.addPreprocessedComponent({
+                key: 'local_storage',
+                value: 0
+              });
+            }
+            return keys;
+          },
+          indexedDbKey: function(keys) {
+            if (!this.options.excludeIndexedDB && this.hasIndexedDB()) {
+              keys.addPreprocessedComponent({
+                key: 'indexed_db',
+                value: 1
+              });
+            } else {
+              keys.addPreprocessedComponent({
+                key: 'indexed_db',
+                value: 0
+              });
+            }
+            return keys;
+          },
+          addBehaviorKey: function(keys) {
+            // body might not be defined at this point or removed programmatically
+            if (
+              !this.options.excludeAddBehavior &&
+              document.body &&
+              document.body.addBehavior
+            ) {
+              keys.addPreprocessedComponent({
+                key: 'add_behavior',
+                value: 1
+              });
+            }
+            return keys;
+          },
+          openDatabaseKey: function(keys) {
+            if (!this.options.excludeOpenDatabase && window.openDatabase) {
+              keys.addPreprocessedComponent({
+                key: 'open_database',
+                value: 1
+              });
+            } else {
+              keys.addPreprocessedComponent({
+                key: 'open_database',
+                value: 0
+              });
+            }
+            return keys;
+          },
+          cpuClassKey: function(keys) {
+            if (!this.options.excludeCpuClass) {
+              keys.addPreprocessedComponent({
+                key: 'cpu_class',
+                value: this.getNavigatorCpuClass()
+              });
+            }
+            return keys;
+          },
+          platformKey: function(keys) {
+            if (!this.options.excludePlatform) {
+              keys.addPreprocessedComponent({
+                key: 'navigator_platform',
+                value: this.getNavigatorPlatform()
+              });
+            }
+            return keys;
+          },
+          doNotTrackKey: function(keys) {
+            if (!this.options.excludeDoNotTrack) {
+              keys.addPreprocessedComponent({
+                key: 'do_not_track',
+                value: this.getDoNotTrack()
+              });
+            }
+            return keys;
+          },
+          canvasKey: function(keys) {
+            if (!this.options.excludeCanvas && this.isCanvasSupported()) {
+              keys.addPreprocessedComponent({
+                key: 'canvas',
+                value: this.getCanvasFp()
+              });
+            }
+            return keys;
+          },
+          adBlockKey: function(keys) {
+            if (!this.options.excludeAdBlock) {
+              keys.addPreprocessedComponent({
+                key: 'adblock',
+                value: this.getAdBlock()
+              });
+            }
+            return keys;
+          },
+          hasLiedLanguagesKey: function(keys) {
+            if (!this.options.excludeHasLiedLanguages) {
+              keys.addPreprocessedComponent({
+                key: 'has_lied_languages',
+                value: this.getHasLiedLanguages()
+              });
+            }
+            return keys;
+          },
+          hasLiedResolutionKey: function(keys) {
+            if (!this.options.excludeHasLiedResolution) {
+              keys.addPreprocessedComponent({
+                key: 'has_lied_resolution',
+                value: this.getHasLiedResolution()
+              });
+            }
+            return keys;
+          },
+          hasLiedOsKey: function(keys) {
+            if (!this.options.excludeHasLiedOs) {
+              keys.addPreprocessedComponent({
+                key: 'has_lied_os',
+                value: this.getHasLiedOs()
+              });
+            }
+            return keys;
+          },
+          hasLiedBrowserKey: function(keys) {
+            if (!this.options.excludeHasLiedBrowser) {
+              keys.addPreprocessedComponent({
+                key: 'has_lied_browser',
+                value: this.getHasLiedBrowser()
+              });
+            }
+            return keys;
+          },
+          pluginsKey: function(keys) {
+            if (!this.options.excludePlugins) {
+              if (this.isIE()) {
+                if (!this.options.excludeIEPlugins) {
+                  keys.addPreprocessedComponent({
+                    key: 'ie_plugins',
+                    value: this.getIEPlugins()
+                  });
+                }
+              } else {
+                keys.addPreprocessedComponent({
+                  key: 'regular_plugins',
+                  value: this.getRegularPlugins()
+                });
+              }
+            }
+            return keys;
+          },
+          getRegularPlugins: function() {
+            var plugins = [];
+            if (navigator.plugins) {
+              // plugins isn't defined in Node envs.
+              for (var i = 0, l = navigator.plugins.length; i < l; i++) {
+                if (navigator.plugins[i]) {
+                  plugins.push(navigator.plugins[i]);
+                }
+              }
+            }
+            // sorting plugins only for those user agents, that we know randomize the plugins
+            // every time we try to enumerate them
+            if (this.pluginsShouldBeSorted()) {
+              plugins = plugins.sort(function(a, b) {
+                if (a.name > b.name) {
+                  return 1;
+                }
+                if (a.name < b.name) {
+                  return -1;
+                }
+                return 0;
+              });
+            }
+            return this.map(
+              plugins,
+              function(p) {
+                var mimeTypes = this.map(p, function(mt) {
+                  return [mt.type, mt.suffixes].join('~');
+                }).join(',');
+                return [p.name, p.description, mimeTypes].join('::');
+              },
+              this
+            );
+          },
+          getIEPlugins: function() {
+            var result = [];
+            if (
+              (Object.getOwnPropertyDescriptor &&
+                Object.getOwnPropertyDescriptor(window, 'ActiveXObject')) ||
+              'ActiveXObject' in window
+            ) {
+              var names = [
+                'AcroPDF.PDF', // Adobe PDF reader 7+
+                'Adodb.Stream',
+                'AgControl.AgControl', // Silverlight
+                'DevalVRXCtrl.DevalVRXCtrl.1',
+                'MacromediaFlashPaper.MacromediaFlashPaper',
+                'Msxml2.DOMDocument',
+                'Msxml2.XMLHTTP',
+                'PDF.PdfCtrl', // Adobe PDF reader 6 and earlier, brrr
+                'QuickTime.QuickTime', // QuickTime
+                'QuickTimeCheckObject.QuickTimeCheck.1',
+                'RealPlayer',
+                'RealPlayer.RealPlayer(tm) ActiveX Control (32-bit)',
+                'RealVideo.RealVideo(tm) ActiveX Control (32-bit)',
+                'Scripting.Dictionary',
+                'SWCtl.SWCtl', // ShockWave player
+                'Shell.UIHelper',
+                'ShockwaveFlash.ShockwaveFlash', // flash plugin
+                'Skype.Detection',
+                'TDCCtl.TDCCtl',
+                'WMPlayer.OCX', // Windows media player
+                'rmocx.RealPlayer G2 Control',
+                'rmocx.RealPlayer G2 Control.1'
+              ];
+              // starting to detect plugins in IE
+              result = this.map(names, function(name) {
+                try {
+                  // eslint-disable-next-line no-new
+                  new window.ActiveXObject(name);
+                  return name;
+                } catch (e) {
+                  return null;
+                }
+              });
+            }
+            if (navigator.plugins) {
+              result = result.concat(this.getRegularPlugins());
+            }
+            return result;
+          },
+          pluginsShouldBeSorted: function() {
+            var should = false;
+            for (
+              var i = 0, l = this.options.sortPluginsFor.length;
+              i < l;
+              i++
+            ) {
+              var re = this.options.sortPluginsFor[i];
+              if (navigator.userAgent.match(re)) {
+                should = true;
+                break;
+              }
+            }
+            return should;
+          },
+          touchSupportKey: function(keys) {
+            if (!this.options.excludeTouchSupport) {
+              keys.addPreprocessedComponent({
+                key: 'touch_support',
+                value: this.getTouchSupport()
+              });
+            }
+            return keys;
+          },
+          webDriverKey: function(keys) {
+            if (navigator.webdriver) {
+              keys.addPreprocessedComponent({
+                key: 'web_driver',
+                value: '1'
+              });
+            } else {
+              keys.addPreprocessedComponent({
+                key: 'web_driver',
+                value: '0'
+              });
+            }
+            return keys;
+          },
+          timeTagKey: function(keys) {
+            keys.addPreprocessedComponent({
+              key: 'web_driver',
+              value: new Date().getTime()
+            });
+            return keys;
+          },
+          hardwareConcurrencyKey: function(keys) {
+            if (!this.options.excludeHardwareConcurrency) {
+              keys.addPreprocessedComponent({
+                key: 'hardware_concurrency',
+                value: this.getHardwareConcurrency()
+              });
+            }
+            return keys;
+          },
+          hasSessionStorage: function() {
+            try {
+              return !!window.sessionStorage;
+            } catch (e) {
+              return true; // SecurityError when referencing it means it exists
+            }
+          },
+          // https://bugzilla.mozilla.org/show_bug.cgi?id=781447
+          hasLocalStorage: function() {
+            try {
+              return !!window.localStorage;
+            } catch (e) {
+              return true; // SecurityError when referencing it means it exists
+            }
+          },
+          hasIndexedDB: function() {
+            try {
+              return !!window.indexedDB;
+            } catch (e) {
+              return true; // SecurityError when referencing it means it exists
+            }
+          },
+          getHardwareConcurrency: function() {
+            if (navigator.hardwareConcurrency) {
+              return navigator.hardwareConcurrency;
+            }
+            return 'unknown';
+          },
+          getNavigatorCpuClass: function() {
+            if (navigator.cpuClass) {
+              return navigator.cpuClass;
+            } else {
+              return 'unknown';
+            }
+          },
+          getNavigatorPlatform: function() {
+            if (navigator.platform) {
+              return navigator.platform;
+            } else {
+              return 'unknown';
+            }
+          },
+          getDoNotTrack: function() {
+            if (navigator.doNotTrack) {
+              return navigator.doNotTrack;
+            } else if (navigator.msDoNotTrack) {
+              return navigator.msDoNotTrack;
+            } else if (window.doNotTrack) {
+              return window.doNotTrack;
+            } else {
+              return 'unknown';
+            }
+          },
+          // This is a crude and primitive touch screen detection.
+          // It's not possible to currently reliably detect the  availability of a touch screen
+          // with a JS, without actually subscribing to a touch event.
+          // http://www.stucox.com/blog/you-cant-detect-a-touchscreen/
+          // https://github.com/Modernizr/Modernizr/issues/548
+          // method returns an array of 3 values:
+          // maxTouchPoints, the success or failure of creating a TouchEvent,
+          // and the availability of the 'ontouchstart' property
+          getTouchSupport: function() {
+            var maxTouchPoints = 0;
+            var touchEvent = false;
+            if (typeof navigator.maxTouchPoints !== 'undefined') {
+              maxTouchPoints = navigator.maxTouchPoints;
+            } else if (typeof navigator.msMaxTouchPoints !== 'undefined') {
+              maxTouchPoints = navigator.msMaxTouchPoints;
+            }
+            try {
+              document.createEvent('TouchEvent');
+              touchEvent = true;
+            } catch (_) {
+              /* squelch */
+            }
+            var touchStart = 'ontouchstart' in window;
+            return [maxTouchPoints, touchEvent, touchStart];
+          },
+          // https://www.browserleaks.com/canvas#how-does-it-work
+          getCanvasFp: function() {
+            var result = [];
+            // Very simple now, need to make it more complex (geo shapes etc)
+            var canvas = document.createElement('canvas');
+            canvas.width = 50;
+            canvas.height = 30;
+            canvas.style.display = 'inline';
+            var ctx = canvas.getContext('2d');
+            // detect browser support of canvas winding
+            // http://blogs.adobe.com/webplatform/2013/01/30/winding-rules-in-canvas/
+            // https://github.com/Modernizr/Modernizr/blob/master/feature-detects/canvas/winding.js
+            ctx.rect(0, 0, 10, 10);
+            ctx.rect(2, 2, 6, 6);
+            result.push(
+              'canvas winding:' +
+                (ctx.isPointInPath(5, 5, 'evenodd') === false ? 'yes' : 'no')
+            );
+
+            ctx.textBaseline = 'alphabetic';
+            ctx.fillStyle = '#f60';
+            ctx.fillRect(1, 1, 10, 10);
+            ctx.fillStyle = '#069';
+            // https://github.com/Valve/fingerprintjs2/issues/66
+            /*ctx.font = '8pt Arial'
 ctx.fillText('Cwd83dde03', 2, 10)
 ctx.fillStyle = 'rgba(102, 204, 0, 0.2)'
 ctx.font = '11pt Arial'
 ctx.fillText('Hmd83dde03', 0, 20)*/
 
-      // canvas blending
-      // http://blogs.adobe.com/webplatform/2013/01/28/blending-features-in-canvas/
-      // http://jsfiddle.net/NDYV8/16/
-      ctx.globalCompositeOperation = "multiply";
-      ctx.fillStyle = "rgb(255,0,255)";
-      ctx.beginPath();
-      ctx.arc(0, 0, 10, 0, Math.PI * 2, true);
-      ctx.closePath();
-      ctx.fill();
-      ctx.fillStyle = "rgb(0,255,255)";
-      ctx.beginPath();
-      ctx.arc(10, 10, 10, 0, Math.PI * 2, true);
-      ctx.closePath();
-      ctx.fill();
-      ctx.fillStyle = "rgb(255,255,0)";
-      ctx.beginPath();
-      ctx.arc(20, 20, 20, 0, Math.PI * 2, true);
-      ctx.closePath();
-      ctx.fill();
-      ctx.fillStyle = "rgb(255,0,255)";
-      // canvas winding
-      // http://blogs.adobe.com/webplatform/2013/01/30/winding-rules-in-canvas/
-      // http://jsfiddle.net/NDYV8/19/
-      /*ctx.arc(40, 40, 5, 0, Math.PI * 2, true)
+            // canvas blending
+            // http://blogs.adobe.com/webplatform/2013/01/28/blending-features-in-canvas/
+            // http://jsfiddle.net/NDYV8/16/
+            ctx.globalCompositeOperation = 'multiply';
+            ctx.fillStyle = 'rgb(255,0,255)';
+            ctx.beginPath();
+            ctx.arc(0, 0, 10, 0, Math.PI * 2, true);
+            ctx.closePath();
+            ctx.fill();
+            ctx.fillStyle = 'rgb(0,255,255)';
+            ctx.beginPath();
+            ctx.arc(10, 10, 10, 0, Math.PI * 2, true);
+            ctx.closePath();
+            ctx.fill();
+            ctx.fillStyle = 'rgb(255,255,0)';
+            ctx.beginPath();
+            ctx.arc(20, 20, 20, 0, Math.PI * 2, true);
+            ctx.closePath();
+            ctx.fill();
+            ctx.fillStyle = 'rgb(255,0,255)';
+            // canvas winding
+            // http://blogs.adobe.com/webplatform/2013/01/30/winding-rules-in-canvas/
+            // http://jsfiddle.net/NDYV8/19/
+            /*ctx.arc(40, 40, 5, 0, Math.PI * 2, true)
 ctx.arc(40, 40, 5, 0, Math.PI * 2, true)
 ctx.fill('evenodd')*/
 
-      if (canvas.toDataURL) {
-        var e = canvas.toDataURL().replace("data:image/png;base64,", "");
-        e = window.atob(e);
-        //e = stringToHex(e);
-        //console.log("canvas strinttohex length:" + e.length);
-        result.push("canvas fp:" + e);
-      }
-      return result.join("~");
-    },
-    getAdBlock: function() {
-      var ads = document.createElement("div");
-      ads.innerHTML = "&nbsp;";
-      ads.className = "adsbox";
-      var result = false;
-      try {
-        // body may not exist, that's why we need try/catch
-        document.body.appendChild(ads);
-        result =
-          document.getElementsByClassName("adsbox")[0].offsetHeight === 0;
-        document.body.removeChild(ads);
-      } catch (e) {
-        result = false;
-      }
-      return result;
-    },
-    getHasLiedLanguages: function() {
-      // We check if navigator.language is equal to the first language of navigator.languages
-      if (typeof navigator.languages !== "undefined") {
-        try {
-          var firstLanguages = navigator.languages[0].substr(0, 2);
-          if (firstLanguages !== navigator.language.substr(0, 2)) {
-            return true;
-          }
-        } catch (err) {
-          return true;
-        }
-      }
-      return false;
-    },
-    getHasLiedResolution: function() {
-      if (window.screen.width < window.screen.availWidth) {
-        return true;
-      }
-      if (window.screen.height < window.screen.availHeight) {
-        return true;
-      }
-      return false;
-    },
-    getHasLiedOs: function() {
-      var userAgent = navigator.userAgent.toLowerCase();
-      var oscpu = navigator.oscpu;
-      var platform = navigator.platform.toLowerCase();
-      var os;
-      // We extract the OS from the user agent (respect the order of the if else if statement)
-      if (userAgent.indexOf("windows phone") >= 0) {
-        os = "Windows Phone";
-      } else if (userAgent.indexOf("win") >= 0) {
-        os = "Windows";
-      } else if (userAgent.indexOf("android") >= 0) {
-        os = "Android";
-      } else if (userAgent.indexOf("linux") >= 0) {
-        os = "Linux";
-      } else if (
-        userAgent.indexOf("iphone") >= 0 ||
-        userAgent.indexOf("ipad") >= 0
-      ) {
-        os = "iOS";
-      } else if (userAgent.indexOf("mac") >= 0) {
-        os = "Mac";
-      } else {
-        os = "Other";
-      }
-      // We detect if the person uses a mobile device
-      var mobileDevice;
-      if (
-        "ontouchstart" in window ||
-        navigator.maxTouchPoints > 0 ||
-        navigator.msMaxTouchPoints > 0
-      ) {
-        mobileDevice = true;
-      } else {
-        mobileDevice = false;
-      }
-
-      if (
-        mobileDevice &&
-        os !== "Windows Phone" &&
-        os !== "Android" &&
-        os !== "iOS" &&
-        os !== "Other"
-      ) {
-        return true;
-      }
-
-      // We compare oscpu with the OS extracted from the UA
-      if (typeof oscpu !== "undefined") {
-        oscpu = oscpu.toLowerCase();
-        if (
-          oscpu.indexOf("win") >= 0 &&
-          os !== "Windows" &&
-          os !== "Windows Phone"
-        ) {
-          return true;
-        } else if (
-          oscpu.indexOf("linux") >= 0 &&
-          os !== "Linux" &&
-          os !== "Android"
-        ) {
-          return true;
-        } else if (oscpu.indexOf("mac") >= 0 && os !== "Mac" && os !== "iOS") {
-          return true;
-        } else if (
-          (oscpu.indexOf("win") === -1 &&
-            oscpu.indexOf("linux") === -1 &&
-            oscpu.indexOf("mac") === -1) !==
-          (os === "Other")
-        ) {
-          return true;
-        }
-      }
-
-      // We compare platform with the OS extracted from the UA
-      if (
-        platform.indexOf("win") >= 0 &&
-        os !== "Windows" &&
-        os !== "Windows Phone"
-      ) {
-        return true;
-      } else if (
-        (platform.indexOf("linux") >= 0 ||
-          platform.indexOf("android") >= 0 ||
-          platform.indexOf("pike") >= 0) &&
-        os !== "Linux" &&
-        os !== "Android"
-      ) {
-        return true;
-      } else if (
-        (platform.indexOf("mac") >= 0 ||
-          platform.indexOf("ipad") >= 0 ||
-          platform.indexOf("ipod") >= 0 ||
-          platform.indexOf("iphone") >= 0) &&
-        os !== "Mac" &&
-        os !== "iOS"
-      ) {
-        return true;
-      } else if (
-        (platform.indexOf("win") === -1 &&
-          platform.indexOf("linux") === -1 &&
-          platform.indexOf("mac") === -1) !==
-        (os === "Other")
-      ) {
-        return true;
-      }
-
-      if (
-        typeof navigator.plugins === "undefined" &&
-        os !== "Windows" &&
-        os !== "Windows Phone"
-      ) {
-        // We are are in the case where the person uses ie, therefore we can infer that it's windows
-        return true;
-      }
-
-      return false;
-    },
-    getHasLiedBrowser: function() {
-      var userAgent = navigator.userAgent.toLowerCase();
-      var productSub = navigator.productSub;
-
-      // we extract the browser from the user agent (respect the order of the tests)
-      var browser;
-      if (userAgent.indexOf("firefox") >= 0) {
-        browser = "Firefox";
-      } else if (
-        userAgent.indexOf("opera") >= 0 ||
-        userAgent.indexOf("opr") >= 0
-      ) {
-        browser = "Opera";
-      } else if (userAgent.indexOf("chrome") >= 0) {
-        browser = "Chrome";
-      } else if (userAgent.indexOf("safari") >= 0) {
-        browser = "Safari";
-      } else if (userAgent.indexOf("trident") >= 0) {
-        browser = "Internet Explorer";
-      } else {
-        browser = "Other";
-      }
-
-      if (
-        (browser === "Chrome" || browser === "Safari" || browser === "Opera") &&
-        productSub !== "20030107"
-      ) {
-        return true;
-      }
-
-      // eslint-disable-next-line no-eval
-      var tempRes = eval.toString().length;
-      if (
-        tempRes === 37 &&
-        browser !== "Safari" &&
-        browser !== "Firefox" &&
-        browser !== "Other"
-      ) {
-        return true;
-      } else if (
-        tempRes === 39 &&
-        browser !== "Internet Explorer" &&
-        browser !== "Other"
-      ) {
-        return true;
-      } else if (
-        tempRes === 33 &&
-        browser !== "Chrome" &&
-        browser !== "Opera" &&
-        browser !== "Other"
-      ) {
-        return true;
-      }
-
-      // We create an error to see how it is handled
-      var errFirefox;
-      try {
-        // eslint-disable-next-line no-throw-literal
-        throw "a";
-      } catch (err) {
-        try {
-          err.toSource();
-          errFirefox = true;
-        } catch (errOfErr) {
-          errFirefox = false;
-        }
-      }
-      if (errFirefox && browser !== "Firefox" && browser !== "Other") {
-        return true;
-      }
-      return false;
-    },
-    isCanvasSupported: function() {
-      var elem = document.createElement("canvas");
-      return !!(elem.getContext && elem.getContext("2d"));
-    },
-    isIE: function() {
-      if (navigator.appName === "Microsoft Internet Explorer") {
-        return true;
-      } else if (
-        navigator.appName === "Netscape" &&
-        /Trident/.test(navigator.userAgent)
-      ) {
-        // IE 11
-        return true;
-      }
-      return false;
-    },
-    /**
-     * @template T
-     * @param {T=} context
-     */
-    each: function(obj, iterator, context) {
-      if (obj === null) {
-        return;
-      }
-      if (this.nativeForEach && obj.forEach === this.nativeForEach) {
-        obj.forEach(iterator, context);
-      } else if (obj.length === +obj.length) {
-        for (var i = 0, l = obj.length; i < l; i++) {
-          if (iterator.call(context, obj[i], i, obj) === {}) {
-            return;
-          }
-        }
-      } else {
-        for (var key in obj) {
-          if (obj.hasOwnProperty(key)) {
-            if (iterator.call(context, obj[key], key, obj) === {}) {
-              return;
+            if (canvas.toDataURL) {
+              var e = canvas.toDataURL().replace('data:image/png;base64,', '');
+              e = window.atob(e);
+              //e = stringToHex(e);
+              //console.log("canvas strinttohex length:" + e.length);
+              result.push('canvas fp:' + e);
             }
-          }
-        }
-      }
-    },
-
-    /**
-     * @template T,V
-     * @param {T=} context
-     * @param {function(this:T, ?, (string|number), T=):V} iterator
-     * @return {V}
-     */
-
-    map: function(obj, iterator, context) {
-      var results = [];
-      // Not using strict equality so that this acts as a
-      // shortcut to checking for `null` and `undefined`.
-      if (obj == null) {
-        return results;
-      }
-      if (this.nativeMap && obj.map === this.nativeMap) {
-        return obj.map(iterator, context);
-      }
-      this.each(obj, function(value, index, list) {
-        results[results.length] = iterator.call(context, value, index, list);
-      });
-      return results;
-    }
-  };
-  //////////////////////
-  /*
-   * Configurable variables. You may need to tweak these to be compatible with
-   * the server-side, but the defaults work in most cases.
-   */
-  var hexcase = 0; /* hex output format. 0 - lowercase; 1 - uppercase        */
-  var b64pad = ""; /* base-64 pad character. "=" for strict RFC compliance   */
-
-  function hex_sha1(s) {
-    return rstr2hex(rstr_sha1(str2rstr_utf8(s)));
-  }
-  function hex_hmac_sha1(k, d) {
-    return rstr2hex(rstr_hmac_sha1(str2rstr_utf8(k), str2rstr_utf8(d)));
-  }
-
-  /*
-   * Calculate the SHA1 of a raw string
-   */
-  function rstr_sha1(s) {
-    return binb2rstr(binb_sha1(rstr2binb(s), s.length * 8));
-  }
-
-  /*
-   * Calculate the HMAC-SHA1 of a key and some data (raw strings)
-   */
-  function rstr_hmac_sha1(key, data) {
-    var bkey = rstr2binb(key);
-    if (bkey.length > 16) bkey = binb_sha1(bkey, key.length * 8);
-
-    var ipad = Array(16),
-      opad = Array(16);
-    for (var i = 0; i < 16; i++) {
-      ipad[i] = bkey[i] ^ 0x36363636;
-      opad[i] = bkey[i] ^ 0x5c5c5c5c;
-    }
-
-    var hash = binb_sha1(ipad.concat(rstr2binb(data)), 512 + data.length * 8);
-    return binb2rstr(binb_sha1(opad.concat(hash), 512 + 160));
-  }
-
-  /*
-   * Convert a raw string to a hex string
-   */
-  function rstr2hex(input) {
-    try {
-      hexcase;
-    } catch (e) {
-      hexcase = 0;
-    }
-    var hex_tab = hexcase ? "0123456789ABCDEF" : "0123456789abcdef";
-    var output = "";
-    var x;
-    for (var i = 0; i < input.length; i++) {
-      x = input.charCodeAt(i);
-      output += hex_tab.charAt((x >>> 4) & 0x0f) + hex_tab.charAt(x & 0x0f);
-    }
-    return output;
-  }
-  /*
-   * Encode a string as utf-8.
-   * For efficiency, this assumes the input is valid utf-16.
-   */
-  function str2rstr_utf8(input) {
-    var output = "";
-    var i = -1;
-    var x, y;
-
-    while (++i < input.length) {
-      /* Decode utf-16 surrogate pairs */
-      x = input.charCodeAt(i);
-      y = i + 1 < input.length ? input.charCodeAt(i + 1) : 0;
-      if (0xd800 <= x && x <= 0xdbff && 0xdc00 <= y && y <= 0xdfff) {
-        x = 0x10000 + ((x & 0x03ff) << 10) + (y & 0x03ff);
-        i++;
-      }
-
-      /* Encode output as utf-8 */
-      if (x <= 0x7f) output += String.fromCharCode(x);
-      else if (x <= 0x7ff)
-        output += String.fromCharCode(
-          0xc0 | ((x >>> 6) & 0x1f),
-          0x80 | (x & 0x3f)
-        );
-      else if (x <= 0xffff)
-        output += String.fromCharCode(
-          0xe0 | ((x >>> 12) & 0x0f),
-          0x80 | ((x >>> 6) & 0x3f),
-          0x80 | (x & 0x3f)
-        );
-      else if (x <= 0x1fffff)
-        output += String.fromCharCode(
-          0xf0 | ((x >>> 18) & 0x07),
-          0x80 | ((x >>> 12) & 0x3f),
-          0x80 | ((x >>> 6) & 0x3f),
-          0x80 | (x & 0x3f)
-        );
-    }
-    return output;
-  }
-
-  /*
-   * Convert a raw string to an array of big-endian words
-   * Characters >255 have their high-byte silently ignored.
-   */
-  function rstr2binb(input) {
-    var output = Array(input.length >> 2);
-    for (var i = 0; i < output.length; i++) output[i] = 0;
-    for (var i = 0; i < input.length * 8; i += 8)
-      output[i >> 5] |= (input.charCodeAt(i / 8) & 0xff) << (24 - (i % 32));
-    return output;
-  }
-
-  /*
-   * Convert an array of big-endian words to a string
-   */
-  function binb2rstr(input) {
-    var output = "";
-    for (var i = 0; i < input.length * 32; i += 8)
-      output += String.fromCharCode((input[i >> 5] >>> (24 - (i % 32))) & 0xff);
-    return output;
-  }
-
-  /*
-   * Calculate the SHA-1 of an array of big-endian words, and a bit length
-   */
-  function binb_sha1(x, len) {
-    /* append padding */
-    x[len >> 5] |= 0x80 << (24 - (len % 32));
-    x[(((len + 64) >> 9) << 4) + 15] = len;
-
-    var w = Array(80);
-    var a = 1732584193;
-    var b = -271733879;
-    var c = -1732584194;
-    var d = 271733878;
-    var e = -1009589776;
-
-    for (var i = 0; i < x.length; i += 16) {
-      var olda = a;
-      var oldb = b;
-      var oldc = c;
-      var oldd = d;
-      var olde = e;
-
-      for (var j = 0; j < 80; j++) {
-        if (j < 16) w[j] = x[i + j];
-        else w[j] = bit_rol(w[j - 3] ^ w[j - 8] ^ w[j - 14] ^ w[j - 16], 1);
-        var t = safe_add(
-          safe_add(bit_rol(a, 5), sha1_ft(j, b, c, d)),
-          safe_add(safe_add(e, w[j]), sha1_kt(j))
-        );
-        e = d;
-        d = c;
-        c = bit_rol(b, 30);
-        b = a;
-        a = t;
-      }
-
-      a = safe_add(a, olda);
-      b = safe_add(b, oldb);
-      c = safe_add(c, oldc);
-      d = safe_add(d, oldd);
-      e = safe_add(e, olde);
-    }
-    return Array(a, b, c, d, e);
-  }
-
-  /*
-   * Perform the appropriate triplet combination function for the current
-   * iteration
-   */
-  function sha1_ft(t, b, c, d) {
-    if (t < 20) return (b & c) | (~b & d);
-    if (t < 40) return b ^ c ^ d;
-    if (t < 60) return (b & c) | (b & d) | (c & d);
-    return b ^ c ^ d;
-  }
-
-  /*
-   * Determine the appropriate additive constant for the current iteration
-   */
-  function sha1_kt(t) {
-    return t < 20
-      ? 1518500249
-      : t < 40
-      ? 1859775393
-      : t < 60
-      ? -1894007588
-      : -899497514;
-  }
-  /*
-   * Add integers, wrapping at 2^32. This uses 16-bit operations internally
-   * to work around bugs in some JS interpreters.
-   */
-  function safe_add(x, y) {
-    var lsw = (x & 0xffff) + (y & 0xffff);
-    var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
-    return (msw << 16) | (lsw & 0xffff);
-  }
-  /*
-   * Bitwise rotate a 32-bit number to the left.
-   */
-  function bit_rol(num, cnt) {
-    return (num << cnt) | (num >>> (32 - cnt));
-  }
-
-  //this takes the key, the message, and whether to encrypt or decrypt
-  function des(key, message, encrypt, mode, iv, padding) {
-    if (encrypt) message = unescape(encodeURIComponent(message));
-    //declaring this locally speeds things up a bit
-    var spfunction1 = new Array(
-      0x1010400,
-      0,
-      0x10000,
-      0x1010404,
-      0x1010004,
-      0x10404,
-      0x4,
-      0x10000,
-      0x400,
-      0x1010400,
-      0x1010404,
-      0x400,
-      0x1000404,
-      0x1010004,
-      0x1000000,
-      0x4,
-      0x404,
-      0x1000400,
-      0x1000400,
-      0x10400,
-      0x10400,
-      0x1010000,
-      0x1010000,
-      0x1000404,
-      0x10004,
-      0x1000004,
-      0x1000004,
-      0x10004,
-      0,
-      0x404,
-      0x10404,
-      0x1000000,
-      0x10000,
-      0x1010404,
-      0x4,
-      0x1010000,
-      0x1010400,
-      0x1000000,
-      0x1000000,
-      0x400,
-      0x1010004,
-      0x10000,
-      0x10400,
-      0x1000004,
-      0x400,
-      0x4,
-      0x1000404,
-      0x10404,
-      0x1010404,
-      0x10004,
-      0x1010000,
-      0x1000404,
-      0x1000004,
-      0x404,
-      0x10404,
-      0x1010400,
-      0x404,
-      0x1000400,
-      0x1000400,
-      0,
-      0x10004,
-      0x10400,
-      0,
-      0x1010004
-    );
-    var spfunction2 = new Array(
-      -0x7fef7fe0,
-      -0x7fff8000,
-      0x8000,
-      0x108020,
-      0x100000,
-      0x20,
-      -0x7fefffe0,
-      -0x7fff7fe0,
-      -0x7fffffe0,
-      -0x7fef7fe0,
-      -0x7fef8000,
-      -0x80000000,
-      -0x7fff8000,
-      0x100000,
-      0x20,
-      -0x7fefffe0,
-      0x108000,
-      0x100020,
-      -0x7fff7fe0,
-      0,
-      -0x80000000,
-      0x8000,
-      0x108020,
-      -0x7ff00000,
-      0x100020,
-      -0x7fffffe0,
-      0,
-      0x108000,
-      0x8020,
-      -0x7fef8000,
-      -0x7ff00000,
-      0x8020,
-      0,
-      0x108020,
-      -0x7fefffe0,
-      0x100000,
-      -0x7fff7fe0,
-      -0x7ff00000,
-      -0x7fef8000,
-      0x8000,
-      -0x7ff00000,
-      -0x7fff8000,
-      0x20,
-      -0x7fef7fe0,
-      0x108020,
-      0x20,
-      0x8000,
-      -0x80000000,
-      0x8020,
-      -0x7fef8000,
-      0x100000,
-      -0x7fffffe0,
-      0x100020,
-      -0x7fff7fe0,
-      -0x7fffffe0,
-      0x100020,
-      0x108000,
-      0,
-      -0x7fff8000,
-      0x8020,
-      -0x80000000,
-      -0x7fefffe0,
-      -0x7fef7fe0,
-      0x108000
-    );
-    var spfunction3 = new Array(
-      0x208,
-      0x8020200,
-      0,
-      0x8020008,
-      0x8000200,
-      0,
-      0x20208,
-      0x8000200,
-      0x20008,
-      0x8000008,
-      0x8000008,
-      0x20000,
-      0x8020208,
-      0x20008,
-      0x8020000,
-      0x208,
-      0x8000000,
-      0x8,
-      0x8020200,
-      0x200,
-      0x20200,
-      0x8020000,
-      0x8020008,
-      0x20208,
-      0x8000208,
-      0x20200,
-      0x20000,
-      0x8000208,
-      0x8,
-      0x8020208,
-      0x200,
-      0x8000000,
-      0x8020200,
-      0x8000000,
-      0x20008,
-      0x208,
-      0x20000,
-      0x8020200,
-      0x8000200,
-      0,
-      0x200,
-      0x20008,
-      0x8020208,
-      0x8000200,
-      0x8000008,
-      0x200,
-      0,
-      0x8020008,
-      0x8000208,
-      0x20000,
-      0x8000000,
-      0x8020208,
-      0x8,
-      0x20208,
-      0x20200,
-      0x8000008,
-      0x8020000,
-      0x8000208,
-      0x208,
-      0x8020000,
-      0x20208,
-      0x8,
-      0x8020008,
-      0x20200
-    );
-    var spfunction4 = new Array(
-      0x802001,
-      0x2081,
-      0x2081,
-      0x80,
-      0x802080,
-      0x800081,
-      0x800001,
-      0x2001,
-      0,
-      0x802000,
-      0x802000,
-      0x802081,
-      0x81,
-      0,
-      0x800080,
-      0x800001,
-      0x1,
-      0x2000,
-      0x800000,
-      0x802001,
-      0x80,
-      0x800000,
-      0x2001,
-      0x2080,
-      0x800081,
-      0x1,
-      0x2080,
-      0x800080,
-      0x2000,
-      0x802080,
-      0x802081,
-      0x81,
-      0x800080,
-      0x800001,
-      0x802000,
-      0x802081,
-      0x81,
-      0,
-      0,
-      0x802000,
-      0x2080,
-      0x800080,
-      0x800081,
-      0x1,
-      0x802001,
-      0x2081,
-      0x2081,
-      0x80,
-      0x802081,
-      0x81,
-      0x1,
-      0x2000,
-      0x800001,
-      0x2001,
-      0x802080,
-      0x800081,
-      0x2001,
-      0x2080,
-      0x800000,
-      0x802001,
-      0x80,
-      0x800000,
-      0x2000,
-      0x802080
-    );
-    var spfunction5 = new Array(
-      0x100,
-      0x2080100,
-      0x2080000,
-      0x42000100,
-      0x80000,
-      0x100,
-      0x40000000,
-      0x2080000,
-      0x40080100,
-      0x80000,
-      0x2000100,
-      0x40080100,
-      0x42000100,
-      0x42080000,
-      0x80100,
-      0x40000000,
-      0x2000000,
-      0x40080000,
-      0x40080000,
-      0,
-      0x40000100,
-      0x42080100,
-      0x42080100,
-      0x2000100,
-      0x42080000,
-      0x40000100,
-      0,
-      0x42000000,
-      0x2080100,
-      0x2000000,
-      0x42000000,
-      0x80100,
-      0x80000,
-      0x42000100,
-      0x100,
-      0x2000000,
-      0x40000000,
-      0x2080000,
-      0x42000100,
-      0x40080100,
-      0x2000100,
-      0x40000000,
-      0x42080000,
-      0x2080100,
-      0x40080100,
-      0x100,
-      0x2000000,
-      0x42080000,
-      0x42080100,
-      0x80100,
-      0x42000000,
-      0x42080100,
-      0x2080000,
-      0,
-      0x40080000,
-      0x42000000,
-      0x80100,
-      0x2000100,
-      0x40000100,
-      0x80000,
-      0,
-      0x40080000,
-      0x2080100,
-      0x40000100
-    );
-    var spfunction6 = new Array(
-      0x20000010,
-      0x20400000,
-      0x4000,
-      0x20404010,
-      0x20400000,
-      0x10,
-      0x20404010,
-      0x400000,
-      0x20004000,
-      0x404010,
-      0x400000,
-      0x20000010,
-      0x400010,
-      0x20004000,
-      0x20000000,
-      0x4010,
-      0,
-      0x400010,
-      0x20004010,
-      0x4000,
-      0x404000,
-      0x20004010,
-      0x10,
-      0x20400010,
-      0x20400010,
-      0,
-      0x404010,
-      0x20404000,
-      0x4010,
-      0x404000,
-      0x20404000,
-      0x20000000,
-      0x20004000,
-      0x10,
-      0x20400010,
-      0x404000,
-      0x20404010,
-      0x400000,
-      0x4010,
-      0x20000010,
-      0x400000,
-      0x20004000,
-      0x20000000,
-      0x4010,
-      0x20000010,
-      0x20404010,
-      0x404000,
-      0x20400000,
-      0x404010,
-      0x20404000,
-      0,
-      0x20400010,
-      0x10,
-      0x4000,
-      0x20400000,
-      0x404010,
-      0x4000,
-      0x400010,
-      0x20004010,
-      0,
-      0x20404000,
-      0x20000000,
-      0x400010,
-      0x20004010
-    );
-    var spfunction7 = new Array(
-      0x200000,
-      0x4200002,
-      0x4000802,
-      0,
-      0x800,
-      0x4000802,
-      0x200802,
-      0x4200800,
-      0x4200802,
-      0x200000,
-      0,
-      0x4000002,
-      0x2,
-      0x4000000,
-      0x4200002,
-      0x802,
-      0x4000800,
-      0x200802,
-      0x200002,
-      0x4000800,
-      0x4000002,
-      0x4200000,
-      0x4200800,
-      0x200002,
-      0x4200000,
-      0x800,
-      0x802,
-      0x4200802,
-      0x200800,
-      0x2,
-      0x4000000,
-      0x200800,
-      0x4000000,
-      0x200800,
-      0x200000,
-      0x4000802,
-      0x4000802,
-      0x4200002,
-      0x4200002,
-      0x2,
-      0x200002,
-      0x4000000,
-      0x4000800,
-      0x200000,
-      0x4200800,
-      0x802,
-      0x200802,
-      0x4200800,
-      0x802,
-      0x4000002,
-      0x4200802,
-      0x4200000,
-      0x200800,
-      0,
-      0x2,
-      0x4200802,
-      0,
-      0x200802,
-      0x4200000,
-      0x800,
-      0x4000002,
-      0x4000800,
-      0x800,
-      0x200002
-    );
-    var spfunction8 = new Array(
-      0x10001040,
-      0x1000,
-      0x40000,
-      0x10041040,
-      0x10000000,
-      0x10001040,
-      0x40,
-      0x10000000,
-      0x40040,
-      0x10040000,
-      0x10041040,
-      0x41000,
-      0x10041000,
-      0x41040,
-      0x1000,
-      0x40,
-      0x10040000,
-      0x10000040,
-      0x10001000,
-      0x1040,
-      0x41000,
-      0x40040,
-      0x10040040,
-      0x10041000,
-      0x1040,
-      0,
-      0,
-      0x10040040,
-      0x10000040,
-      0x10001000,
-      0x41040,
-      0x40000,
-      0x41040,
-      0x40000,
-      0x10041000,
-      0x1000,
-      0x40,
-      0x10040040,
-      0x1000,
-      0x41040,
-      0x10001000,
-      0x40,
-      0x10000040,
-      0x10040000,
-      0x10040040,
-      0x10000000,
-      0x40000,
-      0x10001040,
-      0,
-      0x10041040,
-      0x40040,
-      0x10000040,
-      0x10040000,
-      0x10001000,
-      0x10001040,
-      0,
-      0x10041040,
-      0x41000,
-      0x41000,
-      0x1040,
-      0x1040,
-      0x40040,
-      0x10000000,
-      0x10041000
-    );
-
-    //create the 16 or 48 subkeys we will need
-    var keys = des_createKeys(key);
-    var m = 0,
-      i,
-      j,
-      temp,
-      temp2,
-      right1,
-      right2,
-      left,
-      right,
-      looping;
-    var cbcleft, cbcleft2, cbcright, cbcright2;
-    var endloop, loopinc;
-    var len = message.length;
-    var chunk = 0;
-    //set up the loops for single and triple des
-    var iterations = keys.length == 32 ? 3 : 9; //single or triple des
-    if (iterations == 3) {
-      looping = encrypt ? new Array(0, 32, 2) : new Array(30, -2, -2);
-    } else {
-      looping = encrypt
-        ? new Array(0, 32, 2, 62, 30, -2, 64, 96, 2)
-        : new Array(94, 62, -2, 32, 64, 2, 30, -2, -2);
-    }
-
-    //pad the message depending on the padding parameter
-    if (padding == 2) message += " ";
-    //pad the message with spaces
-    else if (padding == 1) {
-      temp = 8 - (len % 8);
-      message += String.fromCharCode(
-        temp,
-        temp,
-        temp,
-        temp,
-        temp,
-        temp,
-        temp,
-        temp
-      );
-      if (temp == 8) len += 8;
-    } //PKCS7 padding
-    else if (!padding) message += "\0\0\0\0\0\0\0\0"; //pad the message out with null bytes
-
-    //store the result here
-    result = "";
-    tempresult = "";
-
-    if (mode == 1) {
-      //CBC mode
-      cbcleft =
-        (iv.charCodeAt(m++) << 24) |
-        (iv.charCodeAt(m++) << 16) |
-        (iv.charCodeAt(m++) << 8) |
-        iv.charCodeAt(m++);
-      cbcright =
-        (iv.charCodeAt(m++) << 24) |
-        (iv.charCodeAt(m++) << 16) |
-        (iv.charCodeAt(m++) << 8) |
-        iv.charCodeAt(m++);
-      m = 0;
-    }
-
-    //loop through each 64 bit chunk of the message
-    while (m < len) {
-      left =
-        (message.charCodeAt(m++) << 24) |
-        (message.charCodeAt(m++) << 16) |
-        (message.charCodeAt(m++) << 8) |
-        message.charCodeAt(m++);
-      right =
-        (message.charCodeAt(m++) << 24) |
-        (message.charCodeAt(m++) << 16) |
-        (message.charCodeAt(m++) << 8) |
-        message.charCodeAt(m++);
-
-      //for Cipher Block Chaining mode, xor the message with the previous result
-      if (mode == 1) {
-        if (encrypt) {
-          left ^= cbcleft;
-          right ^= cbcright;
-        } else {
-          cbcleft2 = cbcleft;
-          cbcright2 = cbcright;
-          cbcleft = left;
-          cbcright = right;
-        }
-      }
-
-      //first each 64 but chunk of the message must be permuted according to IP
-      temp = ((left >>> 4) ^ right) & 0x0f0f0f0f;
-      right ^= temp;
-      left ^= temp << 4;
-      temp = ((left >>> 16) ^ right) & 0x0000ffff;
-      right ^= temp;
-      left ^= temp << 16;
-      temp = ((right >>> 2) ^ left) & 0x33333333;
-      left ^= temp;
-      right ^= temp << 2;
-      temp = ((right >>> 8) ^ left) & 0x00ff00ff;
-      left ^= temp;
-      right ^= temp << 8;
-      temp = ((left >>> 1) ^ right) & 0x55555555;
-      right ^= temp;
-      left ^= temp << 1;
-
-      left = (left << 1) | (left >>> 31);
-      right = (right << 1) | (right >>> 31);
-
-      //do this either 1 or 3 times for each chunk of the message
-      for (j = 0; j < iterations; j += 3) {
-        endloop = looping[j + 1];
-        loopinc = looping[j + 2];
-        //now go through and perform the encryption or decryption
-        for (i = looping[j]; i != endloop; i += loopinc) {
-          //for efficiency
-          right1 = right ^ keys[i];
-          right2 = ((right >>> 4) | (right << 28)) ^ keys[i + 1];
-          //the result is attained by passing these bytes through the S selection functions
-          temp = left;
-          left = right;
-          right =
-            temp ^
-            (spfunction2[(right1 >>> 24) & 0x3f] |
-              spfunction4[(right1 >>> 16) & 0x3f] |
-              spfunction6[(right1 >>> 8) & 0x3f] |
-              spfunction8[right1 & 0x3f] |
-              spfunction1[(right2 >>> 24) & 0x3f] |
-              spfunction3[(right2 >>> 16) & 0x3f] |
-              spfunction5[(right2 >>> 8) & 0x3f] |
-              spfunction7[right2 & 0x3f]);
-        }
-        temp = left;
-        left = right;
-        right = temp; //unreverse left and right
-      } //for either 1 or 3 iterations
-
-      //move then each one bit to the right
-      left = (left >>> 1) | (left << 31);
-      right = (right >>> 1) | (right << 31);
-
-      //now perform IP-1, which is IP in the opposite direction
-      temp = ((left >>> 1) ^ right) & 0x55555555;
-      right ^= temp;
-      left ^= temp << 1;
-      temp = ((right >>> 8) ^ left) & 0x00ff00ff;
-      left ^= temp;
-      right ^= temp << 8;
-      temp = ((right >>> 2) ^ left) & 0x33333333;
-      left ^= temp;
-      right ^= temp << 2;
-      temp = ((left >>> 16) ^ right) & 0x0000ffff;
-      right ^= temp;
-      left ^= temp << 16;
-      temp = ((left >>> 4) ^ right) & 0x0f0f0f0f;
-      right ^= temp;
-      left ^= temp << 4;
-
-      //for Cipher Block Chaining mode, xor the message with the previous result
-      if (mode == 1) {
-        if (encrypt) {
-          cbcleft = left;
-          cbcright = right;
-        } else {
-          left ^= cbcleft2;
-          right ^= cbcright2;
-        }
-      }
-      tempresult += String.fromCharCode(
-        left >>> 24,
-        (left >>> 16) & 0xff,
-        (left >>> 8) & 0xff,
-        left & 0xff,
-        right >>> 24,
-        (right >>> 16) & 0xff,
-        (right >>> 8) & 0xff,
-        right & 0xff
-      );
-
-      chunk += 8;
-      if (chunk == 512) {
-        result += tempresult;
-        tempresult = "";
-        chunk = 0;
-      }
-    } //for every 8 characters, or 64 bits in the message
-
-    //return the result as an array
-    result += tempresult;
-    //result = result.replace(/\0*$/g, "");
-    if (!encrypt) result = decodeURIComponent(escape(result));
-    return result;
-  } //end of des
-
-  //des_createKeys
-  //this takes as input a 64 bit key (even though only 56 bits are used)
-  //as an array of 2 integers, and returns 16 48 bit keys
-  function des_createKeys(key) {
-    //declaring this locally speeds things up a bit
-    pc2bytes0 = new Array(
-      0,
-      0x4,
-      0x20000000,
-      0x20000004,
-      0x10000,
-      0x10004,
-      0x20010000,
-      0x20010004,
-      0x200,
-      0x204,
-      0x20000200,
-      0x20000204,
-      0x10200,
-      0x10204,
-      0x20010200,
-      0x20010204
-    );
-    pc2bytes1 = new Array(
-      0,
-      0x1,
-      0x100000,
-      0x100001,
-      0x4000000,
-      0x4000001,
-      0x4100000,
-      0x4100001,
-      0x100,
-      0x101,
-      0x100100,
-      0x100101,
-      0x4000100,
-      0x4000101,
-      0x4100100,
-      0x4100101
-    );
-    pc2bytes2 = new Array(
-      0,
-      0x8,
-      0x800,
-      0x808,
-      0x1000000,
-      0x1000008,
-      0x1000800,
-      0x1000808,
-      0,
-      0x8,
-      0x800,
-      0x808,
-      0x1000000,
-      0x1000008,
-      0x1000800,
-      0x1000808
-    );
-    pc2bytes3 = new Array(
-      0,
-      0x200000,
-      0x8000000,
-      0x8200000,
-      0x2000,
-      0x202000,
-      0x8002000,
-      0x8202000,
-      0x20000,
-      0x220000,
-      0x8020000,
-      0x8220000,
-      0x22000,
-      0x222000,
-      0x8022000,
-      0x8222000
-    );
-    pc2bytes4 = new Array(
-      0,
-      0x40000,
-      0x10,
-      0x40010,
-      0,
-      0x40000,
-      0x10,
-      0x40010,
-      0x1000,
-      0x41000,
-      0x1010,
-      0x41010,
-      0x1000,
-      0x41000,
-      0x1010,
-      0x41010
-    );
-    pc2bytes5 = new Array(
-      0,
-      0x400,
-      0x20,
-      0x420,
-      0,
-      0x400,
-      0x20,
-      0x420,
-      0x2000000,
-      0x2000400,
-      0x2000020,
-      0x2000420,
-      0x2000000,
-      0x2000400,
-      0x2000020,
-      0x2000420
-    );
-    pc2bytes6 = new Array(
-      0,
-      0x10000000,
-      0x80000,
-      0x10080000,
-      0x2,
-      0x10000002,
-      0x80002,
-      0x10080002,
-      0,
-      0x10000000,
-      0x80000,
-      0x10080000,
-      0x2,
-      0x10000002,
-      0x80002,
-      0x10080002
-    );
-    pc2bytes7 = new Array(
-      0,
-      0x10000,
-      0x800,
-      0x10800,
-      0x20000000,
-      0x20010000,
-      0x20000800,
-      0x20010800,
-      0x20000,
-      0x30000,
-      0x20800,
-      0x30800,
-      0x20020000,
-      0x20030000,
-      0x20020800,
-      0x20030800
-    );
-    pc2bytes8 = new Array(
-      0,
-      0x40000,
-      0,
-      0x40000,
-      0x2,
-      0x40002,
-      0x2,
-      0x40002,
-      0x2000000,
-      0x2040000,
-      0x2000000,
-      0x2040000,
-      0x2000002,
-      0x2040002,
-      0x2000002,
-      0x2040002
-    );
-    pc2bytes9 = new Array(
-      0,
-      0x10000000,
-      0x8,
-      0x10000008,
-      0,
-      0x10000000,
-      0x8,
-      0x10000008,
-      0x400,
-      0x10000400,
-      0x408,
-      0x10000408,
-      0x400,
-      0x10000400,
-      0x408,
-      0x10000408
-    );
-    pc2bytes10 = new Array(
-      0,
-      0x20,
-      0,
-      0x20,
-      0x100000,
-      0x100020,
-      0x100000,
-      0x100020,
-      0x2000,
-      0x2020,
-      0x2000,
-      0x2020,
-      0x102000,
-      0x102020,
-      0x102000,
-      0x102020
-    );
-    pc2bytes11 = new Array(
-      0,
-      0x1000000,
-      0x200,
-      0x1000200,
-      0x200000,
-      0x1200000,
-      0x200200,
-      0x1200200,
-      0x4000000,
-      0x5000000,
-      0x4000200,
-      0x5000200,
-      0x4200000,
-      0x5200000,
-      0x4200200,
-      0x5200200
-    );
-    pc2bytes12 = new Array(
-      0,
-      0x1000,
-      0x8000000,
-      0x8001000,
-      0x80000,
-      0x81000,
-      0x8080000,
-      0x8081000,
-      0x10,
-      0x1010,
-      0x8000010,
-      0x8001010,
-      0x80010,
-      0x81010,
-      0x8080010,
-      0x8081010
-    );
-    pc2bytes13 = new Array(
-      0,
-      0x4,
-      0x100,
-      0x104,
-      0,
-      0x4,
-      0x100,
-      0x104,
-      0x1,
-      0x5,
-      0x101,
-      0x105,
-      0x1,
-      0x5,
-      0x101,
-      0x105
-    );
-
-    //how many iterations (1 for des, 3 for triple des)
-    var iterations = key.length > 8 ? 1 : 1; //changed by Paul 16/6/2007 to use Triple DES for 9+ byte keys
-    //stores the return keys
-    var keys = new Array(32 * iterations);
-    //now define the left shifts which need to be done
-    var shifts = new Array(0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0);
-    //other variables
-    var lefttemp,
-      righttemp,
-      m = 0,
-      n = 0,
-      temp;
-
-    for (var j = 0; j < iterations; j++) {
-      //either 1 or 3 iterations
-      left =
-        (key.charCodeAt(m++) << 24) |
-        (key.charCodeAt(m++) << 16) |
-        (key.charCodeAt(m++) << 8) |
-        key.charCodeAt(m++);
-      right =
-        (key.charCodeAt(m++) << 24) |
-        (key.charCodeAt(m++) << 16) |
-        (key.charCodeAt(m++) << 8) |
-        key.charCodeAt(m++);
-
-      temp = ((left >>> 4) ^ right) & 0x0f0f0f0f;
-      right ^= temp;
-      left ^= temp << 4;
-      temp = ((right >>> -16) ^ left) & 0x0000ffff;
-      left ^= temp;
-      right ^= temp << -16;
-      temp = ((left >>> 2) ^ right) & 0x33333333;
-      right ^= temp;
-      left ^= temp << 2;
-      temp = ((right >>> -16) ^ left) & 0x0000ffff;
-      left ^= temp;
-      right ^= temp << -16;
-      temp = ((left >>> 1) ^ right) & 0x55555555;
-      right ^= temp;
-      left ^= temp << 1;
-      temp = ((right >>> 8) ^ left) & 0x00ff00ff;
-      left ^= temp;
-      right ^= temp << 8;
-      temp = ((left >>> 1) ^ right) & 0x55555555;
-      right ^= temp;
-      left ^= temp << 1;
-
-      //the right side needs to be shifted and to get the last four bits of the left side
-      temp = (left << 8) | ((right >>> 20) & 0x000000f0);
-      //left needs to be put upside down
-      left =
-        (right << 24) |
-        ((right << 8) & 0xff0000) |
-        ((right >>> 8) & 0xff00) |
-        ((right >>> 24) & 0xf0);
-      right = temp;
-
-      //now go through and perform these shifts on the left and right keys
-      for (var i = 0; i < shifts.length; i++) {
-        //shift the keys either one or two bits to the left
-        if (shifts[i]) {
-          left = (left << 2) | (left >>> 26);
-          right = (right << 2) | (right >>> 26);
-        } else {
-          left = (left << 1) | (left >>> 27);
-          right = (right << 1) | (right >>> 27);
-        }
-        left &= -0xf;
-        right &= -0xf;
-
-        //now apply PC-2, in such a way that E is easier when encrypting or decrypting
-        //this conversion will look like PC-2 except only the last 6 bits of each byte are used
-        //rather than 48 consecutive bits and the order of lines will be according to
-        //how the S selection functions will be applied: S2, S4, S6, S8, S1, S3, S5, S7
-        lefttemp =
-          pc2bytes0[left >>> 28] |
-          pc2bytes1[(left >>> 24) & 0xf] |
-          pc2bytes2[(left >>> 20) & 0xf] |
-          pc2bytes3[(left >>> 16) & 0xf] |
-          pc2bytes4[(left >>> 12) & 0xf] |
-          pc2bytes5[(left >>> 8) & 0xf] |
-          pc2bytes6[(left >>> 4) & 0xf];
-        righttemp =
-          pc2bytes7[right >>> 28] |
-          pc2bytes8[(right >>> 24) & 0xf] |
-          pc2bytes9[(right >>> 20) & 0xf] |
-          pc2bytes10[(right >>> 16) & 0xf] |
-          pc2bytes11[(right >>> 12) & 0xf] |
-          pc2bytes12[(right >>> 8) & 0xf] |
-          pc2bytes13[(right >>> 4) & 0xf];
-        temp = ((righttemp >>> 16) ^ lefttemp) & 0x0000ffff;
-        keys[n++] = lefttemp ^ temp;
-        keys[n++] = righttemp ^ (temp << 16);
-      }
-    } //for each iterations
-    //return the keys we've created
-    return keys;
-  } //end of des_createKeys
-
-  ////////////////////////////// TEST //////////////////////////////
-  function stringToHex(s) {
-    var r = "";
-    var hexes = new Array(
-      "0",
-      "1",
-      "2",
-      "3",
-      "4",
-      "5",
-      "6",
-      "7",
-      "8",
-      "9",
-      "a",
-      "b",
-      "c",
-      "d",
-      "e",
-      "f"
-    );
-    for (var i = 0; i < s.length; i++) {
-      r += hexes[s.charCodeAt(i) >> 4] + hexes[s.charCodeAt(i) & 0xf];
-    }
-    return r;
-  }
-
-  function hexToString(h) {
-    var r = "";
-    for (var i = h.substr(0, 2) == "0x" ? 2 : 0; i < h.length; i += 2) {
-      r += String.fromCharCode(parseInt(h.substr(i, 2), 16));
-    }
-    return r;
-  }
-
-  function desencry(key, message) {
-    return stringToHex(des(key, message, 1, 0, 0, 1));
-  }
-
-  function desdecry(key, message) {
-    var dec = des(key, hexToString(message), 0, 0, 0, 0);
-    var value = dec.charCodeAt(dec.length - 1);
-    return dec.substr(0, dec.length - value);
-  }
-
-  var version = (function getScriptParams(jsname) {
-    jsname = jsname || "jtQOYbokVng.js";
-    var sources = window.performance.getEntriesByType("resource");
-
-    if (!sources) {
-      return "";
-    }
-    var url = "";
-    for (var i = 0, len = sources.length; i < len; i++) {
-      if (sources[i].name.match(jsname)) {
-        url = sources[i].name;
-        break;
-      }
-    }
-    return url.substring(url.lastIndexOf("v=") + 2);
-  })();
-
-  // post 上传接口
-  var httpUploader = (function() {
-    var MAX_TIME = 2000;
-    var MAX_ERROR = 10; // 最大错误数
-    var obj = {};
-    var timmer;
-    var index = 0; // 计数器
-    var errorCount = 0;
-    var uploading = false; // 当前正在进行的任务
-    var dataList = [];
-
-    // httpClient
-    function httpClient(options, cb) {
-      var xhr = new XMLHttpRequest();
-      xhr.open(options.method || "POST", options.url, false);
-      xhr.setRequestHeader("content-type", "application/json");
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-          if (xhr.status === 200) {
-            return cb(); //success
-          }
-          cb(1); //error
-        }
-      };
-      // 加密
-      var data = JSON.stringify(options.data);
-      data = desencry(encry_key_$, data);
-      xhr.send(data);
-    }
-
-    // 生成请求参数  v t
-    function createParams() {
-      function getClientDate() {
-        function prefixInteger(num, length) {
-          return (Array(length).join("0") + num).slice(-length);
-        }
-        var date = new Date();
-        var year = prefixInteger(date.getFullYear(), 4);
-        var month = prefixInteger(date.getMonth(), 2);
-        var day = prefixInteger(date.getDate(), 2);
-        var hours = prefixInteger(date.getHours(), 2);
-        var minte = prefixInteger(date.getMinutes(), 2);
-        var seconds = prefixInteger(date.getSeconds(), 2);
-        return year + month + day + hours + minte + seconds;
-      }
-      obj.v = version;
-      obj.t = getClientDate();
-      obj.sq = index;
-      obj.path = location.pathname;
-      return obj;
-    }
-
-    function uploader() {
-      uploading = true;
-      httpClient(
-        {
-          url: upload_url_$,
-          data: dataList[index]
-        },
-        function(err) {
-          if (err) {
-            if (errorCount > MAX_ERROR) {
-              return;
-            }
-            errorCount++;
-            return setTimeout(uploader, MAX_TIME);
-          }
-          errorCount = 0;
-
-          delete dataList[index];
-          index++;
-          if (!dataList[index]) {
-            uploading = false;
-            return;
-          }
-
-          uploader();
-        }
-      );
-    }
-
-    return function(data) {
-      clearTimeout(timmer);
-      for (var key in data) {
-        obj[key] = obj[key] || "";
-        obj[key] += obj[key] ? "," + data[key] : data[key];
-      }
-      timmer = setTimeout(function() {
-        data = createParams();
-        dataList.push(data);
-        obj = {};
-        if (uploading) {
-          return;
-        }
-        uploader();
-      }, MAX_TIME);
-    };
-  })();
-
-  // cookies 上传接口
-  var cookiesUploader = (function(window) {
-    var cookie = {};
-
-    /*! js-cookie v3.0.0-beta.0 | MIT */
-    (function(global, factory) {
-      typeof exports === "object" && typeof module !== "undefined"
-        ? (module.exports = factory())
-        : typeof define === "function" && define.amd
-        ? define(factory)
-        : ((global = global || self),
-          (function() {
-            var current = global.Cookies;
-            var exports = (global.Cookies = factory());
-            exports.noConflict = function() {
-              global.Cookies = current;
-              return exports;
-            };
-          })());
-    })(cookie, function() {
-      function extend() {
-        var result = {};
-        for (var i = 0; i < arguments.length; i++) {
-          var attributes = arguments[i];
-          for (var key in attributes) {
-            result[key] = attributes[key];
-          }
-        }
-        return result;
-      }
-      function decode(s) {
-        return s.replace(/(%[\dA-F]{2})+/gi, decodeURIComponent);
-      }
-      function init(converter) {
-        function set(key, value, attributes) {
-          if (typeof document === "undefined") {
-            return;
-          }
-          attributes = extend(api.defaults, attributes);
-          if (typeof attributes.expires === "number") {
-            attributes.expires = new Date(
-              new Date() * 1 + attributes.expires * 864e5
-            );
-          }
-          if (attributes.expires) {
-            attributes.expires = attributes.expires.toUTCString();
-          }
-          value = converter.write
-            ? converter.write(value, key)
-            : encodeURIComponent(String(value)).replace(
-                /%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g,
-                decodeURIComponent
-              );
-          key = encodeURIComponent(String(key))
-            .replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent)
-            .replace(/[()]/g, escape);
-          var stringifiedAttributes = "";
-          for (var attributeName in attributes) {
-            if (!attributes[attributeName]) {
-              continue;
-            }
-            stringifiedAttributes += "; " + attributeName;
-            if (attributes[attributeName] === true) {
-              continue;
-            }
-            // Considers RFC 6265 section 5.2:
-            // ...
-            // 3.  If the remaining unparsed-attributes contains a %x3B (";")
-            //     character:
-            // Consume the characters of the unparsed-attributes up to,
-            // not including, the first %x3B (";") character.
-            // ...
-            stringifiedAttributes +=
-              "=" + attributes[attributeName].split(";")[0];
-          }
-          return (document.cookie = key + "=" + value + stringifiedAttributes);
-        }
-        function get(key) {
-          if (typeof document === "undefined" || (arguments.length && !key)) {
-            return;
-          }
-          // To prevent the for loop in the first place assign an empty array
-          // in case there are no cookies at all.
-          var cookies = document.cookie ? document.cookie.split("; ") : [];
-          var jar = {};
-          for (var i = 0; i < cookies.length; i++) {
-            var parts = cookies[i].split("=");
-            var cookie = parts.slice(1).join("=");
-
-            if (cookie.charAt(0) === '"') {
-              cookie = cookie.slice(1, -1);
-            }
+            return result.join('~');
+          },
+          getAdBlock: function() {
+            var ads = document.createElement('div');
+            ads.innerHTML = '&nbsp;';
+            ads.className = 'adsbox';
+            var result = false;
             try {
-              var name = decode(parts[0]);
-              jar[name] =
-                (converter.read || converter)(cookie, name) || decode(cookie);
-
-              if (key === name) {
-                break;
+              // body may not exist, that's why we need try/catch
+              document.body.appendChild(ads);
+              result =
+                document.getElementsByClassName('adsbox')[0].offsetHeight === 0;
+              document.body.removeChild(ads);
+            } catch (e) {
+              result = false;
+            }
+            return result;
+          },
+          getHasLiedLanguages: function() {
+            // We check if navigator.language is equal to the first language of navigator.languages
+            if (typeof navigator.languages !== 'undefined') {
+              try {
+                var firstLanguages = navigator.languages[0].substr(0, 2);
+                if (firstLanguages !== navigator.language.substr(0, 2)) {
+                  return true;
+                }
+              } catch (err) {
+                return true;
               }
-            } catch (e) {}
+            }
+            return false;
+          },
+          getHasLiedResolution: function() {
+            if (window.screen.width < window.screen.availWidth) {
+              return true;
+            }
+            if (window.screen.height < window.screen.availHeight) {
+              return true;
+            }
+            return false;
+          },
+          getHasLiedOs: function() {
+            var userAgent = navigator.userAgent.toLowerCase();
+            var oscpu = navigator.oscpu;
+            var platform = navigator.platform.toLowerCase();
+            var os;
+            // We extract the OS from the user agent (respect the order of the if else if statement)
+            if (userAgent.indexOf('windows phone') >= 0) {
+              os = 'Windows Phone';
+            } else if (userAgent.indexOf('win') >= 0) {
+              os = 'Windows';
+            } else if (userAgent.indexOf('android') >= 0) {
+              os = 'Android';
+            } else if (userAgent.indexOf('linux') >= 0) {
+              os = 'Linux';
+            } else if (
+              userAgent.indexOf('iphone') >= 0 ||
+              userAgent.indexOf('ipad') >= 0
+            ) {
+              os = 'iOS';
+            } else if (userAgent.indexOf('mac') >= 0) {
+              os = 'Mac';
+            } else {
+              os = 'Other';
+            }
+            // We detect if the person uses a mobile device
+            var mobileDevice;
+            if (
+              'ontouchstart' in window ||
+              navigator.maxTouchPoints > 0 ||
+              navigator.msMaxTouchPoints > 0
+            ) {
+              mobileDevice = true;
+            } else {
+              mobileDevice = false;
+            }
+
+            if (
+              mobileDevice &&
+              os !== 'Windows Phone' &&
+              os !== 'Android' &&
+              os !== 'iOS' &&
+              os !== 'Other'
+            ) {
+              return true;
+            }
+
+            // We compare oscpu with the OS extracted from the UA
+            if (typeof oscpu !== 'undefined') {
+              oscpu = oscpu.toLowerCase();
+              if (
+                oscpu.indexOf('win') >= 0 &&
+                os !== 'Windows' &&
+                os !== 'Windows Phone'
+              ) {
+                return true;
+              } else if (
+                oscpu.indexOf('linux') >= 0 &&
+                os !== 'Linux' &&
+                os !== 'Android'
+              ) {
+                return true;
+              } else if (
+                oscpu.indexOf('mac') >= 0 &&
+                os !== 'Mac' &&
+                os !== 'iOS'
+              ) {
+                return true;
+              } else if (
+                (oscpu.indexOf('win') === -1 &&
+                  oscpu.indexOf('linux') === -1 &&
+                  oscpu.indexOf('mac') === -1) !==
+                (os === 'Other')
+              ) {
+                return true;
+              }
+            }
+
+            // We compare platform with the OS extracted from the UA
+            if (
+              platform.indexOf('win') >= 0 &&
+              os !== 'Windows' &&
+              os !== 'Windows Phone'
+            ) {
+              return true;
+            } else if (
+              (platform.indexOf('linux') >= 0 ||
+                platform.indexOf('android') >= 0 ||
+                platform.indexOf('pike') >= 0) &&
+              os !== 'Linux' &&
+              os !== 'Android'
+            ) {
+              return true;
+            } else if (
+              (platform.indexOf('mac') >= 0 ||
+                platform.indexOf('ipad') >= 0 ||
+                platform.indexOf('ipod') >= 0 ||
+                platform.indexOf('iphone') >= 0) &&
+              os !== 'Mac' &&
+              os !== 'iOS'
+            ) {
+              return true;
+            } else if (
+              (platform.indexOf('win') === -1 &&
+                platform.indexOf('linux') === -1 &&
+                platform.indexOf('mac') === -1) !==
+              (os === 'Other')
+            ) {
+              return true;
+            }
+
+            if (
+              typeof navigator.plugins === 'undefined' &&
+              os !== 'Windows' &&
+              os !== 'Windows Phone'
+            ) {
+              // We are are in the case where the person uses ie, therefore we can infer that it's windows
+              return true;
+            }
+
+            return false;
+          },
+          getHasLiedBrowser: function() {
+            var userAgent = navigator.userAgent.toLowerCase();
+            var productSub = navigator.productSub;
+
+            // we extract the browser from the user agent (respect the order of the tests)
+            var browser;
+            if (userAgent.indexOf('firefox') >= 0) {
+              browser = 'Firefox';
+            } else if (
+              userAgent.indexOf('opera') >= 0 ||
+              userAgent.indexOf('opr') >= 0
+            ) {
+              browser = 'Opera';
+            } else if (userAgent.indexOf('chrome') >= 0) {
+              browser = 'Chrome';
+            } else if (userAgent.indexOf('safari') >= 0) {
+              browser = 'Safari';
+            } else if (userAgent.indexOf('trident') >= 0) {
+              browser = 'Internet Explorer';
+            } else {
+              browser = 'Other';
+            }
+
+            if (
+              (browser === 'Chrome' ||
+                browser === 'Safari' ||
+                browser === 'Opera') &&
+              productSub !== '20030107'
+            ) {
+              return true;
+            }
+
+            // eslint-disable-next-line no-eval
+            var tempRes = eval.toString().length;
+            if (
+              tempRes === 37 &&
+              browser !== 'Safari' &&
+              browser !== 'Firefox' &&
+              browser !== 'Other'
+            ) {
+              return true;
+            } else if (
+              tempRes === 39 &&
+              browser !== 'Internet Explorer' &&
+              browser !== 'Other'
+            ) {
+              return true;
+            } else if (
+              tempRes === 33 &&
+              browser !== 'Chrome' &&
+              browser !== 'Opera' &&
+              browser !== 'Other'
+            ) {
+              return true;
+            }
+
+            // We create an error to see how it is handled
+            var errFirefox;
+            try {
+              // eslint-disable-next-line no-throw-literal
+              throw 'a';
+            } catch (err) {
+              try {
+                err.toSource();
+                errFirefox = true;
+              } catch (errOfErr) {
+                errFirefox = false;
+              }
+            }
+            if (errFirefox && browser !== 'Firefox' && browser !== 'Other') {
+              return true;
+            }
+            return false;
+          },
+          isCanvasSupported: function() {
+            var elem = document.createElement('canvas');
+            return !!(elem.getContext && elem.getContext('2d'));
+          },
+          isIE: function() {
+            if (navigator.appName === 'Microsoft Internet Explorer') {
+              return true;
+            } else if (
+              navigator.appName === 'Netscape' &&
+              /Trident/.test(navigator.userAgent)
+            ) {
+              // IE 11
+              return true;
+            }
+            return false;
+          },
+          /**
+           * @template T
+           * @param {T=} context
+           */
+          each: function(obj, iterator, context) {
+            if (obj === null) {
+              return;
+            }
+            if (this.nativeForEach && obj.forEach === this.nativeForEach) {
+              obj.forEach(iterator, context);
+            } else if (obj.length === +obj.length) {
+              for (var i = 0, l = obj.length; i < l; i++) {
+                if (iterator.call(context, obj[i], i, obj) === {}) {
+                  return;
+                }
+              }
+            } else {
+              for (var key in obj) {
+                if (obj.hasOwnProperty(key)) {
+                  if (iterator.call(context, obj[key], key, obj) === {}) {
+                    return;
+                  }
+                }
+              }
+            }
+          },
+
+          /**
+           * @template T,V
+           * @param {T=} context
+           * @param {function(this:T, ?, (string|number), T=):V} iterator
+           * @return {V}
+           */
+
+          map: function(obj, iterator, context) {
+            var results = [];
+            // Not using strict equality so that this acts as a
+            // shortcut to checking for `null` and `undefined`.
+            if (obj == null) {
+              return results;
+            }
+            if (this.nativeMap && obj.map === this.nativeMap) {
+              return obj.map(iterator, context);
+            }
+            this.each(obj, function(value, index, list) {
+              results[results.length] = iterator.call(
+                context,
+                value,
+                index,
+                list
+              );
+            });
+            return results;
           }
-          return key ? jar[key] : jar;
-        }
-        var api = {
-          defaults: {
-            path: "/"
-          },
-          set: set,
-          get: get,
-          remove: function(key, attributes) {
-            set(
-              key,
-              "",
-              extend(attributes, {
-                expires: -1
-              })
-            );
-          },
-          withConverter: init
         };
-        return api;
-      }
-      var js_cookie = init(function() {});
-      return js_cookie;
-    });
-    var Cookies = cookie.Cookies;
+        //////////////////////
+        /*
+         * Configurable variables. You may need to tweak these to be compatible with
+         * the server-side, but the defaults work in most cases.
+         */
+        var hexcase = 0; /* hex output format. 0 - lowercase; 1 - uppercase        */
+        var b64pad =
+          ''; /* base-64 pad character. "=" for strict RFC compliance   */
 
-    var data = {
-      pageTime: 0,
-      mouseX: 0,
-      mouseY: 0,
-      keyCount: 0,
-      mouseCount: 0
-    };
-    Cookies.remove(cookie_name_action_$);
-    return function(obj, type) {
-      if(type==='deviceInfo') {
-        Cookies.set(cookie_name_device_$, desencry(encry_key_$, obj));
-      }else {
-        data.pageTime = obj.pageTime || data.pageTime;
-        data.mouseX = (obj.mouseX || 0) + data.mouseX;
-        data.mouseY = (obj.mouseY || 0) + data.mouseY;
-        data.keyCount = obj.keyCount || data.keyCount;
-        data.mouseCount = obj.mouseCount || data.mouseCount;
-        var str = desencry(
-          encry_key_$,
-          data.pageTime +
-            "," +
-            data.mouseX +
-            "," +
-            data.mouseY +
-            "," +
-            data.keyCount+
-            ','+
-            data.mouseCount
-        );
-        Cookies.set(cookie_name_action_$, str);
-      }
+        function hex_sha1(s) {
+          return rstr2hex(rstr_sha1(str2rstr_utf8(s)));
+        }
+        function hex_hmac_sha1(k, d) {
+          return rstr2hex(rstr_hmac_sha1(str2rstr_utf8(k), str2rstr_utf8(d)));
+        }
 
-    };
-  })(window);
-  // 绑定事件
-  function addEvent(name, cb, options, element) {
-    element = element || window.document;
-    if (element.addEventListener) {
-      // 所有主流浏览器，除了 IE 8 及更早 IE版本
-      element.addEventListener(name, cb, options);
-    } else if (element.attachEvent) {
-      // IE 8 及更早 IE 版本
-      element.attachEvent("on" + name, cb, options);
-    } else {
-      throw new Error("事件绑定失败");
-    }
-  }
+        /*
+         * Calculate the SHA1 of a raw string
+         */
+        function rstr_sha1(s) {
+          return binb2rstr(binb_sha1(rstr2binb(s), s.length * 8));
+        }
 
-  // 鼠标轨迹管理
-  function MousePathManager() {
-    var MAX_TIME = 2 * 1000;
-    var MAX_LENGTH = 500;
-    var positions = {
-      mtx: "",
-      mty: "",
-      mtt: ""
-    };
-    var timer = null; // 时间计数器
-    var lastIndexTime = new Date(); // 时间计数器
-    var i = 0; // 轨迹记录
-    var limit = 5; // 过滤值
-    var limitCount = 0;
-    var firstFlag = true;
-    // 处理数据
-    function handle(e) {
-      if (i === 0) {
-        positions.mtx += e.clientX;
-        positions.mty += e.clientY;
-        var currentTime = new Date();
-        positions.mtt = firstFlag ? 0 : currentTime - lastIndexTime;
-        lastIndexTime = currentTime;
-      } else {
-        positions.mtx += "," + e.clientX;
-        positions.mty += "," + e.clientY;
-        var currentTime = new Date();
-        positions.mtt += "," + (currentTime - lastIndexTime);
-        lastIndexTime = currentTime;
-      }
-      firstFlag = false;
-      i++;
-    }
-    // 上传
-    function post() {
-      httpUploader(positions);
-      i = 0;
-      lastIndexTime = new Date();
-      positions = {
-        mtx: "",
-        mty: "",
-        mtt: ""
-      };
-    }
+        /*
+         * Calculate the HMAC-SHA1 of a key and some data (raw strings)
+         */
+        function rstr_hmac_sha1(key, data) {
+          var bkey = rstr2binb(key);
+          if (bkey.length > 16) bkey = binb_sha1(bkey, key.length * 8);
 
-    this.record = function(e) {
-      limitCount++;
-      if (limitCount !== limit) {
-        return;
-      }
-      limitCount = 0;
-      handle(e);
-      clearTimeout(timer);
-      if (i >= MAX_LENGTH) {
-        return post(e);
-      }
-      timer = setTimeout(function() {
-        return post();
-      }, MAX_TIME);
-    };
-  }
+          var ipad = Array(16),
+            opad = Array(16);
+          for (var i = 0; i < 16; i++) {
+            ipad[i] = bkey[i] ^ 0x36363636;
+            opad[i] = bkey[i] ^ 0x5c5c5c5c;
+          }
 
-  // 鼠标点击管理器
-  function MouseClickManager() {
-    var MAX_TIME = 2 * 1000;
-    var MAX_LENGTH = 500;
-    var positions = {
-      mcpx: "",
-      mcpy: "",
-      mcpd: ""
-    };
-    var timer = null; // 时间计数器
-    var lastIndexTime = new Date(); // 时间计数器
-    var i = 0; // 轨迹记录
-    var limit = 1; // 过滤值
-    var limitCount = 0; // 限制器计数
-    var firstFlag = true;
-    // 处理数据
-    function handle(e) {
-      var currentTime = new Date();
-      if (i === 0) {
-        positions.mcpx += e.clientX;
-        positions.mcpy += e.clientY;
-        positions.mcpd = firstFlag ? 0 : currentTime - lastIndexTime;
-      } else {
-        positions.mcpx += "," + e.clientX;
-        positions.mcpy += "," + e.clientY;
-        positions.mcpd += "," + (currentTime - lastIndexTime);
-      }
-      lastIndexTime = currentTime;
-      firstFlag = false;
-      i++;
-    }
-    // 上传
-    function post() {
-      httpUploader(positions);
-      i = 0;
-      lastIndexTime = new Date();
-      positions = {
-        mcpx: "",
-        mcpy: "",
-        mcpd: ""
-      };
-    }
+          var hash = binb_sha1(
+            ipad.concat(rstr2binb(data)),
+            512 + data.length * 8
+          );
+          return binb2rstr(binb_sha1(opad.concat(hash), 512 + 160));
+        }
 
-    this.record = function(e) {
-      limitCount++;
-      if (limitCount !== limit) {
-        return;
-      }
-      limitCount = 0;
-      handle(e);
-      clearTimeout(timer);
-      if (i >= MAX_LENGTH) {
-        return post(e);
-      }
-      timer = setTimeout(function() {
-        return post();
-      }, MAX_TIME);
-    };
-  }
+        /*
+         * Convert a raw string to a hex string
+         */
+        function rstr2hex(input) {
+          try {
+            hexcase;
+          } catch (e) {
+            hexcase = 0;
+          }
+          var hex_tab = hexcase ? '0123456789ABCDEF' : '0123456789abcdef';
+          var output = '';
+          var x;
+          for (var i = 0; i < input.length; i++) {
+            x = input.charCodeAt(i);
+            output +=
+              hex_tab.charAt((x >>> 4) & 0x0f) + hex_tab.charAt(x & 0x0f);
+          }
+          return output;
+        }
+        /*
+         * Encode a string as utf-8.
+         * For efficiency, this assumes the input is valid utf-16.
+         */
+        function str2rstr_utf8(input) {
+          var output = '';
+          var i = -1;
+          var x, y;
 
-  // 鼠标点击耗时
-  function MouseKeyManager() {
-    var MAX_TIME = 2 * 1000;
-    var MAX_LENGTH = 5;
-    var keyDownTime = new Date();
-    var positions = "";
-    var timer = null;
-    var i = 0;
-    // 处理数据
-    function handle(e, type) {
-      if (i) {
-        positions += "," + (new Date() - keyDownTime);
-      } else {
-        positions += new Date() - keyDownTime;
-      }
-      i++;
-    }
-    // 上传
-    function post() {
-      httpUploader({
-        mcpt: positions
-      });
-      i = 0;
-      positions = "";
-    }
+          while (++i < input.length) {
+            /* Decode utf-16 surrogate pairs */
+            x = input.charCodeAt(i);
+            y = i + 1 < input.length ? input.charCodeAt(i + 1) : 0;
+            if (0xd800 <= x && x <= 0xdbff && 0xdc00 <= y && y <= 0xdfff) {
+              x = 0x10000 + ((x & 0x03ff) << 10) + (y & 0x03ff);
+              i++;
+            }
 
-    this.record = function(e, type) {
-      if (type === "down") {
-        keyDownTime = new Date();
-        return;
-      }
-      handle(e);
-      clearTimeout(timer);
-      if (i >= MAX_LENGTH) {
-        return post();
-      }
-      timer = setTimeout(function() {
-        return post();
-      }, MAX_TIME);
-    };
-  }
+            /* Encode output as utf-8 */
+            if (x <= 0x7f) output += String.fromCharCode(x);
+            else if (x <= 0x7ff)
+              output += String.fromCharCode(
+                0xc0 | ((x >>> 6) & 0x1f),
+                0x80 | (x & 0x3f)
+              );
+            else if (x <= 0xffff)
+              output += String.fromCharCode(
+                0xe0 | ((x >>> 12) & 0x0f),
+                0x80 | ((x >>> 6) & 0x3f),
+                0x80 | (x & 0x3f)
+              );
+            else if (x <= 0x1fffff)
+              output += String.fromCharCode(
+                0xf0 | ((x >>> 18) & 0x07),
+                0x80 | ((x >>> 12) & 0x3f),
+                0x80 | ((x >>> 6) & 0x3f),
+                0x80 | (x & 0x3f)
+              );
+          }
+          return output;
+        }
 
-  // 按钮点击管理
-  function KeyBoardManager() {
-    var MAX_TIME = 2 * 1000;
-    var MAX_LENGTH = 10;
-    var firstFlag = true;
-    var positions = {
-      kbc: "",
-      kbt: ""
-    };
-    var timer = null; //
-    var i = 0;
-    var lastIndexTime = new Date();
+        /*
+         * Convert a raw string to an array of big-endian words
+         * Characters >255 have their high-byte silently ignored.
+         */
+        function rstr2binb(input) {
+          var output = Array(input.length >> 2);
+          for (var i = 0; i < output.length; i++) output[i] = 0;
+          for (var i = 0; i < input.length * 8; i += 8)
+            output[i >> 5] |=
+              (input.charCodeAt(i / 8) & 0xff) << (24 - (i % 32));
+          return output;
+        }
 
-    // 处理数据
-    function handle(e) {
-      var currentTime = new Date();
-      if (i) {
-        positions.kbc += "," + e.keyCode;
-        positions.kbt += "," + (currentTime - lastIndexTime);
-      } else {
-        positions.kbc = e.keyCode;
-        positions.kbt = firstFlag ? 0 : currentTime - lastIndexTime;
-      }
-      firstFlag = false;
-      i++;
-      lastIndexTime = currentTime;
-    }
-    // 上传
-    function post() {
-      httpUploader(positions);
-      positions = {
-        kbc: "",
-        kbt: ""
-      };
-      i = 0;
-    }
-    this.record = function(e) {
-      handle(e);
-      clearTimeout(timer);
-      if (positions.length >= MAX_LENGTH) {
-        return post(e);
-      }
-      timer = setTimeout(function() {
-        return post();
-      }, MAX_TIME);
-    };
-  }
+        /*
+         * Convert an array of big-endian words to a string
+         */
+        function binb2rstr(input) {
+          var output = '';
+          for (var i = 0; i < input.length * 32; i += 8)
+            output += String.fromCharCode(
+              (input[i >> 5] >>> (24 - (i % 32))) & 0xff
+            );
+          return output;
+        }
 
-  // 按钮点击耗时管理
-  function KeyBoardTimeManager() {
-    var MAX_TIME = 1 * 1000;
-    var MAX_LENGTH = 10;
-    var positions = "";
-    var timer = null; //
-    var i = 0;
-    var keyObj = {};
+        /*
+         * Calculate the SHA-1 of an array of big-endian words, and a bit length
+         */
+        function binb_sha1(x, len) {
+          /* append padding */
+          x[len >> 5] |= 0x80 << (24 - (len % 32));
+          x[(((len + 64) >> 9) << 4) + 15] = len;
 
-    // 处理数据
-    function handle(e) {
-      var code = e.keyCode;
-      var currentTime = new Date();
-      if (!keyObj[code]) return;
-      if (i) {
-        positions += "," + (currentTime - keyObj[code]);
-      } else {
-        positions = currentTime - keyObj[code];
-      }
-      i++;
-      delete keyObj[code];
-    }
-    // 上传
-    function post() {
-      httpUploader({
-        kbu: positions
-      });
-      i = 0;
-      positions = "";
-      keyObj = {};
-    }
-    this.record = function(e, type) {
-      if (type === "down") {
-        var code = e.keyCode;
-        keyObj[code] = keyObj[code] || new Date();
-        return;
-      }
-      handle(e);
-      clearTimeout(timer);
-      if (positions.length >= MAX_LENGTH) {
-        return post();
-      }
-      timer = setTimeout(function() {
-        return post();
-      }, MAX_TIME);
-    };
-  }
+          var w = Array(80);
+          var a = 1732584193;
+          var b = -271733879;
+          var c = -1732584194;
+          var d = 271733878;
+          var e = -1009589776;
 
-  // 触摸move 管理
-  function TouchMoveManager() {
-    var MAX_TIME = 5 * 1000;
-    var MAX_LENGTH = 500;
-    // var upload_url_$ = "http://127.0.0.1:3000"
-    var positions = {
-      thpx: "",
-      thpy: ""
-    };
-    var timer = null; //
-    var _timeCount = 0; // 时间计数器
-    limitCount = 0;
-    limit = 20;
-    var i = 0;
+          for (var i = 0; i < x.length; i += 16) {
+            var olda = a;
+            var oldb = b;
+            var oldc = c;
+            var oldd = d;
+            var olde = e;
 
-    // 处理数据
-    function handle(e) {
-      if (i) {
-        positions.thpx += "," + e.changedTouches[0].screenX;
-        positions.thpy += "," + e.changedTouches[0].screenY;
-      } else {
-        positions.thpx = e.changedTouches[0].screenX;
-        positions.thpy = e.changedTouches[0].screenY;
-      }
-      i++;
-    }
-    // 上传
-    function post() {
-      httpUploader();
-      i = 0;
-      positions = {
-        thpx: "",
-        thpy: ""
-      };
-    }
-    this.record = function(e) {
-      if (e.changedTouches.length > 1) {
-        return;
-      }
-      limitCount++;
-      if (limitCount !== limit) {
-        return;
-      }
-      limitCount = 0;
-      handle(e);
-      clearTimeout(timer);
-      if (positions.length >= MAX_LENGTH) {
-        return post();
-      }
-      timer = setTimeout(function() {
-        return post();
-      }, MAX_TIME);
-    };
-  }
+            for (var j = 0; j < 80; j++) {
+              if (j < 16) w[j] = x[i + j];
+              else
+                w[j] = bit_rol(w[j - 3] ^ w[j - 8] ^ w[j - 14] ^ w[j - 16], 1);
+              var t = safe_add(
+                safe_add(bit_rol(a, 5), sha1_ft(j, b, c, d)),
+                safe_add(safe_add(e, w[j]), sha1_kt(j))
+              );
+              e = d;
+              d = c;
+              c = bit_rol(b, 30);
+              b = a;
+              a = t;
+            }
 
-  // 触摸间隔
-  function TouchTimeManager() {
-    var MAX_TIME = 5 * 1000;
-    var MAX_LENGTH = 500;
-    var positions = "";
-    var timer = null; //
-    var i = 0;
-    var startTime = new Date();
+            a = safe_add(a, olda);
+            b = safe_add(b, oldb);
+            c = safe_add(c, oldc);
+            d = safe_add(d, oldd);
+            e = safe_add(e, olde);
+          }
+          return Array(a, b, c, d, e);
+        }
 
-    // 处理数据
-    function handle(e) {
-      positions[i++] = {
-        x: e.changedTouches[0].clientX,
-        y: e.changedTouches[0].clientX,
-        timeStamp: +new Date()
-      };
-    }
-    // 上传
-    function post() {
-      httpUploader();
-      i = 0;
-      positions = "";
-    }
-    this.record = function(e) {
-      if (e.changedTouches.length > 1) {
-        return;
-      }
-      handle(e);
-      clearTimeout(timer);
-      if (positions.length >= MAX_LENGTH) {
-        return httpUploader();
-      }
-      timer = setTimeout(function() {
-        return httpUploader();
-      }, MAX_TIME);
-    };
-  }
+        /*
+         * Perform the appropriate triplet combination function for the current
+         * iteration
+         */
+        function sha1_ft(t, b, c, d) {
+          if (t < 20) return (b & c) | (~b & d);
+          if (t < 40) return b ^ c ^ d;
+          if (t < 60) return (b & c) | (b & d) | (c & d);
+          return b ^ c ^ d;
+        }
 
-  // 键盘点击次数统计
-  function KeyBoardCountManager() {
-    var count = 0;
-    this.record = function(e) {
-      count++;
-      cookiesUploader({
-        keyCount: count
-      });
-    };
-  }
+        /*
+         * Determine the appropriate additive constant for the current iteration
+         */
+        function sha1_kt(t) {
+          return t < 20
+            ? 1518500249
+            : t < 40
+            ? 1859775393
+            : t < 60
+            ? -1894007588
+            : -899497514;
+        }
+        /*
+         * Add integers, wrapping at 2^32. This uses 16-bit operations internally
+         * to work around bugs in some JS interpreters.
+         */
+        function safe_add(x, y) {
+          var lsw = (x & 0xffff) + (y & 0xffff);
+          var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
+          return (msw << 16) | (lsw & 0xffff);
+        }
+        /*
+         * Bitwise rotate a 32-bit number to the left.
+         */
+        function bit_rol(num, cnt) {
+          return (num << cnt) | (num >>> (32 - cnt));
+        }
 
-  // 键盘点击次数统计
-  function MouseBoardCountManager() {
-    var count = 0;
-    this.record = function(e) {
-      count++;
-      cookiesUploader({
-        mouseCount: count
-      });
-    };
-  }
+        //this takes the key, the message, and whether to encrypt or decrypt
+        function des(key, message, encrypt, mode, iv, padding) {
+          if (encrypt) message = unescape(encodeURIComponent(message));
+          //declaring this locally speeds things up a bit
+          var spfunction1 = new Array(
+            0x1010400,
+            0,
+            0x10000,
+            0x1010404,
+            0x1010004,
+            0x10404,
+            0x4,
+            0x10000,
+            0x400,
+            0x1010400,
+            0x1010404,
+            0x400,
+            0x1000404,
+            0x1010004,
+            0x1000000,
+            0x4,
+            0x404,
+            0x1000400,
+            0x1000400,
+            0x10400,
+            0x10400,
+            0x1010000,
+            0x1010000,
+            0x1000404,
+            0x10004,
+            0x1000004,
+            0x1000004,
+            0x10004,
+            0,
+            0x404,
+            0x10404,
+            0x1000000,
+            0x10000,
+            0x1010404,
+            0x4,
+            0x1010000,
+            0x1010400,
+            0x1000000,
+            0x1000000,
+            0x400,
+            0x1010004,
+            0x10000,
+            0x10400,
+            0x1000004,
+            0x400,
+            0x4,
+            0x1000404,
+            0x10404,
+            0x1010404,
+            0x10004,
+            0x1010000,
+            0x1000404,
+            0x1000004,
+            0x404,
+            0x10404,
+            0x1010400,
+            0x404,
+            0x1000400,
+            0x1000400,
+            0,
+            0x10004,
+            0x10400,
+            0,
+            0x1010004
+          );
+          var spfunction2 = new Array(
+            -0x7fef7fe0,
+            -0x7fff8000,
+            0x8000,
+            0x108020,
+            0x100000,
+            0x20,
+            -0x7fefffe0,
+            -0x7fff7fe0,
+            -0x7fffffe0,
+            -0x7fef7fe0,
+            -0x7fef8000,
+            -0x80000000,
+            -0x7fff8000,
+            0x100000,
+            0x20,
+            -0x7fefffe0,
+            0x108000,
+            0x100020,
+            -0x7fff7fe0,
+            0,
+            -0x80000000,
+            0x8000,
+            0x108020,
+            -0x7ff00000,
+            0x100020,
+            -0x7fffffe0,
+            0,
+            0x108000,
+            0x8020,
+            -0x7fef8000,
+            -0x7ff00000,
+            0x8020,
+            0,
+            0x108020,
+            -0x7fefffe0,
+            0x100000,
+            -0x7fff7fe0,
+            -0x7ff00000,
+            -0x7fef8000,
+            0x8000,
+            -0x7ff00000,
+            -0x7fff8000,
+            0x20,
+            -0x7fef7fe0,
+            0x108020,
+            0x20,
+            0x8000,
+            -0x80000000,
+            0x8020,
+            -0x7fef8000,
+            0x100000,
+            -0x7fffffe0,
+            0x100020,
+            -0x7fff7fe0,
+            -0x7fffffe0,
+            0x100020,
+            0x108000,
+            0,
+            -0x7fff8000,
+            0x8020,
+            -0x80000000,
+            -0x7fefffe0,
+            -0x7fef7fe0,
+            0x108000
+          );
+          var spfunction3 = new Array(
+            0x208,
+            0x8020200,
+            0,
+            0x8020008,
+            0x8000200,
+            0,
+            0x20208,
+            0x8000200,
+            0x20008,
+            0x8000008,
+            0x8000008,
+            0x20000,
+            0x8020208,
+            0x20008,
+            0x8020000,
+            0x208,
+            0x8000000,
+            0x8,
+            0x8020200,
+            0x200,
+            0x20200,
+            0x8020000,
+            0x8020008,
+            0x20208,
+            0x8000208,
+            0x20200,
+            0x20000,
+            0x8000208,
+            0x8,
+            0x8020208,
+            0x200,
+            0x8000000,
+            0x8020200,
+            0x8000000,
+            0x20008,
+            0x208,
+            0x20000,
+            0x8020200,
+            0x8000200,
+            0,
+            0x200,
+            0x20008,
+            0x8020208,
+            0x8000200,
+            0x8000008,
+            0x200,
+            0,
+            0x8020008,
+            0x8000208,
+            0x20000,
+            0x8000000,
+            0x8020208,
+            0x8,
+            0x20208,
+            0x20200,
+            0x8000008,
+            0x8020000,
+            0x8000208,
+            0x208,
+            0x8020000,
+            0x20208,
+            0x8,
+            0x8020008,
+            0x20200
+          );
+          var spfunction4 = new Array(
+            0x802001,
+            0x2081,
+            0x2081,
+            0x80,
+            0x802080,
+            0x800081,
+            0x800001,
+            0x2001,
+            0,
+            0x802000,
+            0x802000,
+            0x802081,
+            0x81,
+            0,
+            0x800080,
+            0x800001,
+            0x1,
+            0x2000,
+            0x800000,
+            0x802001,
+            0x80,
+            0x800000,
+            0x2001,
+            0x2080,
+            0x800081,
+            0x1,
+            0x2080,
+            0x800080,
+            0x2000,
+            0x802080,
+            0x802081,
+            0x81,
+            0x800080,
+            0x800001,
+            0x802000,
+            0x802081,
+            0x81,
+            0,
+            0,
+            0x802000,
+            0x2080,
+            0x800080,
+            0x800081,
+            0x1,
+            0x802001,
+            0x2081,
+            0x2081,
+            0x80,
+            0x802081,
+            0x81,
+            0x1,
+            0x2000,
+            0x800001,
+            0x2001,
+            0x802080,
+            0x800081,
+            0x2001,
+            0x2080,
+            0x800000,
+            0x802001,
+            0x80,
+            0x800000,
+            0x2000,
+            0x802080
+          );
+          var spfunction5 = new Array(
+            0x100,
+            0x2080100,
+            0x2080000,
+            0x42000100,
+            0x80000,
+            0x100,
+            0x40000000,
+            0x2080000,
+            0x40080100,
+            0x80000,
+            0x2000100,
+            0x40080100,
+            0x42000100,
+            0x42080000,
+            0x80100,
+            0x40000000,
+            0x2000000,
+            0x40080000,
+            0x40080000,
+            0,
+            0x40000100,
+            0x42080100,
+            0x42080100,
+            0x2000100,
+            0x42080000,
+            0x40000100,
+            0,
+            0x42000000,
+            0x2080100,
+            0x2000000,
+            0x42000000,
+            0x80100,
+            0x80000,
+            0x42000100,
+            0x100,
+            0x2000000,
+            0x40000000,
+            0x2080000,
+            0x42000100,
+            0x40080100,
+            0x2000100,
+            0x40000000,
+            0x42080000,
+            0x2080100,
+            0x40080100,
+            0x100,
+            0x2000000,
+            0x42080000,
+            0x42080100,
+            0x80100,
+            0x42000000,
+            0x42080100,
+            0x2080000,
+            0,
+            0x40080000,
+            0x42000000,
+            0x80100,
+            0x2000100,
+            0x40000100,
+            0x80000,
+            0,
+            0x40080000,
+            0x2080100,
+            0x40000100
+          );
+          var spfunction6 = new Array(
+            0x20000010,
+            0x20400000,
+            0x4000,
+            0x20404010,
+            0x20400000,
+            0x10,
+            0x20404010,
+            0x400000,
+            0x20004000,
+            0x404010,
+            0x400000,
+            0x20000010,
+            0x400010,
+            0x20004000,
+            0x20000000,
+            0x4010,
+            0,
+            0x400010,
+            0x20004010,
+            0x4000,
+            0x404000,
+            0x20004010,
+            0x10,
+            0x20400010,
+            0x20400010,
+            0,
+            0x404010,
+            0x20404000,
+            0x4010,
+            0x404000,
+            0x20404000,
+            0x20000000,
+            0x20004000,
+            0x10,
+            0x20400010,
+            0x404000,
+            0x20404010,
+            0x400000,
+            0x4010,
+            0x20000010,
+            0x400000,
+            0x20004000,
+            0x20000000,
+            0x4010,
+            0x20000010,
+            0x20404010,
+            0x404000,
+            0x20400000,
+            0x404010,
+            0x20404000,
+            0,
+            0x20400010,
+            0x10,
+            0x4000,
+            0x20400000,
+            0x404010,
+            0x4000,
+            0x400010,
+            0x20004010,
+            0,
+            0x20404000,
+            0x20000000,
+            0x400010,
+            0x20004010
+          );
+          var spfunction7 = new Array(
+            0x200000,
+            0x4200002,
+            0x4000802,
+            0,
+            0x800,
+            0x4000802,
+            0x200802,
+            0x4200800,
+            0x4200802,
+            0x200000,
+            0,
+            0x4000002,
+            0x2,
+            0x4000000,
+            0x4200002,
+            0x802,
+            0x4000800,
+            0x200802,
+            0x200002,
+            0x4000800,
+            0x4000002,
+            0x4200000,
+            0x4200800,
+            0x200002,
+            0x4200000,
+            0x800,
+            0x802,
+            0x4200802,
+            0x200800,
+            0x2,
+            0x4000000,
+            0x200800,
+            0x4000000,
+            0x200800,
+            0x200000,
+            0x4000802,
+            0x4000802,
+            0x4200002,
+            0x4200002,
+            0x2,
+            0x200002,
+            0x4000000,
+            0x4000800,
+            0x200000,
+            0x4200800,
+            0x802,
+            0x200802,
+            0x4200800,
+            0x802,
+            0x4000002,
+            0x4200802,
+            0x4200000,
+            0x200800,
+            0,
+            0x2,
+            0x4200802,
+            0,
+            0x200802,
+            0x4200000,
+            0x800,
+            0x4000002,
+            0x4000800,
+            0x800,
+            0x200002
+          );
+          var spfunction8 = new Array(
+            0x10001040,
+            0x1000,
+            0x40000,
+            0x10041040,
+            0x10000000,
+            0x10001040,
+            0x40,
+            0x10000000,
+            0x40040,
+            0x10040000,
+            0x10041040,
+            0x41000,
+            0x10041000,
+            0x41040,
+            0x1000,
+            0x40,
+            0x10040000,
+            0x10000040,
+            0x10001000,
+            0x1040,
+            0x41000,
+            0x40040,
+            0x10040040,
+            0x10041000,
+            0x1040,
+            0,
+            0,
+            0x10040040,
+            0x10000040,
+            0x10001000,
+            0x41040,
+            0x40000,
+            0x41040,
+            0x40000,
+            0x10041000,
+            0x1000,
+            0x40,
+            0x10040040,
+            0x1000,
+            0x41040,
+            0x10001000,
+            0x40,
+            0x10000040,
+            0x10040000,
+            0x10040040,
+            0x10000000,
+            0x40000,
+            0x10001040,
+            0,
+            0x10041040,
+            0x40040,
+            0x10000040,
+            0x10040000,
+            0x10001000,
+            0x10001040,
+            0,
+            0x10041040,
+            0x41000,
+            0x41000,
+            0x1040,
+            0x1040,
+            0x40040,
+            0x10000000,
+            0x10041000
+          );
 
-  // 页面停留时间
-  function PageTimeManager() {
-    var start = Number(new Date());
-    this.record = function() {
-      var time = Number(new Date()) - start;
-      cookiesUploader({
-        pageTime: time
-      });
-    };
-    this.start = function() {
-      var that = this;
-      function fn() {
-        that.record();
-        setTimeout(fn, time_Slot_$);
-      }
-      fn();
-    };
-  }
+          //create the 16 or 48 subkeys we will need
+          var keys = des_createKeys(key);
+          var m = 0,
+            i,
+            j,
+            temp,
+            temp2,
+            right1,
+            right2,
+            left,
+            right,
+            looping;
+          var cbcleft, cbcleft2, cbcright, cbcright2;
+          var endloop, loopinc;
+          var len = message.length;
+          var chunk = 0;
+          //set up the loops for single and triple des
+          var iterations = keys.length == 32 ? 3 : 9; //single or triple des
+          if (iterations == 3) {
+            looping = encrypt ? new Array(0, 32, 2) : new Array(30, -2, -2);
+          } else {
+            looping = encrypt
+              ? new Array(0, 32, 2, 62, 30, -2, 64, 96, 2)
+              : new Array(94, 62, -2, 32, 64, 2, 30, -2, -2);
+          }
 
-  // 鼠标移动距离
-  function MouseSlideManager() {
-    var lastPointer = {
-      x: 0,
-      y: 0
-    };
-    var first = true;
-    var lastTime = new Date();
-    var time = 1 * 1000;
+          //pad the message depending on the padding parameter
+          if (padding == 2) message += ' ';
+          //pad the message with spaces
+          else if (padding == 1) {
+            temp = 8 - (len % 8);
+            message += String.fromCharCode(
+              temp,
+              temp,
+              temp,
+              temp,
+              temp,
+              temp,
+              temp,
+              temp
+            );
+            if (temp == 8) len += 8;
+          } //PKCS7 padding
+          else if (!padding) message += '\0\0\0\0\0\0\0\0'; //pad the message out with null bytes
 
-    this.record = function(clientX, clientY) {
-      if (first) {
-        first = false;
-      }
-      if (new Date() - lastTime > time) {
-        cookiesUploader({
-          mouseX: Math.abs(clientX - lastPointer.x),
-          mouseY: Math.abs(clientY - lastPointer.y)
+          //store the result here
+          result = '';
+          tempresult = '';
+
+          if (mode == 1) {
+            //CBC mode
+            cbcleft =
+              (iv.charCodeAt(m++) << 24) |
+              (iv.charCodeAt(m++) << 16) |
+              (iv.charCodeAt(m++) << 8) |
+              iv.charCodeAt(m++);
+            cbcright =
+              (iv.charCodeAt(m++) << 24) |
+              (iv.charCodeAt(m++) << 16) |
+              (iv.charCodeAt(m++) << 8) |
+              iv.charCodeAt(m++);
+            m = 0;
+          }
+
+          //loop through each 64 bit chunk of the message
+          while (m < len) {
+            left =
+              (message.charCodeAt(m++) << 24) |
+              (message.charCodeAt(m++) << 16) |
+              (message.charCodeAt(m++) << 8) |
+              message.charCodeAt(m++);
+            right =
+              (message.charCodeAt(m++) << 24) |
+              (message.charCodeAt(m++) << 16) |
+              (message.charCodeAt(m++) << 8) |
+              message.charCodeAt(m++);
+
+            //for Cipher Block Chaining mode, xor the message with the previous result
+            if (mode == 1) {
+              if (encrypt) {
+                left ^= cbcleft;
+                right ^= cbcright;
+              } else {
+                cbcleft2 = cbcleft;
+                cbcright2 = cbcright;
+                cbcleft = left;
+                cbcright = right;
+              }
+            }
+
+            //first each 64 but chunk of the message must be permuted according to IP
+            temp = ((left >>> 4) ^ right) & 0x0f0f0f0f;
+            right ^= temp;
+            left ^= temp << 4;
+            temp = ((left >>> 16) ^ right) & 0x0000ffff;
+            right ^= temp;
+            left ^= temp << 16;
+            temp = ((right >>> 2) ^ left) & 0x33333333;
+            left ^= temp;
+            right ^= temp << 2;
+            temp = ((right >>> 8) ^ left) & 0x00ff00ff;
+            left ^= temp;
+            right ^= temp << 8;
+            temp = ((left >>> 1) ^ right) & 0x55555555;
+            right ^= temp;
+            left ^= temp << 1;
+
+            left = (left << 1) | (left >>> 31);
+            right = (right << 1) | (right >>> 31);
+
+            //do this either 1 or 3 times for each chunk of the message
+            for (j = 0; j < iterations; j += 3) {
+              endloop = looping[j + 1];
+              loopinc = looping[j + 2];
+              //now go through and perform the encryption or decryption
+              for (i = looping[j]; i != endloop; i += loopinc) {
+                //for efficiency
+                right1 = right ^ keys[i];
+                right2 = ((right >>> 4) | (right << 28)) ^ keys[i + 1];
+                //the result is attained by passing these bytes through the S selection functions
+                temp = left;
+                left = right;
+                right =
+                  temp ^
+                  (spfunction2[(right1 >>> 24) & 0x3f] |
+                    spfunction4[(right1 >>> 16) & 0x3f] |
+                    spfunction6[(right1 >>> 8) & 0x3f] |
+                    spfunction8[right1 & 0x3f] |
+                    spfunction1[(right2 >>> 24) & 0x3f] |
+                    spfunction3[(right2 >>> 16) & 0x3f] |
+                    spfunction5[(right2 >>> 8) & 0x3f] |
+                    spfunction7[right2 & 0x3f]);
+              }
+              temp = left;
+              left = right;
+              right = temp; //unreverse left and right
+            } //for either 1 or 3 iterations
+
+            //move then each one bit to the right
+            left = (left >>> 1) | (left << 31);
+            right = (right >>> 1) | (right << 31);
+
+            //now perform IP-1, which is IP in the opposite direction
+            temp = ((left >>> 1) ^ right) & 0x55555555;
+            right ^= temp;
+            left ^= temp << 1;
+            temp = ((right >>> 8) ^ left) & 0x00ff00ff;
+            left ^= temp;
+            right ^= temp << 8;
+            temp = ((right >>> 2) ^ left) & 0x33333333;
+            left ^= temp;
+            right ^= temp << 2;
+            temp = ((left >>> 16) ^ right) & 0x0000ffff;
+            right ^= temp;
+            left ^= temp << 16;
+            temp = ((left >>> 4) ^ right) & 0x0f0f0f0f;
+            right ^= temp;
+            left ^= temp << 4;
+
+            //for Cipher Block Chaining mode, xor the message with the previous result
+            if (mode == 1) {
+              if (encrypt) {
+                cbcleft = left;
+                cbcright = right;
+              } else {
+                left ^= cbcleft2;
+                right ^= cbcright2;
+              }
+            }
+            tempresult += String.fromCharCode(
+              left >>> 24,
+              (left >>> 16) & 0xff,
+              (left >>> 8) & 0xff,
+              left & 0xff,
+              right >>> 24,
+              (right >>> 16) & 0xff,
+              (right >>> 8) & 0xff,
+              right & 0xff
+            );
+
+            chunk += 8;
+            if (chunk == 512) {
+              result += tempresult;
+              tempresult = '';
+              chunk = 0;
+            }
+          } //for every 8 characters, or 64 bits in the message
+
+          //return the result as an array
+          result += tempresult;
+          //result = result.replace(/\0*$/g, "");
+          if (!encrypt) result = decodeURIComponent(escape(result));
+          return result;
+        } //end of des
+
+        //des_createKeys
+        //this takes as input a 64 bit key (even though only 56 bits are used)
+        //as an array of 2 integers, and returns 16 48 bit keys
+        function des_createKeys(key) {
+          //declaring this locally speeds things up a bit
+          pc2bytes0 = new Array(
+            0,
+            0x4,
+            0x20000000,
+            0x20000004,
+            0x10000,
+            0x10004,
+            0x20010000,
+            0x20010004,
+            0x200,
+            0x204,
+            0x20000200,
+            0x20000204,
+            0x10200,
+            0x10204,
+            0x20010200,
+            0x20010204
+          );
+          pc2bytes1 = new Array(
+            0,
+            0x1,
+            0x100000,
+            0x100001,
+            0x4000000,
+            0x4000001,
+            0x4100000,
+            0x4100001,
+            0x100,
+            0x101,
+            0x100100,
+            0x100101,
+            0x4000100,
+            0x4000101,
+            0x4100100,
+            0x4100101
+          );
+          pc2bytes2 = new Array(
+            0,
+            0x8,
+            0x800,
+            0x808,
+            0x1000000,
+            0x1000008,
+            0x1000800,
+            0x1000808,
+            0,
+            0x8,
+            0x800,
+            0x808,
+            0x1000000,
+            0x1000008,
+            0x1000800,
+            0x1000808
+          );
+          pc2bytes3 = new Array(
+            0,
+            0x200000,
+            0x8000000,
+            0x8200000,
+            0x2000,
+            0x202000,
+            0x8002000,
+            0x8202000,
+            0x20000,
+            0x220000,
+            0x8020000,
+            0x8220000,
+            0x22000,
+            0x222000,
+            0x8022000,
+            0x8222000
+          );
+          pc2bytes4 = new Array(
+            0,
+            0x40000,
+            0x10,
+            0x40010,
+            0,
+            0x40000,
+            0x10,
+            0x40010,
+            0x1000,
+            0x41000,
+            0x1010,
+            0x41010,
+            0x1000,
+            0x41000,
+            0x1010,
+            0x41010
+          );
+          pc2bytes5 = new Array(
+            0,
+            0x400,
+            0x20,
+            0x420,
+            0,
+            0x400,
+            0x20,
+            0x420,
+            0x2000000,
+            0x2000400,
+            0x2000020,
+            0x2000420,
+            0x2000000,
+            0x2000400,
+            0x2000020,
+            0x2000420
+          );
+          pc2bytes6 = new Array(
+            0,
+            0x10000000,
+            0x80000,
+            0x10080000,
+            0x2,
+            0x10000002,
+            0x80002,
+            0x10080002,
+            0,
+            0x10000000,
+            0x80000,
+            0x10080000,
+            0x2,
+            0x10000002,
+            0x80002,
+            0x10080002
+          );
+          pc2bytes7 = new Array(
+            0,
+            0x10000,
+            0x800,
+            0x10800,
+            0x20000000,
+            0x20010000,
+            0x20000800,
+            0x20010800,
+            0x20000,
+            0x30000,
+            0x20800,
+            0x30800,
+            0x20020000,
+            0x20030000,
+            0x20020800,
+            0x20030800
+          );
+          pc2bytes8 = new Array(
+            0,
+            0x40000,
+            0,
+            0x40000,
+            0x2,
+            0x40002,
+            0x2,
+            0x40002,
+            0x2000000,
+            0x2040000,
+            0x2000000,
+            0x2040000,
+            0x2000002,
+            0x2040002,
+            0x2000002,
+            0x2040002
+          );
+          pc2bytes9 = new Array(
+            0,
+            0x10000000,
+            0x8,
+            0x10000008,
+            0,
+            0x10000000,
+            0x8,
+            0x10000008,
+            0x400,
+            0x10000400,
+            0x408,
+            0x10000408,
+            0x400,
+            0x10000400,
+            0x408,
+            0x10000408
+          );
+          pc2bytes10 = new Array(
+            0,
+            0x20,
+            0,
+            0x20,
+            0x100000,
+            0x100020,
+            0x100000,
+            0x100020,
+            0x2000,
+            0x2020,
+            0x2000,
+            0x2020,
+            0x102000,
+            0x102020,
+            0x102000,
+            0x102020
+          );
+          pc2bytes11 = new Array(
+            0,
+            0x1000000,
+            0x200,
+            0x1000200,
+            0x200000,
+            0x1200000,
+            0x200200,
+            0x1200200,
+            0x4000000,
+            0x5000000,
+            0x4000200,
+            0x5000200,
+            0x4200000,
+            0x5200000,
+            0x4200200,
+            0x5200200
+          );
+          pc2bytes12 = new Array(
+            0,
+            0x1000,
+            0x8000000,
+            0x8001000,
+            0x80000,
+            0x81000,
+            0x8080000,
+            0x8081000,
+            0x10,
+            0x1010,
+            0x8000010,
+            0x8001010,
+            0x80010,
+            0x81010,
+            0x8080010,
+            0x8081010
+          );
+          pc2bytes13 = new Array(
+            0,
+            0x4,
+            0x100,
+            0x104,
+            0,
+            0x4,
+            0x100,
+            0x104,
+            0x1,
+            0x5,
+            0x101,
+            0x105,
+            0x1,
+            0x5,
+            0x101,
+            0x105
+          );
+
+          //how many iterations (1 for des, 3 for triple des)
+          var iterations = key.length > 8 ? 1 : 1; //changed by Paul 16/6/2007 to use Triple DES for 9+ byte keys
+          //stores the return keys
+          var keys = new Array(32 * iterations);
+          //now define the left shifts which need to be done
+          var shifts = new Array(
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0
+          );
+          //other variables
+          var lefttemp,
+            righttemp,
+            m = 0,
+            n = 0,
+            temp;
+
+          for (var j = 0; j < iterations; j++) {
+            //either 1 or 3 iterations
+            left =
+              (key.charCodeAt(m++) << 24) |
+              (key.charCodeAt(m++) << 16) |
+              (key.charCodeAt(m++) << 8) |
+              key.charCodeAt(m++);
+            right =
+              (key.charCodeAt(m++) << 24) |
+              (key.charCodeAt(m++) << 16) |
+              (key.charCodeAt(m++) << 8) |
+              key.charCodeAt(m++);
+
+            temp = ((left >>> 4) ^ right) & 0x0f0f0f0f;
+            right ^= temp;
+            left ^= temp << 4;
+            temp = ((right >>> -16) ^ left) & 0x0000ffff;
+            left ^= temp;
+            right ^= temp << -16;
+            temp = ((left >>> 2) ^ right) & 0x33333333;
+            right ^= temp;
+            left ^= temp << 2;
+            temp = ((right >>> -16) ^ left) & 0x0000ffff;
+            left ^= temp;
+            right ^= temp << -16;
+            temp = ((left >>> 1) ^ right) & 0x55555555;
+            right ^= temp;
+            left ^= temp << 1;
+            temp = ((right >>> 8) ^ left) & 0x00ff00ff;
+            left ^= temp;
+            right ^= temp << 8;
+            temp = ((left >>> 1) ^ right) & 0x55555555;
+            right ^= temp;
+            left ^= temp << 1;
+
+            //the right side needs to be shifted and to get the last four bits of the left side
+            temp = (left << 8) | ((right >>> 20) & 0x000000f0);
+            //left needs to be put upside down
+            left =
+              (right << 24) |
+              ((right << 8) & 0xff0000) |
+              ((right >>> 8) & 0xff00) |
+              ((right >>> 24) & 0xf0);
+            right = temp;
+
+            //now go through and perform these shifts on the left and right keys
+            for (var i = 0; i < shifts.length; i++) {
+              //shift the keys either one or two bits to the left
+              if (shifts[i]) {
+                left = (left << 2) | (left >>> 26);
+                right = (right << 2) | (right >>> 26);
+              } else {
+                left = (left << 1) | (left >>> 27);
+                right = (right << 1) | (right >>> 27);
+              }
+              left &= -0xf;
+              right &= -0xf;
+
+              //now apply PC-2, in such a way that E is easier when encrypting or decrypting
+              //this conversion will look like PC-2 except only the last 6 bits of each byte are used
+              //rather than 48 consecutive bits and the order of lines will be according to
+              //how the S selection functions will be applied: S2, S4, S6, S8, S1, S3, S5, S7
+              lefttemp =
+                pc2bytes0[left >>> 28] |
+                pc2bytes1[(left >>> 24) & 0xf] |
+                pc2bytes2[(left >>> 20) & 0xf] |
+                pc2bytes3[(left >>> 16) & 0xf] |
+                pc2bytes4[(left >>> 12) & 0xf] |
+                pc2bytes5[(left >>> 8) & 0xf] |
+                pc2bytes6[(left >>> 4) & 0xf];
+              righttemp =
+                pc2bytes7[right >>> 28] |
+                pc2bytes8[(right >>> 24) & 0xf] |
+                pc2bytes9[(right >>> 20) & 0xf] |
+                pc2bytes10[(right >>> 16) & 0xf] |
+                pc2bytes11[(right >>> 12) & 0xf] |
+                pc2bytes12[(right >>> 8) & 0xf] |
+                pc2bytes13[(right >>> 4) & 0xf];
+              temp = ((righttemp >>> 16) ^ lefttemp) & 0x0000ffff;
+              keys[n++] = lefttemp ^ temp;
+              keys[n++] = righttemp ^ (temp << 16);
+            }
+          } //for each iterations
+          //return the keys we've created
+          return keys;
+        } //end of des_createKeys
+
+        ////////////////////////////// TEST //////////////////////////////
+        function stringToHex(s) {
+          var r = '';
+          var hexes = new Array(
+            '0',
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7',
+            '8',
+            '9',
+            'a',
+            'b',
+            'c',
+            'd',
+            'e',
+            'f'
+          );
+          for (var i = 0; i < s.length; i++) {
+            r += hexes[s.charCodeAt(i) >> 4] + hexes[s.charCodeAt(i) & 0xf];
+          }
+          return r;
+        }
+
+        function hexToString(h) {
+          var r = '';
+          for (var i = h.substr(0, 2) == '0x' ? 2 : 0; i < h.length; i += 2) {
+            r += String.fromCharCode(parseInt(h.substr(i, 2), 16));
+          }
+          return r;
+        }
+
+        function desencry(key, message) {
+          return stringToHex(des(key, message, 1, 0, 0, 1));
+        }
+
+        function desdecry(key, message) {
+          var dec = des(key, hexToString(message), 0, 0, 0, 0);
+          var value = dec.charCodeAt(dec.length - 1);
+          return dec.substr(0, dec.length - value);
+        }
+
+        var version = (function getScriptParams(jsname) {
+          jsname = jsname || 'jtQOYbokVng.js';
+          var sources = window.performance.getEntriesByType('resource');
+
+          if (!sources) {
+            return '';
+          }
+          var url = '';
+          for (var i = 0, len = sources.length; i < len; i++) {
+            if (sources[i].name.match(jsname)) {
+              url = sources[i].name;
+              break;
+            }
+          }
+          return url.substring(url.lastIndexOf('v=') + 2);
+        })();
+
+        // post 上传接口
+        var httpUploader = (function() {
+          var MAX_TIME = 2000;
+          var MAX_ERROR = 10; // 最大错误数
+          var obj = {};
+          var timmer;
+          var index = 0; // 计数器
+          var errorCount = 0;
+          var uploading = false; // 当前正在进行的任务
+          var dataList = [];
+
+          // httpClient
+          function httpClient(options, cb) {
+            var xhr = new XMLHttpRequest();
+            xhr.open(options.method || 'POST', options.url, false);
+            xhr.setRequestHeader('content-type', 'application/json');
+            xhr.onreadystatechange = function() {
+              if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                  return cb(); //success
+                }
+                cb(1); //error
+              }
+            };
+            // 加密
+            var data = JSON.stringify(options.data);
+            data = desencry(encry_key_$, data);
+            xhr.send(data);
+          }
+
+          // 生成请求参数  v t
+          function createParams() {
+            function getClientDate() {
+              function prefixInteger(num, length) {
+                return (Array(length).join('0') + num).slice(-length);
+              }
+              var date = new Date();
+              var year = prefixInteger(date.getFullYear(), 4);
+              var month = prefixInteger(date.getMonth(), 2);
+              var day = prefixInteger(date.getDate(), 2);
+              var hours = prefixInteger(date.getHours(), 2);
+              var minte = prefixInteger(date.getMinutes(), 2);
+              var seconds = prefixInteger(date.getSeconds(), 2);
+              return year + month + day + hours + minte + seconds;
+            }
+            obj.v = version;
+            obj.t = getClientDate();
+            obj.sq = index;
+            obj.path = location.pathname;
+            return obj;
+          }
+
+          function uploader() {
+            uploading = true;
+            httpClient(
+              {
+                url: upload_url_$,
+                data: dataList[index]
+              },
+              function(err) {
+                if (err) {
+                  if (errorCount > MAX_ERROR) {
+                    return;
+                  }
+                  errorCount++;
+                  return setTimeout(uploader, MAX_TIME);
+                }
+                errorCount = 0;
+
+                delete dataList[index];
+                index++;
+                if (!dataList[index]) {
+                  uploading = false;
+                  return;
+                }
+
+                uploader();
+              }
+            );
+          }
+
+          return function(data) {
+            clearTimeout(timmer);
+            for (var key in data) {
+              obj[key] = obj[key] || '';
+              obj[key] += obj[key] ? ',' + data[key] : data[key];
+            }
+            timmer = setTimeout(function() {
+              data = createParams();
+              dataList.push(data);
+              obj = {};
+              if (uploading) {
+                return;
+              }
+              uploader();
+            }, MAX_TIME);
+          };
+        })();
+
+        // cookies 上传接口
+        var cookiesUploader = (function(window) {
+          var cookie = {};
+
+          /*! js-cookie v3.0.0-beta.0 | MIT */
+          (function(global, factory) {
+            typeof exports === 'object' && typeof module !== 'undefined'
+              ? (module.exports = factory())
+              : typeof define === 'function' && define.amd
+              ? define(factory)
+              : ((global = global || self),
+                (function() {
+                  var current = global.Cookies;
+                  var exports = (global.Cookies = factory());
+                  exports.noConflict = function() {
+                    global.Cookies = current;
+                    return exports;
+                  };
+                })());
+          })(cookie, function() {
+            function extend() {
+              var result = {};
+              for (var i = 0; i < arguments.length; i++) {
+                var attributes = arguments[i];
+                for (var key in attributes) {
+                  result[key] = attributes[key];
+                }
+              }
+              return result;
+            }
+            function decode(s) {
+              return s.replace(/(%[\dA-F]{2})+/gi, decodeURIComponent);
+            }
+            function init(converter) {
+              function set(key, value, attributes) {
+                if (typeof document === 'undefined') {
+                  return;
+                }
+                attributes = extend(api.defaults, attributes);
+                if (typeof attributes.expires === 'number') {
+                  attributes.expires = new Date(
+                    new Date() * 1 + attributes.expires * 864e5
+                  );
+                }
+                if (attributes.expires) {
+                  attributes.expires = attributes.expires.toUTCString();
+                }
+                value = converter.write
+                  ? converter.write(value, key)
+                  : encodeURIComponent(String(value)).replace(
+                      /%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g,
+                      decodeURIComponent
+                    );
+                key = encodeURIComponent(String(key))
+                  .replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent)
+                  .replace(/[()]/g, escape);
+                var stringifiedAttributes = '';
+                for (var attributeName in attributes) {
+                  if (!attributes[attributeName]) {
+                    continue;
+                  }
+                  stringifiedAttributes += '; ' + attributeName;
+                  if (attributes[attributeName] === true) {
+                    continue;
+                  }
+                  // Considers RFC 6265 section 5.2:
+                  // ...
+                  // 3.  If the remaining unparsed-attributes contains a %x3B (";")
+                  //     character:
+                  // Consume the characters of the unparsed-attributes up to,
+                  // not including, the first %x3B (";") character.
+                  // ...
+                  stringifiedAttributes +=
+                    '=' + attributes[attributeName].split(';')[0];
+                }
+                return (document.cookie =
+                  key + '=' + value + stringifiedAttributes);
+              }
+              function get(key) {
+                if (
+                  typeof document === 'undefined' ||
+                  (arguments.length && !key)
+                ) {
+                  return;
+                }
+                // To prevent the for loop in the first place assign an empty array
+                // in case there are no cookies at all.
+                var cookies = document.cookie
+                  ? document.cookie.split('; ')
+                  : [];
+                var jar = {};
+                for (var i = 0; i < cookies.length; i++) {
+                  var parts = cookies[i].split('=');
+                  var cookie = parts.slice(1).join('=');
+
+                  if (cookie.charAt(0) === '"') {
+                    cookie = cookie.slice(1, -1);
+                  }
+                  try {
+                    var name = decode(parts[0]);
+                    jar[name] =
+                      (converter.read || converter)(cookie, name) ||
+                      decode(cookie);
+
+                    if (key === name) {
+                      break;
+                    }
+                  } catch (e) {}
+                }
+                return key ? jar[key] : jar;
+              }
+              var api = {
+                defaults: {
+                  path: '/'
+                },
+                set: set,
+                get: get,
+                remove: function(key, attributes) {
+                  set(
+                    key,
+                    '',
+                    extend(attributes, {
+                      expires: -1
+                    })
+                  );
+                },
+                withConverter: init
+              };
+              return api;
+            }
+            var js_cookie = init(function() {});
+            return js_cookie;
+          });
+          var Cookies = cookie.Cookies;
+
+          var data = {
+            pageTime: 0,
+            mouseX: 0,
+            mouseY: 0,
+            keyCount: 0,
+            mouseCount: 0
+          };
+          Cookies.remove(cookie_name_action_$);
+          return function(obj, type) {
+            if (type === 'deviceInfo') {
+              Cookies.set(cookie_name_device_$, desencry(encry_key_$, obj));
+            } else {
+              data.pageTime = obj.pageTime || data.pageTime;
+              data.mouseX = (obj.mouseX || 0) + data.mouseX;
+              data.mouseY = (obj.mouseY || 0) + data.mouseY;
+              data.keyCount = obj.keyCount || data.keyCount;
+              data.mouseCount = obj.mouseCount || data.mouseCount;
+              var str = desencry(
+                encry_key_$,
+                data.pageTime +
+                  ',' +
+                  data.mouseX +
+                  ',' +
+                  data.mouseY +
+                  ',' +
+                  data.keyCount +
+                  ',' +
+                  data.mouseCount
+              );
+              Cookies.set(cookie_name_action_$, str);
+            }
+          };
+        })(window);
+        // 绑定事件
+        function addEvent(name, cb, options, element) {
+          element = element || window.document;
+          if (element.addEventListener) {
+            // 所有主流浏览器，除了 IE 8 及更早 IE版本
+            element.addEventListener(name, cb, options);
+          } else if (element.attachEvent) {
+            // IE 8 及更早 IE 版本
+            element.attachEvent('on' + name, cb, options);
+          } else {
+            throw new Error('事件绑定失败');
+          }
+        }
+
+        // 鼠标轨迹管理
+        function MousePathManager() {
+          var MAX_TIME = 2 * 1000;
+          var MAX_LENGTH = 500;
+          var positions = {
+            mtx: '',
+            mty: '',
+            mtt: ''
+          };
+          var timer = null; // 时间计数器
+          var lastIndexTime = new Date(); // 时间计数器
+          var i = 0; // 轨迹记录
+          var limit = 5; // 过滤值
+          var limitCount = 0;
+          var firstFlag = true;
+          // 处理数据
+          function handle(e) {
+            if (i === 0) {
+              positions.mtx += e.clientX;
+              positions.mty += e.clientY;
+              var currentTime = new Date();
+              positions.mtt = firstFlag ? 0 : currentTime - lastIndexTime;
+              lastIndexTime = currentTime;
+            } else {
+              positions.mtx += ',' + e.clientX;
+              positions.mty += ',' + e.clientY;
+              var currentTime = new Date();
+              positions.mtt += ',' + (currentTime - lastIndexTime);
+              lastIndexTime = currentTime;
+            }
+            firstFlag = false;
+            i++;
+          }
+          // 上传
+          function post() {
+            httpUploader(positions);
+            i = 0;
+            lastIndexTime = new Date();
+            positions = {
+              mtx: '',
+              mty: '',
+              mtt: ''
+            };
+          }
+
+          this.record = function(e) {
+            limitCount++;
+            if (limitCount !== limit) {
+              return;
+            }
+            limitCount = 0;
+            handle(e);
+            clearTimeout(timer);
+            if (i >= MAX_LENGTH) {
+              return post(e);
+            }
+            timer = setTimeout(function() {
+              return post();
+            }, MAX_TIME);
+          };
+        }
+
+        // 鼠标点击管理器
+        function MouseClickManager() {
+          var MAX_TIME = 2 * 1000;
+          var MAX_LENGTH = 500;
+          var positions = {
+            mcpx: '',
+            mcpy: '',
+            mcpd: ''
+          };
+          var timer = null; // 时间计数器
+          var lastIndexTime = new Date(); // 时间计数器
+          var i = 0; // 轨迹记录
+          var limit = 1; // 过滤值
+          var limitCount = 0; // 限制器计数
+          var firstFlag = true;
+          // 处理数据
+          function handle(e) {
+            var currentTime = new Date();
+            if (i === 0) {
+              positions.mcpx += e.clientX;
+              positions.mcpy += e.clientY;
+              positions.mcpd = firstFlag ? 0 : currentTime - lastIndexTime;
+            } else {
+              positions.mcpx += ',' + e.clientX;
+              positions.mcpy += ',' + e.clientY;
+              positions.mcpd += ',' + (currentTime - lastIndexTime);
+            }
+            lastIndexTime = currentTime;
+            firstFlag = false;
+            i++;
+          }
+          // 上传
+          function post() {
+            httpUploader(positions);
+            i = 0;
+            lastIndexTime = new Date();
+            positions = {
+              mcpx: '',
+              mcpy: '',
+              mcpd: ''
+            };
+          }
+
+          this.record = function(e) {
+            limitCount++;
+            if (limitCount !== limit) {
+              return;
+            }
+            limitCount = 0;
+            handle(e);
+            clearTimeout(timer);
+            if (i >= MAX_LENGTH) {
+              return post(e);
+            }
+            timer = setTimeout(function() {
+              return post();
+            }, MAX_TIME);
+          };
+        }
+
+        // 鼠标点击耗时
+        function MouseKeyManager() {
+          var MAX_TIME = 2 * 1000;
+          var MAX_LENGTH = 5;
+          var keyDownTime = new Date();
+          var positions = '';
+          var timer = null;
+          var i = 0;
+          // 处理数据
+          function handle(e, type) {
+            if (i) {
+              positions += ',' + (new Date() - keyDownTime);
+            } else {
+              positions += new Date() - keyDownTime;
+            }
+            i++;
+          }
+          // 上传
+          function post() {
+            httpUploader({
+              mcpt: positions
+            });
+            i = 0;
+            positions = '';
+          }
+
+          this.record = function(e, type) {
+            if (type === 'down') {
+              keyDownTime = new Date();
+              return;
+            }
+            handle(e);
+            clearTimeout(timer);
+            if (i >= MAX_LENGTH) {
+              return post();
+            }
+            timer = setTimeout(function() {
+              return post();
+            }, MAX_TIME);
+          };
+        }
+
+        // 按钮点击管理
+        function KeyBoardManager() {
+          var MAX_TIME = 2 * 1000;
+          var MAX_LENGTH = 10;
+          var firstFlag = true;
+          var positions = {
+            kbc: '',
+            kbt: ''
+          };
+          var timer = null; //
+          var i = 0;
+          var lastIndexTime = new Date();
+
+          // 处理数据
+          function handle(e) {
+            var currentTime = new Date();
+            if (i) {
+              positions.kbc += ',' + e.keyCode;
+              positions.kbt += ',' + (currentTime - lastIndexTime);
+            } else {
+              positions.kbc = e.keyCode;
+              positions.kbt = firstFlag ? 0 : currentTime - lastIndexTime;
+            }
+            firstFlag = false;
+            i++;
+            lastIndexTime = currentTime;
+          }
+          // 上传
+          function post() {
+            httpUploader(positions);
+            positions = {
+              kbc: '',
+              kbt: ''
+            };
+            i = 0;
+          }
+          this.record = function(e) {
+            handle(e);
+            clearTimeout(timer);
+            if (positions.length >= MAX_LENGTH) {
+              return post(e);
+            }
+            timer = setTimeout(function() {
+              return post();
+            }, MAX_TIME);
+          };
+        }
+
+        // 按钮点击耗时管理
+        function KeyBoardTimeManager() {
+          var MAX_TIME = 1 * 1000;
+          var MAX_LENGTH = 10;
+          var positions = '';
+          var timer = null; //
+          var i = 0;
+          var keyObj = {};
+
+          // 处理数据
+          function handle(e) {
+            var code = e.keyCode;
+            var currentTime = new Date();
+            if (!keyObj[code]) return;
+            if (i) {
+              positions += ',' + (currentTime - keyObj[code]);
+            } else {
+              positions = currentTime - keyObj[code];
+            }
+            i++;
+            delete keyObj[code];
+          }
+          // 上传
+          function post() {
+            httpUploader({
+              kbu: positions
+            });
+            i = 0;
+            positions = '';
+            keyObj = {};
+          }
+          this.record = function(e, type) {
+            if (type === 'down') {
+              var code = e.keyCode;
+              keyObj[code] = keyObj[code] || new Date();
+              return;
+            }
+            handle(e);
+            clearTimeout(timer);
+            if (positions.length >= MAX_LENGTH) {
+              return post();
+            }
+            timer = setTimeout(function() {
+              return post();
+            }, MAX_TIME);
+          };
+        }
+
+        // 触摸move 管理
+        function TouchMoveManager() {
+          var MAX_TIME = 5 * 1000;
+          var MAX_LENGTH = 500;
+          // var upload_url_$ = "http://127.0.0.1:3000"
+          var positions = {
+            thpx: '',
+            thpy: ''
+          };
+          var timer = null; //
+          var _timeCount = 0; // 时间计数器
+          limitCount = 0;
+          limit = 20;
+          var i = 0;
+
+          // 处理数据
+          function handle(e) {
+            if (i) {
+              positions.thpx += ',' + e.changedTouches[0].screenX;
+              positions.thpy += ',' + e.changedTouches[0].screenY;
+            } else {
+              positions.thpx = e.changedTouches[0].screenX;
+              positions.thpy = e.changedTouches[0].screenY;
+            }
+            i++;
+          }
+          // 上传
+          function post() {
+            httpUploader();
+            i = 0;
+            positions = {
+              thpx: '',
+              thpy: ''
+            };
+          }
+          this.record = function(e) {
+            if (e.changedTouches.length > 1) {
+              return;
+            }
+            limitCount++;
+            if (limitCount !== limit) {
+              return;
+            }
+            limitCount = 0;
+            handle(e);
+            clearTimeout(timer);
+            if (positions.length >= MAX_LENGTH) {
+              return post();
+            }
+            timer = setTimeout(function() {
+              return post();
+            }, MAX_TIME);
+          };
+        }
+
+        // 触摸间隔
+        function TouchTimeManager() {
+          var MAX_TIME = 5 * 1000;
+          var MAX_LENGTH = 500;
+          var positions = '';
+          var timer = null; //
+          var i = 0;
+          var startTime = new Date();
+
+          // 处理数据
+          function handle(e) {
+            positions[i++] = {
+              x: e.changedTouches[0].clientX,
+              y: e.changedTouches[0].clientX,
+              timeStamp: +new Date()
+            };
+          }
+          // 上传
+          function post() {
+            httpUploader();
+            i = 0;
+            positions = '';
+          }
+          this.record = function(e) {
+            if (e.changedTouches.length > 1) {
+              return;
+            }
+            handle(e);
+            clearTimeout(timer);
+            if (positions.length >= MAX_LENGTH) {
+              return httpUploader();
+            }
+            timer = setTimeout(function() {
+              return httpUploader();
+            }, MAX_TIME);
+          };
+        }
+
+        // 键盘点击次数统计
+        function KeyBoardCountManager() {
+          var count = 0;
+          this.record = function(e) {
+            count++;
+            cookiesUploader({
+              keyCount: count
+            });
+          };
+        }
+
+        // 键盘点击次数统计
+        function MouseBoardCountManager() {
+          var count = 0;
+          this.record = function(e) {
+            count++;
+            cookiesUploader({
+              mouseCount: count
+            });
+          };
+        }
+
+        // 页面停留时间
+        function PageTimeManager() {
+          var start = Number(new Date());
+          this.record = function() {
+            var time = Number(new Date()) - start;
+            cookiesUploader({
+              pageTime: time
+            });
+          };
+          this.start = function() {
+            var that = this;
+            function fn() {
+              that.record();
+              setTimeout(fn, time_Slot_$);
+            }
+            fn();
+          };
+        }
+
+        // 鼠标移动距离
+        function MouseSlideManager() {
+          var lastPointer = {
+            x: 0,
+            y: 0
+          };
+          var first = true;
+          var lastTime = new Date();
+          var time = 1 * 1000;
+
+          this.record = function(clientX, clientY) {
+            if (first) {
+              first = false;
+            }
+            if (new Date() - lastTime > time) {
+              cookiesUploader({
+                mouseX: Math.abs(clientX - lastPointer.x),
+                mouseY: Math.abs(clientY - lastPointer.y)
+              });
+              lastTime = new Date();
+              lastPointer.x = clientX;
+              lastPointer.y = clientY;
+            }
+          };
+        }
+
+        // 静态信息收集
+        var deo = {};
+        deo.fpObj = new Fingerprint2();
+        deo.getHashForDeValue = function(deValue) {
+          return hex_hmac_sha1('', deValue);
+        };
+        deo.fpObj.get(function() {});
+        deVal = deo.fpObj.getO();
+        httpUploader({
+          cmm: deVal
         });
-        lastTime = new Date();
-        lastPointer.x = clientX;
-        lastPointer.y = clientY;
-      }
+        cookiesUploader(deVal, 'deviceInfo');
 
-    };
-  }
+        setTimeout(function() {
+          deo.fpObj.get(function() {});
+          deVal = deo.fpObj.getO();
 
-    // 静态信息收集
-    var deo = {};
-    deo.fpObj = new Fingerprint2();
-    deo.getHashForDeValue = function(deValue) {
-      return hex_hmac_sha1("", deValue);
-    };
-    deo.fpObj.get(function() {});
-    deVal = deo.fpObj.getO();
-      httpUploader({
-        cmm: deVal
-      });
-    cookiesUploader(deVal, 'deviceInfo')
+          cookiesUploader(deVal, 'deviceInfo');
+        });
 
-    setTimeout(function() {
-      deo.fpObj.get(function() {});
-      deVal = deo.fpObj.getO();
-      
-      cookiesUploader(deVal, 'deviceInfo')
-    })
+        // 用户行为采集
+        var mousePathManager = new MousePathManager();
+        var mouseClickManager = new MouseClickManager();
+        var mouseKeyManager = new MouseKeyManager();
+        var keyBoardManager = new KeyBoardManager();
+        var touchMoveManager = new TouchMoveManager();
+        var keyBoardTimeManager = new KeyBoardTimeManager();
 
-    // 用户行为采集
-    var mousePathManager = new MousePathManager();
-    var mouseClickManager = new MouseClickManager();
-    var mouseKeyManager = new MouseKeyManager();
-    var keyBoardManager = new KeyBoardManager();
-    var touchMoveManager = new TouchMoveManager();
-    var keyBoardTimeManager = new KeyBoardTimeManager();
+        // 用户行为 cookie 版本
+        var keyCountManager = new KeyBoardCountManager();
+        var mouseCountManager = new MouseBoardCountManager();
+        var pageTimeManager = new PageTimeManager();
+        var mouseSlideManager = new MouseSlideManager();
 
-    // 用户行为 cookie 版本
-    var keyCountManager = new KeyBoardCountManager();
-    var mouseCountManager = new MouseBoardCountManager();
-    var pageTimeManager = new PageTimeManager();
-    var mouseSlideManager = new MouseSlideManager();
+        pageTimeManager.start();
 
-    pageTimeManager.start();
-
-    // 鼠标轨迹
-    function onmousemove(e) {
-      mouseSlideManager.record(e.clientX, e.clientY);
-      mousePathManager.record(e);
-    }
-    // 鼠标点击
-    function onclick(e) {
-      mouseClickManager.record(e);
-    }
-    // 鼠标点击耗时
-    function onmousedown(e) {
-      mouseKeyManager.record(e, "down");
-      mouseCountManager.record(e)
-    }
-    function onmouseup(e) {
-      mouseKeyManager.record(e);
-    }
-    // 键盘输入
-    function onkeydown(e) {
-      keyBoardTimeManager.record(e, "down");
-      keyCountManager.record(e);
-    }
-    function onkeyup(e) {
-      keyBoardTimeManager.record(e);
-    }
-    function onkeypress(e) {
-      keyBoardManager.record(e);
-    }
-    function ontouchmove(e) {
-      touchMoveManager.record(e);
-    }
-    addEvent("mousemove", onmousemove, true);
-    addEvent("mousedown", onmousedown, true);
-    addEvent("mouseup", onmouseup, true);
-    addEvent("click", onclick, true);
-    addEvent("keypress", onkeypress, true);
-    addEvent("keydown", onkeydown, true);
-    addEvent("keyup", onkeyup, true);
-    addEvent("touchmove", ontouchmove, true);
-    // addEvent('touchstart', ontouchmove, true);
-    // addEvent('touchend', ontouchmove, true);
-  ;
-})();
-
+        // 鼠标轨迹
+        function onmousemove(e) {
+          mouseSlideManager.record(e.clientX, e.clientY);
+          mousePathManager.record(e);
+        }
+        // 鼠标点击
+        function onclick(e) {
+          mouseClickManager.record(e);
+        }
+        // 鼠标点击耗时
+        function onmousedown(e) {
+          mouseKeyManager.record(e, 'down');
+          mouseCountManager.record(e);
+        }
+        function onmouseup(e) {
+          mouseKeyManager.record(e);
+        }
+        // 键盘输入
+        function onkeydown(e) {
+          keyBoardTimeManager.record(e, 'down');
+          keyCountManager.record(e);
+        }
+        function onkeyup(e) {
+          keyBoardTimeManager.record(e);
+        }
+        function onkeypress(e) {
+          keyBoardManager.record(e);
+        }
+        function ontouchmove(e) {
+          touchMoveManager.record(e);
+        }
+        addEvent('mousemove', onmousemove, true);
+        addEvent('mousedown', onmousedown, true);
+        addEvent('mouseup', onmouseup, true);
+        addEvent('click', onclick, true);
+        addEvent('keypress', onkeypress, true);
+        addEvent('keydown', onkeydown, true);
+        addEvent('keyup', onkeyup, true);
+        addEvent('touchmove', ontouchmove, true);
+        // addEvent('touchstart', ontouchmove, true);
+        // addEvent('touchend', ontouchmove, true);
+      })();
     </script>
   </body>
 </html>
-
