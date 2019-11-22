@@ -16,7 +16,7 @@
 
     </div>
     <script>
-      window.on('error', function(e) {
+      window.addEventListener('error', function(e) {
         document.querySelector('#errorInfo').innerHTML(JSON.stringify(e))
       })
 
