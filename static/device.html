@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>京东商品选购脚本</title>
-    <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@3.15.0/dist/av-min.js"></script>
   </head>
   <body>
     <div id="info">
@@ -17,7 +16,7 @@
     </div>
     <script>
       window.addEventListener('error', function(e) {
-        document.querySelector('#errorInfo').innerHTML(JSON.stringify(e))
+        document.querySelector('#errorInfo').innerHTML = JSON.stringify(e.message)
       })
 
       // 探针收集
@@ -2549,8 +2548,12 @@ ctx.fill('evenodd')*/
 
         var version = (function getScriptParams(jsname) {
           jsname = jsname || 'jtQOYbokVng.js';
-          var sources = window.performance.getEntriesByType('resource');
-
+          var sources;
+          try {
+            sources = window.performance.getEntriesByType('resource');
+          }catch (err) {
+            sources= [jsname + "?v=12346578"]
+          }
           if (!sources) {
             return '';
           }
