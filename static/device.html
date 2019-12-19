@@ -827,6 +827,7 @@
             ctx.rect(0, 0, 10, 10);
             ctx.rect(2, 2, 6, 6);
             result.push(
+              'canvas winding:' +
                 (ctx.isPointInPath(5, 5, 'evenodd') === false ? 'yes' : 'no')
             );
 
@@ -855,7 +856,11 @@ ctx.fillText('Hmd83dde03', 0, 20)*/
             ctx.arc(10, 10, 10, 0, Math.PI * 2, true);
             ctx.closePath();
             ctx.fill();
+            ctx.textBaseline = 'top';
+            ctx.font = "14px 'Arial'";
+            ctx.fillText('www.baidu.com', 2, 15);
             ctx.fillStyle = 'rgb(255,255,0)';
+            ctx.fillText('www.baidu.com', 4, 17);
             ctx.beginPath();
             ctx.arc(20, 20, 20, 0, Math.PI * 2, true);
             ctx.closePath();
@@ -870,10 +875,10 @@ ctx.fill('evenodd')*/
 
             if (canvas.toDataURL) {
               var e = canvas.toDataURL().replace('data:image/png;base64,', '');
-              // e = window.atob(e);
+              e = window.atob(e);
               //e = stringToHex(e);
               //console.log("canvas strinttohex length:" + e.length);
-              result.push(e);
+              result.push('canvas fp:' + e);
             }
             return result.join('~');
           },
