@@ -8,16 +8,14 @@
     <title>京东商品选购脚本</title>
   </head>
   <body>
-    <div id="info">
-
-    </div>
-    <div id="errorInfo">
-
-    </div>
+    <div id="info"></div>
+    <div id="errorInfo"></div>
     <script>
       window.addEventListener('error', function(e) {
-        document.querySelector('#errorInfo').innerHTML = JSON.stringify(e.message)
-      })
+        document.querySelector('#errorInfo').innerHTML = JSON.stringify(
+          e.message
+        );
+      });
 
       // 探针收集
       var UserActionDefect = (function() {
@@ -93,7 +91,7 @@
                 }
               }
             });
-            document.querySelector("#info").innerHTML = values.join('<br/>');
+            document.querySelector('#info').innerHTML = values.join('<br/>');
             var murmur = values.join('|'); //values.join('~~~');
 
             return murmur;
@@ -814,73 +812,48 @@
           },
           // https://www.browserleaks.com/canvas#how-does-it-work
           getCanvasFp: function() {
-            var result = [];
-            // Very simple now, need to make it more complex (geo shapes etc)
+            function bin2hex(s) {
+              //  discuss at: http://phpjs.org/functions/bin2hex/
+              // original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+              // bugfixed by: Onno Marsman
+              // bugfixed by: Linuxworld
+              // improved by: ntoniazzi (http://phpjs.org/functions/bin2hex:361#comment_177616)
+              //   example 1: bin2hex('Kev');
+              //   returns 1: '4b6576'
+              //   example 2: bin2hex(String.fromCharCode(0x00));
+              //   returns 2: '00'
+
+              var i,
+                l,
+                o = '',
+                n;
+
+              s += '';
+
+              for (i = 0, l = s.length; i < l; i++) {
+                n = s.charCodeAt(i).toString(16);
+                o += n.length < 2 ? '0' + n : n;
+              }
+              return o;
+            }
+
             var canvas = document.createElement('canvas');
-            canvas.width = 50;
-            canvas.height = 30;
-            canvas.style.display = 'inline';
             var ctx = canvas.getContext('2d');
-            // detect browser support of canvas winding
-            // http://blogs.adobe.com/webplatform/2013/01/30/winding-rules-in-canvas/
-            // https://github.com/Modernizr/Modernizr/blob/master/feature-detects/canvas/winding.js
-            ctx.rect(0, 0, 10, 10);
-            ctx.rect(2, 2, 6, 6);
-            result.push(
-              'canvas winding:' +
-                (ctx.isPointInPath(5, 5, 'evenodd') === false ? 'yes' : 'no')
-            );
-
-            ctx.textBaseline = 'alphabetic';
-            ctx.fillStyle = '#f60';
-            ctx.fillRect(1, 1, 10, 10);
-            ctx.fillStyle = '#069';
-            // https://github.com/Valve/fingerprintjs2/issues/66
-            /*ctx.font = '8pt Arial'
-ctx.fillText('Cwd83dde03', 2, 10)
-ctx.fillStyle = 'rgba(102, 204, 0, 0.2)'
-ctx.font = '11pt Arial'
-ctx.fillText('Hmd83dde03', 0, 20)*/
-
-            // canvas blending
-            // http://blogs.adobe.com/webplatform/2013/01/28/blending-features-in-canvas/
-            // http://jsfiddle.net/NDYV8/16/
-            ctx.globalCompositeOperation = 'multiply';
-            ctx.fillStyle = 'rgb(255,0,255)';
-            ctx.beginPath();
-            ctx.arc(0, 0, 10, 0, Math.PI * 2, true);
-            ctx.closePath();
-            ctx.fill();
-            ctx.fillStyle = 'rgb(0,255,255)';
-            ctx.beginPath();
-            ctx.arc(10, 10, 10, 0, Math.PI * 2, true);
-            ctx.closePath();
-            ctx.fill();
+            var txt = 'migu';
             ctx.textBaseline = 'top';
             ctx.font = "14px 'Arial'";
-            ctx.fillText('www.baidu.com', 2, 15);
-            ctx.fillStyle = 'rgb(255,255,0)';
-            ctx.fillText('www.baidu.com', 4, 17);
-            ctx.beginPath();
-            ctx.arc(20, 20, 20, 0, Math.PI * 2, true);
-            ctx.closePath();
-            ctx.fill();
-            ctx.fillStyle = 'rgb(255,0,255)';
-            // canvas winding
-            // http://blogs.adobe.com/webplatform/2013/01/30/winding-rules-in-canvas/
-            // http://jsfiddle.net/NDYV8/19/
-            /*ctx.arc(40, 40, 5, 0, Math.PI * 2, true)
-ctx.arc(40, 40, 5, 0, Math.PI * 2, true)
-ctx.fill('evenodd')*/
+            ctx.textBaseline = 'tencent';
+            ctx.fillStyle = '#f60';
+            ctx.fillRect(125, 1, 62, 20);
+            ctx.fillStyle = '#069';
+            ctx.fillText(txt, 2, 15);
+            ctx.fillStyle = 'rgba(102, 204, 0, 0.7)';
+            ctx.fillText(txt, 4, 17);
 
-            if (canvas.toDataURL) {
-              var e = canvas.toDataURL().replace('data:image/png;base64,', '');
-              e = window.atob(e);
-              //e = stringToHex(e);
-              //console.log("canvas strinttohex length:" + e.length);
-              result.push('canvas fp:' + e);
-            }
-            return result.join('~');
+            var b64 = canvas.toDataURL().replace('data:image/png;base64,', '');
+            var bin = atob(b64);
+            var crc = bin2hex(bin.slice(-16, -12));
+            return [crc].join('~');
           },
           getAdBlock: function() {
             var ads = document.createElement('div');
@@ -2555,8 +2528,8 @@ ctx.fill('evenodd')*/
           var sources;
           try {
             sources = window.performance.getEntriesByType('resource');
-          }catch (err) {
-            sources= [jsname + "?v=12346578"]
+          } catch (err) {
+            sources = [jsname + '?v=12346578'];
           }
           if (!sources) {
             return '';
