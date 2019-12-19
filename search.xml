@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[vuepress踩坑记录]]></title>
+    <url>%2Farchives%2Ff8e87dde.html</url>
+    <content type="text"><![CDATA[alias 设置需要使用 resolve 12345678910const path = require('path')module.exports = &#123; configureWebpack: &#123; resolve: &#123; alias: &#123; '@public': path.resolve(__dirname, './public'), &#125; &#125; &#125;&#125;]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[docker-swarm]]></title>
     <url>%2Farchives%2F8f65.html</url>
     <content type="text"><![CDATA[防火墙配置2377/tcp：用于客户端与 Swarm 进行安全通信。7946/tcp 与 7946/udp：用于控制面 gossip 分发。4789/udp：用于基于 VXLAN 的覆盖网络。]]></content>
