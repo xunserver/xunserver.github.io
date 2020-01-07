@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[记canvas追踪技术的坑]]></title>
-    <url>%2Farchives%2F747440be.html</url>
-    <content type="text"><![CDATA[原理绘制 canvas，获取 base64基于 Canvas 绘制特定内容的图片，使用 canvas.toDataURL()方法返回该图片内容的 base64 编码字符串。对于 PNG 文件格式，以块(chunk)划分，最后一块是一段 32 位的 CRC 校验，提取这段 CRC 校验码便可以用于用户的唯一标识。 代码123456789101112131415var canvas = document.createElement('canvas');var ctx = canvas.getContext('2d');var txt = domain;ctx.textBaseline = 'top';ctx.font = "14px 'Arial'";ctx.textBaseline = 'tencent';ctx.fillStyle = '#f60';ctx.fillRect(125, 1, 62, 20); // 绘制文字很重要ctx.fillStyle = '#069';ctx.fillText(txt, 2, 15); // 绘制文字很重要，一定要绘制两遍ctx.fillStyle = 'rgba(102, 204, 0, 0.7)';ctx.fillText(txt, 4, 17);var b64 = canvas.toDataURL().replace('data:image/png;base64,', '');var bin = atob(b64);]]></content>
+    <title><![CDATA[记canvas追踪]]></title>
+    <url>%2Farchives%2F4fca1c86.html</url>
+    <content type="text"><![CDATA[原理绘制 canvas，获取 base64基于 Canvas 绘制特定内容的图片，使用 canvas.toDataURL()方法返回该图片内容的 base64 编码字符串。对于 PNG 文件格式，以块(chunk)划分，最后一块是一段 32 位的 CRC 校验，提取这段 CRC 校验码便可以用于用户的唯一标识。 代码123456789101112131415var canvas = document.createElement("canvas");var ctx = canvas.getContext("2d");var txt = domain;ctx.textBaseline = "top";ctx.font = "14px 'Arial'";ctx.textBaseline = "tencent";ctx.fillStyle = "#f60";ctx.fillRect(125, 1, 62, 20); // 绘制文字很重要ctx.fillStyle = "#069";ctx.fillText(txt, 2, 15); // 绘制文字很重要，一定要绘制两遍ctx.fillStyle = "rgba(102, 204, 0, 0.7)";ctx.fillText(txt, 4, 17);var b64 = canvas.toDataURL().replace("data:image/png;base64,", "");var bin = atob(b64);]]></content>
   </entry>
   <entry>
     <title><![CDATA[vuepress踩坑记录]]></title>
