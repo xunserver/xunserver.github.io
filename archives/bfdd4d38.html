@@ -88,18 +88,18 @@
 
 
 
-<meta name="description" content="原理绘制 canvas，获取 base64基于 Canvas 绘制特定内容的图片，使用 canvas.toDataURL()方法返回该图片内容的 base64 编码字符串。对于 PNG 文件格式，以块(chunk)划分，最后一块是一段 32 位的 CRC 校验，提取这段 CRC 校验码便可以用于用户的唯一标识。 代码123456789101112131415var canvas = documen">
+<meta name="description" content="前言本文适用同机器同浏览器追踪。分为 5 个大指标：browser_fp, canvas_fp, webgl_fp,audio_fp, webrtc 场景 匿名用户系统 未登录的用户 广告 ID  浏览器指纹webdriver cpuClass deviceMemory UserAgent platform123456return navigator.webdriver; // 这个可以检测 自动">
 <meta name="keywords" content="博客,xunsever,bang">
 <meta property="og:type" content="article">
-<meta property="og:title" content="记canvas追踪">
-<meta property="og:url" content="https://blog.xunserver.cn/archives/4fca1c86.html">
+<meta property="og:title" content="浏览器追踪">
+<meta property="og:url" content="https://blog.xunserver.cn/archives/bfdd4d38.html">
 <meta property="og:site_name" content="bang">
-<meta property="og:description" content="原理绘制 canvas，获取 base64基于 Canvas 绘制特定内容的图片，使用 canvas.toDataURL()方法返回该图片内容的 base64 编码字符串。对于 PNG 文件格式，以块(chunk)划分，最后一块是一段 32 位的 CRC 校验，提取这段 CRC 校验码便可以用于用户的唯一标识。 代码123456789101112131415var canvas = documen">
+<meta property="og:description" content="前言本文适用同机器同浏览器追踪。分为 5 个大指标：browser_fp, canvas_fp, webgl_fp,audio_fp, webrtc 场景 匿名用户系统 未登录的用户 广告 ID  浏览器指纹webdriver cpuClass deviceMemory UserAgent platform123456return navigator.webdriver; // 这个可以检测 自动">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-12-19T09:34:21.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="记canvas追踪">
-<meta name="twitter:description" content="原理绘制 canvas，获取 base64基于 Canvas 绘制特定内容的图片，使用 canvas.toDataURL()方法返回该图片内容的 base64 编码字符串。对于 PNG 文件格式，以块(chunk)划分，最后一块是一段 32 位的 CRC 校验，提取这段 CRC 校验码便可以用于用户的唯一标识。 代码123456789101112131415var canvas = documen">
+<meta name="twitter:title" content="浏览器追踪">
+<meta name="twitter:description" content="前言本文适用同机器同浏览器追踪。分为 5 个大指标：browser_fp, canvas_fp, webgl_fp,audio_fp, webrtc 场景 匿名用户系统 未登录的用户 广告 ID  浏览器指纹webdriver cpuClass deviceMemory UserAgent platform123456return navigator.webdriver; // 这个可以检测 自动">
 
 
 
@@ -129,7 +129,7 @@
 
 
 
-  <link rel="canonical" href="https://blog.xunserver.cn/archives/4fca1c86.html">
+  <link rel="canonical" href="https://blog.xunserver.cn/archives/bfdd4d38.html">
 
 
 
@@ -143,7 +143,7 @@
   daovoice('update');
   </script>
 
-  <title>记canvas追踪 | bang</title>
+  <title>浏览器追踪 | bang</title>
   
 
 
@@ -331,7 +331,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.xunserver.cn/archives/4fca1c86.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.xunserver.cn/archives/bfdd4d38.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yangmanman">
@@ -348,7 +348,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">记canvas追踪</h2>
+          <h2 class="post-title" itemprop="name headline">浏览器追踪</h2>
         
 
         <div class="post-meta">
@@ -379,8 +379,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/archives/4fca1c86.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/archives/4fca1c86.html" itemprop="commentCount"></span>
+                <a href="/archives/bfdd4d38.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/archives/bfdd4d38.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -388,7 +388,7 @@
 
           
           
-             <span id="/archives/4fca1c86.html" class="leancloud_visitors" data-flag-title="记canvas追踪">
+             <span id="/archives/bfdd4d38.html" class="leancloud_visitors" data-flag-title="浏览器追踪">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  174 字
+                  402 字
                 </span>
               
 
@@ -453,8 +453,23 @@
       
 
       
-        <h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>绘制 canvas，获取 base64<br>基于 Canvas 绘制特定内容的图片，使用 canvas.toDataURL()方法返回该图片内容的 base64 编码字符串。对于 PNG 文件格式，以块(chunk)划分，最后一块是一段 32 位的 CRC 校验，提取这段 CRC 校验码便可以用于用户的唯一标识。</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> canvas = <span class="built_in">document</span>.createElement(<span class="string">"canvas"</span>);</span><br><span class="line"><span class="keyword">var</span> ctx = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line"><span class="keyword">var</span> txt = domain;</span><br><span class="line">ctx.textBaseline = <span class="string">"top"</span>;</span><br><span class="line">ctx.font = <span class="string">"14px 'Arial'"</span>;</span><br><span class="line">ctx.textBaseline = <span class="string">"tencent"</span>;</span><br><span class="line">ctx.fillStyle = <span class="string">"#f60"</span>;</span><br><span class="line">ctx.fillRect(<span class="number">125</span>, <span class="number">1</span>, <span class="number">62</span>, <span class="number">20</span>); <span class="comment">// 绘制文字很重要</span></span><br><span class="line">ctx.fillStyle = <span class="string">"#069"</span>;</span><br><span class="line">ctx.fillText(txt, <span class="number">2</span>, <span class="number">15</span>); <span class="comment">// 绘制文字很重要，一定要绘制两遍</span></span><br><span class="line">ctx.fillStyle = <span class="string">"rgba(102, 204, 0, 0.7)"</span>;</span><br><span class="line">ctx.fillText(txt, <span class="number">4</span>, <span class="number">17</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b64 = canvas.toDataURL().replace(<span class="string">"data:image/png;base64,"</span>, <span class="string">""</span>);</span><br><span class="line"><span class="keyword">var</span> bin = atob(b64);</span><br></pre></td></tr></table></figure>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文适用同机器同浏览器追踪。分为 5 个大指标：browser_fp, canvas_fp, webgl_fp,audio_fp, webrtc</p>
+<h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><ol>
+<li>匿名用户系统</li>
+<li>未登录的用户</li>
+<li>广告 ID</li>
+</ol>
+<h2 id="浏览器指纹"><a href="#浏览器指纹" class="headerlink" title="浏览器指纹"></a>浏览器指纹</h2><h3 id="webdriver-cpuClass-deviceMemory-UserAgent-platform"><a href="#webdriver-cpuClass-deviceMemory-UserAgent-platform" class="headerlink" title="webdriver cpuClass deviceMemory UserAgent platform"></a>webdriver cpuClass deviceMemory UserAgent platform</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> navigator.webdriver; <span class="comment">// 这个可以检测 自动化测试工具（puppeteer, selenium）</span></span><br><span class="line"><span class="keyword">return</span> navigator.cpuClass;  <span class="comment">// cpu等级 </span></span><br><span class="line"><span class="keyword">return</span> navigator.deviceMemory;  <span class="comment">// 设备内存大小 8</span></span><br><span class="line"><span class="keyword">return</span> navigator.UserAgent;     <span class="comment">// 浏览器标识 (操作系统标识; 加密等级标识; 浏览器语言) 渲染引擎标识 版本信息</span></span><br><span class="line"><span class="keyword">return</span> navigator.hardwareConcurrencyKey  <span class="comment">// cpu核心数  4核几线程</span></span><br><span class="line"><span class="keyword">return</span> navigator.platform  <span class="comment">// Win32</span></span><br></pre></td></tr></table></figure>
+<h3 id="language"><a href="#language" class="headerlink" title="language"></a>language</h3><p>navigator 里面有两个关于 language 的 一个 language，一个是 languages</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> getLanguage = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    navigator.language ||</span><br><span class="line">    navigator.userLanguage ||</span><br><span class="line">    navigator.browserLanguage ||</span><br><span class="line">    navigator.systemLanguage</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="colorDepth-screenResolution-devicePixelRatio"><a href="#colorDepth-screenResolution-devicePixelRatio" class="headerlink" title="colorDepth screenResolution devicePixelRatio"></a>colorDepth screenResolution devicePixelRatio</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="built_in">window</span>.screen.colorDepth  <span class="comment">// 颜色深度</span></span><br><span class="line"><span class="keyword">return</span> [<span class="built_in">window</span>.screen.width, <span class="built_in">window</span>.screen.height] <span class="comment">// 设备分辨率</span></span><br><span class="line"><span class="keyword">return</span> <span class="built_in">window</span>.devicePixelRatio <span class="comment">// 视网膜屏比例</span></span><br></pre></td></tr></table></figure>
+<h3 id="timezone-时区"><a href="#timezone-时区" class="headerlink" title="timezone 时区"></a>timezone 时区</h3><p>这个可以和 <code>ip</code> 相结合来判断是否 <code>ip</code> 和时区一致</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> getTimezone = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">window</span>.Intl.DateTimeFormat().resolvedOptions().timeZone</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="timezoneOffset-时区偏移"><a href="#timezoneOffset-时区偏移" class="headerlink" title="timezoneOffset 时区偏移"></a>timezoneOffset 时区偏移</h3><p>和上面类似</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> getTimezoneOffset = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Date</span>().getTimezoneOffset()</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="sessionStorage-localStorage-IndexedDB-openDatabase"><a href="#sessionStorage-localStorage-IndexedDB-openDatabase" class="headerlink" title="sessionStorage localStorage IndexedDB openDatabase"></a>sessionStorage localStorage IndexedDB openDatabase</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> !!<span class="built_in">window</span>.localStorage;</span><br><span class="line"><span class="keyword">return</span> !!<span class="built_in">window</span>.sessionStorage;</span><br><span class="line"><span class="keyword">return</span> !!<span class="built_in">window</span>.indexedDB;</span><br><span class="line"><span class="keyword">return</span> !!<span class="built_in">window</span>.openDatabase;</span><br></pre></td></tr></table></figure>
+<h3 id="doNotTrack-浏览器设置的不追踪标记"><a href="#doNotTrack-浏览器设置的不追踪标记" class="headerlink" title="doNotTrack 浏览器设置的不追踪标记"></a>doNotTrack 浏览器设置的不追踪标记</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> navigator.doNotTrack || navigator.msDoNotTrac || <span class="built_in">window</span>.doNotTrack</span><br></pre></td></tr></table></figure>
+<h3 id="plugins-浏览器插件"><a href="#plugins-浏览器插件" class="headerlink" title="plugins 浏览器插件"></a>plugins 浏览器插件</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">navigator.plugins <span class="comment">// 非IE</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// IE</span></span><br><span class="line"><span class="keyword">var</span> names = [</span><br><span class="line">        <span class="string">'AcroPDF.PDF'</span>, <span class="comment">// Adobe PDF reader 7+</span></span><br><span class="line">        <span class="string">'Adodb.Stream'</span>,</span><br><span class="line">        <span class="string">'AgControl.AgControl'</span>, <span class="comment">// Silverlight</span></span><br><span class="line">        <span class="string">'DevalVRXCtrl.DevalVRXCtrl.1'</span>,</span><br><span class="line">        <span class="string">'MacromediaFlashPaper.MacromediaFlashPaper'</span>,</span><br><span class="line">        <span class="string">'Msxml2.DOMDocument'</span>,</span><br><span class="line">        <span class="string">'Msxml2.XMLHTTP'</span>,</span><br><span class="line">        <span class="string">'PDF.PdfCtrl'</span>, <span class="comment">// Adobe PDF reader 6 and earlier, brrr</span></span><br><span class="line">        <span class="string">'QuickTime.QuickTime'</span>, <span class="comment">// QuickTime</span></span><br><span class="line">        <span class="string">'QuickTimeCheckObject.QuickTimeCheck.1'</span>,</span><br><span class="line">        <span class="string">'RealPlayer'</span>,</span><br><span class="line">        <span class="string">'RealPlayer.RealPlayer(tm) ActiveX Control (32-bit)'</span>,</span><br><span class="line">        <span class="string">'RealVideo.RealVideo(tm) ActiveX Control (32-bit)'</span>,</span><br><span class="line">        <span class="string">'Scripting.Dictionary'</span>,</span><br><span class="line">        <span class="string">'SWCtl.SWCtl'</span>, <span class="comment">// ShockWave player</span></span><br><span class="line">        <span class="string">'Shell.UIHelper'</span>,</span><br><span class="line">        <span class="string">'ShockwaveFlash.ShockwaveFlash'</span>, <span class="comment">// flash plugin</span></span><br><span class="line">        <span class="string">'Skype.Detection'</span>,</span><br><span class="line">        <span class="string">'TDCCtl.TDCCtl'</span>,</span><br><span class="line">        <span class="string">'WMPlayer.OCX'</span>, <span class="comment">// Windows media player</span></span><br><span class="line">        <span class="string">'rmocx.RealPlayer G2 Control'</span>,</span><br><span class="line">        <span class="string">'rmocx.RealPlayer G2 Control.1'</span></span><br><span class="line">];</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="keyword">new</span>  <span class="keyword">new</span> <span class="built_in">window</span>.ActiveXObject(names[i]);  <span class="comment">// 通过是否能够成功构造对象来区分</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -640,7 +655,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#原理"><span class="nav-number">1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">2.</span> <span class="nav-text">代码</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#场景"><span class="nav-number">2.</span> <span class="nav-text">场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器指纹"><span class="nav-number">3.</span> <span class="nav-text">浏览器指纹</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#webdriver-cpuClass-deviceMemory-UserAgent-platform"><span class="nav-number">3.1.</span> <span class="nav-text">webdriver cpuClass deviceMemory UserAgent platform</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#language"><span class="nav-number">3.2.</span> <span class="nav-text">language</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#colorDepth-screenResolution-devicePixelRatio"><span class="nav-number">3.3.</span> <span class="nav-text">colorDepth screenResolution devicePixelRatio</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#timezone-时区"><span class="nav-number">3.4.</span> <span class="nav-text">timezone 时区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#timezoneOffset-时区偏移"><span class="nav-number">3.5.</span> <span class="nav-text">timezoneOffset 时区偏移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sessionStorage-localStorage-IndexedDB-openDatabase"><span class="nav-number">3.6.</span> <span class="nav-text">sessionStorage localStorage IndexedDB openDatabase</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#doNotTrack-浏览器设置的不追踪标记"><span class="nav-number">3.7.</span> <span class="nav-text">doNotTrack 浏览器设置的不追踪标记</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#plugins-浏览器插件"><span class="nav-number">3.8.</span> <span class="nav-text">plugins 浏览器插件</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -674,7 +689,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">9.2k</span>
+    <span title="博客全站字数共计">9.5k</span>
   
 </div>
 
