@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[前端编码的故事]]></title>
+    <url>%2Farchives%2F5f877c4e.html</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title><![CDATA[算法-递归优化]]></title>
+    <url>%2Farchives%2F15477400.html</url>
+    <content type="text"><![CDATA[前言本文简单记录算法学习中， 递归优化的一些方法 尾调用简单来说就说一个函数末尾返回另一个函数 123456789function a() &#123; ... return a() // 这种就属于尾调用&#125;function a() &#123; ... return n+b() // 这种不属于， 因为return 了其他计算式&#125; 尾调用优化当尾调用的不依赖当前函数时就是尾调用优化，调用栈尽可能少。 12345678910function a(n) &#123; ... function b(n) &#123; return n+x &#125; return b(n) // 这个是尾调用， 但不是尾调用优化。 // 因为执行 return 时 a依然在调用栈中&#125; 尾调用优化例子 保证是一个尾调用 保证调用栈尽可能的,return 的函数无副作用 123456789101112131415161718192021222324252627// 阶乘函数function f1(n) &#123; if (n === 1) return n; return n * f1(n - 1);&#125;function f2(n, total) &#123; if (n === 1) &#123; return total; &#125; return arguments.callee(n - 1, n * total);&#125;// 斐波拉契函数function fb1(n) &#123; if (n &lt;= 2) &#123; return 1; &#125; return arguments.callee(n - 2) + arguments.callee(n - 1);&#125;function fb2(n, a1, a2) &#123; if (n === 1) &#123; return a2; &#125; return arguments.callee(n - 1, a2, a1 + a2);&#125; 缓存值的方式优化通过把函数中值缓存起来，加快速度，这种仅限于结果集固定的情况 12345678910111213function memoizer(fn, cache = &#123;&#125;) &#123; return function(arg) &#123; if (!(arg in cache)) &#123; cache[arg] = fn(arg); &#125; return cache[arg]; &#125;;&#125;let fac = memoizer(function(n) &#123; if (n === 1) return n; return n * arguments.callce(n - 1);&#125;);fac(5); 尾调用转 栈 + 迭代的通用方案阮一峰书中看到的方案，可以对任意尾调用进行优化, 只能尾调用形式的递归 12345678910111213141516function tco(fn) &#123; var value; var active = false; var accumulated = []; return function() &#123; accumulated.push(arguments); if (!active) &#123; active = true; while (accumulated.length) &#123; value = fn.apply(this, accumulated.shift()); &#125; active = false; return value; &#125; &#125;;&#125;]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[优秀代码片段]]></title>
     <url>%2Farchives%2Fa8404769.html</url>
     <content type="text"><![CDATA[## 123456789var _ = function(obj) &#123; if(obj instanceof _) &#123; return obj; &#125; if(!(this instanceof _)) &#123; return new _(obj) &#125; this _._wrapped = obj&#125;]]></content>

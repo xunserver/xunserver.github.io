@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.xunserver.cn/"/>
-  <updated>2020-01-09T14:23:13.000Z</updated>
+  <updated>2020-02-18T06:51:19.000Z</updated>
   <id>https://blog.xunserver.cn/</id>
   
   <author>
@@ -15,6 +15,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>前端编码的故事</title>
+    <link href="https://blog.xunserver.cn/archives/5f877c4e.html"/>
+    <id>https://blog.xunserver.cn/archives/5f877c4e.html</id>
+    <published>2020-02-18T06:51:19.000Z</published>
+    <updated>2020-02-18T06:51:19.000Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>算法-递归优化</title>
+    <link href="https://blog.xunserver.cn/archives/15477400.html"/>
+    <id>https://blog.xunserver.cn/archives/15477400.html</id>
+    <published>2020-02-17T02:09:36.000Z</published>
+    <updated>2020-02-17T02:09:36.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文简单记录算法学习中， 递归优化的一些方法</p><h2 id="尾调用"><a href="#尾调用" class="headerlink" title="尾调用"></a>尾调用</h2><p>简单来说就说一个函数末尾返回另一个函数</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> a()    <span class="comment">// 这种就属于尾调用</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> n+b()   <span class="comment">// 这种不属于， 因为return 了其他计算式</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="尾调用优化"><a href="#尾调用优化" class="headerlink" title="尾调用优化"></a>尾调用优化</h2><p>当尾调用的不依赖当前函数时就是尾调用优化，调用栈尽可能少。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">b</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> n+x</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> b(n)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 这个是尾调用， 但不是尾调用优化。</span></span><br><span class="line">    <span class="comment">// 因为执行 return 时 a依然在调用栈中</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="尾调用优化例子"><a href="#尾调用优化例子" class="headerlink" title="尾调用优化例子"></a>尾调用优化例子</h2><ol><li>保证是一个尾调用</li><li>保证调用栈尽可能的,<code>return</code> 的函数无副作用</li></ol><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 阶乘函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (n === <span class="number">1</span>) <span class="keyword">return</span> n;</span><br><span class="line">  <span class="keyword">return</span> n * f1(n - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params">n, total</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (n === <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> total;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">arguments</span>.callee(n - <span class="number">1</span>, n * total);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 斐波拉契函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fb1</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (n &lt;= <span class="number">2</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">arguments</span>.callee(n - <span class="number">2</span>) + <span class="built_in">arguments</span>.callee(n - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fb2</span>(<span class="params">n, a1, a2</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (n === <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> a2;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">arguments</span>.callee(n - <span class="number">1</span>, a2, a1 + a2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="缓存值的方式优化"><a href="#缓存值的方式优化" class="headerlink" title="缓存值的方式优化"></a>缓存值的方式优化</h2><p>通过把函数中值缓存起来，加快速度，这种仅限于结果集固定的情况</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">memoizer</span>(<span class="params">fn, cache = &#123;&#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">arg</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!(arg <span class="keyword">in</span> cache)) &#123;</span><br><span class="line">      cache[arg] = fn(arg);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> cache[arg];</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> fac = memoizer(<span class="function"><span class="keyword">function</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (n === <span class="number">1</span>) <span class="keyword">return</span> n;</span><br><span class="line">  <span class="keyword">return</span> n * <span class="built_in">arguments</span>.callce(n - <span class="number">1</span>);</span><br><span class="line">&#125;);</span><br><span class="line">fac(<span class="number">5</span>);</span><br></pre></td></tr></table></figure><h2 id="尾调用转-栈-迭代的通用方案"><a href="#尾调用转-栈-迭代的通用方案" class="headerlink" title="尾调用转 栈 + 迭代的通用方案"></a>尾调用转 栈 + 迭代的通用方案</h2><p>阮一峰书中看到的方案，可以对任意尾调用进行优化, 只能尾调用形式的递归</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">tco</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> value;</span><br><span class="line">  <span class="keyword">var</span> active = <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">var</span> accumulated = [];</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    accumulated.push(<span class="built_in">arguments</span>);</span><br><span class="line">    <span class="keyword">if</span> (!active) &#123;</span><br><span class="line">      active = <span class="literal">true</span>;</span><br><span class="line">      <span class="keyword">while</span> (accumulated.length) &#123;</span><br><span class="line">        value = fn.apply(<span class="keyword">this</span>, accumulated.shift());</span><br><span class="line">      &#125;</span><br><span class="line">      active = <span class="literal">false</span>;</span><br><span class="line">      <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;本文简单记录算法学习中， 递归优化的一些方法&lt;/p&gt;
+&lt;h2 id=&quot;尾调用&quot;&gt;&lt;a href=&quot;#尾调用&quot; class=&quot;headerli
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>优秀代码片段</title>
@@ -447,60 +483,6 @@
       <category term="linux" scheme="https://blog.xunserver.cn/tags/linux/"/>
     
       <category term="学习笔记" scheme="https://blog.xunserver.cn/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>frp内网穿透</title>
-    <link href="https://blog.xunserver.cn/archives/c067e7e3.html"/>
-    <id>https://blog.xunserver.cn/archives/c067e7e3.html</id>
-    <published>2019-04-17T02:13:24.000Z</published>
-    <updated>2019-04-17T02:13:24.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h2><p>github搜索frp star最多的项目，到release中根据系统下载响应压缩包 <a href="https://github.com/fatedier/frp" target="_blank" rel="noopener">传送门</a>，<br>压缩包中包含frps（公网服务端），frpc（需要被穿透的客户端）.ini 结尾是配置文件，full.ini 是全部的配置文件</p><h2 id="启动服务端和客户端"><a href="#启动服务端和客户端" class="headerlink" title="启动服务端和客户端"></a>启动服务端和客户端</h2><pre><code>./fprs -c ./frps.ini  // 到公网服务器启动./frpc -c ./frpc.ini  // 需要被穿透的机器上执行</code></pre><h2 id="服务器配置"><a href="#服务器配置" class="headerlink" title="服务器配置"></a>服务器配置</h2><p>官网文档支持中文，更多细节查看<a href="https://github.com/fatedier/frp/blob/master/README_zh.md" target="_blank" rel="noopener">官方文档</a></p><pre><code>[common]# 通信端口bind_port = 7000# 外网访问端口vhost_http_port=80vhost_https_port=443# 二级域名subdomain_host=frp.xunserver.cn# 连接密码token=adadadadad# 管理服务器 密码用户端口dashboard_port=7500dashboard_user=admindashboard_pwd=adadadadad# 连接池# max_pool_count=5</code></pre><h2 id="客户端管理"><a href="#客户端管理" class="headerlink" title="客户端管理"></a>客户端管理</h2><pre><code>[common]# 服务器地址server_addr = xx.xx.xx.xx# 服务器配置中 bind_port 字段server_port = 7000# 本地管理admin_addr = 127.0.0.1admin_port = 7400admin_user = adminadmin_passwd = admin# 连接密码token=xxxxx# 连接池pool_count = 5# 日志log_file = ./frpc.log# 客户端名字，必须和其他客户端名字不同[migu-http]type = http  # 类型local_port = 80 # 映射到本地端口subdomain= migu # 子域名# 同上[migu-https]type = https local_port = 443subdomain= migu</code></pre><h2 id="https-配置"><a href="#https-配置" class="headerlink" title="https 配置"></a>https 配置</h2><p>由于frp 是全部转发，所以https的配置在应用上，可以在nginx上配置。具体参考 nginx-https配置</p><h2 id="ssh-连接"><a href="#ssh-连接" class="headerlink" title="ssh 连接"></a>ssh 连接</h2><p>在客户端配置， 执行==ssh -oPort=6000 <a href="mailto:username@x.x.x.x" target="_blank" rel="noopener">username@x.x.x.x</a>==</p><pre><code>[ssh]type = tcplocal_ip = 127.0.0.1local_port = 22remote_port = 6000</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;下载安装&quot;&gt;&lt;a href=&quot;#下载安装&quot; class=&quot;headerlink&quot; title=&quot;下载安装&quot;&gt;&lt;/a&gt;下载安装&lt;/h2&gt;&lt;p&gt;github搜索frp star最多的项目，到release中根据系统下载响应压缩包 &lt;a href=&quot;https://gi
-      
-    
-    </summary>
-    
-      <category term="linux" scheme="https://blog.xunserver.cn/categories/linux/"/>
-    
-    
-      <category term="frp" scheme="https://blog.xunserver.cn/tags/frp/"/>
-    
-      <category term="内网穿透" scheme="https://blog.xunserver.cn/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ngrok内网穿透</title>
-    <link href="https://blog.xunserver.cn/archives/64ba60b1.html"/>
-    <id>https://blog.xunserver.cn/archives/64ba60b1.html</id>
-    <published>2019-04-17T01:40:39.000Z</published>
-    <updated>2019-04-17T01:40:39.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h2><p>github 搜索 <a href="https://github.com/inconshreveable/ngrok" target="_blank" rel="noopener">ngrok</a> star 最多的项目，clone 到本地，解压。</p><h2 id="证书配置"><a href="#证书配置" class="headerlink" title="证书配置"></a>证书配置</h2><p>证书配置，没有证书的使用自签名证书。有证书的跳过这一步</p><h3 id="自签名证书"><a href="#自签名证书" class="headerlink" title="自签名证书"></a>自签名证书</h3><p>使用openssl 生成证书，openssl安装 查看opnessl 学习笔记</p><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 生成自签名证书私钥 ca.key</span></span><br><span class="line">openssl genrsa -out ca<span class="selector-class">.key</span> <span class="number">2048</span></span><br><span class="line"><span class="comment">// 根据 ca.key 生成自签名的CA证书</span></span><br><span class="line">openssl req -x509 -new  -nodes -key ca<span class="selector-class">.key</span> -subj <span class="string">"/CN=domain.name"</span> -days <span class="number">5000</span> -out root<span class="selector-class">.crt</span> </span><br><span class="line"><span class="comment">// 生成服务器私钥</span></span><br><span class="line">openssl genrsa -out server<span class="selector-class">.key</span> <span class="number">2048</span></span><br><span class="line"><span class="comment">// 生成服务器 csr</span></span><br><span class="line">openssl req -new -key server<span class="selector-class">.key</span> -subj <span class="string">"/CN=domain.name"</span> -out server.csr</span><br><span class="line"><span class="comment">// ca 颁发证书</span></span><br><span class="line">openssl x509 -req -<span class="keyword">in</span> server<span class="selector-class">.csr</span> -CA ca<span class="selector-class">.crt</span> -CAkey ca<span class="selector-class">.key</span> -CAcreateserial -out  server<span class="selector-class">.crt</span> -days <span class="number">5000</span></span><br></pre></td></tr></table></figure><h2 id="替换官方证书"><a href="#替换官方证书" class="headerlink" title="替换官方证书"></a>替换官方证书</h2><p>将官方证书替换掉, 官方的证书放在 assets/中, 具体替换下面3个</p><ul><li>替换ca ———- assets/client/tls</li><li>替换服务器公钥 ———– assets/server/tls</li><li>替换服务器证书 ———— assets/server/tls</li></ul><h2 id="重新编译服务端和客户端"><a href="#重新编译服务端和客户端" class="headerlink" title="重新编译服务端和客户端"></a>重新编译服务端和客户端</h2><p>编译需要安装go语言环境<code>yum insatll golang</code>，<br>设置不同系统环境变量编译</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GOOS=[windows | linux] GOARCH=[386 | amd64] make [<span class="keyword">release</span>-<span class="keyword">server</span> | <span class="keyword">release</span>-<span class="keyword">client</span>]</span><br></pre></td></tr></table></figure><h2 id="启动服务器端"><a href="#启动服务器端" class="headerlink" title="启动服务器端"></a>启动服务器端</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/usr/</span>local<span class="regexp">/ngrok/</span>bin<span class="regexp">/ngrokd [-tlsKey=/</span>usr<span class="regexp">/local/</span>ngrok<span class="regexp">/assets/</span>server<span class="regexp">/tls/</span>snakeoil.key] [-tlsCrt=<span class="regexp">/usr/</span>local<span class="regexp">/ngrok/</span>assets<span class="regexp">/server/</span>tls/snakeoil.crt]  -domain=xxx.xxxx.xx -httpAddr=:<span class="number">81</span> -httpsAddr=:<span class="number">4443</span> -tunnelAddr=:<span class="number">4445</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// -tlsKey 和 -tlsCrt可选，表示使用自己的证书和 key，-damain 绑定的域名； http 和https 监听的端口； -tunnelAddr 客户端通信端口</span></span><br></pre></td></tr></table></figure><h2 id="启动客户端"><a href="#启动客户端" class="headerlink" title="启动客户端"></a>启动客户端</h2><p>根据平台下载对应的 ngrok程序<br>新建配置文件，添加如下内容</p><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">server_addr:</span> <span class="string">"xxx.xxxx.xxx:port"</span>  <span class="comment">// port 为服务器 -tunnelAddr 端口值  </span></span><br><span class="line"><span class="string">trust_host_root_certs:</span> <span class="literal">false</span>   <span class="comment">// 如果是自签名证书，此项为false</span></span><br></pre></td></tr></table></figure><p>新建log文件，前期调试用 log.log<br>启动客户端,具体配置可以通过 ngrok -h 查看<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ngrok -<span class="built_in">config</span> <span class="built_in">config</span>.cfg -<span class="built_in">log</span> <span class="built_in">log</span>.<span class="built_in">log</span> -subdomain subdomainname port</span><br><span class="line">// ngrok -<span class="built_in">config</span> <span class="built_in">config</span>.cfg -<span class="built_in">log</span> <span class="built_in">log</span>.<span class="built_in">log</span> -subdomain ngrok <span class="number">80</span></span><br></pre></td></tr></table></figure></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;下载安装&quot;&gt;&lt;a href=&quot;#下载安装&quot; class=&quot;headerlink&quot; title=&quot;下载安装&quot;&gt;&lt;/a&gt;下载安装&lt;/h2&gt;&lt;p&gt;github 搜索 &lt;a href=&quot;https://github.com/inconshreveable/ngrok&quot; t
-      
-    
-    </summary>
-    
-      <category term="linux" scheme="https://blog.xunserver.cn/categories/linux/"/>
-    
-    
-      <category term="内网穿透" scheme="https://blog.xunserver.cn/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/"/>
-    
-      <category term="ngrok" scheme="https://blog.xunserver.cn/tags/ngrok/"/>
     
   </entry>
   
