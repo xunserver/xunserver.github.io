@@ -88,18 +88,18 @@
 
 
 
-<meta name="description" content="随笔">
+<meta name="description" content="前言本文记录自己理解 ascii、unicode、utf-8 的含义和区别 ascii 编码ascii 编码使用一个字节代表一个字符，比如 A，二进制就是 0100 0001，十进制就是 65。目前来说 ascii 只有 128 个字符，所以第一位都统一为 0 unicode 编码ascii 编码只有 128 种状态，表示英语字符能够，但是表示其他国家语言字符时就不够用， 所以 unicode 编">
 <meta name="keywords" content="博客,xunsever,bang">
 <meta property="og:type" content="article">
 <meta property="og:title" content="前端编码的故事">
 <meta property="og:url" content="https://blog.xunserver.cn/archives/5f877c4e.html">
 <meta property="og:site_name" content="bang">
-<meta property="og:description" content="随笔">
+<meta property="og:description" content="前言本文记录自己理解 ascii、unicode、utf-8 的含义和区别 ascii 编码ascii 编码使用一个字节代表一个字符，比如 A，二进制就是 0100 0001，十进制就是 65。目前来说 ascii 只有 128 个字符，所以第一位都统一为 0 unicode 编码ascii 编码只有 128 种状态，表示英语字符能够，但是表示其他国家语言字符时就不够用， 所以 unicode 编">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2020-02-18T06:51:19.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端编码的故事">
-<meta name="twitter:description" content="随笔">
+<meta name="twitter:description" content="前言本文记录自己理解 ascii、unicode、utf-8 的含义和区别 ascii 编码ascii 编码使用一个字节代表一个字符，比如 A，二进制就是 0100 0001，十进制就是 65。目前来说 ascii 只有 128 个字符，所以第一位都统一为 0 unicode 编码ascii 编码只有 128 种状态，表示英语字符能够，但是表示其他国家语言字符时就不够用， 所以 unicode 编">
 
 
 
@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0 字
+                  387 字
                 </span>
               
 
@@ -453,7 +453,16 @@
       
 
       
-        
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文记录自己理解 ascii、unicode、utf-8 的含义和区别</p>
+<h2 id="ascii-编码"><a href="#ascii-编码" class="headerlink" title="ascii 编码"></a>ascii 编码</h2><p>ascii 编码使用一个字节代表一个字符，比如 <code>A</code>，二进制就是 <code>0100 0001</code>，十进制就是 <code>65</code>。目前来说 ascii 只有 128 个字符，所以第一位都统一为 <code>0</code></p>
+<h2 id="unicode-编码"><a href="#unicode-编码" class="headerlink" title="unicode 编码"></a>unicode 编码</h2><p>ascii 编码只有 128 种状态，表示英语字符能够，但是表示其他国家语言字符时就不够用， 所以 unicode 编码就是在 ascii 上面扩展到多个字节。所以 unicode 编码将世界上所有符号包括在内。</p>
+<p>unicode 只是定义的符号集，但是有些字符需要多字节存储。这个时候有个问题，如何区分多个独立字节表示的多个符号还是表示的一个符号。 有个解决方式都统一成 4 字节或者更高，这个也有个问题是，英语字符需要一个字节，补位会导致存储空间明显变大。</p>
+<h2 id="utf-8"><a href="#utf-8" class="headerlink" title="utf-8"></a>utf-8</h2><p>为了解决这个问题，出现 UTF-8、UTF-16、UTF-32 这些解决方案。大部分 unicode 字符都是 2 字节<br>UTF-8 是一种可变长得编码方式， 可以使用 1-4 个字节来表示一个符号。编码规则只有两条</p>
+<ol>
+<li>如果是单字节，第一位是 0，剩下用 unicode 编码补齐</li>
+<li>如果字节是 n(n&gt;1), 前 n 位 1，n+1 位 0, 剩下的每个字节的前两位一律 10， 没有提及的位数使用 unicode 编码补全，</li>
+</ol>
+
       
     </div>
     
@@ -486,6 +495,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archives/b29594f7.html" rel="prev" title="炫酷的CSS">
+                炫酷的CSS <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -539,8 +552,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -557,7 +579,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -620,6 +642,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ascii-编码"><span class="nav-number">2.</span> <span class="nav-text">ascii 编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unicode-编码"><span class="nav-number">3.</span> <span class="nav-text">unicode 编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#utf-8"><span class="nav-number">4.</span> <span class="nav-text">utf-8</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -647,7 +685,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">10.4k</span>
+    <span title="博客全站字数共计">14.1k</span>
   
 </div>
 
