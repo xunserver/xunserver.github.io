@@ -96,10 +96,12 @@
 <meta property="og:site_name" content="bang">
 <meta property="og:description" content="前言本文简单记录算法学习中， 递归优化的一些方法 尾调用简单来说就说一个函数末尾返回另一个函数 123456789function a() &amp;#123;    ...    return a()    // 这种就属于尾调用&amp;#125;function a() &amp;#123;    ...    return n+b()   // 这种不属于， 因为return 了其他计算式&amp;#125; 尾调用优化">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/solution/104-er-cha-shu-de-zui-da-shen-du-by-alexer-660/">
 <meta property="og:updated_time" content="2020-02-17T02:09:36.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法-递归优化">
 <meta name="twitter:description" content="前言本文简单记录算法学习中， 递归优化的一些方法 尾调用简单来说就说一个函数末尾返回另一个函数 123456789function a() &amp;#123;    ...    return a()    // 这种就属于尾调用&amp;#125;function a() &amp;#123;    ...    return n+b()   // 这种不属于， 因为return 了其他计算式&amp;#125; 尾调用优化">
+<meta name="twitter:image" content="https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/solution/104-er-cha-shu-de-zui-da-shen-du-by-alexer-660/">
 
 
 
@@ -416,7 +418,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  443 字
+                  691 字
                 </span>
               
 
@@ -432,7 +434,7 @@
                   <span class="post-meta-item-text">阅读时长 </span>
                 
                 <span title="阅读时长">
-                  2 分钟
+                  3 分钟
                 </span>
               
             </div>
@@ -467,6 +469,17 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">memoizer</span>(<span class="params">fn, cache = &#123;&#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">arg</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!(arg <span class="keyword">in</span> cache)) &#123;</span><br><span class="line">      cache[arg] = fn(arg);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> cache[arg];</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> fac = memoizer(<span class="function"><span class="keyword">function</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (n === <span class="number">1</span>) <span class="keyword">return</span> n;</span><br><span class="line">  <span class="keyword">return</span> n * <span class="built_in">arguments</span>.callce(n - <span class="number">1</span>);</span><br><span class="line">&#125;);</span><br><span class="line">fac(<span class="number">5</span>);</span><br></pre></td></tr></table></figure>
 <h2 id="尾调用转-栈-迭代的通用方案"><a href="#尾调用转-栈-迭代的通用方案" class="headerlink" title="尾调用转 栈 + 迭代的通用方案"></a>尾调用转 栈 + 迭代的通用方案</h2><p>阮一峰书中看到的方案，可以对任意尾调用进行优化, 只能尾调用形式的递归</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">tco</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> value;</span><br><span class="line">  <span class="keyword">var</span> active = <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">var</span> accumulated = [];</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    accumulated.push(<span class="built_in">arguments</span>);</span><br><span class="line">    <span class="keyword">if</span> (!active) &#123;</span><br><span class="line">      active = <span class="literal">true</span>;</span><br><span class="line">      <span class="keyword">while</span> (accumulated.length) &#123;</span><br><span class="line">        value = fn.apply(<span class="keyword">this</span>, accumulated.shift());</span><br><span class="line">      &#125;</span><br><span class="line">      active = <span class="literal">false</span>;</span><br><span class="line">      <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="缓存值优化方案"><a href="#缓存值优化方案" class="headerlink" title="缓存值优化方案"></a>缓存值优化方案</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fb</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (n === <span class="number">1</span> || n === <span class="number">2</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> fb(n - <span class="number">1</span>) + fb(n - <span class="number">2</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 优化</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">optimizeRecursion</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> cache = &#123;&#125;;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> arg = <span class="built_in">Array</span>.prototype.join.call(<span class="built_in">arguments</span>, <span class="string">"."</span>);</span><br><span class="line">    <span class="keyword">if</span> (arg <span class="keyword">in</span> cache) &#123;</span><br><span class="line">      <span class="keyword">return</span> cache[arg];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (cache[arg] = fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>));</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="斐波拉契数列-转迭代-动态规划"><a href="#斐波拉契数列-转迭代-动态规划" class="headerlink" title="斐波拉契数列 转迭代 动态规划"></a>斐波拉契数列 转迭代 动态规划</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> climbStairs = <span class="function"><span class="keyword">function</span>(<span class="params">n</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> dp = [];</span><br><span class="line">  dp[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">  dp[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">2</span>; i &lt;= n; i++) &#123;</span><br><span class="line">    dp[i] = dp[i - <span class="number">1</span>] + dp[i - <span class="number">2</span>];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> dp[n];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="递归时间复杂度和空间复杂度计算规则"><a href="#递归时间复杂度和空间复杂度计算规则" class="headerlink" title="递归时间复杂度和空间复杂度计算规则"></a>递归时间复杂度和空间复杂度计算规则</h2><p>递归次数和计算函数的时间的乘积</p>
+<h2 id="二叉树的最大深度"><a href="#二叉树的最大深度" class="headerlink" title="二叉树的最大深度"></a>二叉树的最大深度</h2><h3 id="普通迭代方案"><a href="#普通迭代方案" class="headerlink" title="普通迭代方案"></a>普通迭代方案</h3><p><img src="https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/solution/104-er-cha-shu-de-zui-da-shen-du-by-alexer-660/" alt="123"></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">maxDeep</span>(<span class="params">node</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (node === <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Math</span>.max(maxDeep(node.left), maxDeep(node.right)) + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="总结-二叉树数组的关系"><a href="#总结-二叉树数组的关系" class="headerlink" title="总结 二叉树数组的关系"></a>总结 二叉树数组的关系</h3><ol>
+<li>深度 log2 (length+1)</li>
+<li>i 行第一个元素和最后一个: 第一个 2^i - 1 最后一个 2^(i+1) - 2 ， i 从 0 开始</li>
+<li>i 行元素个数 2 ^ i</li>
+<li>左节点 <code>2 * i + 1</code> 右节点 <code>2 * i + 2</code></li>
+</ol>
 
       
     </div>
@@ -584,7 +597,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -656,7 +669,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#尾调用"><span class="nav-number">2.</span> <span class="nav-text">尾调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#尾调用优化"><span class="nav-number">3.</span> <span class="nav-text">尾调用优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#尾调用优化例子"><span class="nav-number">4.</span> <span class="nav-text">尾调用优化例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存值的方式优化"><span class="nav-number">5.</span> <span class="nav-text">缓存值的方式优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#尾调用转-栈-迭代的通用方案"><span class="nav-number">6.</span> <span class="nav-text">尾调用转 栈 + 迭代的通用方案</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#尾调用"><span class="nav-number">2.</span> <span class="nav-text">尾调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#尾调用优化"><span class="nav-number">3.</span> <span class="nav-text">尾调用优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#尾调用优化例子"><span class="nav-number">4.</span> <span class="nav-text">尾调用优化例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存值的方式优化"><span class="nav-number">5.</span> <span class="nav-text">缓存值的方式优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#尾调用转-栈-迭代的通用方案"><span class="nav-number">6.</span> <span class="nav-text">尾调用转 栈 + 迭代的通用方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存值优化方案"><span class="nav-number">7.</span> <span class="nav-text">缓存值优化方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#斐波拉契数列-转迭代-动态规划"><span class="nav-number">8.</span> <span class="nav-text">斐波拉契数列 转迭代 动态规划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#递归时间复杂度和空间复杂度计算规则"><span class="nav-number">9.</span> <span class="nav-text">递归时间复杂度和空间复杂度计算规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉树的最大深度"><span class="nav-number">10.</span> <span class="nav-text">二叉树的最大深度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#普通迭代方案"><span class="nav-number">10.1.</span> <span class="nav-text">普通迭代方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-二叉树数组的关系"><span class="nav-number">10.2.</span> <span class="nav-text">总结 二叉树数组的关系</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -690,7 +703,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">14.1k</span>
+    <span title="博客全站字数共计">16.2k</span>
   
 </div>
 
