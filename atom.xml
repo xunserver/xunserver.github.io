@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.xunserver.cn/"/>
-  <updated>2020-03-13T11:06:00.000Z</updated>
+  <updated>2020-03-18T01:34:43.000Z</updated>
   <id>https://blog.xunserver.cn/</id>
   
   <author>
@@ -15,6 +15,50 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>三次握手四次挥手的奇怪理解</title>
+    <link href="https://blog.xunserver.cn/archives/6c3aac24.html"/>
+    <id>https://blog.xunserver.cn/archives/6c3aac24.html</id>
+    <published>2020-03-18T01:34:43.000Z</published>
+    <updated>2020-03-18T01:34:43.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h2><ol><li>向妹子招手(SYN=1, seq = X)</li><li>妹子回应(ACK=X+1) (此时你知道妹子回应你，你知道妹子的意思了) 并通知向你招手(seq=Y syn =1)</li><li>你回应妹子的招手(ACK=Y+1, seq = Z) (此时妹子也知道你的意思了)</li></ol><h2 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h2><p>主动方: FIN=1 ACK=Z seq=X<br>被动方: ACK=X+1 seq=Z<br>被动方：FIN=1 ACK=X seq=Y;<br>主动方：ACK=Y seq=X</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;三次握手&quot;&gt;&lt;a href=&quot;#三次握手&quot; class=&quot;headerlink&quot; title=&quot;三次握手&quot;&gt;&lt;/a&gt;三次握手&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;向妹子招手(SYN=1, seq = X)&lt;/li&gt;
+&lt;li&gt;妹子回应(ACK=X+1) (此时你知道妹子回应你
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>垂直居中</title>
+    <link href="https://blog.xunserver.cn/archives/a1ccf0ca.html"/>
+    <id>https://blog.xunserver.cn/archives/a1ccf0ca.html</id>
+    <published>2020-03-18T01:03:55.000Z</published>
+    <updated>2020-03-18T01:03:55.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="父元素高度已知-子元素高度未知"><a href="#父元素高度已知-子元素高度未知" class="headerlink" title="父元素高度已知, 子元素高度未知"></a>父元素高度已知, 子元素高度未知</h2><h2 id="line-height-vertical-align"><a href="#line-height-vertical-align" class="headerlink" title="line-height + vertical-align"></a>line-height + vertical-align</h2><ol><li>父元素高度和 line-height 一致</li></ol><h2 id="父元素高度已知，子元素高度已知"><a href="#父元素高度已知，子元素高度已知" class="headerlink" title="父元素高度已知，子元素高度已知"></a>父元素高度已知，子元素高度已知</h2><h3 id="position-absolute-和-margin-top-50"><a href="#position-absolute-和-margin-top-50" class="headerlink" title="position: absolute 和 margin-top: -50%"></a>position: absolute 和 margin-top: -50%</h3><h3 id="position-absolute-和-transform-translateY-50"><a href="#position-absolute-和-transform-translateY-50" class="headerlink" title="position: absolute 和 transform: translateY: -50%;"></a>position: absolute 和 transform: translateY: -50%;</h3><h3 id="position-absolute-top-0-bottom-0-margin-auto"><a href="#position-absolute-top-0-bottom-0-margin-auto" class="headerlink" title="position: absolute; top: 0; bottom: 0 ; margin: auto"></a>position: absolute; top: 0; bottom: 0 ; margin: auto</h3><h2 id="父元素高度未知-子元素高度未知"><a href="#父元素高度未知-子元素高度未知" class="headerlink" title="父元素高度未知, 子元素高度未知"></a>父元素高度未知, 子元素高度未知</h2><h3 id="align-item-center"><a href="#align-item-center" class="headerlink" title="align-item: center;"></a>align-item: center;</h3><h3 id="table-table-cell"><a href="#table-table-cell" class="headerlink" title="table table-cell"></a>table table-cell</h3><h3 id="grid-align-items-center"><a href="#grid-align-items-center" class="headerlink" title="grid align-items:center;"></a>grid align-items:center;</h3>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;父元素高度已知-子元素高度未知&quot;&gt;&lt;a href=&quot;#父元素高度已知-子元素高度未知&quot; class=&quot;headerlink&quot; title=&quot;父元素高度已知, 子元素高度未知&quot;&gt;&lt;/a&gt;父元素高度已知, 子元素高度未知&lt;/h2&gt;&lt;h2 id=&quot;line-height
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>passport学习</title>
@@ -395,55 +439,6 @@
     
     </summary>
     
-    
-  </entry>
-  
-  <entry>
-    <title>面试基础篇（二）</title>
-    <link href="https://blog.xunserver.cn/archives/234b714a.html"/>
-    <id>https://blog.xunserver.cn/archives/234b714a.html</id>
-    <published>2019-10-08T03:11:46.000Z</published>
-    <updated>2019-10-08T03:11:46.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="js-正在表达式高级用法记忆"><a href="#js-正在表达式高级用法记忆" class="headerlink" title="js 正在表达式高级用法记忆"></a>js 正在表达式高级用法记忆</h2><ol><li>非捕获 (?:x) x 参与匹配但是不参与捕获</li><li>断言 x(?=y) y 参与匹配， 但是不出现在匹配的子串中 /x(?=y)/.exec(“xy”)[0]=”x”, 和非捕获的差别是 /x(?=y)/.exec(“xy”)[0]=”xy”</li><li>x(?!y) 表示 x 后面不跟 y</li><li>(?&lt;=y)x x 前面是 y</li><li>(?&lt;!y)x x 前面是不是 y</li><li>正则默认是贪婪匹配，在数量词后? 表示非贪婪匹配</li><li>正则表达式事深度优先原则，先一路到底，再回溯。如果出现了回溯，会使性能大幅度影响，尽量少出现回溯，数量词尽量明确。大型子串匹配时很容易出现回溯。</li></ol><h2 id="正则回溯举例"><a href="#正则回溯举例" class="headerlink" title="正则回溯举例"></a>正则回溯举例</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/a\d&#123;<span class="number">1</span>,<span class="number">3</span>&#125;<span class="number">0</span>/.test(<span class="string">"a220"</span>);</span><br><span class="line"><span class="comment">// 这种情况会出现一次回溯， \d&#123;1,3&#125; 贪婪匹配, 220 ，然后再匹配0，不复活， 回溯成\d&#123;1,3&#125; 匹配22</span></span><br></pre></td></tr></table></figure><h2 id="正则表达式-的理解"><a href="#正则表达式-的理解" class="headerlink" title="正则表达式 | 的理解"></a>正则表达式 | 的理解</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/<span class="number">99</span>|<span class="number">55</span>/; <span class="comment">// 匹配的应该是 99 或者55 而不是 9(9|5)5</span></span><br></pre></td></tr></table></figure><h2 id="正则-exec-和-g-修饰符理解"><a href="#正则-exec-和-g-修饰符理解" class="headerlink" title="正则 exec 和 g 修饰符理解"></a>正则 exec 和 g 修饰符理解</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/\w/</span>;</span><br><span class="line">reg.exec(<span class="string">"abc"</span>); <span class="comment">// a</span></span><br><span class="line">reg.exec(<span class="string">"abc"</span>); <span class="comment">// a</span></span><br><span class="line">reg.exec(<span class="string">"abc"</span>); <span class="comment">// a</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/\w/g</span>; <span class="comment">// 必须是变量的方式</span></span><br><span class="line">reg.exec(<span class="string">"abc"</span>); <span class="comment">// a</span></span><br><span class="line">reg.exec(<span class="string">"abc"</span>); <span class="comment">// b</span></span><br><span class="line">reg.exec(<span class="string">"abc"</span>); <span class="comment">// c</span></span><br></pre></td></tr></table></figure><h2 id="match-和-replace-中-g-修饰符"><a href="#match-和-replace-中-g-修饰符" class="headerlink" title="match 和 replace 中 g 修饰符"></a>match 和 replace 中 g 修饰符</h2><p>match(//g) 返回的是匹配的每个子串组成的数组，不加 g 同 exec<br>replace 同上， 但是使用字符串模式时， $` $’ 需要注意</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;js-正在表达式高级用法记忆&quot;&gt;&lt;a href=&quot;#js-正在表达式高级用法记忆&quot; class=&quot;headerlink&quot; title=&quot;js 正在表达式高级用法记忆&quot;&gt;&lt;/a&gt;js 正在表达式高级用法记忆&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;非捕获 (?:x) x 参与匹配
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>前端常用布局 - 两列布局</title>
-    <link href="https://blog.xunserver.cn/archives/8930074f.html"/>
-    <id>https://blog.xunserver.cn/archives/8930074f.html</id>
-    <published>2019-09-25T09:36:26.000Z</published>
-    <updated>2019-09-25T09:36:26.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本编主要讲常用布局 <strong>两列布局</strong>，两列布局有两种，一是左边固定右边自适应，另一种是右边固定，左边自适应。只讲我认为最优的方案</p><h2 id="左侧固定"><a href="#左侧固定" class="headerlink" title="左侧固定"></a>左侧固定</h2><p><a href="/static/layout/两列布局-左侧固定.html">演示</a><br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"main"</span>&gt;</span>main<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"slide"</span>&gt;</span>slide<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.slide</span> &#123;</span><br><span class="line">  <span class="attribute">float</span>: left;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">margin-left</span>: -<span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.main</span> &#123;</span><br><span class="line">  <span class="attribute">float</span>: left;</span><br><span class="line">  <span class="attribute">padding-left</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">box-sizing</span>: border-box;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="右侧固定"><a href="#右侧固定" class="headerlink" title="右侧固定"></a>右侧固定</h2><p><a href="/static/layout/两列布局-右侧固定.html">演示</a><br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"main"</span>&gt;</span>main<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"slide"</span>&gt;</span>slide<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.slide</span> &#123;</span><br><span class="line">  <span class="attribute">float</span>: left;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">margin-left</span>: -<span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.main</span> &#123;</span><br><span class="line">  <span class="attribute">float</span>: left;</span><br><span class="line">  <span class="attribute">padding-left</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">box-sizing</span>: border-box;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="flex"><a href="#flex" class="headerlink" title="flex"></a>flex</h2><p>这个方案最简单，也最容易理解使用 order + flex 属性即可</p><h2 id="table"><a href="#table" class="headerlink" title="table"></a>table</h2><p>使用table也行， 兼容性高于flex。<br>父：display: table;<br>子：display: table-cell;</p><h2 id="绝对定位"><a href="#绝对定位" class="headerlink" title="绝对定位"></a>绝对定位</h2><p>比较简单容易理解<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.slide</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">bottom</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.main</span> &#123;</span><br><span class="line">  <span class="attribute">margin-left</span>: <span class="number">200px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><h2 id="float-margin"><a href="#float-margin" class="headerlink" title="float + margin"></a>float + margin</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.slide</span> &#123;</span><br><span class="line">  <span class="attribute">float</span>: left;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.main</span> &#123;</span><br><span class="line">  <span class="attribute">margin-left</span>: <span class="number">200px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;本编主要讲常用布局 &lt;strong&gt;两列布局&lt;/strong&gt;，两列布局有两种，一是左边固定右边自适应，另一种是右边固定，左边自适应。只讲我
-      
-    
-    </summary>
-    
-      <category term="面试" scheme="https://blog.xunserver.cn/categories/%E9%9D%A2%E8%AF%95/"/>
-    
-    
-      <category term="css" scheme="https://blog.xunserver.cn/tags/css/"/>
-    
-      <category term="html" scheme="https://blog.xunserver.cn/tags/html/"/>
     
   </entry>
   

@@ -438,7 +438,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  613 字
+                  961 字
                 </span>
               
 
@@ -454,7 +454,7 @@
                   <span class="post-meta-item-text">阅读时长 </span>
                 
                 <span title="阅读时长">
-                  2 分钟
+                  3 分钟
                 </span>
               
             </div>
@@ -510,7 +510,7 @@
 <li>float 不为 none</li>
 <li>html 元素</li>
 </ol>
-<h2 id="清除浮动"><a href="#清除浮动" class="headerlink" title="清除浮动"></a>清除浮动</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.clearfloat</span> &#123;</span><br><span class="line">  <span class="attribute">zoom</span>: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.clearfloat</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">clear</span>: both;</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">""</span>;</span><br><span class="line">  <span class="attribute">visibility</span>: hidden;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="清除浮动"><a href="#清除浮动" class="headerlink" title="清除浮动"></a>清除浮动</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.clearfloat</span> &#123;</span><br><span class="line">  <span class="attribute">zoom</span>: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.clearfloat</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">clear</span>: both;</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">''</span>;</span><br><span class="line">  <span class="attribute">visibility</span>: hidden;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="css-优先级"><a href="#css-优先级" class="headerlink" title="css 优先级"></a>css 优先级</h2><p>!important &gt; 内联 &gt; id &gt; class &gt; tag</p>
 <h2 id="消除-display-inline-block-间隙"><a href="#消除-display-inline-block-间隙" class="headerlink" title="消除 display: inline-block 间隙"></a>消除 display: inline-block 间隙</h2><ol>
 <li>父元素 font-size: 0;</li>
@@ -529,6 +529,21 @@
 </ol>
 <p>last-modified(第一次响应) =&gt; if-modified-since（浏览器再次请求） =&gt; 服务端和本地文件进行对比</p>
 <p>Etag 和 if-none-match<br>返回 etat =&gt; if-none-match =&gt; 对比 etag</p>
+<h2 id="viewport-的值有哪些"><a href="#viewport-的值有哪些" class="headerlink" title="viewport 的值有哪些"></a>viewport 的值有哪些</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span></span></span><br><span class="line"><span class="tag">  <span class="attr">name</span>=<span class="string">"viewport"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0 user-scaleable=yes"</span></span></span><br><span class="line"><span class="tag">/&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="如何判断一个单链表是否有环"><a href="#如何判断一个单链表是否有环" class="headerlink" title="如何判断一个单链表是否有环"></a>如何判断一个单链表是否有环</h2><p>使用快慢指针, 快指针追上慢指针表示有环，快指针到末尾还未追上， 表示没环。</p>
+<h2 id="如何判断环的长度和环的起点"><a href="#如何判断环的长度和环的起点" class="headerlink" title="如何判断环的长度和环的起点"></a>如何判断环的长度和环的起点</h2><p>设置一个指针从 head 开始， 一个从相遇点开始，知道两个指针重合， 就是起点<br>环的长度，可以通过快指针和慢指针下次相遇的，操作步数</p>
+<h2 id="两个无环链表，判断是否相交和相交节点是多少"><a href="#两个无环链表，判断是否相交和相交节点是多少" class="headerlink" title="两个无环链表，判断是否相交和相交节点是多少"></a>两个无环链表，判断是否相交和相交节点是多少</h2><p>将任意一个链表守卫相接，然后从另一个链表开始， 如果是有环的，证明必然有环</p>
+<h2 id="xss-和-csrf"><a href="#xss-和-csrf" class="headerlink" title="xss 和 csrf"></a>xss 和 csrf</h2><p>xss 跨站脚本攻击，网站内容被插入了 js 代码。包括在 url 里面被植入 例如 javascript: alert()这种代码。</p>
+<ol>
+<li>转义<br>csrf 跨站请求伪造， 直接在 B 网站上发送请求 A 网站的请求。</li>
+<li>禁止跨站访问，根据 referer 来判断。</li>
+<li>点击劫持 嵌套 iframe, 服务端配置禁止被引用。</li>
+</ol>
+<h2 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h2><ol>
+<li>递归拷贝引用类型</li>
+<li>循环引用的情况，每次检测是否某个对象的字段是本身对象或祖先对象</li>
+<li>平级引用，使用 weakMap 检测有个属性是否在 weakMap 存在</li>
+</ol>
 
       
     </div>
@@ -656,7 +671,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -728,7 +743,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前端-SEO-注意情况"><span class="nav-number">1.</span> <span class="nav-text">前端 SEO 注意情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#post-和-put-区别"><span class="nav-number">2.</span> <span class="nav-text">post 和 put 区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化的一些点"><span class="nav-number">3.</span> <span class="nav-text">优化的一些点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iframe-问题"><span class="nav-number">4.</span> <span class="nav-text">iframe 问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#采用多个域名存储资源的原因"><span class="nav-number">5.</span> <span class="nav-text">采用多个域名存储资源的原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#电商图片处理"><span class="nav-number">6.</span> <span class="nav-text">电商图片处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BFC"><span class="nav-number">7.</span> <span class="nav-text">BFC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#清除浮动"><span class="nav-number">8.</span> <span class="nav-text">清除浮动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#css-优先级"><span class="nav-number">9.</span> <span class="nav-text">css 优先级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#消除-display-inline-block-间隙"><span class="nav-number">10.</span> <span class="nav-text">消除 display: inline-block 间隙</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动画间隔时间"><span class="nav-number">11.</span> <span class="nav-text">动画间隔时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bind-注意"><span class="nav-number">12.</span> <span class="nav-text">bind 注意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器缓存"><span class="nav-number">13.</span> <span class="nav-text">浏览器缓存</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前端-SEO-注意情况"><span class="nav-number">1.</span> <span class="nav-text">前端 SEO 注意情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#post-和-put-区别"><span class="nav-number">2.</span> <span class="nav-text">post 和 put 区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化的一些点"><span class="nav-number">3.</span> <span class="nav-text">优化的一些点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iframe-问题"><span class="nav-number">4.</span> <span class="nav-text">iframe 问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#采用多个域名存储资源的原因"><span class="nav-number">5.</span> <span class="nav-text">采用多个域名存储资源的原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#电商图片处理"><span class="nav-number">6.</span> <span class="nav-text">电商图片处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BFC"><span class="nav-number">7.</span> <span class="nav-text">BFC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#清除浮动"><span class="nav-number">8.</span> <span class="nav-text">清除浮动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#css-优先级"><span class="nav-number">9.</span> <span class="nav-text">css 优先级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#消除-display-inline-block-间隙"><span class="nav-number">10.</span> <span class="nav-text">消除 display: inline-block 间隙</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动画间隔时间"><span class="nav-number">11.</span> <span class="nav-text">动画间隔时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bind-注意"><span class="nav-number">12.</span> <span class="nav-text">bind 注意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器缓存"><span class="nav-number">13.</span> <span class="nav-text">浏览器缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#viewport-的值有哪些"><span class="nav-number">14.</span> <span class="nav-text">viewport 的值有哪些</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何判断一个单链表是否有环"><span class="nav-number">15.</span> <span class="nav-text">如何判断一个单链表是否有环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何判断环的长度和环的起点"><span class="nav-number">16.</span> <span class="nav-text">如何判断环的长度和环的起点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#两个无环链表，判断是否相交和相交节点是多少"><span class="nav-number">17.</span> <span class="nav-text">两个无环链表，判断是否相交和相交节点是多少</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xss-和-csrf"><span class="nav-number">18.</span> <span class="nav-text">xss 和 csrf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深拷贝"><span class="nav-number">19.</span> <span class="nav-text">深拷贝</span></a></li></ol></div>
             
 
           </div>
@@ -762,7 +777,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">16.2k</span>
+    <span title="博客全站字数共计">16.7k</span>
   
 </div>
 

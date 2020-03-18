@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[三次握手四次挥手的奇怪理解]]></title>
+    <url>%2Farchives%2F6c3aac24.html</url>
+    <content type="text"><![CDATA[三次握手 向妹子招手(SYN=1, seq = X) 妹子回应(ACK=X+1) (此时你知道妹子回应你，你知道妹子的意思了) 并通知向你招手(seq=Y syn =1) 你回应妹子的招手(ACK=Y+1, seq = Z) (此时妹子也知道你的意思了) 四次挥手主动方: FIN=1 ACK=Z seq=X被动方: ACK=X+1 seq=Z被动方：FIN=1 ACK=X seq=Y;主动方：ACK=Y seq=X]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[垂直居中]]></title>
+    <url>%2Farchives%2Fa1ccf0ca.html</url>
+    <content type="text"><![CDATA[父元素高度已知, 子元素高度未知line-height + vertical-align 父元素高度和 line-height 一致 父元素高度已知，子元素高度已知position: absolute 和 margin-top: -50%position: absolute 和 transform: translateY: -50%;position: absolute; top: 0; bottom: 0 ; margin: auto父元素高度未知, 子元素高度未知align-item: center;table table-cellgrid align-items:center;]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[passport学习]]></title>
     <url>%2Farchives%2Fb4605e3d.html</url>
     <content type="text"></content>
@@ -122,7 +132,7 @@
   <entry>
     <title><![CDATA[面试基础篇（一）]]></title>
     <url>%2Farchives%2F135d9d92.html</url>
-    <content type="text"><![CDATA[前端 SEO 注意情况 title &gt; description &gt; keywords 搜索引擎从上到下，重要内容放前面 内容不用 js 动态输出 搜索引擎会跳过 frame 非装饰图片使用 alt post 和 put 区别put 是幂等的，多次操作不会新增数据条数，可以理解为修改某条数据。post 是非幂等的，多次操作会增加多条数据，理解为新增接口。建议管理系统不做区分， 都用 post。 优化的一些点 静态资源分布到多域名下 控制资源大小，小文件合并。 css 和 js 单独放置为文件 压缩图片，减少位深。 iframe 问题 阻塞主页面 onload 事件，通过 动态添加 src 或更优的 createElmenet 的形式来添加 iframe 和主页面同域共享连接池，会影响主页面资源加载 采用多个域名存储资源的原因 突破浏览器并发限制 节约 cookie 带宽 节约主域名连接数 电商图片处理 小图标 雪碧图 加载缩略图 懒加载，滚动位置再加载 BFC overflow 不为 visible; position: absolute || fixed; display: inline-block || table-cell || flex float 不为 none html 元素 清除浮动12345678910.clearfloat &#123; zoom: 1;&#125;.clearfloat:after &#123; display: block; clear: both; content: ""; visibility: hidden; height: 0;&#125; css 优先级!important &gt; 内联 &gt; id &gt; class &gt; tag 消除 display: inline-block 间隙 父元素 font-size: 0; 父元素 word-spacing: 0; // 单词间隙 删除空格 letter-spacing: 0 // 字母间隙 动画间隔时间保证 30fps 1000/30 = 33.333ms bind 注意bind 是强绑定的， 绑定后不能更换 this 浏览器缓存 强制缓存 =&gt; 根据 Expired(http1.0)(通过服务端返回有效时间) ， 或者 Cache-control 来控制， 一般使用 max-age： 1h。 强制缓存是直接从浏览器获得请求，一个是 from memory cache(页面刷新的缓存)，一个是 from disk cache（页面关闭再打开）js 和图片等文件 当刷新页面时只需直接从内存缓存中读取(from memory cache)；而 css 文件则会存入硬盘文件中，所以每次渲染页面都需要从硬盘读取缓存(from disk cache 协商缓存 =&gt; 强制缓存失效时， 就会启用协商缓存 last-modified(第一次响应) =&gt; if-modified-since（浏览器再次请求） =&gt; 服务端和本地文件进行对比 Etag 和 if-none-match返回 etat =&gt; if-none-match =&gt; 对比 etag]]></content>
+    <content type="text"><![CDATA[前端 SEO 注意情况 title &gt; description &gt; keywords 搜索引擎从上到下，重要内容放前面 内容不用 js 动态输出 搜索引擎会跳过 frame 非装饰图片使用 alt post 和 put 区别put 是幂等的，多次操作不会新增数据条数，可以理解为修改某条数据。post 是非幂等的，多次操作会增加多条数据，理解为新增接口。建议管理系统不做区分， 都用 post。 优化的一些点 静态资源分布到多域名下 控制资源大小，小文件合并。 css 和 js 单独放置为文件 压缩图片，减少位深。 iframe 问题 阻塞主页面 onload 事件，通过 动态添加 src 或更优的 createElmenet 的形式来添加 iframe 和主页面同域共享连接池，会影响主页面资源加载 采用多个域名存储资源的原因 突破浏览器并发限制 节约 cookie 带宽 节约主域名连接数 电商图片处理 小图标 雪碧图 加载缩略图 懒加载，滚动位置再加载 BFC overflow 不为 visible; position: absolute || fixed; display: inline-block || table-cell || flex float 不为 none html 元素 清除浮动12345678910.clearfloat &#123; zoom: 1;&#125;.clearfloat:after &#123; display: block; clear: both; content: ''; visibility: hidden; height: 0;&#125; css 优先级!important &gt; 内联 &gt; id &gt; class &gt; tag 消除 display: inline-block 间隙 父元素 font-size: 0; 父元素 word-spacing: 0; // 单词间隙 删除空格 letter-spacing: 0 // 字母间隙 动画间隔时间保证 30fps 1000/30 = 33.333ms bind 注意bind 是强绑定的， 绑定后不能更换 this 浏览器缓存 强制缓存 =&gt; 根据 Expired(http1.0)(通过服务端返回有效时间) ， 或者 Cache-control 来控制， 一般使用 max-age： 1h。 强制缓存是直接从浏览器获得请求，一个是 from memory cache(页面刷新的缓存)，一个是 from disk cache（页面关闭再打开）js 和图片等文件 当刷新页面时只需直接从内存缓存中读取(from memory cache)；而 css 文件则会存入硬盘文件中，所以每次渲染页面都需要从硬盘读取缓存(from disk cache 协商缓存 =&gt; 强制缓存失效时， 就会启用协商缓存 last-modified(第一次响应) =&gt; if-modified-since（浏览器再次请求） =&gt; 服务端和本地文件进行对比 Etag 和 if-none-match返回 etat =&gt; if-none-match =&gt; 对比 etag viewport 的值有哪些1234&lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0 user-scaleable=yes"/&gt; 如何判断一个单链表是否有环使用快慢指针, 快指针追上慢指针表示有环，快指针到末尾还未追上， 表示没环。 如何判断环的长度和环的起点设置一个指针从 head 开始， 一个从相遇点开始，知道两个指针重合， 就是起点环的长度，可以通过快指针和慢指针下次相遇的，操作步数 两个无环链表，判断是否相交和相交节点是多少将任意一个链表守卫相接，然后从另一个链表开始， 如果是有环的，证明必然有环 xss 和 csrfxss 跨站脚本攻击，网站内容被插入了 js 代码。包括在 url 里面被植入 例如 javascript: alert()这种代码。 转义csrf 跨站请求伪造， 直接在 B 网站上发送请求 A 网站的请求。 禁止跨站访问，根据 referer 来判断。 点击劫持 嵌套 iframe, 服务端配置禁止被引用。 深拷贝 递归拷贝引用类型 循环引用的情况，每次检测是否某个对象的字段是本身对象或祖先对象 平级引用，使用 weakMap 检测有个属性是否在 weakMap 存在]]></content>
       <categories>
         <category>面试</category>
       </categories>
