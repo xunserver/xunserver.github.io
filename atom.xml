@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.xunserver.cn/"/>
-  <updated>2021-04-07T14:57:23.000Z</updated>
+  <updated>2021-08-06T08:13:04.000Z</updated>
   <id>https://blog.xunserver.cn/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>vue查漏补缺</title>
+    <link href="https://blog.xunserver.cn/archives/98f4c1bc.html"/>
+    <id>https://blog.xunserver.cn/archives/98f4c1bc.html</id>
+    <published>2021-08-06T08:13:04.000Z</published>
+    <updated>2021-08-06T08:13:04.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="动态编译-Vue-compile-str"><a href="#动态编译-Vue-compile-str" class="headerlink" title="动态编译 Vue.compile(str)"></a>动态编译 Vue.compile(str)</h3><p>完整版情况可以将模板加载成render函数，实现远程加载功能</p><h3 id="阉割版的响应数据-Vue-observable-obj"><a href="#阉割版的响应数据-Vue-observable-obj" class="headerlink" title="阉割版的响应数据 Vue.observable(obj)"></a>阉割版的响应数据 Vue.observable(obj)</h3><p>创建一个可响应对象，目前我们的可以响应对象在data，watch,computed 中， 这个阉割版的可以响应对象用于渲染函数和计算属性中</p><h3 id="watch可以监听一个数组，也可以是一个方法"><a href="#watch可以监听一个数组，也可以是一个方法" class="headerlink" title="watch可以监听一个数组，也可以是一个方法"></a>watch可以监听一个数组，也可以是一个方法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">watch: &#123;</span><br><span class="line">    a: <span class="string">'someMethod'</span>  <span class="comment">// vm实例中方法,</span></span><br><span class="line">    b: [</span><br><span class="line">        &#123;</span><br><span class="line">            handler: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;,</span><br><span class="line">            deep: <span class="literal">true</span>,</span><br><span class="line">            immediate: <span class="literal">true</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;,</span><br><span class="line">        <span class="string">'someMethod'</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="插槽新功能-v-slot"><a href="#插槽新功能-v-slot" class="headerlink" title="插槽新功能 v-slot"></a>插槽新功能 v-slot</h3><ol><li>v-slot:slotName 指定具名插槽</li><li>v-slot在单个插槽的情况下可以绑定非template<em>，其余必</em>须绑定到组件上</li><li>v-slot可以简写为#, 认插槽需要#default<h3 id="v-bind-支持对象绑定-动态绑定"><a href="#v-bind-支持对象绑定-动态绑定" class="headerlink" title="v-bind 支持对象绑定, 动态绑定"></a>v-bind 支持对象绑定, 动态绑定</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 绑定一个 attribute --&gt;</span><br><span class="line">&lt;img v-bind:src=&quot;imageSrc&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 动态 attribute 名 (2.6.0+) --&gt;</span><br><span class="line">&lt;button v-bind:[key]=&quot;value&quot;&gt;&lt;/button&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 缩写 --&gt;</span><br><span class="line">&lt;img :src=&quot;imageSrc&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 动态 attribute 名缩写 (2.6.0+) --&gt;</span><br><span class="line">&lt;button :[key]=&quot;value&quot;&gt;&lt;/button&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 内联字符串拼接 --&gt;</span><br><span class="line">&lt;img :src=&quot;&apos;/path/to/images/&apos; + fileName&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- class 绑定 --&gt;</span><br><span class="line">&lt;div :class=&quot;&#123; red: isRed &#125;&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;div :class=&quot;[classA, classB]&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;div :class=&quot;[classA, &#123; classB: isB, classC: isC &#125;]&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- style 绑定 --&gt;</span><br><span class="line">&lt;div :style=&quot;&#123; fontSize: size + &apos;px&apos; &#125;&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;div :style=&quot;[styleObjectA, styleObjectB]&quot;&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 绑定一个全是 attribute 的对象 --&gt;</span><br><span class="line">&lt;div v-bind=&quot;&#123; id: someProp, &apos;other-attr&apos;: otherProp &#125;&quot;&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 通过 prop 修饰符绑定 DOM attribute --&gt;</span><br><span class="line">&lt;div v-bind:text-content.prop=&quot;text&quot;&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- prop 绑定。“prop”必须在 my-component 中声明。--&gt;</span><br><span class="line">&lt;my-component :prop=&quot;someThing&quot;&gt;&lt;/my-component&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 通过 $props 将父组件的 props 一起传给子组件 --&gt;</span><br><span class="line">&lt;child-component v-bind=&quot;$props&quot;&gt;&lt;/child-component&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- XLink --&gt;</span><br><span class="line">&lt;svg&gt;&lt;a :xlink:special=&quot;foo&quot;&gt;&lt;/a&gt;&lt;/svg&gt;</span><br></pre></td></tr></table></figure></li></ol><h3 id="v-pre-手动指定这个元素和其子元素不需要编译。直接展示原始标签"><a href="#v-pre-手动指定这个元素和其子元素不需要编译。直接展示原始标签" class="headerlink" title="v-pre 手动指定这个元素和其子元素不需要编译。直接展示原始标签"></a>v-pre 手动指定这个元素和其子元素不需要编译。直接展示原始标签</h3><h3 id="不需要响应式的数据记得冻结，比如表格数据"><a href="#不需要响应式的数据记得冻结，比如表格数据" class="headerlink" title="不需要响应式的数据记得冻结，比如表格数据"></a>不需要响应式的数据记得冻结，比如表格数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  export  default  &#123;</span><br><span class="line">    data() &#123;</span><br><span class="line">      retur: &#123;</span><br><span class="line">        data: []</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    async beforeMounted() &#123;</span><br><span class="line">      this.data = await this.getData()</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">      async getData() &#123;</span><br><span class="line">        return Object.freeze(someData)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure><h3 id="静态内容尽量使用template模板渲染，-不使用jsx或者render函数。提高性能"><a href="#静态内容尽量使用template模板渲染，-不使用jsx或者render函数。提高性能" class="headerlink" title="静态内容尽量使用template模板渲染， 不使用jsx或者render函数。提高性能"></a>静态内容尽量使用template模板渲染， 不使用jsx或者render函数。提高性能</h3><p>complie 会优化render 函数，直接写没有优化过程。</p><h3 id="组件会在每个生命周期触发事件，比如’hook-mounted’-这种。"><a href="#组件会在每个生命周期触发事件，比如’hook-mounted’-这种。" class="headerlink" title="组件会在每个生命周期触发事件，比如’hook:mounted’ 这种。"></a>组件会在每个生命周期触发事件，比如’hook:mounted’ 这种。</h3><h3 id="尽量使用受控组件，优先选择函数组件。"><a href="#尽量使用受控组件，优先选择函数组件。" class="headerlink" title="尽量使用受控组件，优先选择函数组件。"></a>尽量使用受控组件，优先选择函数组件。</h3>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;动态编译-Vue-compile-str&quot;&gt;&lt;a href=&quot;#动态编译-Vue-compile-str&quot; class=&quot;headerlink&quot; title=&quot;动态编译 Vue.compile(str)&quot;&gt;&lt;/a&gt;动态编译 Vue.compile(str)&lt;/h3
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>filerun搭建和配置</title>
@@ -426,28 +447,6 @@
         &lt;h2 id=&quot;若隐若现的发光字&quot;&gt;&lt;a href=&quot;#若隐若现的发光字&quot; class=&quot;headerlink&quot; title=&quot;若隐若现的发光字&quot;&gt;&lt;/a&gt;若隐若现的发光字&lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;background-image： line&lt;/li&gt;
 &lt;li&gt;backgrou
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>前端编码的故事</title>
-    <link href="https://blog.xunserver.cn/archives/5f877c4e.html"/>
-    <id>https://blog.xunserver.cn/archives/5f877c4e.html</id>
-    <published>2020-02-18T06:51:19.000Z</published>
-    <updated>2020-02-18T06:51:19.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文记录自己理解 ascii、unicode、utf-8 的含义和区别</p><h2 id="ascii-编码"><a href="#ascii-编码" class="headerlink" title="ascii 编码"></a>ascii 编码</h2><p>ascii 编码使用一个字节代表一个字符，比如 <code>A</code>，二进制就是 <code>0100 0001</code>，十进制就是 <code>65</code>。目前来说 ascii 只有 128 个字符，所以第一位都统一为 <code>0</code></p><h2 id="unicode-编码"><a href="#unicode-编码" class="headerlink" title="unicode 编码"></a>unicode 编码</h2><p>ascii 编码只有 128 种状态，表示英语字符能够，但是表示其他国家语言字符时就不够用， 所以 unicode 编码就是在 ascii 上面扩展到多个字节。所以 unicode 编码将世界上所有符号包括在内。</p><p>unicode 只是定义的符号集，但是有些字符需要多字节存储。这个时候有个问题，如何区分多个独立字节表示的多个符号还是表示的一个符号。 有个解决方式都统一成 4 字节或者更高，这个也有个问题是，英语字符需要一个字节，补位会导致存储空间明显变大。</p><h2 id="utf-8"><a href="#utf-8" class="headerlink" title="utf-8"></a>utf-8</h2><p>为了解决这个问题，出现 UTF-8、UTF-16、UTF-32 这些解决方案。大部分 unicode 字符都是 2 字节<br>UTF-8 是一种可变长得编码方式， 可以使用 1-4 个字节来表示一个符号。编码规则只有两条</p><ol><li>如果是单字节，第一位是 0，剩下用 unicode 编码补齐</li><li>如果字节是 n(n&gt;1), 前 n 位 1，n+1 位 0, 剩下的每个字节的前两位一律 10， 没有提及的位数使用 unicode 编码补全，</li></ol>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;本文记录自己理解 ascii、unicode、utf-8 的含义和区别&lt;/p&gt;
-&lt;h2 id=&quot;ascii-编码&quot;&gt;&lt;a href=&quot;#as
       
     
     </summary>
