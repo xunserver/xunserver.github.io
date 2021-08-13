@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.xunserver.cn/"/>
-  <updated>2021-08-06T08:13:04.000Z</updated>
+  <updated>2021-08-12T10:24:09.000Z</updated>
   <id>https://blog.xunserver.cn/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>github-action</title>
+    <link href="https://blog.xunserver.cn/archives/355afdd9.html"/>
+    <id>https://blog.xunserver.cn/archives/355afdd9.html</id>
+    <published>2021-08-12T10:24:09.000Z</published>
+    <updated>2021-08-12T10:24:09.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h2><p>workflow: 一次持续集成</p><p>job: 一次workflow包含一个或者多个job，在没有依赖的情况下，多个job异步执行</p><p>step: 每个job 由多个step组成，同步执行</p><p>action: 每个step可以执行一个或者多个action</p><h2 id="简单例子"><a href="#简单例子" class="headerlink" title="简单例子"></a>简单例子</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">github</span> <span class="string">pages</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line"><span class="attr">  push:</span></span><br><span class="line"><span class="attr">    branches:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">master</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line"><span class="attr">  build-deploy:</span></span><br><span class="line"><span class="attr">    runs-on:</span> <span class="string">ubuntu-18.04</span></span><br><span class="line"><span class="attr">    steps:</span></span><br><span class="line"><span class="attr">    - uses:</span> <span class="string">actions/checkout@master</span></span><br><span class="line"></span><br><span class="line"><span class="attr">    - name:</span> <span class="string">build</span></span><br><span class="line"><span class="attr">      uses:</span> <span class="string">actions/setup-node@v1</span></span><br><span class="line"><span class="attr">      with:</span></span><br><span class="line"><span class="attr">        node-version:</span> <span class="string">'10.x'</span></span><br><span class="line"><span class="attr">    - run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">        npm install</span></span><br><span class="line"><span class="string">        npm run hexo g </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span><span class="attr">    - name:</span> <span class="string">deploy</span></span><br><span class="line"><span class="attr">      uses:</span> <span class="string">peaceiris/actions-gh-pages@v2.5.0</span></span><br><span class="line"><span class="attr">      env:</span></span><br><span class="line"><span class="attr">        ACTIONS_DEPLOY_KEY:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.ACTIONS_DEPLOY_KEY</span> <span class="string">&#125;&#125;</span></span><br><span class="line"><span class="attr">        EXTERNAL_REPOSITORY:</span> <span class="string">xunserver/xunserver.github.io</span></span><br><span class="line"><span class="attr">        PUBLISH_BRANCH:</span> <span class="string">master</span></span><br><span class="line"><span class="attr">        PUBLISH_DIR:</span> <span class="string">./public</span></span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;术语&quot;&gt;&lt;a href=&quot;#术语&quot; class=&quot;headerlink&quot; title=&quot;术语&quot;&gt;&lt;/a&gt;术语&lt;/h2&gt;&lt;p&gt;workflow: 一次持续集成&lt;/p&gt;
+&lt;p&gt;job: 一次workflow包含一个或者多个job，在没有依赖的情况下，多个job异步执行
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>vue查漏补缺</title>
@@ -424,29 +446,6 @@
       
       
         &lt;h2 id=&quot;引用值作为属性名情况&quot;&gt;&lt;a href=&quot;#引用值作为属性名情况&quot; class=&quot;headerlink&quot; title=&quot;引用值作为属性名情况&quot;&gt;&lt;/a&gt;引用值作为属性名情况&lt;/h2&gt;&lt;p&gt;先 toString 再 valueOf，使用独一无二的 key 使用 sy
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>炫酷的CSS</title>
-    <link href="https://blog.xunserver.cn/archives/b29594f7.html"/>
-    <id>https://blog.xunserver.cn/archives/b29594f7.html</id>
-    <published>2020-02-22T08:33:01.000Z</published>
-    <updated>2020-02-22T08:33:01.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="若隐若现的发光字"><a href="#若隐若现的发光字" class="headerlink" title="若隐若现的发光字"></a>若隐若现的发光字</h2><ol><li>background-image： line</li><li>background-position: -500% =&gt; 500%</li></ol>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;若隐若现的发光字&quot;&gt;&lt;a href=&quot;#若隐若现的发光字&quot; class=&quot;headerlink&quot; title=&quot;若隐若现的发光字&quot;&gt;&lt;/a&gt;若隐若现的发光字&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;background-image： line&lt;/li&gt;
-&lt;li&gt;backgrou
       
     
     </summary>
