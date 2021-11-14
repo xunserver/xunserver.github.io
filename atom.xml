@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.xunserver.cn/"/>
-  <updated>2021-11-04T02:56:36.000Z</updated>
+  <updated>2021-11-14T10:43:41.000Z</updated>
   <id>https://blog.xunserver.cn/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>前端缓存</title>
+    <link href="https://blog.xunserver.cn/archives/97f0c4bf.html"/>
+    <id>https://blog.xunserver.cn/archives/97f0c4bf.html</id>
+    <published>2021-11-14T10:43:41.000Z</published>
+    <updated>2021-11-14T10:43:41.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="请求报文和相应报文"><a href="#请求报文和相应报文" class="headerlink" title="请求报文和相应报文"></a>请求报文和相应报文</h3><p>报文中报头部分使用冒号分隔的键值对组成，称为首部字段。部分首部字段在响应和请求中均有，称为通用首部字段。</p><h3 id="强缓存"><a href="#强缓存" class="headerlink" title="强缓存"></a>强缓存</h3><h4 id="expires"><a href="#expires" class="headerlink" title="expires"></a>expires</h4><p>(响应首部字段)资源有效时间，表示在此事件前资源使用缓存。<code>Expires: Wed, 11 May 2022 03:50:47 GMT</code></p><h4 id="cache-control"><a href="#cache-control" class="headerlink" title="cache-control"></a>cache-control</h4><p>（通用首部字段）缓存控制，由以下字段组成</p><ul><li>max-age 缓存最大时间，是一个相对时间，同时可用于请求，表示希望获得一个max-age 不大于指定值的资源，单位是秒。max-age 会覆盖expires，一般expires和max-age需要同时存在，兼容性设置。</li><li>s-maxage  表示代理服务器最大缓存时间，公共服务器接受到这个参数后，会直接使用这个，忽略其他expires 和 max-age</li><li>public/private 表示资源是否能够被缓存服务器缓存， 不过一般缓存服务器不会处理这个字段，照样缓存。</li><li>no-cache/no store，no-cache在请求中时，表示不使用缓存服务器资源，使用源资源，同时也可以向源资源表示，使用最新资源。在响应中需要使用no-store 才表示真正的不缓存</li><li>no-cache 不进行强缓存（重要）</li><li>no-store 不强缓存，也不协商缓存。</li></ul><h3 id="协商缓存"><a href="#协商缓存" class="headerlink" title="协商缓存"></a>协商缓存</h3><h4 id="Last-Modified-和-If-Modified-Since"><a href="#Last-Modified-和-If-Modified-Since" class="headerlink" title="Last-Modified 和 If-Modified-Since"></a>Last-Modified 和 If-Modified-Since</h4><p>Last-Modified 资源最后修改时间，浏览器接收当前资源后，下次在请求头中添加If-Modified-Since 字段。服务器验证是否有效，有效返回304。无效返回200、最新资源和最新的Last-Modified</p><p>Last-Modified值实列如下，时间精度到秒<code>Last-Modified: Fri , 14 May 2021 17:23:13 GMT</code>。如果资源是毫秒级别的更新，可能会出现资源不是最新的情况。所以新出现了Etag和If-None-Match</p><h4 id="Etag-和-If-None-match"><a href="#Etag-和-If-None-match" class="headerlink" title="Etag 和 If-None-match"></a>Etag 和 If-None-match</h4><p>Etag在响应头中返回，用于标志资源的唯一性，资源每次变化时，Etag会重新生成。浏览器下次发送请求通过If-None-match发送。服务器对比处理逻辑同Last-Modified</p><h3 id="缓存位置"><a href="#缓存位置" class="headerlink" title="缓存位置"></a>缓存位置</h3><ul><li>memory cache 内存缓存</li><li>disk cache</li></ul><h3 id="缓存时间如何计算"><a href="#缓存时间如何计算" class="headerlink" title="缓存时间如何计算"></a>缓存时间如何计算</h3><p>缓存新鲜度 = max-age || (expires - date)  date 表示响应头中的Date字段<br>缓存使用期 = 响应使用期 + 传输延迟时间 + 停留缓存时间</p><ul><li>响应使用期 = max(0, response_time - date_value)，然后再和响应头age（秒）max</li><li>传输延迟时间 = 响应时间 - 请求时间</li><li>停留缓存时间 = now - 响应时间   now表示电脑当前时间。修改电脑时间使缓存失效的关键点。</li></ul><p>当缓存使用期大于缓存新鲜度时，强缓存会失效，会启用缓存协商，如果无协商缓存，会重新请求。</p><h3 id="启发式缓存"><a href="#启发式缓存" class="headerlink" title="启发式缓存"></a>启发式缓存</h3><p>上述可见强缓存新鲜度 = max-age || (expires - date)。如果max-age、expires、date不存在。缓存新鲜度计算规则 max(0, date - Last-Modified ) * 10%</p><h3 id="开发模式下的刷新操作"><a href="#开发模式下的刷新操作" class="headerlink" title="开发模式下的刷新操作"></a>开发模式下的刷新操作</h3><ul><li>硬性重新加载：不使用本地缓存，同时请求时在请求中添加cache-control: no-cache, 告知服务器和代理服务器不使用缓存。</li></ul><p>使用硬性加载没有用的原因是，这两个请求头仅在页面渲染时添加，通过动态脚本添加的资源不会添加这个请求头，还是会走强缓存。</p><ul><li>清空缓存并强制加载：清空本地缓存并硬性加载</li></ul><h3 id="spa情况下如何配置缓存策略"><a href="#spa情况下如何配置缓存策略" class="headerlink" title="spa情况下如何配置缓存策略"></a>spa情况下如何配置缓存策略</h3><p>spa通过加载一个index.html,index.html中再加载相关文件完成界面。这里就有两个地方index.html 和 其他资源。</p><ul><li><p>index.html 文件名不会变化，需要使用协商缓存，服务端配置max-age = 0, 但是不能配置cache-control: no-store</p></li><li><p>其余资源，设置强缓存。根据文件内容变化文件名，保证每次引用都是新的，也不会走缓存。</p></li></ul><h3 id="webpack-如何使用强缓存"><a href="#webpack-如何使用强缓存" class="headerlink" title="webpack 如何使用强缓存"></a>webpack 如何使用强缓存</h3><ul><li>hash 项目级别的hash</li><li>chunkhash 根据 入口文件相关的依赖进行hash</li><li>contenthash，根据每个文件内容变化的hash</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;请求报文和相应报文&quot;&gt;&lt;a href=&quot;#请求报文和相应报文&quot; class=&quot;headerlink&quot; title=&quot;请求报文和相应报文&quot;&gt;&lt;/a&gt;请求报文和相应报文&lt;/h3&gt;&lt;p&gt;报文中报头部分使用冒号分隔的键值对组成，称为首部字段。部分首部字段在响应和请求中均有
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>umd,cmd,commonjs,esmodule学习教程</title>
@@ -434,20 +455,6 @@
       
         &lt;h2 id=&quot;父元素高度已知-子元素高度未知&quot;&gt;&lt;a href=&quot;#父元素高度已知-子元素高度未知&quot; class=&quot;headerlink&quot; title=&quot;父元素高度已知, 子元素高度未知&quot;&gt;&lt;/a&gt;父元素高度已知, 子元素高度未知&lt;/h2&gt;&lt;h2 id=&quot;line-height
       
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>passport学习</title>
-    <link href="https://blog.xunserver.cn/archives/b4605e3d.html"/>
-    <id>https://blog.xunserver.cn/archives/b4605e3d.html</id>
-    <published>2020-03-13T11:06:00.000Z</published>
-    <updated>2020-03-13T11:06:00.000Z</updated>
-    
-    <summary type="html">
     
     </summary>
     
