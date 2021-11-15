@@ -38,6 +38,29 @@
   </entry>
   
   <entry>
+    <title>ccna</title>
+    <link href="https://blog.xunserver.cn/archives/838de56f.html"/>
+    <id>https://blog.xunserver.cn/archives/838de56f.html</id>
+    <published>2021-11-10T04:19:20.000Z</published>
+    <updated>2021-11-10T04:19:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="三种配置模式"><a href="#三种配置模式" class="headerlink" title="三种配置模式"></a>三种配置模式</h3><ol><li>用户模式 console登录上去默认   命令行标识符为 &gt; </li><li>特权模式 输入 en | enable进入， 标识符为 #</li><li>配置模式 输入 configrue terminal  标识符为(terminal)#</li></ol><h3 id="console-配置密码"><a href="#console-配置密码" class="headerlink" title="console 配置密码"></a>console 配置密码</h3><p>防止内鬼直接console进入设备<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">en  <span class="comment"># 特权模式</span></span><br><span class="line">configure t <span class="comment"># 配置模式</span></span><br><span class="line">line <span class="comment"># 线缆模式</span></span><br><span class="line">line console 0  <span class="comment"># 选择console 0</span></span><br><span class="line">password somepass  <span class="comment"># 设置密码</span></span><br><span class="line">login  <span class="comment"># 激活登录 </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 取消密码</span></span><br><span class="line">no login  <span class="comment"># 不激活密码</span></span><br><span class="line">no password  <span class="comment"># 删除密码</span></span><br></pre></td></tr></table></figure></p><p>华为仅只有用户视图密码<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">system-view</span><br><span class="line">user-interface console 0</span><br><span class="line"><span class="comment"># 路由器</span></span><br><span class="line">authentication-mode password</span><br><span class="line"><span class="comment"># 交换机</span></span><br><span class="line"><span class="built_in">set</span> authentication password simple somepassword</span><br></pre></td></tr></table></figure></p><h3 id="特权模式设置密码"><a href="#特权模式设置密码" class="headerlink" title="特权模式设置密码"></a>特权模式设置密码</h3><p>需要在配置模式设置<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">enable</span> password somepassword</span><br><span class="line"></span><br><span class="line"><span class="literal">no</span> <span class="builtin-name">enable</span> password 删除密码</span><br></pre></td></tr></table></figure></p><h3 id="查看线缆链接情况"><a href="#查看线缆链接情况" class="headerlink" title="查看线缆链接情况"></a>查看线缆链接情况</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">enable</span></span><br><span class="line">show line </span><br><span class="line"></span><br><span class="line"><span class="comment"># 华为</span></span><br><span class="line">show user-interface</span><br></pre></td></tr></table></figure><p>星号表示当前正在使用的端口<br>vty: 虚拟tty<br>cty: console tty<br>aux: 不常用</p><h3 id="查看当前模式下所有配置"><a href="#查看当前模式下所有配置" class="headerlink" title="查看当前模式下所有配置"></a>查看当前模式下所有配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 思科</span></span><br><span class="line">show running-config</span><br><span class="line"><span class="comment"># 华为</span></span><br><span class="line">display currenting-configure</span><br></pre></td></tr></table></figure><h3 id="保存配置"><a href="#保存配置" class="headerlink" title="保存配置"></a>保存配置</h3><p>不保存配置关机后之前的配置会消失<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">enable</span></span><br><span class="line">write</span><br><span class="line"></span><br><span class="line"><span class="comment"># 华为只在用户模式保存</span></span><br><span class="line">save</span><br></pre></td></tr></table></figure></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;三种配置模式&quot;&gt;&lt;a href=&quot;#三种配置模式&quot; class=&quot;headerlink&quot; title=&quot;三种配置模式&quot;&gt;&lt;/a&gt;三种配置模式&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;用户模式 console登录上去默认   命令行标识符为 &amp;gt; &lt;/li&gt;
+&lt;li&gt;特权模式
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>umd,cmd,commonjs,esmodule学习教程</title>
     <link href="https://blog.xunserver.cn/archives/4986aa26.html"/>
     <id>https://blog.xunserver.cn/archives/4986aa26.html</id>
@@ -433,27 +456,6 @@
         &lt;h2 id=&quot;三次握手&quot;&gt;&lt;a href=&quot;#三次握手&quot; class=&quot;headerlink&quot; title=&quot;三次握手&quot;&gt;&lt;/a&gt;三次握手&lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;向妹子招手(SYN=1, seq = X)&lt;/li&gt;
 &lt;li&gt;妹子回应(ACK=X+1) (此时你知道妹子回应你
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>垂直居中</title>
-    <link href="https://blog.xunserver.cn/archives/a1ccf0ca.html"/>
-    <id>https://blog.xunserver.cn/archives/a1ccf0ca.html</id>
-    <published>2020-03-18T01:03:55.000Z</published>
-    <updated>2020-03-18T01:03:55.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="父元素高度已知-子元素高度未知"><a href="#父元素高度已知-子元素高度未知" class="headerlink" title="父元素高度已知, 子元素高度未知"></a>父元素高度已知, 子元素高度未知</h2><h2 id="line-height-vertical-align"><a href="#line-height-vertical-align" class="headerlink" title="line-height + vertical-align"></a>line-height + vertical-align</h2><ol><li>父元素高度和 line-height 一致</li></ol><h2 id="父元素高度已知，子元素高度已知"><a href="#父元素高度已知，子元素高度已知" class="headerlink" title="父元素高度已知，子元素高度已知"></a>父元素高度已知，子元素高度已知</h2><h3 id="position-absolute-和-margin-top-50"><a href="#position-absolute-和-margin-top-50" class="headerlink" title="position: absolute 和 margin-top: -50%"></a>position: absolute 和 margin-top: -50%</h3><h3 id="position-absolute-和-transform-translateY-50"><a href="#position-absolute-和-transform-translateY-50" class="headerlink" title="position: absolute 和 transform: translateY: -50%;"></a>position: absolute 和 transform: translateY: -50%;</h3><h3 id="position-absolute-top-0-bottom-0-margin-auto"><a href="#position-absolute-top-0-bottom-0-margin-auto" class="headerlink" title="position: absolute; top: 0; bottom: 0 ; margin: auto"></a>position: absolute; top: 0; bottom: 0 ; margin: auto</h3><h2 id="父元素高度未知-子元素高度未知"><a href="#父元素高度未知-子元素高度未知" class="headerlink" title="父元素高度未知, 子元素高度未知"></a>父元素高度未知, 子元素高度未知</h2><h3 id="align-item-center"><a href="#align-item-center" class="headerlink" title="align-item: center;"></a>align-item: center;</h3><h3 id="table-table-cell"><a href="#table-table-cell" class="headerlink" title="table table-cell"></a>table table-cell</h3><h3 id="grid-align-items-center"><a href="#grid-align-items-center" class="headerlink" title="grid align-items:center;"></a>grid align-items:center;</h3>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;父元素高度已知-子元素高度未知&quot;&gt;&lt;a href=&quot;#父元素高度已知-子元素高度未知&quot; class=&quot;headerlink&quot; title=&quot;父元素高度已知, 子元素高度未知&quot;&gt;&lt;/a&gt;父元素高度已知, 子元素高度未知&lt;/h2&gt;&lt;h2 id=&quot;line-height
       
     
     </summary>
