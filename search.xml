@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[glob模式学习]]></title>
+    <url>%2Farchives%2F5500de7d.html</url>
+    <content type="text"><![CDATA[概念 区段 地址分隔符中分隔的区间 比如 /a/b/c 就分为了3个区间 语法 * 匹配单个区段中0个或者多个字符 ** 匹配跨区段 0个或者多个字符, 如果是 **/ 只会匹配目录，或者忽略目录 ? 匹配一个字符 []配置括号中某个字符,当开头添加 ^、!时表示不匹配 ! ? * 和小括号一起使用时，和正则类似 例子匹配任意module下全部js，除了index.js **/module/!(index).js 只能配置 /module 或者 xx/module，不能匹配 /xx/module */module]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[git再学习]]></title>
     <url>%2Farchives%2F141454d6.html</url>
     <content type="text"><![CDATA[git rebase]]></content>
