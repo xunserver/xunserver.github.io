@@ -88,18 +88,18 @@
 
 
 
-<meta name="description" content="git rebase">
+<meta name="description" content="常用命令别名配置12# 注意不要git， 同事还可以在后面添加 --配置 git lg --xxxgit config alias.lg &quot;log --oneline&quot; 经验技巧原则记录 未推送的内容使用reset回退，已推送的内容使用revert回退 谨慎使用rebase，建议仅作为本地内容commit的合并 使用对commit –amend 对上一次commit信息进行修改，可以把当前暂存区的">
 <meta name="keywords" content="博客,xunsever,bang">
 <meta property="og:type" content="article">
 <meta property="og:title" content="git再学习">
 <meta property="og:url" content="https://blog.xunserver.cn/archives/141454d6.html">
 <meta property="og:site_name" content="bang">
-<meta property="og:description" content="git rebase">
+<meta property="og:description" content="常用命令别名配置12# 注意不要git， 同事还可以在后面添加 --配置 git lg --xxxgit config alias.lg &quot;log --oneline&quot; 经验技巧原则记录 未推送的内容使用reset回退，已推送的内容使用revert回退 谨慎使用rebase，建议仅作为本地内容commit的合并 使用对commit –amend 对上一次commit信息进行修改，可以把当前暂存区的">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2021-11-15T09:39:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git再学习">
-<meta name="twitter:description" content="git rebase">
+<meta name="twitter:description" content="常用命令别名配置12# 注意不要git， 同事还可以在后面添加 --配置 git lg --xxxgit config alias.lg &quot;log --oneline&quot; 经验技巧原则记录 未推送的内容使用reset回退，已推送的内容使用revert回退 谨慎使用rebase，建议仅作为本地内容commit的合并 使用对commit –amend 对上一次commit信息进行修改，可以把当前暂存区的">
 
 
 
@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2 字
+                  612 字
                 </span>
               
 
@@ -432,7 +432,7 @@
                   <span class="post-meta-item-text">阅读时长 </span>
                 
                 <span title="阅读时长">
-                  1 分钟
+                  2 分钟
                 </span>
               
             </div>
@@ -453,7 +453,44 @@
       
 
       
-        <h3 id="git-rebase"><a href="#git-rebase" class="headerlink" title="git rebase"></a>git rebase</h3>
+        <h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p>别名配置<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 注意不要git， 同事还可以在后面添加 --配置 git lg --xxx</span></span><br><span class="line">git config alias.lg <span class="string">"log --oneline"</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="经验技巧原则记录"><a href="#经验技巧原则记录" class="headerlink" title="经验技巧原则记录"></a>经验技巧原则记录</h3><ul>
+<li>未推送的内容使用reset回退，已推送的内容使用revert回退</li>
+<li>谨慎使用rebase，建议仅作为本地内容commit的合并</li>
+<li>使用对commit –amend 对上一次commit信息进行修改，可以把当前暂存区的合并到修改中</li>
+</ul>
+<h3 id="gitlab-分支管理流程"><a href="#gitlab-分支管理流程" class="headerlink" title="gitlab 分支管理流程"></a>gitlab 分支管理流程</h3><h3 id="commit理解"><a href="#commit理解" class="headerlink" title="commit理解"></a>commit理解</h3><p>git 是由commit组成，commit 记录git每次操作，包括</p>
+<ul>
+<li>commitid（sha-1）</li>
+<li>Author, </li>
+<li>commiter, </li>
+<li>Parent(父commit)，</li>
+<li>child(多个下游commit),</li>
+<li>Branches 当前被哪些分支引用</li>
+</ul>
+<p>每次commit操作会在当前commit上，添加一个下游commit，同时挪动相关引用。</p>
+<h3 id="branch-理解"><a href="#branch-理解" class="headerlink" title="branch 理解"></a>branch 理解</h3><p>commit用commit标记，同时可以取一个别名，这个别名就是branch，branch指向某个commit。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建分支</span></span><br><span class="line">git branch develop </span><br><span class="line"><span class="comment"># 删除分支</span></span><br><span class="line">git branch -d develop</span><br></pre></td></tr></table></figure></p>
+<p>如果当前工作区是branch，commit时会挪动branch和HEAD到最新commit，如果当前是在commit上，只会挪动HEAD到最新commit</p>
+<h3 id="HEAD"><a href="#HEAD" class="headerlink" title="HEAD"></a>HEAD</h3><p>当前引用，始终指向当前工作区所在commit，可以用checkout来挪动。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将当前HEAD 挪动到develop 所指的commit上，并切换工作区</span></span><br><span class="line">git checkout develop</span><br><span class="line"><span class="comment"># 切换到349d1ddf的commit上，HEAD -&gt; 349d1ddf, 并切换工作区</span></span><br><span class="line">git checkout 349d1ddf</span><br></pre></td></tr></table></figure></p>
+<h3 id="merge"><a href="#merge" class="headerlink" title="merge"></a>merge</h3><p>分为两种情况，快速合并和新建合并</p>
+<ul>
+<li>快速合并是指要合并过来的分支commit树包含当前分支commit信息，这个时候直接挪动当前分支到要合并的分支</li>
+<li>如果不包含，会自动在当前分支新建一个commit。这个commit包含两个分支的diff 信息，然后挪动当前分支到自动创建的commit。</li>
+</ul>
+<h3 id="reset"><a href="#reset" class="headerlink" title="reset"></a>reset</h3><p>将分支和HEAD挪动位置<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 挪动当前分支到HEAD所在commit</span></span><br><span class="line">git reset HEAD</span><br><span class="line"><span class="comment"># 挪动当前分支到HEAD父commit</span></span><br><span class="line">git reset HEAD^</span><br><span class="line"><span class="comment"># 挪动当前分支到3次父commit</span></span><br><span class="line">git reset HEAD~3</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>–soft 将差异内容保存到暂存区</li>
+<li>–hard 清空当前工作区和暂存区内容</li>
+<li>不加参数，将差异保存在工作区</li>
+</ul>
+<p>也可以对文件进行操作，删除暂存区内容</p>
+<h3 id="checkout"><a href="#checkout" class="headerlink" title="checkout"></a>checkout</h3><p>针对文件时，是操作工作区内容和版本区一致</p>
+<h3 id="工作区、暂存区和版本区"><a href="#工作区、暂存区和版本区" class="headerlink" title="工作区、暂存区和版本区"></a>工作区、暂存区和版本区</h3><ul>
+<li>工作区 -&gt;当前文件系统所拥有的状态</li>
+<li>暂存区 -&gt;add后添加到到内容</li>
+<li>版本区 -&gt;commit后的区域 指针都指向版本区</li>
+</ul>
+<h3 id="pull和push"><a href="#pull和push" class="headerlink" title="pull和push"></a>pull和push</h3>
       
     </div>
     
@@ -642,7 +679,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#git-rebase"><span class="nav-number">1.</span> <span class="nav-text">git rebase</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#常用命令"><span class="nav-number">1.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#经验技巧原则记录"><span class="nav-number">2.</span> <span class="nav-text">经验技巧原则记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gitlab-分支管理流程"><span class="nav-number">3.</span> <span class="nav-text">gitlab 分支管理流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#commit理解"><span class="nav-number">4.</span> <span class="nav-text">commit理解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#branch-理解"><span class="nav-number">5.</span> <span class="nav-text">branch 理解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HEAD"><span class="nav-number">6.</span> <span class="nav-text">HEAD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#merge"><span class="nav-number">7.</span> <span class="nav-text">merge</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reset"><span class="nav-number">8.</span> <span class="nav-text">reset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#checkout"><span class="nav-number">9.</span> <span class="nav-text">checkout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工作区、暂存区和版本区"><span class="nav-number">10.</span> <span class="nav-text">工作区、暂存区和版本区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pull和push"><span class="nav-number">11.</span> <span class="nav-text">pull和push</span></a></li></ol></div>
             
 
           </div>
@@ -676,7 +713,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">31.2k</span>
+    <span title="博客全站字数共计">31.8k</span>
   
 </div>
 
