@@ -88,18 +88,18 @@
 
 
 
-<meta name="description" content="常用命令别名配置12# 注意不要git， 同事还可以在后面添加 --配置 git lg --xxxgit config alias.lg &quot;log --oneline&quot; 经验技巧原则记录 未推送的内容使用reset回退，已推送的内容使用revert回退 谨慎使用rebase，建议仅作为本地内容commit的合并 使用对commit –amend 对上一次commit信息进行修改，可以把当前暂存区的">
+<meta name="description" content="经验技巧原则记录 未推送的内容使用reset回退，已推送的内容使用revert回退 谨慎使用rebase，建议仅作为本地内容commit的合并 使用对commit –amend 对上一次commit信息进行修改，可以把当前暂存区的合并到修改中  下面文件是常用的git 配置12345[user]	name = yangjiaxun	email = yangjiaxun@longfor.com[al">
 <meta name="keywords" content="博客,xunsever,bang">
 <meta property="og:type" content="article">
 <meta property="og:title" content="git再学习">
 <meta property="og:url" content="https://blog.xunserver.cn/archives/141454d6.html">
 <meta property="og:site_name" content="bang">
-<meta property="og:description" content="常用命令别名配置12# 注意不要git， 同事还可以在后面添加 --配置 git lg --xxxgit config alias.lg &quot;log --oneline&quot; 经验技巧原则记录 未推送的内容使用reset回退，已推送的内容使用revert回退 谨慎使用rebase，建议仅作为本地内容commit的合并 使用对commit –amend 对上一次commit信息进行修改，可以把当前暂存区的">
+<meta property="og:description" content="经验技巧原则记录 未推送的内容使用reset回退，已推送的内容使用revert回退 谨慎使用rebase，建议仅作为本地内容commit的合并 使用对commit –amend 对上一次commit信息进行修改，可以把当前暂存区的合并到修改中  下面文件是常用的git 配置12345[user]	name = yangjiaxun	email = yangjiaxun@longfor.com[al">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2021-11-15T09:39:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git再学习">
-<meta name="twitter:description" content="常用命令别名配置12# 注意不要git， 同事还可以在后面添加 --配置 git lg --xxxgit config alias.lg &quot;log --oneline&quot; 经验技巧原则记录 未推送的内容使用reset回退，已推送的内容使用revert回退 谨慎使用rebase，建议仅作为本地内容commit的合并 使用对commit –amend 对上一次commit信息进行修改，可以把当前暂存区的">
+<meta name="twitter:description" content="经验技巧原则记录 未推送的内容使用reset回退，已推送的内容使用revert回退 谨慎使用rebase，建议仅作为本地内容commit的合并 使用对commit –amend 对上一次commit信息进行修改，可以把当前暂存区的合并到修改中  下面文件是常用的git 配置12345[user]	name = yangjiaxun	email = yangjiaxun@longfor.com[al">
 
 
 
@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  612 字
+                  624 字
                 </span>
               
 
@@ -453,12 +453,12 @@
       
 
       
-        <h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p>别名配置<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 注意不要git， 同事还可以在后面添加 --配置 git lg --xxx</span></span><br><span class="line">git config alias.lg <span class="string">"log --oneline"</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="经验技巧原则记录"><a href="#经验技巧原则记录" class="headerlink" title="经验技巧原则记录"></a>经验技巧原则记录</h3><ul>
+        <h3 id="经验技巧原则记录"><a href="#经验技巧原则记录" class="headerlink" title="经验技巧原则记录"></a>经验技巧原则记录</h3><ul>
 <li>未推送的内容使用reset回退，已推送的内容使用revert回退</li>
 <li>谨慎使用rebase，建议仅作为本地内容commit的合并</li>
 <li>使用对commit –amend 对上一次commit信息进行修改，可以把当前暂存区的合并到修改中</li>
 </ul>
+<p>下面文件是常用的git 配置<br><figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[user]</span><br><span class="line">	name = yangjiaxun</span><br><span class="line">	email = yangjiaxun<span class="title">@longfor.com</span></span><br><span class="line">[<span class="keyword">alias</span>]</span><br><span class="line">	lg = log --graph --pretty=format:'<span class="symbol">%Cred</span><span class="symbol">%h</span><span class="symbol">%Creset</span> -<span class="symbol">%C</span>(yellow)<span class="symbol">%d</span><span class="symbol">%Creset</span> <span class="symbol">%s</span> <span class="symbol">%Cgreen</span>(<span class="symbol">%cr</span>) <span class="symbol">%C</span>(bold blue)&lt;<span class="symbol">%an</span>&gt;<span class="symbol">%Creset</span>' --abbrev-commit --date=relative</span><br></pre></td></tr></table></figure></p>
 <h3 id="gitlab-分支管理流程"><a href="#gitlab-分支管理流程" class="headerlink" title="gitlab 分支管理流程"></a>gitlab 分支管理流程</h3><h3 id="commit理解"><a href="#commit理解" class="headerlink" title="commit理解"></a>commit理解</h3><p>git 是由commit组成，commit 记录git每次操作，包括</p>
 <ul>
 <li>commitid（sha-1）</li>
@@ -607,7 +607,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-count">55</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -679,7 +679,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#常用命令"><span class="nav-number">1.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#经验技巧原则记录"><span class="nav-number">2.</span> <span class="nav-text">经验技巧原则记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gitlab-分支管理流程"><span class="nav-number">3.</span> <span class="nav-text">gitlab 分支管理流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#commit理解"><span class="nav-number">4.</span> <span class="nav-text">commit理解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#branch-理解"><span class="nav-number">5.</span> <span class="nav-text">branch 理解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HEAD"><span class="nav-number">6.</span> <span class="nav-text">HEAD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#merge"><span class="nav-number">7.</span> <span class="nav-text">merge</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reset"><span class="nav-number">8.</span> <span class="nav-text">reset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#checkout"><span class="nav-number">9.</span> <span class="nav-text">checkout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工作区、暂存区和版本区"><span class="nav-number">10.</span> <span class="nav-text">工作区、暂存区和版本区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pull和push"><span class="nav-number">11.</span> <span class="nav-text">pull和push</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#经验技巧原则记录"><span class="nav-number">1.</span> <span class="nav-text">经验技巧原则记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gitlab-分支管理流程"><span class="nav-number">2.</span> <span class="nav-text">gitlab 分支管理流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#commit理解"><span class="nav-number">3.</span> <span class="nav-text">commit理解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#branch-理解"><span class="nav-number">4.</span> <span class="nav-text">branch 理解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HEAD"><span class="nav-number">5.</span> <span class="nav-text">HEAD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#merge"><span class="nav-number">6.</span> <span class="nav-text">merge</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reset"><span class="nav-number">7.</span> <span class="nav-text">reset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#checkout"><span class="nav-number">8.</span> <span class="nav-text">checkout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工作区、暂存区和版本区"><span class="nav-number">9.</span> <span class="nav-text">工作区、暂存区和版本区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pull和push"><span class="nav-number">10.</span> <span class="nav-text">pull和push</span></a></li></ol></div>
             
 
           </div>
