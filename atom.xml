@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.xunserver.cn/"/>
-  <updated>2021-11-18T11:43:45.000Z</updated>
+  <updated>2021-11-22T09:14:22.000Z</updated>
   <id>https://blog.xunserver.cn/</id>
   
   <author>
@@ -15,6 +15,50 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>whistle跨平台代理调试工具</title>
+    <link href="https://blog.xunserver.cn/archives/5258564a.html"/>
+    <id>https://blog.xunserver.cn/archives/5258564a.html</id>
+    <published>2021-11-22T09:14:22.000Z</published>
+    <updated>2021-11-22T09:14:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>whistle用于代理http,https,websocket请求，监听修改报文，实现调式功能。语法简单，对前端友好。</p><h3 id="安装和命令行"><a href="#安装和命令行" class="headerlink" title="安装和命令行"></a>安装和命令行</h3><p>通过npm全局安装<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">npm i -g whistle</span><br><span class="line"><span class="comment"># 前台启动</span></span><br><span class="line">w2 run </span><br><span class="line"><span class="comment"># 后台启动</span></span><br><span class="line">w2 start</span><br><span class="line"><span class="comment"># 后台停止</span></span><br><span class="line">w2 stop</span><br><span class="line"><span class="comment"># 重启</span></span><br><span class="line">w2 restart</span><br><span class="line"><span class="comment"># 查看帮助信息</span></span><br><span class="line">w2 <span class="built_in">help</span></span><br></pre></td></tr></table></figure></p><p>其余请求参数</p><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h4 id="范式"><a href="#范式" class="headerlink" title="范式"></a>范式</h4><p>whistle所有的操作都是通过下面范式配置， 匹配模式   操作协议+操作值</p><pre><code>pattern       operatorURI   |                |请求url表达式    对应的操作：操作协议和操作值</code></pre><h4 id="匹配模式"><a href="#匹配模式" class="headerlink" title="匹配模式"></a>匹配模式</h4><p>匹配模式分为域名、路径、正则、精准匹配和，通配符匹配</p><h5 id="域名匹配"><a href="#域名匹配" class="headerlink" title="域名匹配"></a>域名匹配</h5><p>通过域名、协议和端口号进行匹配，会匹配命中的所有请求<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不区分协议</span></span><br><span class="line">www.baidu.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 区分协议， 注意尾部添加/ 不是域名匹配</span></span><br><span class="line">https://www.baidu.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 带端口的形式</span></span><br><span class="line">www.baiu.com:9000</span><br></pre></td></tr></table></figure></p><h5 id="路径匹配"><a href="#路径匹配" class="headerlink" title="路径匹配"></a>路径匹配</h5><p>匹配uri路径及其子路径，uri是由域名和路径组成<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">www.baidu.com/xxx    <span class="comment"># 匹配 www.baidu.com/xxx 以及 www.baidu.com/xxx/xxx1/xxxx.index.html, 但是不匹配 www.baidu.com/xxx1</span></span><br></pre></td></tr></table></figure></p><p>如果想实现任何域名的路径匹配，使用通配符模式 **/xxx</p><h5 id="正则匹配"><a href="#正则匹配" class="headerlink" title="正则匹配"></a>正则匹配</h5><p>支持子匹配，i模式，不支持g模式。子匹配可用在operatorURI中,同时支持非匹配 <code>!/xxx/</code></p><h5 id="精准匹配"><a href="#精准匹配" class="headerlink" title="精准匹配"></a>精准匹配</h5><p>在路径匹配前添加$，同时支持非匹配， 表示不精准匹配某条。<code>!\$uri</code></p><h5 id="通配符匹配"><a href="#通配符匹配" class="headerlink" title="通配符匹配"></a>通配符匹配</h5>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h3&gt;&lt;p&gt;whistle用于代理http,https,websocket请求，监听修改报文，实现调式功能。语法简单，对前端友好。&lt;/p&gt;
+&lt;h3 id
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>常用软件合集</title>
+    <link href="https://blog.xunserver.cn/archives/f11219d6.html"/>
+    <id>https://blog.xunserver.cn/archives/f11219d6.html</id>
+    <published>2021-11-19T02:02:16.000Z</published>
+    <updated>2021-11-19T02:02:16.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="编辑器"><a href="#编辑器" class="headerlink" title="编辑器"></a>编辑器</h3><ul><li><a href="https://code.visualstudio.com/#alt-downloads" target="_blank" rel="noopener">vscode</a></li><li><a href="https://sublimetextcn.com/3/" target="_blank" rel="noopener">subline</a></li><li><a href="https://notepad-plus-plus.org/downloads/" target="_blank" rel="noopener">notepad++</a>，<a href="http://cdn.xunserver.cn/npp.8.1.9.1.Installer.exe" target="_blank" rel="noopener">国内下载</a></li></ul><h3 id="数据库GUI"><a href="#数据库GUI" class="headerlink" title="数据库GUI"></a>数据库GUI</h3><ul><li>mysql <a href="https://dbeaver.io/download/" target="_blank" rel="noopener">dbeaver</a>，<a href="http://cdn.xunserver.cn/dbeaver-ce-21.2.5-x86_64-setup.exe" target="_blank" rel="noopener">国内下载</a></li></ul><h3 id="git相关"><a href="#git相关" class="headerlink" title="git相关"></a>git相关</h3><ul><li><a href="https://npm.taobao.org/mirrors/git-for-windows/" target="_blank" rel="noopener">git</a></li></ul><h3 id="vscode-插件"><a href="#vscode-插件" class="headerlink" title="vscode 插件"></a>vscode 插件</h3><ul><li>code runner</li><li>css peek</li><li>eslint</li><li>stylelint</li><li>vetur</li><li>rest client</li><li>prettier</li><li>git lens</li><li>live Server</li><li>markdown all in one</li><li>git lens</li><li>git history</li></ul><h3 id="npm-包"><a href="#npm-包" class="headerlink" title="npm 包"></a>npm 包</h3><ul><li><p>代理工具</p><blockquote><p>npm i -g whistle</p></blockquote></li><li><p>静态服务器</p><blockquote><p>npm i -g static-server</p></blockquote></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;编辑器&quot;&gt;&lt;a href=&quot;#编辑器&quot; class=&quot;headerlink&quot; title=&quot;编辑器&quot;&gt;&lt;/a&gt;编辑器&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://code.visualstudio.com/#alt-downloads&quot; targe
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>前端加密那些事儿</title>
@@ -401,53 +445,6 @@
       
       
         &lt;h2 id=&quot;父组件给子组件设置-className-也需要通过-props-传递&quot;&gt;&lt;a href=&quot;#父组件给子组件设置-className-也需要通过-props-传递&quot; class=&quot;headerlink&quot; title=&quot;父组件给子组件设置 className 也需要通
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>英语学习</title>
-    <link href="https://blog.xunserver.cn/archives/3f43dc72.html"/>
-    <id>https://blog.xunserver.cn/archives/3f43dc72.html</id>
-    <published>2020-03-30T23:56:36.000Z</published>
-    <updated>2020-03-30T23:56:36.000Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>I come across below behavior</p></blockquote><p>我遇到了下面这些问题</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;I come across below behavior&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;我遇到了下面这些问题&lt;/p&gt;
-
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>ts+react环境搭建</title>
-    <link href="https://blog.xunserver.cn/archives/3a1fbb86.html"/>
-    <id>https://blog.xunserver.cn/archives/3a1fbb86.html</id>
-    <published>2020-03-30T09:38:25.000Z</published>
-    <updated>2020-03-30T09:38:25.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="package-json-初始化"><a href="#package-json-初始化" class="headerlink" title="package.json 初始化"></a>package.json 初始化</h2><blockquote><p>npm init</p></blockquote><h2 id="webpack-安装配置"><a href="#webpack-安装配置" class="headerlink" title="webpack 安装配置"></a>webpack 安装配置</h2><h3 id="webpack-安装"><a href="#webpack-安装" class="headerlink" title="webpack 安装"></a>webpack 安装</h3><blockquote><p>npm i -D webpack webpack-cli</p></blockquote><h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><ol><li>新建<code>config/base.config.js</code></li></ol><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: &#123;</span><br><span class="line">    main: path.resolve(__dirname, <span class="string">"../src/main.tsx"</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">"../dist"</span>),</span><br><span class="line">    filename: <span class="string">"[name]-[hash].js"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="built_in">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\./</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;package-json-初始化&quot;&gt;&lt;a href=&quot;#package-json-初始化&quot; class=&quot;headerlink&quot; title=&quot;package.json 初始化&quot;&gt;&lt;/a&gt;package.json 初始化&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;n
       
     
     </summary>
