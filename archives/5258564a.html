@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  371 字
+                  409 字
                 </span>
               
 
@@ -466,7 +466,13 @@
 <p>如果想实现任何域名的路径匹配，使用通配符模式 **/xxx</p>
 <h5 id="正则匹配"><a href="#正则匹配" class="headerlink" title="正则匹配"></a>正则匹配</h5><p>支持子匹配，i模式，不支持g模式。子匹配可用在operatorURI中,同时支持非匹配 <code>!/xxx/</code></p>
 <h5 id="精准匹配"><a href="#精准匹配" class="headerlink" title="精准匹配"></a>精准匹配</h5><p>在路径匹配前添加$，同时支持非匹配， 表示不精准匹配某条。<code>!\$uri</code></p>
-<h5 id="通配符匹配"><a href="#通配符匹配" class="headerlink" title="通配符匹配"></a>通配符匹配</h5>
+<h5 id="通配符匹配"><a href="#通配符匹配" class="headerlink" title="通配符匹配"></a>通配符匹配</h5><p>使用<code>^</code>开始，可选的<code>$</code>作为结尾</p>
+<ul>
+<li>*.com 匹配 xx.com 但是不能匹配 a.xx.com</li>
+<li>**.com 可以匹配 a.xx.com</li>
+<li>*/xx  可以匹配</li>
+</ul>
+
       
     </div>
     
@@ -685,7 +691,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">32.2k</span>
+    <span title="博客全站字数共计">32.3k</span>
   
 </div>
 
