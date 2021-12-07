@@ -1,67 +1,43 @@
-function isObject(obj) {
-    return typeof obj === 'object' && obj
-    // return Object.prototype.toString.call(obj) === '[object Object]'
-}
-
-function cloneDeep(source, cache = new WeakMap()) {
+function cloneIteration(source) {
     if(!isObject(source)) {
         return source
     }
 
-    if(cache.has(source)) {
-        return cache.get(source)
-    }
+    const root = Array.isArray(source) ? [] : {};
 
-    const target = Array.isArray(source) ? [] : {};
-    cache.set(target)
-
-    Object.entries(source).forEach(([key, value]) => {
-        target[key] = cloneDeep(value, cache)
-    })
-    return target
-}
-
-function cloneDeepIteration(source) {
-    const root = {}
     const queueList = [{
         parent: root,
-        data: source,
-        key: undefined
-    }];
+        key: undefined,
+        data: source
+    }]
 
     while(queueList.length) {
         const node = queueList.pop()
-        const { key, data, parent } = node;
+        const { parent, key, data } = node;
 
-        if(!isObject(data)) {
-           if(key === undefined) {
-                return source
-           }
-           parent[key] = data;
-           continue
-        }
-
-        let res = parent
-
-        if (key !== undefined) {
-            res = parent[key] = Array.isArray(data) ? [] : {}
+        if (!isObject(data)) {
+            parent[key] = data;
+            continue;
         }
         
+        let result = parent;
+        if(key !== undefined) {
+            result = parent[key] = {};
+        }
 
-        Object.entries(data).forEach(([k, v]) => {
+        console.log(queueList.length)
+
+        Object.entries(data).forEach(([key, value]) => {
             queueList.push({
-                parent: res,
-                key: k,
-                data: v
+                parent: result,
+                data: value,
+                key
             })
         })
-        
-
     }
 
     return root
-
-} 
+}
 
 const source = {
     a: 1,
@@ -84,4 +60,26 @@ const source = {
     dd: [{a: [1]}]
 }
 
-console.log( JSON.stringify(cloneDeepIteration(source)))
+function isObject(obj) {
+    return typeof obj === 'object' && obj
+}
+
+function cloneDeep(source, cache = new WeakMap) {
+    if(!isObject(source)) {
+        return source
+    }
+
+    if (cache.has(source)) {
+        return cache.get(source)
+    }
+
+    const target = Array.isArray(source) ? [] : {};
+    cache.set(source, target)
+    Object.entries(source).forEach(([key, value]) => {
+        target[key] = cloneDeep(value, cache);
+    })
+
+    return target
+}
+
+console.log(JSON.stringify(cloneIteration(source)))

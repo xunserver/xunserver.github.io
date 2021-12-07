@@ -1,88 +1,91 @@
-const getFunctionArgs = (funcArgs, startIndex = 0) => {
-    const result = []
-    for(let i = startIndex, len = funcArgs.length; i < len; i++) {
-        result.push(funcArgs[i])
-    }
-
-    return result;
-}
-
-const checkFunction = (fn) => {
+function checkFunction(fn) {
     return typeof fn === 'function'
 }
 
-Function.prototype.myCall = function(context) {
-    if(!(checkFunction(this))) {
-        throw new Error('not function');
+function getArgs(args, startIndex, name = 'args') {
+    const result = []
+    for( let i = startIndex; i < args.length; i++) {
+        result.push(`${name}[${i}]`)
     }
 
-    const restArgs = getFunctionArgs(arguments, 1);
-    context = context || globalThis;
-    context.__fn = this;
-    const result = eval(`context.__fn(${restArgs})`)
-    delete context.__fn
+    return  result
+}
+
+Function.prototype.myCall = function(context) {
+    context = context || global
+    const fn = this;
+    if(!checkFunction(fn)) {
+        throw new Error('not function')
+    }
+
+    const args = getArgs(arguments, 1)
+
+    const fnName = Symbol('fnName')
+
+    context[fnName] = fn;
+    const result = eval(`context[fnName](${args})`);
+    delete context[fnName]
     return result
 }
 
-Function.prototype.myApply = function(context, args = []) {
-    if(!checkFunction(this)) throw new Error('not function');
-    context = context || globalThis;
-    context.__fn = this;
-    const result = eval(`context.__fn(${args})`)
-    delete context.__fn
+Function.prototype.myApply = function (context, args) {
+    const fn = this;
+    context = context || global;
+
+    const _args = getArgs(args, 0, 'args')
+
+    context.fn = fn;
+    const result = eval(`context.fn(${_args})`)
+    delete context.fn
     return result
 }
 
 Function.prototype.myBind = function (context, ...initArgs) {
-    if(!checkFunction(this)) throw new Error('not function');
-    const fn = this;
+    if(!checkFunction(this)) {
+        throw new Error('not function')
+    }
+    context = context || global
+    const fn = this
 
-    const temp = function () {}
-    temp.prototype = this.prototype;
+    const tempFn = function () {}
+    tempFn.prototype = this.prototype
 
-    const fbind = function (...args) {
-        return fn.myCall(this instanceof fn ? this : context, ...initArgs, ...args)
+    const fBind = function(...args) {
+        return fn.myApply(this instanceof fn ? this : context, initArgs.concat(args))
     }
 
-    fbind.prototype = new temp()
+    fBind.prototype = new tempFn
 
-    return fbind
+    return fBind;
 }
 
-function newFn(constructor, ...args) {
-    const obj = Object.create(null);
-    obj.__proto__ = constructor.prototype;
-    constructor.myApply(obj, args)
-
-    return obj
-}
-
-function log(a) {
-   return {
-       a: this,
-       ...arguments
-   }
-}
-
-// let a = log.myBind({
-//     a: 1
-// })
-
-// b = new a(2,3,4,5)
-// console.log(b)
-
-function test() {
-    return {
-        a: this.a
+function newFn(fn, ...args) {
+    if(!checkFunction(fn)) {
+        throw new Error('not function')
     }
+
+    const obj = Object.create(null)
+    obj.__proto__ = fn.prototype;
+
+    const result = fn.myApply(obj, args);
+
+    return (typeof result === 'object' ? result : obj) || obj
 }
 
-test.prototype.a = 1
-const test1 = new test
+function log(...args) {
+    this.c = 1
+    console.log(this.a, ...args)
+    
+}
 
-console.log(test1.a)
+log.prototype = {
+    c: 1
+}
 
-test.prototype.a = 2
+const a = {
+    a: 1
+}
 
-console.log(test1.a)
+const Log = log.myBind(a, [2, 3 ,4, { a: 1 }])
 
+console.log(new Log)
