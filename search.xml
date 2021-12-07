@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[call,apply,bind实现]]></title>
+    <url>%2Farchives%2F8b2df16f.html</url>
+    <content type="text"><![CDATA[思路 模拟this调用 解析剩余参数 参数如何传到函数中 context为null时处理 处理函数非法的情况 删除额外新增的变量，最好采用symbol12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758const getFunctionArgs = (funcArgs, startIndex = 0) =&gt; &#123; const result = [] for(let i = startIndex, len = funcArgs.length; i &lt; len; i++) &#123; result.push(funcArgs[i]) &#125; return result;&#125;const checkFunction = (fn) =&gt; &#123; return typeof fn === 'function'&#125;Function.prototype.myCall = function(context) &#123; if(!(checkFunction(this))) &#123; throw new Error('not function'); &#125; const restArgs = getFunctionArgs(arguments, 1); context = context || globalThis; context.__fn = this; const result = eval(`context.__fn($&#123;restArgs&#125;)`) delete context.__fn return result&#125;Function.prototype.myApply = function(context, args = []) &#123; if(!checkFunction(this)) throw new Error('not function'); context = context || globalThis; context.__fn = this; const result = eval(`context.__fn($&#123;args&#125;)`) delete context.__fn return result&#125;Function.prototype.myBind = function (context, ...initArgs) &#123; if(!checkFunction(this)) throw new Error('not function'); const fn = this; const temp = function () &#123;&#125; temp.prototype = this.prototype; const fbind = function (...args) &#123; return fn.myCall(this instanceof fn ? this : context, ...initArgs, ...args) &#125; fbind.prototype = new temp() return fbind&#125;function newFn(constructor, ...args) &#123; const obj = Object.create(null); obj.__proto__ = constructor.prototype; constructor.myApply(obj, args) return obj&#125;]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[whistle跨平台代理调试工具]]></title>
     <url>%2Farchives%2F5258564a.html</url>
     <content type="text"><![CDATA[简介whistle用于代理http,https,websocket请求，监听修改报文，实现调式功能。语法简单，对前端友好。 安装和命令行通过npm全局安装1234567891011npm i -g whistle# 前台启动w2 run # 后台启动w2 start# 后台停止w2 stop# 重启w2 restart# 查看帮助信息w2 help 其余请求参数 配置范式whistle所有的操作都是通过下面范式配置， 匹配模式 操作协议+操作值 pattern operatorURI | | 请求url表达式 对应的操作：操作协议和操作值 匹配模式匹配模式分为域名、路径、正则、精准匹配和，通配符匹配 域名匹配通过域名、协议和端口号进行匹配，会匹配命中的所有请求12345678# 不区分协议www.baidu.com# 区分协议， 注意尾部添加/ 不是域名匹配https://www.baidu.com# 带端口的形式www.baiu.com:9000 路径匹配匹配uri路径及其子路径，uri是由域名和路径组成1www.baidu.com/xxx # 匹配 www.baidu.com/xxx 以及 www.baidu.com/xxx/xxx1/xxxx.index.html, 但是不匹配 www.baidu.com/xxx1 如果想实现任何域名的路径匹配，使用通配符模式 **/xxx 正则匹配支持子匹配，i模式，不支持g模式。子匹配可用在operatorURI中,同时支持非匹配 !/xxx/ 精准匹配在路径匹配前添加$，同时支持非匹配， 表示不精准匹配某条。!\$uri 通配符匹配使用^开始，可选的$作为结尾 *.com 匹配 xx.com 但是不能匹配 a.xx.com **.com 可以匹配 a.xx.com */xx 可以匹配]]></content>
@@ -8,7 +13,7 @@
   <entry>
     <title><![CDATA[常用软件合集]]></title>
     <url>%2Farchives%2Ff11219d6.html</url>
-    <content type="text"><![CDATA[编辑器 vscode subline notepad++，国内下载 数据库GUI mysql dbeaver，国内下载 redis AnotherRedisDesktopManager 服务器 git相关 git vscode 插件 code runner css peek eslint stylelint vetur rest client prettier git lens live Server markdown all in one git lens git history npm 包 代理工具 npm i -g whistle 静态服务器 npm i -g static-server]]></content>
+    <content type="text"><![CDATA[编辑器 vscode subline notepad++，国内下载 数据库GUI mysql dbeaver，国内下载 redis AnotherRedisDesktopManager 服务器 git相关 git vscode 插件 code runner css peek eslint stylelint vetur rest client prettier git lens live Server markdown all in one git lens git history npm 包 代理工具 npm i -g whistle 静态服务器 npm i -g static-server 其他软件 act 本地运行github action工具]]></content>
   </entry>
   <entry>
     <title><![CDATA[前端加密那些事儿]]></title>

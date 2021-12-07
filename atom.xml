@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.xunserver.cn/"/>
-  <updated>2021-11-22T09:14:22.000Z</updated>
+  <updated>2021-12-07T07:22:56.000Z</updated>
   <id>https://blog.xunserver.cn/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>call,apply,bind实现</title>
+    <link href="https://blog.xunserver.cn/archives/8b2df16f.html"/>
+    <id>https://blog.xunserver.cn/archives/8b2df16f.html</id>
+    <published>2021-12-07T07:22:56.000Z</published>
+    <updated>2021-12-07T07:22:56.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ol><li>模拟this调用</li><li>解析剩余参数</li><li>参数如何传到函数中</li><li>context为null时处理</li><li>处理函数非法的情况</li><li>删除额外新增的变量，最好采用symbol<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> getFunctionArgs = <span class="function">(<span class="params">funcArgs, startIndex = <span class="number">0</span></span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> result = []</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = startIndex, len = funcArgs.length; i &lt; len; i++) &#123;</span><br><span class="line">        result.push(funcArgs[i])</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> checkFunction = <span class="function">(<span class="params">fn</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">typeof</span> fn === <span class="string">'function'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Function</span>.prototype.myCall = <span class="function"><span class="keyword">function</span>(<span class="params">context</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!(checkFunction(<span class="keyword">this</span>))) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'not function'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> restArgs = getFunctionArgs(<span class="built_in">arguments</span>, <span class="number">1</span>);</span><br><span class="line">    context = context || globalThis;</span><br><span class="line">    context.__fn = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">const</span> result = <span class="built_in">eval</span>(<span class="string">`context.__fn(<span class="subst">$&#123;restArgs&#125;</span>)`</span>)</span><br><span class="line">    <span class="keyword">delete</span> context.__fn</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Function</span>.prototype.myApply = <span class="function"><span class="keyword">function</span>(<span class="params">context, args = []</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!checkFunction(<span class="keyword">this</span>)) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'not function'</span>);</span><br><span class="line">    context = context || globalThis;</span><br><span class="line">    context.__fn = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">const</span> result = <span class="built_in">eval</span>(<span class="string">`context.__fn(<span class="subst">$&#123;args&#125;</span>)`</span>)</span><br><span class="line">    <span class="keyword">delete</span> context.__fn</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Function</span>.prototype.myBind = <span class="function"><span class="keyword">function</span> (<span class="params">context, ...initArgs</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!checkFunction(<span class="keyword">this</span>)) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'not function'</span>);</span><br><span class="line">    <span class="keyword">const</span> fn = <span class="keyword">this</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> temp = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">    temp.prototype = <span class="keyword">this</span>.prototype;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> fbind = <span class="function"><span class="keyword">function</span> (<span class="params">...args</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> fn.myCall(<span class="keyword">this</span> <span class="keyword">instanceof</span> fn ? <span class="keyword">this</span> : context, ...initArgs, ...args)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fbind.prototype = <span class="keyword">new</span> temp()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> fbind</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">newFn</span>(<span class="params">constructor, ...args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> obj = <span class="built_in">Object</span>.create(<span class="literal">null</span>);</span><br><span class="line">    obj.__proto__ = <span class="keyword">constructor</span>.prototype;</span><br><span class="line">    <span class="keyword">constructor</span>.myApply(obj, args)</span><br><span class="line"></span><br><span class="line">    return obj</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;思路&quot;&gt;&lt;a href=&quot;#思路&quot; class=&quot;headerlink&quot; title=&quot;思路&quot;&gt;&lt;/a&gt;思路&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;模拟this调用&lt;/li&gt;
+&lt;li&gt;解析剩余参数&lt;/li&gt;
+&lt;li&gt;参数如何传到函数中&lt;/li&gt;
+&lt;li&gt;context为nul
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>whistle跨平台代理调试工具</title>
@@ -45,7 +70,7 @@
     <published>2021-11-19T02:02:16.000Z</published>
     <updated>2021-11-19T02:02:16.000Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="编辑器"><a href="#编辑器" class="headerlink" title="编辑器"></a>编辑器</h3><ul><li><a href="https://code.visualstudio.com/#alt-downloads" target="_blank" rel="noopener">vscode</a></li><li><a href="https://sublimetextcn.com/3/" target="_blank" rel="noopener">subline</a></li><li><a href="https://notepad-plus-plus.org/downloads/" target="_blank" rel="noopener">notepad++</a>，<a href="http://cdn.xunserver.cn/npp.8.1.9.1.Installer.exe" target="_blank" rel="noopener">国内下载</a></li></ul><h3 id="数据库GUI"><a href="#数据库GUI" class="headerlink" title="数据库GUI"></a>数据库GUI</h3><ul><li>mysql <a href="https://dbeaver.io/download/" target="_blank" rel="noopener">dbeaver</a>，<a href="http://cdn.xunserver.cn/dbeaver-ce-21.2.5-x86_64-setup.exe" target="_blank" rel="noopener">国内下载</a></li><li>redis <a href="https://github.com/qishibo/AnotherRedisDesktopManager/releases" target="_blank" rel="noopener"><br>AnotherRedisDesktopManager</a></li></ul><h3 id="服务器"><a href="#服务器" class="headerlink" title="服务器"></a>服务器</h3><ul><li><h3 id="git相关"><a href="#git相关" class="headerlink" title="git相关"></a>git相关</h3></li><li><a href="https://npm.taobao.org/mirrors/git-for-windows/" target="_blank" rel="noopener">git</a></li></ul><h3 id="vscode-插件"><a href="#vscode-插件" class="headerlink" title="vscode 插件"></a>vscode 插件</h3><ul><li>code runner</li><li>css peek</li><li>eslint</li><li>stylelint</li><li>vetur</li><li>rest client</li><li>prettier</li><li>git lens</li><li>live Server</li><li>markdown all in one</li><li>git lens</li><li>git history</li></ul><h3 id="npm-包"><a href="#npm-包" class="headerlink" title="npm 包"></a>npm 包</h3><ul><li><p>代理工具</p><blockquote><p>npm i -g whistle</p></blockquote></li><li><p>静态服务器</p><blockquote><p>npm i -g static-server</p></blockquote></li></ul>]]></content>
+    <content type="html"><![CDATA[<h3 id="编辑器"><a href="#编辑器" class="headerlink" title="编辑器"></a>编辑器</h3><ul><li><a href="https://code.visualstudio.com/#alt-downloads" target="_blank" rel="noopener">vscode</a></li><li><a href="https://sublimetextcn.com/3/" target="_blank" rel="noopener">subline</a></li><li><a href="https://notepad-plus-plus.org/downloads/" target="_blank" rel="noopener">notepad++</a>，<a href="http://cdn.xunserver.cn/npp.8.1.9.1.Installer.exe" target="_blank" rel="noopener">国内下载</a></li></ul><h3 id="数据库GUI"><a href="#数据库GUI" class="headerlink" title="数据库GUI"></a>数据库GUI</h3><ul><li>mysql <a href="https://dbeaver.io/download/" target="_blank" rel="noopener">dbeaver</a>，<a href="http://cdn.xunserver.cn/dbeaver-ce-21.2.5-x86_64-setup.exe" target="_blank" rel="noopener">国内下载</a></li><li>redis <a href="https://github.com/qishibo/AnotherRedisDesktopManager/releases" target="_blank" rel="noopener"><br>AnotherRedisDesktopManager</a></li></ul><h3 id="服务器"><a href="#服务器" class="headerlink" title="服务器"></a>服务器</h3><ul><li><h3 id="git相关"><a href="#git相关" class="headerlink" title="git相关"></a>git相关</h3></li><li><a href="https://npm.taobao.org/mirrors/git-for-windows/" target="_blank" rel="noopener">git</a></li></ul><h3 id="vscode-插件"><a href="#vscode-插件" class="headerlink" title="vscode 插件"></a>vscode 插件</h3><ul><li>code runner</li><li>css peek</li><li>eslint</li><li>stylelint</li><li>vetur</li><li>rest client</li><li>prettier</li><li>git lens</li><li>live Server</li><li>markdown all in one</li><li>git lens</li><li>git history</li></ul><h3 id="npm-包"><a href="#npm-包" class="headerlink" title="npm 包"></a>npm 包</h3><ul><li><p>代理工具</p><blockquote><p>npm i -g whistle</p></blockquote></li><li><p>静态服务器</p><blockquote><p>npm i -g static-server</p></blockquote></li></ul><h3 id="其他软件"><a href="#其他软件" class="headerlink" title="其他软件"></a>其他软件</h3><ul><li>act 本地运行github action工具</li></ul>]]></content>
     
     <summary type="html">
     
@@ -424,27 +449,6 @@
         &lt;h2 id=&quot;vue&quot;&gt;&lt;a href=&quot;#vue&quot; class=&quot;headerlink&quot; title=&quot;vue&quot;&gt;&lt;/a&gt;vue&lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;beforeCreate （ &amp;lt;=初始化事件和生命周期）&lt;/li&gt;
 &lt;li&gt;created （&amp;lt;= prop
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>react开发采坑之路</title>
-    <link href="https://blog.xunserver.cn/archives/5bca6e8e.html"/>
-    <id>https://blog.xunserver.cn/archives/5bca6e8e.html</id>
-    <published>2020-03-31T07:48:38.000Z</published>
-    <updated>2020-03-31T07:48:38.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="父组件给子组件设置-className-也需要通过-props-传递"><a href="#父组件给子组件设置-className-也需要通过-props-传递" class="headerlink" title="父组件给子组件设置 className 也需要通过 props 传递"></a>父组件给子组件设置 className 也需要通过 props 传递</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=&#123;`$&#123;this.props.className&#125;  otherClassName`&#125;&gt;</span><br></pre></td></tr></table></figure><h2 id="jsx-属性命名原则"><a href="#jsx-属性命名原则" class="headerlink" title="jsx 属性命名原则"></a>jsx 属性命名原则</h2><p>React DOM 使用 camelCase（小驼峰命名）来定义属性的名称</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;父组件给子组件设置-className-也需要通过-props-传递&quot;&gt;&lt;a href=&quot;#父组件给子组件设置-className-也需要通过-props-传递&quot; class=&quot;headerlink&quot; title=&quot;父组件给子组件设置 className 也需要通
       
     
     </summary>

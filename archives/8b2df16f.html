@@ -88,17 +88,18 @@
 
 
 
-<meta name="description" content="随笔">
+<meta name="description" content="思路 模拟this调用 解析剩余参数 参数如何传到函数中 context为null时处理 处理函数非法的情况 删除额外新增的变量，最好采用symbol12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758const getFunctionA">
 <meta name="keywords" content="博客,xunsever,bang">
-<meta property="og:type" content="website">
-<meta property="og:title" content="bang">
-<meta property="og:url" content="https://blog.xunserver.cn/archives/2019/04/page/2/index.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="call,apply,bind实现">
+<meta property="og:url" content="https://blog.xunserver.cn/archives/8b2df16f.html">
 <meta property="og:site_name" content="bang">
-<meta property="og:description" content="随笔">
+<meta property="og:description" content="思路 模拟this调用 解析剩余参数 参数如何传到函数中 context为null时处理 处理函数非法的情况 删除额外新增的变量，最好采用symbol12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758const getFunctionA">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-12-07T07:22:56.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="bang">
-<meta name="twitter:description" content="随笔">
+<meta name="twitter:title" content="call,apply,bind实现">
+<meta name="twitter:description" content="思路 模拟this调用 解析剩余参数 参数如何传到函数中 context为null时处理 处理函数非法的情况 删除额外新增的变量，最好采用symbol12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758const getFunctionA">
 
 
 
@@ -128,7 +129,7 @@
 
 
 
-  <link rel="canonical" href="https://blog.xunserver.cn/archives/2019/04/page/2/">
+  <link rel="canonical" href="https://blog.xunserver.cn/archives/8b2df16f.html">
 
 
 
@@ -142,7 +143,7 @@
   daovoice('update');
   </script>
 
-  <title>归档 | bang</title>
+  <title>call,apply,bind实现 | bang</title>
   
 
 
@@ -180,7 +181,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -316,145 +317,203 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.xunserver.cn/archives/8b2df16f.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yangmanman">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="bang">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
-         
+          <h2 class="post-title" itemprop="name headline">call,apply,bind实现</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-12-07T07:22:56+00:00">
+                2021-12-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        好! 目前共计 58 篇日志。 继续努力。
-      </span>
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h2 class="archive-year" id="archive-year-2019">2019</h2>
-          </div>
-        
-        
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/archives/8b2df16f.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/archives/8b2df16f.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
 
-        
+          
+          
+             <span id="/archives/8b2df16f.html" class="leancloud_visitors" data-flag-title="call,apply,bind实现">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                 <span>ºC</span>
+             </span>
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/archives/64ba60b1.html" itemprop="url">
+          
+            <div class="post-wordcount">
               
-                <span itemprop="name">ngrok内网穿透</span>
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  235 字
+                </span>
               
-            </a>
-        
-      </h3>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-17T09:40:39+08:00" content="2019-04-17">
-          04-17
-        </time>
-      </div>
+              
+                <span class="post-meta-divider">|</span>
+              
 
-    </header>
-  </article>
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 </span>
+                
+                <span title="阅读时长">
+                  1 分钟
+                </span>
+              
+            </div>
+          
 
+          
 
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/archives/ce3dc320.html" itemprop="url">
-              
-                <span itemprop="name">hexo搭建博客（下）</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-16T14:41:39+08:00" content="2019-04-16">
-          04-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/archives/7681a445.html" itemprop="url">
-              
-                <span itemprop="name">hexo搭建博客（上）</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-16T10:10:22+08:00" content="2019-04-16">
-          04-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ol>
+<li>模拟this调用</li>
+<li>解析剩余参数</li>
+<li>参数如何传到函数中</li>
+<li>context为null时处理</li>
+<li>处理函数非法的情况</li>
+<li>删除额外新增的变量，最好采用symbol<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> getFunctionArgs = <span class="function">(<span class="params">funcArgs, startIndex = <span class="number">0</span></span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> result = []</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = startIndex, len = funcArgs.length; i &lt; len; i++) &#123;</span><br><span class="line">        result.push(funcArgs[i])</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> checkFunction = <span class="function">(<span class="params">fn</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">typeof</span> fn === <span class="string">'function'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Function</span>.prototype.myCall = <span class="function"><span class="keyword">function</span>(<span class="params">context</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!(checkFunction(<span class="keyword">this</span>))) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'not function'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> restArgs = getFunctionArgs(<span class="built_in">arguments</span>, <span class="number">1</span>);</span><br><span class="line">    context = context || globalThis;</span><br><span class="line">    context.__fn = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">const</span> result = <span class="built_in">eval</span>(<span class="string">`context.__fn(<span class="subst">$&#123;restArgs&#125;</span>)`</span>)</span><br><span class="line">    <span class="keyword">delete</span> context.__fn</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Function</span>.prototype.myApply = <span class="function"><span class="keyword">function</span>(<span class="params">context, args = []</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!checkFunction(<span class="keyword">this</span>)) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'not function'</span>);</span><br><span class="line">    context = context || globalThis;</span><br><span class="line">    context.__fn = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">const</span> result = <span class="built_in">eval</span>(<span class="string">`context.__fn(<span class="subst">$&#123;args&#125;</span>)`</span>)</span><br><span class="line">    <span class="keyword">delete</span> context.__fn</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Function</span>.prototype.myBind = <span class="function"><span class="keyword">function</span> (<span class="params">context, ...initArgs</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!checkFunction(<span class="keyword">this</span>)) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'not function'</span>);</span><br><span class="line">    <span class="keyword">const</span> fn = <span class="keyword">this</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> temp = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">    temp.prototype = <span class="keyword">this</span>.prototype;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> fbind = <span class="function"><span class="keyword">function</span> (<span class="params">...args</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> fn.myCall(<span class="keyword">this</span> <span class="keyword">instanceof</span> fn ? <span class="keyword">this</span> : context, ...initArgs, ...args)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fbind.prototype = <span class="keyword">new</span> temp()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> fbind</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">newFn</span>(<span class="params">constructor, ...args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> obj = <span class="built_in">Object</span>.create(<span class="literal">null</span>);</span><br><span class="line">    obj.__proto__ = <span class="keyword">constructor</span>.prototype;</span><br><span class="line">    <span class="keyword">constructor</span>.myApply(obj, args)</span><br><span class="line"></span><br><span class="line">    return obj</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
 
       
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archives/5258564a.html" rel="next" title="whistle跨平台代理调试工具">
+                <i class="fa fa-chevron-left"></i> whistle跨平台代理调试工具
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2019/04/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/2019/04/">1</a><span class="page-number current">2</span>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -462,6 +521,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
         </div>
         
           
@@ -481,8 +547,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -561,6 +636,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#思路"><span class="nav-number">1.</span> <span class="nav-text">思路</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -706,6 +797,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
