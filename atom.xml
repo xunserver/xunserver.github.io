@@ -197,6 +197,27 @@
   </entry>
   
   <entry>
+    <title>ts随笔</title>
+    <link href="https://blog.xunserver.cn/archives/d6023bbe.html"/>
+    <id>https://blog.xunserver.cn/archives/d6023bbe.html</id>
+    <published>2021-11-11T13:48:50.000Z</published>
+    <updated>2021-11-11T13:48:50.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="变量申明空间和类型申明空间"><a href="#变量申明空间和类型申明空间" class="headerlink" title="变量申明空间和类型申明空间"></a>变量申明空间和类型申明空间</h3><p>类型申明空间不会编译到源码中，class会同时声明到变量声明空间和类型声明空间</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;变量申明空间和类型申明空间&quot;&gt;&lt;a href=&quot;#变量申明空间和类型申明空间&quot; class=&quot;headerlink&quot; title=&quot;变量申明空间和类型申明空间&quot;&gt;&lt;/a&gt;变量申明空间和类型申明空间&lt;/h3&gt;&lt;p&gt;类型申明空间不会编译到源码中，class会同时声明到
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>ccna</title>
     <link href="https://blog.xunserver.cn/archives/838de56f.html"/>
     <id>https://blog.xunserver.cn/archives/838de56f.html</id>
@@ -426,29 +447,6 @@
       
       
         &lt;h2 id=&quot;下载固件&quot;&gt;&lt;a href=&quot;#下载固件&quot; class=&quot;headerlink&quot; title=&quot;下载固件&quot;&gt;&lt;/a&gt;下载固件&lt;/h2&gt;&lt;p&gt;下载&lt;a href=&quot;https://firmware.koolshare.cn/LEDE_X64_fw867/%E8%99
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>react和vue的生命周期</title>
-    <link href="https://blog.xunserver.cn/archives/27ee65e3.html"/>
-    <id>https://blog.xunserver.cn/archives/27ee65e3.html</id>
-    <published>2020-04-02T09:33:50.000Z</published>
-    <updated>2020-04-02T09:33:50.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="vue"><a href="#vue" class="headerlink" title="vue"></a>vue</h2><ol><li>beforeCreate （ &lt;=初始化事件和生命周期）</li><li>created （&lt;= prop 注入完成）</li><li>beforeMount 编译 template 模板或者 render， 并收集依赖</li><li>mouted （挂载到 dom 上面）</li><li>beforeUpdate =&gt; 不能在里面更新 data =&gt; 开始 diff render</li><li>beforeDestory =&gt; 解除绑定，解除事件，销毁子组件。</li><li>destoryed =&gt; 删除完回调</li></ol><h2 id="react"><a href="#react" class="headerlink" title="react"></a>react</h2><h3 id="初始化阶段"><a href="#初始化阶段" class="headerlink" title="初始化阶段"></a>初始化阶段</h3><ol><li>defaultProp =&gt; prop</li><li>initState</li><li>componentWillMount</li><li>render</li><li>componentDidMount</li></ol><h3 id="运行阶段"><a href="#运行阶段" class="headerlink" title="运行阶段"></a>运行阶段</h3><p>react 的变化需要自己手动更新，包括 props 和 state 的变化</p><ol><li>props 变化通过 componentWillReceiveProps 获得，</li><li>state 的变化通过 setState 方法来实现</li></ol><p>均会触发 shouldComponentUpdate 钩子，如果钩子返回 false 表示不更新。<br>然后会触发 componentWillUpdate 构造<br>重新调用 render 函数， 渲染界面<br>触发 componentDidUpdate 钩子，</p><p>销毁钩子 componentWillUnmount</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;vue&quot;&gt;&lt;a href=&quot;#vue&quot; class=&quot;headerlink&quot; title=&quot;vue&quot;&gt;&lt;/a&gt;vue&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;beforeCreate （ &amp;lt;=初始化事件和生命周期）&lt;/li&gt;
-&lt;li&gt;created （&amp;lt;= prop
       
     
     </summary>
