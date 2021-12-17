@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[access-control]]></title>
+    <url>%2Farchives%2Fcb8b60b3.html</url>
+    <content type="text"><![CDATA[简单请求必须满足下列所有条件 请求方法是 GET POST HEAD(只请求资源首部) 首部只能包含下面字段 accept accept-language content-language content-type content-type 的值只能是 application/x-www-form-urlencode multipart/form-data text/plain 复杂请求不满足简单请求的都是复杂请求, 常见的复杂请求包括 content-type: applcation/json]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[nginx之location]]></title>
     <url>%2Farchives%2Fe22c93eb.html</url>
-    <content type="text"><![CDATA[语法location [= | ^~ | ~* | ~ ] xxx = 精准匹配优先级最高。 ^~ 前缀匹配, 按照最长的前缀匹配，如果命中，则会阻止正则，但不会组织普通路径 ~ 区分大小写的正则匹配，正则匹配只要命中就生效。 ~* 不区分大小写的正则匹配 不加符号，表示前缀匹配, 采用最长匹配 / 兜底匹配按照 上述顺序匹配 案例分析123456location /test_1 &#123; return 400;&#125;location ^~ /test &#123; return 401;&#125; 如上如果path为/test_1，返回的是400，说明^~优先级并不比普通匹配高 例子2123456789location /test_1 &#123; return 400;&#125;location ^~ /test &#123; return 401;&#125;location ~ /test &#123; return 402;&#125; 会返回 402, 因为会先命中 400 ，然后不会阻止正则 静态服务器root、alias12345678location /img/ &#123; root some/path; # /img/image/1 =&gt; some/path/img/image/1 会将整个路径添加到 root 路径中 index index.html index.htm; =&gt; # /user/image/1 =&gt; some/path/user/image/1 或者1.html&#125;localtion /img/ &#123; alias some/path; # /img/image/1 =&gt; some/path/image/1 会舍弃命中部分，所以要求location 和alias上级目录一致，所以location一定是一个目录，一定需要在末尾添加 / &#125; proxy_pass 解析目标地址后不带/，表示将请求的path拼接在target之后，如果带，表示将请求命中之外的拼接在target后]]></content>
+    <content type="text"><![CDATA[安装windows 安装windows 直接下载官方二进制包，添加到环境变量 其他版本安装官网download下面有个平台的快捷安装方法 docker 安装需要注意的是配置转发的时候不是127.0.0.1（因为指向的是nginx容器本身） 命令大全指定配置文件运行 nginx -f xxx.conf 检查配置 nginx -t 检查配置文件nginx -T 检查并输出配置文件 重启、停止 nginx -s restartnginx -s stop systemctl 管理 systemctl start nginxsystemctl stop nginxsystemctl restart nginx 配置文件server_nameserver_name 支持精准匹配、通配符，正则匹配（^）开头。 location 语法location [= | ^~ | ~* | ~ ] xxx = 精准匹配优先级最高。 ^~ 前缀匹配, 按照最长的前缀匹配，如果命中，则会阻止正则，但不会组织普通路径 ~ 区分大小写的正则匹配，正则匹配只要命中就生效。 ~* 不区分大小写的正则匹配 不加符号，表示前缀匹配, 采用最长匹配 / 兜底匹配按照 上述顺序匹配 案例分析123456location /test_1 &#123; return 400;&#125;location ^~ /test &#123; return 401;&#125; 如上如果path为/test_1，返回的是400，说明^~优先级并不比普通匹配高 例子2123456789location /test_1 &#123; return 400;&#125;location ^~ /test &#123; return 401;&#125;location ~ /test &#123; return 402;&#125; 会返回 402, 因为会先命中 400 ，然后不会阻止正则 静态服务器root、alias12345678location /img/ &#123; root some/path; # /img/image/1 =&gt; some/path/img/image/1 会将整个路径添加到 root 路径中 index index.html index.htm; =&gt; # /user/image/1 =&gt; some/path/user/image/1 或者1.html&#125;localtion /img/ &#123; alias some/path; # /img/image/1 =&gt; some/path/image/1 会舍弃命中部分，所以要求location 和alias上级目录一致，所以location一定是一个目录，一定需要在末尾添加 / &#125; proxy_pass 解析目标地址后不带/，表示将请求的path拼接在target之后，如果带，表示将请求命中之外的拼接在target后]]></content>
   </entry>
   <entry>
     <title><![CDATA[call,apply,bind实现]]></title>

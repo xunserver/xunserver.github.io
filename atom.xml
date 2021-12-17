@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.xunserver.cn/"/>
-  <updated>2021-12-15T14:31:27.000Z</updated>
+  <updated>2021-12-17T03:39:57.000Z</updated>
   <id>https://blog.xunserver.cn/</id>
   
   <author>
@@ -17,22 +17,43 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>access-control</title>
+    <link href="https://blog.xunserver.cn/archives/cb8b60b3.html"/>
+    <id>https://blog.xunserver.cn/archives/cb8b60b3.html</id>
+    <published>2021-12-17T03:39:57.000Z</published>
+    <updated>2021-12-17T03:39:57.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="简单请求"><a href="#简单请求" class="headerlink" title="简单请求"></a>简单请求</h3><p>必须满足下列所有条件</p><ul><li>请求方法是 GET POST HEAD(只请求资源首部)</li><li>首部只能包含下面字段<ul><li>accept</li><li>accept-language</li><li>content-language</li><li>content-type</li></ul></li><li>content-type 的值只能是<ul><li><code>application/x-www-form-urlencode</code></li><li><code>multipart/form-data</code></li><li><code>text/plain</code></li></ul></li></ul><h3 id="复杂请求"><a href="#复杂请求" class="headerlink" title="复杂请求"></a>复杂请求</h3><p>不满足简单请求的都是复杂请求, 常见的复杂请求包括 content-type: applcation/json</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;简单请求&quot;&gt;&lt;a href=&quot;#简单请求&quot; class=&quot;headerlink&quot; title=&quot;简单请求&quot;&gt;&lt;/a&gt;简单请求&lt;/h3&gt;&lt;p&gt;必须满足下列所有条件&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;请求方法是 GET POST HEAD(只请求资源首部)&lt;/li&gt;
+&lt;li&gt;
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>nginx之location</title>
     <link href="https://blog.xunserver.cn/archives/e22c93eb.html"/>
     <id>https://blog.xunserver.cn/archives/e22c93eb.html</id>
     <published>2021-12-15T14:31:27.000Z</published>
     <updated>2021-12-15T14:31:27.000Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>location [= | ^~ | ~* | ~ ] xxx</p><ul><li>= 精准匹配优先级最高。</li><li>^~ 前缀匹配, 按照最长的前缀匹配，如果命中，则会阻止正则，但不会组织普通路径</li><li>~ 区分大小写的正则匹配，正则匹配只要命中就生效。</li><li>~* 不区分大小写的正则匹配</li><li>不加符号，表示前缀匹配, 采用最长匹配</li><li>/ 兜底匹配<br>按照 上述顺序匹配</li></ul><h3 id="案例分析"><a href="#案例分析" class="headerlink" title="案例分析"></a>案例分析</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">location /test_1 &#123;</span><br><span class="line">    return 400;</span><br><span class="line">&#125;</span><br><span class="line">location ^~ /test &#123;</span><br><span class="line">    return 401;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>如上如果path为/test_1，返回的是400，说明^~优先级并不比普通匹配高</p><p>例子2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">location /test_1 &#123;</span><br><span class="line">    return 400;</span><br><span class="line">&#125;</span><br><span class="line">location ^~ /test &#123;</span><br><span class="line">    return 401;</span><br><span class="line">&#125;</span><br><span class="line">location ~ /test &#123;</span><br><span class="line">    return 402;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>会返回 402, 因为会先命中 400 ，然后不会阻止正则</p><h3 id="静态服务器root、alias"><a href="#静态服务器root、alias" class="headerlink" title="静态服务器root、alias"></a>静态服务器root、alias</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">location /img/ &#123;</span><br><span class="line">    root some/path; # /img/image/1  =&gt; some/path/img/image/1 会将整个路径添加到 root 路径中</span><br><span class="line">    index index.html index.htm;   =&gt; # /user/image/1  =&gt; some/path/user/image/1 或者1.html</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">localtion /img/ &#123;</span><br><span class="line">    alias some/path; # /img/image/1  =&gt; some/path/image/1 会舍弃命中部分，所以要求location 和alias上级目录一致，所以location一定是一个目录，一定需要在末尾添加 / </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="proxy-pass-解析"><a href="#proxy-pass-解析" class="headerlink" title="proxy_pass 解析"></a>proxy_pass 解析</h3><p>目标地址后不带/，表示将请求的path拼接在target之后，如果带，表示将请求命中之外的拼接在target后</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="windows-安装"><a href="#windows-安装" class="headerlink" title="windows 安装"></a>windows 安装</h3><p>windows 直接下载官方二进制包，添加到环境变量</p><h3 id="其他版本安装"><a href="#其他版本安装" class="headerlink" title="其他版本安装"></a>其他版本安装</h3><p>官网download下面有个平台的快捷安装方法</p><h3 id="docker-安装"><a href="#docker-安装" class="headerlink" title="docker 安装"></a>docker 安装</h3><p>需要注意的是配置转发的时候不是127.0.0.1（因为指向的是nginx容器本身）</p><h2 id="命令大全"><a href="#命令大全" class="headerlink" title="命令大全"></a>命令大全</h2><p>指定配置文件运行</p><blockquote><p>nginx -f xxx.conf </p></blockquote><p>检查配置</p><blockquote><p>nginx -t 检查配置文件<br>nginx -T 检查并输出配置文件</p></blockquote><p>重启、停止</p><blockquote><p>nginx -s restart<br>nginx -s stop </p></blockquote><p>systemctl 管理</p><blockquote><p>systemctl start nginx<br>systemctl stop nginx<br>systemctl restart nginx</p></blockquote><h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><h4 id="server-name"><a href="#server-name" class="headerlink" title="server_name"></a>server_name</h4><p>server_name 支持精准匹配、通配符，正则匹配（^）开头。</p><h3 id="location-语法"><a href="#location-语法" class="headerlink" title="location 语法"></a>location 语法</h3><p>location [= | ^~ | ~* | ~ ] xxx</p><ul><li>= 精准匹配优先级最高。</li><li>^~ 前缀匹配, 按照最长的前缀匹配，如果命中，则会阻止正则，但不会组织普通路径</li><li>~ 区分大小写的正则匹配，正则匹配只要命中就生效。</li><li>~* 不区分大小写的正则匹配</li><li>不加符号，表示前缀匹配, 采用最长匹配</li><li>/ 兜底匹配<br>按照 上述顺序匹配</li></ul><h3 id="案例分析"><a href="#案例分析" class="headerlink" title="案例分析"></a>案例分析</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">location /test_1 &#123;</span><br><span class="line">    return 400;</span><br><span class="line">&#125;</span><br><span class="line">location ^~ /test &#123;</span><br><span class="line">    return 401;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>如上如果path为/test_1，返回的是400，说明^~优先级并不比普通匹配高</p><p>例子2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">location /test_1 &#123;</span><br><span class="line">    return 400;</span><br><span class="line">&#125;</span><br><span class="line">location ^~ /test &#123;</span><br><span class="line">    return 401;</span><br><span class="line">&#125;</span><br><span class="line">location ~ /test &#123;</span><br><span class="line">    return 402;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>会返回 402, 因为会先命中 400 ，然后不会阻止正则</p><h3 id="静态服务器root、alias"><a href="#静态服务器root、alias" class="headerlink" title="静态服务器root、alias"></a>静态服务器root、alias</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">location /img/ &#123;</span><br><span class="line">    root some/path; # /img/image/1  =&gt; some/path/img/image/1 会将整个路径添加到 root 路径中</span><br><span class="line">    index index.html index.htm;   =&gt; # /user/image/1  =&gt; some/path/user/image/1 或者1.html</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">localtion /img/ &#123;</span><br><span class="line">    alias some/path; # /img/image/1  =&gt; some/path/image/1 会舍弃命中部分，所以要求location 和alias上级目录一致，所以location一定是一个目录，一定需要在末尾添加 / </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="proxy-pass-解析"><a href="#proxy-pass-解析" class="headerlink" title="proxy_pass 解析"></a>proxy_pass 解析</h3><p>目标地址后不带/，表示将请求的path拼接在target之后，如果带，表示将请求命中之外的拼接在target后</p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h3 id=&quot;语法&quot;&gt;&lt;a href=&quot;#语法&quot; class=&quot;headerlink&quot; title=&quot;语法&quot;&gt;&lt;/a&gt;语法&lt;/h3&gt;&lt;p&gt;location [= | ^~ | ~* | ~ ] xxx&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;= 精准匹配优先级最高。&lt;/li&gt;
-&lt;li&gt;^~ 
+        &lt;h2 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h2&gt;&lt;h3 id=&quot;windows-安装&quot;&gt;&lt;a href=&quot;#windows-安装&quot; class=&quot;headerlink&quot; title=&quot;windo
       
     
     </summary>
@@ -429,27 +450,6 @@
       
       
         &lt;h2 id=&quot;安装docker&quot;&gt;&lt;a href=&quot;#安装docker&quot; class=&quot;headerlink&quot; title=&quot;安装docker&quot;&gt;&lt;/a&gt;安装docker&lt;/h2&gt;&lt;p&gt;参考&lt;a href=&quot;https://vuepress.mirror.docker-prac
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>let-encrypt 域名证书申请</title>
-    <link href="https://blog.xunserver.cn/archives/63bb46e5.html"/>
-    <id>https://blog.xunserver.cn/archives/63bb46e5.html</id>
-    <published>2020-12-13T09:04:51.000Z</published>
-    <updated>2020-12-13T09:04:51.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="下载certbot-auto"><a href="#下载certbot-auto" class="headerlink" title="下载certbot-auto"></a>下载certbot-auto</h2><pre><code>wget https://dl.eff.org/certbot-autochmod a+x ./certbot-auto</code></pre><h3 id="单域名证书申请"><a href="#单域名证书申请" class="headerlink" title="单域名证书申请"></a>单域名证书申请</h3><h4 id="新建nginx-配置"><a href="#新建nginx-配置" class="headerlink" title="新建nginx 配置"></a>新建nginx 配置</h4><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> cloud.jiaxuan.site;</span><br><span class="line">    <span class="attribute">charset</span> utf-<span class="number">8</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="attribute">root</span> /opt/www/cloud.jiaxuan.site;</span><br><span class="line">    <span class="attribute">index</span> index.html index.htm;</span><br><span class="line">    </span><br><span class="line">    <span class="attribute">access_log</span>  /var/log/nginx/cloud.jiaxuan.site_access.log;</span><br><span class="line">    <span class="attribute">error_log</span>  /var/log/nginx/cloud.jiaxuan.site_error.log;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="申请单域名证书"><a href="#申请单域名证书" class="headerlink" title="申请单域名证书"></a>申请单域名证书</h4><blockquote><p>./certbot-auto certonly –email <a href="mailto:1358925129@qq.com" target="_blank" rel="noopener">1358925129@qq.com</a> –domains cloud.jiaxuan.site</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;下载certbot-auto&quot;&gt;&lt;a href=&quot;#下载certbot-auto&quot; class=&quot;headerlink&quot; title=&quot;下载certbot-auto&quot;&gt;&lt;/a&gt;下载certbot-auto&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;wget https://d
       
     
     </summary>
