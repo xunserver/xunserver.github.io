@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1k 字
+                  1.1k 字
                 </span>
               
 
@@ -497,6 +497,9 @@
 <li>hash 项目级别的hash</li>
 <li>chunkhash 根据 入口文件相关的依赖进行hash</li>
 <li>contenthash，根据每个文件内容变化的hash</li>
+</ul>
+<h3 id="nginx-如何配置缓存"><a href="#nginx-如何配置缓存" class="headerlink" title="nginx 如何配置缓存"></a>nginx 如何配置缓存</h3><ul>
+<li>针对静态资源设置</li>
 </ul>
 
       
@@ -615,7 +618,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">63</span>
+                  <span class="site-state-item-count">64</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -687,7 +690,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#请求报文和相应报文"><span class="nav-number">1.</span> <span class="nav-text">请求报文和相应报文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#强缓存"><span class="nav-number">2.</span> <span class="nav-text">强缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#expires"><span class="nav-number">2.1.</span> <span class="nav-text">expires</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cache-control"><span class="nav-number">2.2.</span> <span class="nav-text">cache-control</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#协商缓存"><span class="nav-number">3.</span> <span class="nav-text">协商缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Last-Modified-和-If-Modified-Since"><span class="nav-number">3.1.</span> <span class="nav-text">Last-Modified 和 If-Modified-Since</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Etag-和-If-None-match"><span class="nav-number">3.2.</span> <span class="nav-text">Etag 和 If-None-match</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存位置"><span class="nav-number">4.</span> <span class="nav-text">缓存位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存时间如何计算"><span class="nav-number">5.</span> <span class="nav-text">缓存时间如何计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启发式缓存"><span class="nav-number">6.</span> <span class="nav-text">启发式缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开发模式下的刷新操作"><span class="nav-number">7.</span> <span class="nav-text">开发模式下的刷新操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#spa情况下如何配置缓存策略"><span class="nav-number">8.</span> <span class="nav-text">spa情况下如何配置缓存策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack-如何使用强缓存"><span class="nav-number">9.</span> <span class="nav-text">webpack 如何使用强缓存</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#请求报文和相应报文"><span class="nav-number">1.</span> <span class="nav-text">请求报文和相应报文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#强缓存"><span class="nav-number">2.</span> <span class="nav-text">强缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#expires"><span class="nav-number">2.1.</span> <span class="nav-text">expires</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cache-control"><span class="nav-number">2.2.</span> <span class="nav-text">cache-control</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#协商缓存"><span class="nav-number">3.</span> <span class="nav-text">协商缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Last-Modified-和-If-Modified-Since"><span class="nav-number">3.1.</span> <span class="nav-text">Last-Modified 和 If-Modified-Since</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Etag-和-If-None-match"><span class="nav-number">3.2.</span> <span class="nav-text">Etag 和 If-None-match</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存位置"><span class="nav-number">4.</span> <span class="nav-text">缓存位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存时间如何计算"><span class="nav-number">5.</span> <span class="nav-text">缓存时间如何计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启发式缓存"><span class="nav-number">6.</span> <span class="nav-text">启发式缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开发模式下的刷新操作"><span class="nav-number">7.</span> <span class="nav-text">开发模式下的刷新操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#spa情况下如何配置缓存策略"><span class="nav-number">8.</span> <span class="nav-text">spa情况下如何配置缓存策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack-如何使用强缓存"><span class="nav-number">9.</span> <span class="nav-text">webpack 如何使用强缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx-如何配置缓存"><span class="nav-number">10.</span> <span class="nav-text">nginx 如何配置缓存</span></a></li></ol></div>
             
 
           </div>
@@ -721,7 +724,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">34k</span>
+    <span title="博客全站字数共计">34.6k</span>
   
 </div>
 

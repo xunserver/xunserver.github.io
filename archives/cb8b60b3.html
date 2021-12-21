@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  94 字
+                  560 字
                 </span>
               
 
@@ -432,7 +432,7 @@
                   <span class="post-meta-item-text">阅读时长 </span>
                 
                 <span title="阅读时长">
-                  1 分钟
+                  2 分钟
                 </span>
               
             </div>
@@ -471,6 +471,18 @@
 </li>
 </ul>
 <h3 id="复杂请求"><a href="#复杂请求" class="headerlink" title="复杂请求"></a>复杂请求</h3><p>不满足简单请求的都是复杂请求, 常见的复杂请求包括 content-type: applcation/json</p>
+<h3 id="cors-cross-origin-resource-sharing-跨域资源共享"><a href="#cors-cross-origin-resource-sharing-跨域资源共享" class="headerlink" title="cors cross-origin resource sharing  跨域资源共享"></a>cors cross-origin resource sharing  跨域资源共享</h3><h4 id="简单请求-1"><a href="#简单请求-1" class="headerlink" title="简单请求"></a>简单请求</h4><p>针对简单请求，浏览器发现是跨域，会在请求中添加origin字段，如果服务端允许跨域，会返回access-control-allow-origin 字段，浏览器检测返回字段是否和当前域匹配，决定是否舍弃当前请求。</p>
+<p>响应会返回下面3个首部字段</p>
+<ul>
+<li>access-control-allow-origin, 指定允许的域。只能是origin 字段或者*</li>
+<li>access-control-allow-credentials，决定下次请求是否可以携带cookies</li>
+<li>access-control-allow-headers, 允许浏览器额外获取的首部字段</li>
+</ul>
+<h4 id="复杂请求-1"><a href="#复杂请求-1" class="headerlink" title="复杂请求"></a>复杂请求</h4><p>针对复杂请求浏览器会先发送预检请求(options)，检查当前请求能否跨域，允许的字段等。<br>浏览器发送预检查请求，包括Origin,access-control-request-method（表示当前请求的方法）,access-control-allow-Headers(表示当前请求额外的首部字段)</p>
+<p>服务端根据预检请求，会返回origin，access-control-allow-methods（表示允许的方法），用逗号分隔access-control-allow-headers(表示允许的首部字段)（逗号分隔），浏览器会检查，如果和当前匹配，则会发送正式请求。</p>
+<p>为了避免浏览器每次需要预检请求，还会同时返回access-control-max-age(秒), 表示有效期内不用发送预检请求。如果一个请求背、被预检通过，会走简单请求的流程，如果这个时候被简单请求拦截， 也不会成功</p>
+<h4 id="nginx-配置cors"><a href="#nginx-配置cors" class="headerlink" title="nginx 配置cors"></a>nginx 配置cors</h4><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> / &#123;</span><br><span class="line">    <span class="attribute">add_header</span> Access-Control-Allow-Origin *;</span><br><span class="line">    <span class="attribute">add_header</span> Access-Control-Allow-Methods <span class="string">'POST,DELETE,OPTIONS'</span>;</span><br><span class="line">    <span class="attribute">add_header</span> Access-Control-Max-Age: <span class="number">7200</span></span><br><span class="line">    add_header Aceess-Contorl-Allow-Headers <span class="string">'Cache-Control,Keep-Alive,If-Modified-Since,Content-Type,Authorization'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>或者单独对options 请求配置<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> / &#123;</span><br><span class="line">    if($request_method = 'OPTIONS) &#123;</span><br><span class="line">        <span class="attribute">add_header</span> Access-Control-Allow-Origin *;</span><br><span class="line">        <span class="attribute">add_header</span> Access-Control-Allow-Methods <span class="string">'GET,POST,PUT,DELETE,OPTIONS'</span>;</span><br><span class="line">        <span class="attribute">add_header</span> Access-Control-Allow-Header <span class="string">'Cache-control,If-Modified-Since,If-None-Matched,Authorization,Content-Type'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -504,6 +516,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archives/f85ddf3d.html" rel="prev" title="防抖和节流">
+                防抖和节流 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -584,7 +600,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">63</span>
+                  <span class="site-state-item-count">64</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -656,7 +672,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单请求"><span class="nav-number">1.</span> <span class="nav-text">简单请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复杂请求"><span class="nav-number">2.</span> <span class="nav-text">复杂请求</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单请求"><span class="nav-number">1.</span> <span class="nav-text">简单请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复杂请求"><span class="nav-number">2.</span> <span class="nav-text">复杂请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cors-cross-origin-resource-sharing-跨域资源共享"><span class="nav-number">3.</span> <span class="nav-text">cors cross-origin resource sharing  跨域资源共享</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简单请求-1"><span class="nav-number">3.1.</span> <span class="nav-text">简单请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#复杂请求-1"><span class="nav-number">3.2.</span> <span class="nav-text">复杂请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nginx-配置cors"><span class="nav-number">3.3.</span> <span class="nav-text">nginx 配置cors</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -690,7 +706,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">34k</span>
+    <span title="博客全站字数共计">34.6k</span>
   
 </div>
 
