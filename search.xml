@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[esxi入门玩法]]></title>
+    <url>%2Farchives%2F61a1a8d1.html</url>
+    <content type="text"><![CDATA[下载安装 vm下载页面，搜索VMware vSphere下载，当前最新版本7.0，下载Standard版本 使用软碟通刷入U盘，选择硬盘镜像 主板uefi下引导，安装。 安装黑群晖###]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[防抖和节流]]></title>
     <url>%2Farchives%2Ff85ddf3d.html</url>
     <content type="text"><![CDATA[防抖debounce事件发生后，规定时间内只执行一次回调, 如果重复触发，会重置计时器和事件。 有立即执行和延迟执行两种方式，应用场景不同。 立即执行，触发事件 -&gt; 执行回调 -&gt; 延迟。常用在输入框远程搜索。 延迟执行，触发事件 -&gt; 延时 -&gt; 执行回调。用在防止按钮重复点击 实现方式如下 节流规定时间段内，只会发生一次事件，重复事件会被舍弃掉。]]></content>
@@ -28,7 +33,7 @@
   <entry>
     <title><![CDATA[常用软件合集]]></title>
     <url>%2Farchives%2Ff11219d6.html</url>
-    <content type="text"><![CDATA[编辑器 vscode subline notepad++，国内下载 数据库GUI mysql dbeaver，国内下载 redis AnotherRedisDesktopManager 服务器 git相关 git vscode 插件 code runner css peek eslint stylelint vetur rest client prettier git lens live Server markdown all in one git lens git history npm 包 代理工具 npm i -g whistle 静态服务器 npm i -g static-server 其他软件 act 本地运行github action工具]]></content>
+    <content type="text"><![CDATA[编辑器 vscode subline notepad++，国内下载 数据库GUI mysql dbeaver，国内下载 redis AnotherRedisDesktopManager 服务器 git相关 git vscode 插件 code runner css peek eslint stylelint vetur rest client prettier git lens live Server markdown all in one git lens git history npm 包 代理工具 npm i -g whistle 静态服务器 npm i -g static-server 其他软件 act 本地运行github action工具 ftp和dhcp简单工具 tftpd64]]></content>
   </entry>
   <entry>
     <title><![CDATA[前端加密那些事儿]]></title>
