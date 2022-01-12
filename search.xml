@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[dhcp]]></title>
+    <url>%2Farchives%2Fcd116c88.html</url>
+    <content type="text"><![CDATA[简介DHCP（dynamic host configuration protocol）动态主机配置协议。是一个应用层协议，用于给dhcp客户端配置ip，网关，dns等。 流程首次DHCP 客户端广播DISCOVER，要求当前广播域中的服务器提供可用的IP。 服务端广播OFFER，提供可选的IP。 客户端选择一个可用的IP，广播REQUEST，提示服务端已经选择某个OFFER。 服务端收到REQUEST后，记录已经分配的IP，并广播ACK。 客户端收到ACK后，设置IP。 释放IP 客户端单播发送RELEASE，目标地址时DHCP服务端 服务收到，释放IP 续租 租期50%时（T1），客户端会单播发送REQUEST，服务端单播ACK，续租成功。如果服务端单播回复NAK，会重新走DISCOVER流程请求新的IP 如果T1时发送的包REQUEST未得到回应，会在87.5%时，发送第二次RESQUEST，流程同第一次 如果租期到了，REQUEST还未得到回应，走DISCOVER流程 配置 配置默认网关 配置主备DNS服务器 配置开始的IP池，结束IP池 从DHCP服务器同一个广播域中可以存在多个DHCP服务器，所以DHCP流程有4步，不是2步。OFFER就相当于保价并保留短暂时间，如果客户端发起的REQUEST相当于通知其他DHCP没选择他们的OFFER]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[esxi入门玩法]]></title>
     <url>%2Farchives%2F61a1a8d1.html</url>
     <content type="text"><![CDATA[下载安装 vm下载页面，搜索VMware vSphere下载，当前最新版本7.0，下载Standard版本 使用软碟通刷入U盘，选择硬盘镜像 主板uefi下引导，安装。 安装黑群晖###]]></content>

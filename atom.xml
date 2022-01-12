@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.xunserver.cn/"/>
-  <updated>2022-01-10T00:16:56.000Z</updated>
+  <updated>2022-01-11T19:42:04.000Z</updated>
   <id>https://blog.xunserver.cn/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>dhcp</title>
+    <link href="https://blog.xunserver.cn/archives/cd116c88.html"/>
+    <id>https://blog.xunserver.cn/archives/cd116c88.html</id>
+    <published>2022-01-11T19:42:04.000Z</published>
+    <updated>2022-01-11T19:42:04.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>DHCP（dynamic host configuration protocol）动态主机配置协议。是一个应用层协议，用于给dhcp客户端配置ip，网关，dns等。</p><h3 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h3><h4 id="首次DHCP"><a href="#首次DHCP" class="headerlink" title="首次DHCP"></a>首次DHCP</h4><ol><li>客户端广播DISCOVER，要求当前广播域中的服务器提供可用的IP。</li><li>服务端广播OFFER，提供可选的IP。</li><li>客户端选择一个可用的IP，广播REQUEST，提示服务端已经选择某个OFFER。</li><li>服务端收到REQUEST后，记录已经分配的IP，并广播ACK。</li><li>客户端收到ACK后，设置IP。</li></ol><h4 id="释放IP"><a href="#释放IP" class="headerlink" title="释放IP"></a>释放IP</h4><ol><li>客户端单播发送RELEASE，目标地址时DHCP服务端</li><li>服务收到，释放IP</li></ol><h4 id="续租"><a href="#续租" class="headerlink" title="续租"></a>续租</h4><ol><li>租期50%时（T1），客户端会单播发送REQUEST，服务端单播ACK，续租成功。如果服务端单播回复NAK，会重新走DISCOVER流程请求新的IP</li><li>如果T1时发送的包REQUEST未得到回应，会在87.5%时，发送第二次RESQUEST，流程同第一次</li><li>如果租期到了，REQUEST还未得到回应，走DISCOVER流程</li></ol><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><ul><li>配置默认网关</li><li>配置主备DNS服务器</li><li>配置开始的IP池，结束IP池</li></ul><h3 id="从DHCP服务器"><a href="#从DHCP服务器" class="headerlink" title="从DHCP服务器"></a>从DHCP服务器</h3><p>同一个广播域中可以存在多个DHCP服务器，所以DHCP流程有4步，不是2步。OFFER就相当于保价并保留短暂时间，如果客户端发起的REQUEST相当于通知其他DHCP没选择他们的OFFER</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h3&gt;&lt;p&gt;DHCP（dynamic host configuration protocol）动态主机配置协议。是一个应用层协议，用于给dhcp客户端配
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>esxi入门玩法</title>
@@ -429,28 +450,6 @@
       
         &lt;h1 id=&quot;Javascript-编码规范&quot;&gt;&lt;a href=&quot;#Javascript-编码规范&quot; class=&quot;headerlink&quot; title=&quot;Javascript 编码规范&quot;&gt;&lt;/a&gt;Javascript 编码规范&lt;/h1&gt;&lt;p&gt;[TOC]&lt;/p&gt;
 &lt;h2 id=&quot;
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>github-action</title>
-    <link href="https://blog.xunserver.cn/archives/355afdd9.html"/>
-    <id>https://blog.xunserver.cn/archives/355afdd9.html</id>
-    <published>2021-08-12T10:24:09.000Z</published>
-    <updated>2021-08-12T10:24:09.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h2><p>workflow: 一次持续集成</p><p>job: 一次workflow包含一个或者多个job，在没有依赖的情况下，多个job异步执行</p><p>step: 每个job 由多个step组成，同步执行</p><p>action: 每个step可以执行一个或者多个action</p><h2 id="简单例子"><a href="#简单例子" class="headerlink" title="简单例子"></a>简单例子</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">github</span> <span class="string">pages</span></span><br><span class="line"></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line"><span class="attr">  push:</span></span><br><span class="line"><span class="attr">    branches:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">master</span></span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line"><span class="attr">  build-deploy:</span></span><br><span class="line"><span class="attr">    runs-on:</span> <span class="string">ubuntu-18.04</span></span><br><span class="line"><span class="attr">    steps:</span></span><br><span class="line"><span class="attr">    - uses:</span> <span class="string">actions/checkout@master</span></span><br><span class="line"></span><br><span class="line"><span class="attr">    - name:</span> <span class="string">build</span></span><br><span class="line"><span class="attr">      uses:</span> <span class="string">actions/setup-node@v1</span></span><br><span class="line"><span class="attr">      with:</span></span><br><span class="line"><span class="attr">        node-version:</span> <span class="string">'10.x'</span></span><br><span class="line"><span class="attr">    - run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">        npm install</span></span><br><span class="line"><span class="string">        npm run hexo g </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span><span class="attr">    - name:</span> <span class="string">deploy</span></span><br><span class="line"><span class="attr">      uses:</span> <span class="string">peaceiris/actions-gh-pages@v2.5.0</span></span><br><span class="line"><span class="attr">      env:</span></span><br><span class="line"><span class="attr">        ACTIONS_DEPLOY_KEY:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.ACTIONS_DEPLOY_KEY</span> <span class="string">&#125;&#125;</span></span><br><span class="line"><span class="attr">        EXTERNAL_REPOSITORY:</span> <span class="string">xunserver/xunserver.github.io</span></span><br><span class="line"><span class="attr">        PUBLISH_BRANCH:</span> <span class="string">master</span></span><br><span class="line"><span class="attr">        PUBLISH_DIR:</span> <span class="string">./public</span></span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;术语&quot;&gt;&lt;a href=&quot;#术语&quot; class=&quot;headerlink&quot; title=&quot;术语&quot;&gt;&lt;/a&gt;术语&lt;/h2&gt;&lt;p&gt;workflow: 一次持续集成&lt;/p&gt;
-&lt;p&gt;job: 一次workflow包含一个或者多个job，在没有依赖的情况下，多个job异步执行
       
     
     </summary>
