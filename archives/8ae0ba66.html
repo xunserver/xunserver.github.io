@@ -88,18 +88,18 @@
 
 
 
-<meta name="description" content="前言最近在公司碰到了内嵌的iframe始终提示未登录的问题，查询到时接口请求时未自动携带cookie，排查过程中一直没搞懂cookie携带的机制。将排查后学习到总计一下。 问题先来几个问题  cookie是怎么设置到浏览器中，设置cookie有什么限制 什么样的请求能携带cookie，能携带哪些cookie cookie存储方式是什么 cookie 和 storeage区别 跨域和跨站  跨域和跨">
+<meta name="description" content="前言最近在公司碰到了内嵌的iframe始终提示未登录的问题，查询到时接口请求时未自动携带cookie，排查过程中一直没搞懂cookie携带的机制。将排查后学习到总计一下。 问题先来几个问题  cookie是怎么设置到浏览器中，设置cookie有什么限制 什么样的请求能携带cookie，能携带哪些cookie cookie存储方式是什么 cookie 和 storeage 区别 跨域和跨站  跨域和">
 <meta name="keywords" content="博客,xunsever,bang">
 <meta property="og:type" content="article">
 <meta property="og:title" content="cookie">
 <meta property="og:url" content="https://blog.xunserver.cn/archives/8ae0ba66.html">
 <meta property="og:site_name" content="bang">
-<meta property="og:description" content="前言最近在公司碰到了内嵌的iframe始终提示未登录的问题，查询到时接口请求时未自动携带cookie，排查过程中一直没搞懂cookie携带的机制。将排查后学习到总计一下。 问题先来几个问题  cookie是怎么设置到浏览器中，设置cookie有什么限制 什么样的请求能携带cookie，能携带哪些cookie cookie存储方式是什么 cookie 和 storeage区别 跨域和跨站  跨域和跨">
+<meta property="og:description" content="前言最近在公司碰到了内嵌的iframe始终提示未登录的问题，查询到时接口请求时未自动携带cookie，排查过程中一直没搞懂cookie携带的机制。将排查后学习到总计一下。 问题先来几个问题  cookie是怎么设置到浏览器中，设置cookie有什么限制 什么样的请求能携带cookie，能携带哪些cookie cookie存储方式是什么 cookie 和 storeage 区别 跨域和跨站  跨域和">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2022-02-24T22:40:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="cookie">
-<meta name="twitter:description" content="前言最近在公司碰到了内嵌的iframe始终提示未登录的问题，查询到时接口请求时未自动携带cookie，排查过程中一直没搞懂cookie携带的机制。将排查后学习到总计一下。 问题先来几个问题  cookie是怎么设置到浏览器中，设置cookie有什么限制 什么样的请求能携带cookie，能携带哪些cookie cookie存储方式是什么 cookie 和 storeage区别 跨域和跨站  跨域和跨">
+<meta name="twitter:description" content="前言最近在公司碰到了内嵌的iframe始终提示未登录的问题，查询到时接口请求时未自动携带cookie，排查过程中一直没搞懂cookie携带的机制。将排查后学习到总计一下。 问题先来几个问题  cookie是怎么设置到浏览器中，设置cookie有什么限制 什么样的请求能携带cookie，能携带哪些cookie cookie存储方式是什么 cookie 和 storeage 区别 跨域和跨站  跨域和">
 
 
 
@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  842 字
+                  1.1k 字
                 </span>
               
 
@@ -459,7 +459,7 @@
 <li>cookie是怎么设置到浏览器中，设置cookie有什么限制</li>
 <li>什么样的请求能携带cookie，能携带哪些cookie</li>
 <li>cookie存储方式是什么</li>
-<li>cookie 和 storeage区别</li>
+<li>cookie 和 storeage 区别</li>
 <li>跨域和跨站</li>
 </ol>
 <h2 id="跨域和跨站"><a href="#跨域和跨站" class="headerlink" title="跨域和跨站"></a>跨域和跨站</h2><p>同域: 协议、域名、端口相同，反之是跨域<br>同站: eTLD + 1, 顶级域名 + 1 相同则是同站，反之是跨站</p>
@@ -491,6 +491,11 @@
 <p>samesite 如何设置，浏览器默认是lax, 匿名浏览器如果关闭第三方共享是strict。如果设置none，需要同时secure，同时在https下设置</p>
 <h3 id="跨域如何携带cookie"><a href="#跨域如何携带cookie" class="headerlink" title="跨域如何携带cookie"></a>跨域如何携带cookie</h3><h4 id="哪些些请求能跨域"><a href="#哪些些请求能跨域" class="headerlink" title="哪些些请求能跨域"></a>哪些些请求能跨域</h4><p>link、img、script 标签支持跨域，但是new Image不支持。跨域能发送请求，但是不能解析响应。<br>其余的通过axios或者fetch发送跨域请求，<br>axios 需要添加withCredentials: true支持跨域携带cookie<br>fetch 需要添加withCredentials: include属性</p>
 <h4 id="fetch-withCredentials解析"><a href="#fetch-withCredentials解析" class="headerlink" title="fetch withCredentials解析"></a>fetch withCredentials解析</h4><p>omit 跨域不打送cookie<br>include 总是发送<br>same-origin 同站才发送</p>
+<h3 id="storage"><a href="#storage" class="headerlink" title="storage"></a>storage</h3><p>localstorage 和 sessionStorage 严格按照同源原则。</p>
+<h3 id="document-domain-用来干嘛"><a href="#document-domain-用来干嘛" class="headerlink" title="document.domain 用来干嘛"></a>document.domain 用来干嘛</h3><p>可以把父页面和iframe的domain设置成一个（都需要设置，因为document.domain调用后端口会被设置为null），父页面可以拿到iframe的window对象，从而调用iframe中的方法实现跨域。设置document.domain 仅设置自身或者上级域名，不能设置为其他或者子域名。</p>
+<p>也可以通过window.open 获取引用</p>
+<h3 id="如何检查浏览器同时打开多个相同页面"><a href="#如何检查浏览器同时打开多个相同页面" class="headerlink" title="如何检查浏览器同时打开多个相同页面"></a>如何检查浏览器同时打开多个相同页面</h3><p>循环检查localStorage</p>
+<h3 id="host、referer和origin"><a href="#host、referer和origin" class="headerlink" title="host、referer和origin"></a>host、referer和origin</h3><p>host: 指向请求的host和端口号，任何请求都有<br>referer: 当前请求发起的来源，一个页面跳转到另一个页面指向的是之前的页面，页面内发起的资源请求，指向当前文档的地址，不包含hash<br>origin: 跨域请求中常见 ，指向原始</p>
 
       
     </div>
@@ -676,7 +681,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number">2.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跨域和跨站"><span class="nav-number">3.</span> <span class="nav-text">跨域和跨站</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#请求的场景"><span class="nav-number">4.</span> <span class="nav-text">请求的场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cookie"><span class="nav-number">5.</span> <span class="nav-text">cookie</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cookie组成"><span class="nav-number">5.1.</span> <span class="nav-text">cookie组成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cookie-如何被设置"><span class="nav-number">5.2.</span> <span class="nav-text">cookie 如何被设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cookie-如何被携带"><span class="nav-number">5.3.</span> <span class="nav-text">cookie 如何被携带</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#samesite-是啥"><span class="nav-number">5.3.1.</span> <span class="nav-text">samesite 是啥</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#跨域如何携带cookie"><span class="nav-number">5.4.</span> <span class="nav-text">跨域如何携带cookie</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#哪些些请求能跨域"><span class="nav-number">5.4.1.</span> <span class="nav-text">哪些些请求能跨域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fetch-withCredentials解析"><span class="nav-number">5.4.2.</span> <span class="nav-text">fetch withCredentials解析</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number">2.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跨域和跨站"><span class="nav-number">3.</span> <span class="nav-text">跨域和跨站</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#请求的场景"><span class="nav-number">4.</span> <span class="nav-text">请求的场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cookie"><span class="nav-number">5.</span> <span class="nav-text">cookie</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cookie组成"><span class="nav-number">5.1.</span> <span class="nav-text">cookie组成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cookie-如何被设置"><span class="nav-number">5.2.</span> <span class="nav-text">cookie 如何被设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cookie-如何被携带"><span class="nav-number">5.3.</span> <span class="nav-text">cookie 如何被携带</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#samesite-是啥"><span class="nav-number">5.3.1.</span> <span class="nav-text">samesite 是啥</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#跨域如何携带cookie"><span class="nav-number">5.4.</span> <span class="nav-text">跨域如何携带cookie</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#哪些些请求能跨域"><span class="nav-number">5.4.1.</span> <span class="nav-text">哪些些请求能跨域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fetch-withCredentials解析"><span class="nav-number">5.4.2.</span> <span class="nav-text">fetch withCredentials解析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#storage"><span class="nav-number">5.5.</span> <span class="nav-text">storage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#document-domain-用来干嘛"><span class="nav-number">5.6.</span> <span class="nav-text">document.domain 用来干嘛</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何检查浏览器同时打开多个相同页面"><span class="nav-number">5.7.</span> <span class="nav-text">如何检查浏览器同时打开多个相同页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#host、referer和origin"><span class="nav-number">5.8.</span> <span class="nav-text">host、referer和origin</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -710,7 +715,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">36.8k</span>
+    <span title="博客全站字数共计">37k</span>
   
 </div>
 
