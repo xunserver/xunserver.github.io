@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.xunserver.cn/"/>
-  <updated>2022-02-24T22:40:45.000Z</updated>
+  <updated>2022-03-01T02:40:51.000Z</updated>
   <id>https://blog.xunserver.cn/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>浏览器网络</title>
+    <link href="https://blog.xunserver.cn/archives/31643d6c.html"/>
+    <id>https://blog.xunserver.cn/archives/31643d6c.html</id>
+    <published>2022-03-01T02:40:51.000Z</published>
+    <updated>2022-03-01T02:40:51.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="浏览器进程"><a href="#浏览器进程" class="headerlink" title="浏览器进程"></a>浏览器进程</h3><ol><li>主进程</li><li>网络进程</li><li>GUI进程</li><li>多个插件进程</li><li>多个渲染进程（一个页面一个，多个同源界面共用一个，所以页面崩溃时可能影响其他多个页面，一个tab页因为iframe可能存在多个渲染进程）</li></ol><p>渲染进程是放在sanbox中的，不讲整个浏览器放在sanbox原因是其他进程需要用到沙箱外的服务。渲染进程需要保证安全。</p><h3 id="输入url到页面展示页面流程"><a href="#输入url到页面展示页面流程" class="headerlink" title="输入url到页面展示页面流程"></a>输入url到页面展示页面流程</h3><ol><li>构建请求行 GET /index.html http1.1 （没有host和协议）</li><li>浏览器根据请求url判断是否走缓存，如果是get请求，根据查询强缓存（硬盘缓存和内存缓存）查询是否有，有直接返回。没有缓存走下一步。</li><li>准备ip或者端口，如果是url是域名形式的，需要根据DNS查询ip，DNS查询也有多级缓存，查询的流程有递归和迭代查询，前者是从根域名服务器查询，根域名服务器往下查询。后者由下往上查询。如果url中没有端口，端口根据协议自动推导</li><li>准备请求投，根据发起请求添加header，部分请求头浏览器默认准备，cookie会自动根据当前domain和path，添加父域名和父path的cookie。host（domain + port）, referer根据请求发起的位置添加（<a href="http://xxxx.com/123），不包含hash。还有origin，格式同referer" target="_blank" rel="noopener">http://xxxx.com/123），不包含hash。还有origin，格式同referer</a></li><li>建立TCP连接，三次握手，发送请求，谷歌tcp连接最多6条，所以在控制台中有等待的请求</li><li><p>服务处理请求，发送响应，响应包括响应头，响应行，响应体。<br>响应行包括协议、状态码(HTTP/1.1 304)，常见的状态码如下<br>1xx: 请求未传输完成，继续传输<br>200: 请求接受成功，正常处理<br>301: 资源永久重定向, 根据响应头中的location请求新地址<br>302: 资源临时重定向，location处理<br>304：资源未被修改，使用本地缓存文件。同时根据响应头更新本地资源。<br>400: 服务器无法理解当前请求<br>401：未鉴权<br>403: 已登录无权限<br>404: 资源未找到<br>405: 请求的方法错误<br>5xx: 服务器出错了。</p></li><li><p>浏览器解析文档，从上到下依次解析html，计息dom和cssom，组成渲染树，然后渲染到页面。</p></li></ol><h3 id="浏览器缓存概述"><a href="#浏览器缓存概述" class="headerlink" title="浏览器缓存概述"></a>浏览器缓存概述</h3><ol><li>查询是否存在强缓存（cache-control, expire）。如果不存在直接请求</li><li>检查强缓存是否有效（先检查cache-control）,如果没有过期，使用缓存</li><li>如果过期，使用协商缓存，先检查是否有etag,如果有etag，发送请求（携带if-none-match:etag），服务端接收到请求后，如果当前缓存有效，返回304和新的etag，浏览器使用本地缓存同时更新etag或者新的cache-control。如果当前服务检查缓存无效，则会返回新的资源和etag等</li><li>如果不存在etag，存在last-modified。则发送if-modified-since, 服务端检查后同etag处理流程一致。</li><li>如果都不存在，则发送新请求。</li></ol><h3 id="浏览器解析文档"><a href="#浏览器解析文档" class="headerlink" title="浏览器解析文档"></a>浏览器解析文档</h3><ol><li>浏览器根据content-type判断是交给文档解析器还是下载管理器，一般content-type 是字节流会交给下载管理器作为下载文件</li><li>如果是文档，会交给渲染进程，渲染进程接受到后发挥出确认提交给浏览器主进程，主进程会更新浏览器导航栏，地址栏等信息。这个时候页面时空白，然后开始解析文档，渲染界面</li></ol><h3 id="defer-和-async"><a href="#defer-和-async" class="headerlink" title="defer 和 async"></a>defer 和 async</h3><p>defer是延迟，表示资源下载完后，在文档解析完成后依次执行<br>async 是异步，表示资源下载不阻塞，资源下载后立马执行，阻塞渲染进程解析。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;浏览器进程&quot;&gt;&lt;a href=&quot;#浏览器进程&quot; class=&quot;headerlink&quot; title=&quot;浏览器进程&quot;&gt;&lt;/a&gt;浏览器进程&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;主进程&lt;/li&gt;
+&lt;li&gt;网络进程&lt;/li&gt;
+&lt;li&gt;GUI进程&lt;/li&gt;
+&lt;li&gt;多个插件进程&lt;/li
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>cookie</title>
@@ -420,27 +445,6 @@
       
       
         &lt;h3 id=&quot;amd&quot;&gt;&lt;a href=&quot;#amd&quot; class=&quot;headerlink&quot; title=&quot;amd&quot;&gt;&lt;/a&gt;amd&lt;/h3&gt;&lt;p&gt;amd Asynchronous Module Definition 异步模块化定义, requirejs实现了这套规范，思想是前置
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>vercel白嫖教程</title>
-    <link href="https://blog.xunserver.cn/archives/f79d6af9.html"/>
-    <id>https://blog.xunserver.cn/archives/f79d6af9.html</id>
-    <published>2021-09-07T09:00:02.000Z</published>
-    <updated>2021-09-07T09:00:02.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>vercel 可以托管静态资源，ssr，和serverless 函数。官网地址 <a href="https://vercel.com，首次使用需要邮箱注册，建议绑定github" target="_blank" rel="noopener">https://vercel.com，首次使用需要邮箱注册，建议绑定github</a> 账号，方便登录。</p><h4 id="托管vue项目"><a href="#托管vue项目" class="headerlink" title="托管vue项目"></a>托管vue项目</h4>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h3&gt;&lt;p&gt;vercel 可以托管静态资源，ssr，和serverless 函数。官网地址 &lt;a href=&quot;https://vercel.com，首次
       
     
     </summary>
