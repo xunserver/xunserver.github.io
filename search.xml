@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[http查漏补缺]]></title>
+    <url>%2Farchives%2F756fdee8.html</url>
+    <content type="text"><![CDATA[https 加密流程 服务端使用第三方机构（ca）的私钥加密，获得一个公钥证书发给浏览器 浏览器调用三芳芳机构公钥解密，获得服务端的公钥。浏览器使用服务端公钥生成一个对称密钥，发给服务端 服务端使用自己的私钥解密，获取到对称的密钥 DNSDNS使用UDP， 递归查询是指域名服务帮忙查询下一级，迭代查询是指客户端自己查询下一级 常见服务端口20 ftp数据口21 ftp控制口22 ssh23 telnet80 http443 https3306 mysql6379 redis localStorage 和 sessionStorage。localStorage在存储系统中按照同源策略保存，sessionStorage按照同源同时加上tabId保存，当页面tab被关闭时清空，而不是等到浏览器关闭时清空，而且不同tab页面不共享。]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[浏览器解析]]></title>
+    <url>%2Farchives%2F50c7c64b.html</url>
+    <content type="text"><![CDATA[浏览器渲染进程包含的线程 GUI 渲染线程，负责解析HTML，CSS，构建DOM、CSSOM和render tree, 布局和绘制。当页面回流时。 js引擎线程，一个渲染进程只有一个js引擎线程，负责解析执行js代码 事件线程，当事件触发时，会添加到队尾，等待js引擎执行 定时器线程，触发后放在队尾 htto请求线程，请求后放在队尾 简略版xuanran 解析html，构建dom树 解析css,构建css树 cssom和dom合并成渲染树 根据渲染树计算节点位置，布局 调用GUI绘图，上色，合成图层，并渲染到界面上 html、css和js解析构建顺序 html解析从上到下解析文档，依次构建DOM 如果碰到link或者style，异步的进行cssom构建 如果碰到js脚本，会先等到前面的cssom构建完成，才会解析js脚本（可以先下载）。js脚本解析执行期间，html会停止解析 初始的html解析完成后，会触发documentContentLoad 事件。此时图片资源可能还未下载完成 load 事件表示初始html以及资源全部load 图层一个普通的文档流被视为一个图层，包括浮动和非（fixed）定位。对于频繁的渲染需要生成一个新的图层来操作。 3D转换 fixed 动画 重绘和回流重绘不涉及布局和几何变化，比如改下颜色。回流是指布局和几何外观的改变，需要渲染整个图层。所有重绘和回流都只争对当前元素 避免回流 translate 替换 top 选择器从右到左，避免dom查找过深]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[浏览器网络]]></title>
     <url>%2Farchives%2F31643d6c.html</url>
     <content type="text"><![CDATA[浏览器进程 主进程 网络进程 GUI进程 多个插件进程 多个渲染进程（一个页面一个，多个同源界面共用一个，所以页面崩溃时可能影响其他多个页面，一个tab页因为iframe可能存在多个渲染进程） 渲染进程是放在sanbox中的，不讲整个浏览器放在sanbox原因是其他进程需要用到沙箱外的服务。渲染进程需要保证安全。 输入url到页面展示页面流程 构建请求行 GET /index.html http1.1 （没有host和协议） 浏览器根据请求url判断是否走缓存，如果是get请求，根据查询强缓存（硬盘缓存和内存缓存）查询是否有，有直接返回。没有缓存走下一步。 准备ip或者端口，如果是url是域名形式的，需要根据DNS查询ip，DNS查询也有多级缓存，查询的流程有递归和迭代查询，前者是从根域名服务器查询，根域名服务器往下查询。后者由下往上查询。如果url中没有端口，端口根据协议自动推导 准备请求投，根据发起请求添加header，部分请求头浏览器默认准备，cookie会自动根据当前domain和path，添加父域名和父path的cookie。host（domain + port）, referer根据请求发起的位置添加（http://xxxx.com/123），不包含hash。还有origin，格式同referer 建立TCP连接，三次握手，发送请求，谷歌tcp连接最多6条，所以在控制台中有等待的请求 服务处理请求，发送响应，响应包括响应头，响应行，响应体。响应行包括协议、状态码(HTTP/1.1 304)，常见的状态码如下1xx: 请求未传输完成，继续传输200: 请求接受成功，正常处理301: 资源永久重定向, 根据响应头中的location请求新地址302: 资源临时重定向，location处理304：资源未被修改，使用本地缓存文件。同时根据响应头更新本地资源。400: 服务器无法理解当前请求401：未鉴权403: 已登录无权限404: 资源未找到405: 请求的方法错误5xx: 服务器出错了。 浏览器解析文档，从上到下依次解析html，计息dom和cssom，组成渲染树，然后渲染到页面。 浏览器缓存概述 查询是否存在强缓存（cache-control, expire）。如果不存在直接请求 检查强缓存是否有效（先检查cache-control）,如果没有过期，使用缓存 如果过期，使用协商缓存，先检查是否有etag,如果有etag，发送请求（携带if-none-match:etag），服务端接收到请求后，如果当前缓存有效，返回304和新的etag，浏览器使用本地缓存同时更新etag或者新的cache-control。如果当前服务检查缓存无效，则会返回新的资源和etag等 如果不存在etag，存在last-modified。则发送if-modified-since, 服务端检查后同etag处理流程一致。 如果都不存在，则发送新请求。 浏览器解析文档 浏览器根据content-type判断是交给文档解析器还是下载管理器，一般content-type 是字节流会交给下载管理器作为下载文件 如果是文档，会交给渲染进程，渲染进程接受到后发挥出确认提交给浏览器主进程，主进程会更新浏览器导航栏，地址栏等信息。这个时候页面时空白，然后开始解析文档，渲染界面 defer 和 asyncdefer是延迟，表示资源下载完后，在文档解析完成后依次执行async 是异步，表示资源下载不阻塞，资源下载后立马执行，阻塞渲染进程解析。]]></content>
