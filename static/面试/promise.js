@@ -1,64 +1,60 @@
-function MyPromise(fn) {
-    this.value = null;
-    this.error = null;
-    this.status = 'pendding'; // resolved rejected
-    this.successCb = () => {};
-    this.failCb = () => {};
+function MyPromise(exector) {
+    this.status = 'pending';
+    this.value = undefined;
+    this.error = undefined;
+    this.resolveCbs = [];
+    this.rejectCbs = [];
 
     const resolve = (value) => {
-        setTimeout(() => {
-            if(this.status === 'pendding') {
-                this.value = value;
-                this.status = 'resolved'
-                this.successCb(value)  
-            }
-        });
-    }
-
-    const reject = (error) =>  {
-        setTimeout(() => {
-            if(this.status === 'pendding') {
-                this.error = error;
-                this.status = 'rejected'
-                this.failCb(error)
-            }
-        });
-    }
-
-    fn(resolve, reject)
-}
-
-MyPromise.prototype.then = function(fn) {
-    this.successCb = fn
-    const result = this.successCb(this.value)
-    return new MyPromise(resolve => {
-        if(this.status === 'resolved') {
-            resolve(result)
+        if(this.status === 'pending') {
+            this.status = 'fullfilled';
+            this.value = value;
+            this.resolveCbs.forEach(cb => cb && cb(this.value))
         }
-    })
-}
-
-MyPromise.prototype.catch = function(fn) {
-    this.failCb = fn
-    if(this.status === 'rejected') {
-        this.failCb(this.error)
     }
 
-    return this
+    const reject = (error) => {
+        if(this.status === 'pending') {
+            this.status = 'rejected';
+            this.error = error
+        }
+    }
+
+    try {
+        exector(resolve, reject)
+    } catch(err) {
+        this.error = err
+        reject(this.error)
+    }
 }
 
-MyPromise.reject = function() {
-    
-}
+MyPromise.prototype.then = function(resolveCb, rejectedCb) {
+    if (this.status === 'pending') {
+        this.resolveCbs.push(resolveCb);
+        this.rejectCbs.push(rejectedCb);
+        return;
+    }
 
-MyPromise.resolve = function() {
-     
-}
-
-const promise = new MyPromise((resolve, reject) => {
     setTimeout(() => {
-        resolve(234)   
-    }, 1000);
+        if(this.status === 'fullfilled') {
+            return resolveCb(this.value)
+        } else if (this.status === 'rejected') {
+            return rejectedCb(this.error);
+        }
+    }, 0);
+}
+
+const test = new MyPromise((resolve, reject) => {
+    console.log('init');
+    setTimeout(() => {
+        resolve('123')
+    }, 20);
+});
+
+test.then((value) => {
+    console.log('resolved value:' + value)
+}, (error) => {
+    console.log('reject value: ' + error)
 })
 
-promise.then(console.log)
+console.log('aaa')

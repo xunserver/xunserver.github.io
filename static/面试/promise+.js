@@ -1,3 +1,8 @@
+// 定义变量status， value，reason
+// 定义exector的两个参数， resolve 和 reject
+// 执行exector时将 resolve 和 rejedt 作为参数
+// then函数的resolvedCb和 rejectCb
+
 function resolvePromsie(result, nextPromise, resolve, reject) {
     if(nextPromise === result) {
         return new Error('circel promise')
