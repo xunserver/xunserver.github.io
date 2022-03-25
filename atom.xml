@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.xunserver.cn/"/>
-  <updated>2022-03-15T06:42:52.000Z</updated>
+  <updated>2022-03-24T06:05:48.000Z</updated>
   <id>https://blog.xunserver.cn/</id>
   
   <author>
@@ -15,6 +15,48 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Vue查漏补缺（二）双向绑定原理</title>
+    <link href="https://blog.xunserver.cn/archives/61b757b4.html"/>
+    <id>https://blog.xunserver.cn/archives/61b757b4.html</id>
+    <published>2022-03-24T06:05:48.000Z</published>
+    <updated>2022-03-24T06:05:48.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="初始化对象"><a href="#初始化对象" class="headerlink" title="初始化对象"></a>初始化对象</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Vue</span> </span>&#123;</span><br><span class="line">    cont</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;初始化对象&quot;&gt;&lt;a href=&quot;#初始化对象&quot; class=&quot;headerlink&quot; title=&quot;初始化对象&quot;&gt;&lt;/a&gt;初始化对象&lt;/h3&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;p
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Vue查漏补缺（一）生命周期</title>
+    <link href="https://blog.xunserver.cn/archives/69b5cd9a.html"/>
+    <id>https://blog.xunserver.cn/archives/69b5cd9a.html</id>
+    <published>2022-03-24T00:03:10.000Z</published>
+    <updated>2022-03-24T00:03:10.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="生命周期解释"><a href="#生命周期解释" class="headerlink" title="生命周期解释"></a>生命周期解释</h3><p>生命周期函数是一个hook，类似于好莱坞的设计模式，hook是同步调用，在Vue执行的各个时间点被调用，能获取到对应时间点VM的状态</p><h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><ol><li>赋值_self, vm=this</li><li>合并extend和mixin选型</li><li>初始化proxy拦截器</li><li>初始化render生成函数</li><li>初始化组件上的事件监听器</li></ol><h3 id="beforeCreate"><a href="#beforeCreate" class="headerlink" title="beforeCreate"></a>beforeCreate</h3><ol><li>injection</li><li>prop</li><li>method</li><li>data</li><li>computed</li><li>watch</li><li>provider<h3 id="created"><a href="#created" class="headerlink" title="created"></a>created</h3></li><li>编辑模板生成render函数</li><li>vm.$el 赋值（但是还未替换dom）<h3 id="beforeMount"><a href="#beforeMount" class="headerlink" title="beforeMount"></a>beforeMount</h3></li><li>执行render函数，生成vnode</li><li>挂载vnode到dom中<h3 id="mounted"><a href="#mounted" class="headerlink" title="mounted"></a>mounted</h3></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;生命周期解释&quot;&gt;&lt;a href=&quot;#生命周期解释&quot; class=&quot;headerlink&quot; title=&quot;生命周期解释&quot;&gt;&lt;/a&gt;生命周期解释&lt;/h3&gt;&lt;p&gt;生命周期函数是一个hook，类似于好莱坞的设计模式，hook是同步调用，在Vue执行的各个时间点被调用，能获
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>json-schema-json</title>
@@ -405,49 +447,6 @@
         &lt;h3 id=&quot;经验技巧原则记录&quot;&gt;&lt;a href=&quot;#经验技巧原则记录&quot; class=&quot;headerlink&quot; title=&quot;经验技巧原则记录&quot;&gt;&lt;/a&gt;经验技巧原则记录&lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;未推送的内容使用reset回退，已推送的内容使用revert回退&lt;/li&gt;
 &lt;l
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>谷歌浏览器开发者工具技巧</title>
-    <link href="https://blog.xunserver.cn/archives/ea959a90.html"/>
-    <id>https://blog.xunserver.cn/archives/ea959a90.html</id>
-    <published>2021-11-15T09:39:15.000Z</published>
-    <updated>2021-11-15T09:39:15.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="保存为全局变量"><a href="#保存为全局变量" class="headerlink" title="保存为全局变量"></a>保存为全局变量</h3><p>对打印的信息右键保存为全局变量</p><h3 id="复制dom-element-strng"><a href="#复制dom-element-strng" class="headerlink" title="复制dom element strng"></a>复制dom element strng</h3><p>点击直接ctrl+c</p><h3 id="element面板调整数字大小"><a href="#element面板调整数字大小" class="headerlink" title="element面板调整数字大小"></a>element面板调整数字大小</h3><p>上下箭头 + ctrl alt 或者shift一个一个试一下</p><h3 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h3><ul><li>ctrl + p 打开资源查找器，输入 &gt; 进入命令行。</li><li>直接ctrl + p + shift</li></ul><h3 id="和"><a href="#和" class="headerlink" title="$ 和 ?"></a>$ 和 ?</h3><ul><li>$ 是 document.querySelector()别名</li><li>? 是 document.querySelectorAll() 别名</li><li>$_ 表示上一次的执行结果,像是对上一次语句左边拼接 = </li></ul><h3 id="console一定是同步的吗？"><a href="#console一定是同步的吗？" class="headerlink" title="console一定是同步的吗？"></a>console一定是同步的吗？</h3><p>console打印需要时间，再打印出结果前，是以引用的方式保存的。所有有可能打印的结果不准确。所以应该尽量打印基本类型，或者使用断点。</p><h3 id="console控件台总是被async-包围"><a href="#console控件台总是被async-包围" class="headerlink" title="console控件台总是被async 包围"></a>console控件台总是被async 包围</h3><p>一些异步的方法可以直接使用await，比如fetch语句</p><h3 id="条件断点"><a href="#条件断点" class="headerlink" title="条件断点"></a>条件断点</h3><p>在断点语句添加判断语句， 不需要if，如果条件满足就会断点。条件语句总是会执行</p><h3 id="条件断点和console黑科技"><a href="#条件断点和console黑科技" class="headerlink" title="条件断点和console黑科技"></a>条件断点和console黑科技</h3><p>利用上面的特性，因为console总是返回undefined，所以可以添加一个条件语句console.log()</p><h3 id="条件和console"><a href="#条件和console" class="headerlink" title="条件和console"></a>条件和console</h3><p>console.assert()，第一个参数写语句，后面写打印</p><h3 id="log-多参数打印技巧"><a href="#log-多参数打印技巧" class="headerlink" title="log 多参数打印技巧"></a>log 多参数打印技巧</h3><p>console.log(x1, x2, x3) 修改改成 console.log({ x1, x2, x3 }) 就可以看到每个位置是什么参数，当然可能会出现值不准确的问题。</p><h3 id="打印数组和对象"><a href="#打印数组和对象" class="headerlink" title="打印数组和对象"></a>打印数组和对象</h3><p>console.table</p><h3 id="过滤请求"><a href="#过滤请求" class="headerlink" title="过滤请求"></a>过滤请求</h3><ul><li>filter 过滤框中添加 method:GET 就会仅显示GET请求，-method:GET 就会过滤GET请求只显示其他，也可以勾选invert选项</li><li>安装crtl 点击资源类型可以多选</li></ul><h3 id="勾选禁用缓存和硬性刷新浏览器的区别"><a href="#勾选禁用缓存和硬性刷新浏览器的区别" class="headerlink" title="勾选禁用缓存和硬性刷新浏览器的区别"></a>勾选禁用缓存和硬性刷新浏览器的区别</h3><p>禁用缓存会每个资源都不使用缓存，硬性刷新只会在dom初始化阶段的请求添加禁止缓存</p><h3 id="添加network展示的列"><a href="#添加network展示的列" class="headerlink" title="添加network展示的列"></a>添加network展示的列</h3><p>在表头右键，一般添加上method方法</p><h3 id="代码片段"><a href="#代码片段" class="headerlink" title="代码片段"></a>代码片段</h3><p>命令行输入 create new snippet 新建代码片段，通过!加代码片段名称调用</p><h3 id="利用source-gt-filesystem-实现在浏览器中修改代码，并同步css"><a href="#利用source-gt-filesystem-实现在浏览器中修改代码，并同步css" class="headerlink" title="利用source -&gt; filesystem 实现在浏览器中修改代码，并同步css"></a>利用source -&gt; filesystem 实现在浏览器中修改代码，并同步css</h3><p>本地起一个服务，把代码目录拖到filesystem, 对变绿色的代码就可以直接修改，保存后隐射到本地</p><h3 id="page-filesystem-overrides-contentScript的使用"><a href="#page-filesystem-overrides-contentScript的使用" class="headerlink" title="page filesystem overrides contentScript的使用"></a>page filesystem overrides contentScript的使用</h3><ul><li>page 用于查看当前网页下面文件</li><li>filesystem 连接本地和浏览器，在浏览器中的修改会同步到本地代码。文件标志是绿色</li><li>overrides 不能和filesystem共用，修改文件时优先保存overrides。通过完全一致的url对应，包括查询参数。文件标志是紫色。浏览器加载时会本地替换这个资源</li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;保存为全局变量&quot;&gt;&lt;a href=&quot;#保存为全局变量&quot; class=&quot;headerlink&quot; title=&quot;保存为全局变量&quot;&gt;&lt;/a&gt;保存为全局变量&lt;/h3&gt;&lt;p&gt;对打印的信息右键保存为全局变量&lt;/p&gt;
-&lt;h3 id=&quot;复制dom-element-strng&quot;&gt;&lt;
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>前端缓存</title>
-    <link href="https://blog.xunserver.cn/archives/97f0c4bf.html"/>
-    <id>https://blog.xunserver.cn/archives/97f0c4bf.html</id>
-    <published>2021-11-14T10:43:41.000Z</published>
-    <updated>2021-11-14T10:43:41.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="请求报文和相应报文"><a href="#请求报文和相应报文" class="headerlink" title="请求报文和相应报文"></a>请求报文和相应报文</h3><p>报文中报头部分使用冒号分隔的键值对组成，称为首部字段。部分首部字段在响应和请求中均有，称为通用首部字段。</p><h3 id="强缓存"><a href="#强缓存" class="headerlink" title="强缓存"></a>强缓存</h3><h4 id="expires"><a href="#expires" class="headerlink" title="expires"></a>expires</h4><p>(响应首部字段)资源有效时间，表示在此事件前资源使用缓存。<code>Expires: Wed, 11 May 2022 03:50:47 GMT</code></p><h4 id="cache-control"><a href="#cache-control" class="headerlink" title="cache-control"></a>cache-control</h4><p>（通用首部字段）缓存控制，由以下字段组成</p><ul><li>max-age 缓存最大时间，是一个相对时间，同时可用于请求，表示希望获得一个max-age 不大于指定值的资源，单位是秒。max-age 会覆盖expires，一般expires和max-age需要同时存在，兼容性设置。</li><li>s-maxage  表示代理服务器最大缓存时间，公共服务器接受到这个参数后，会直接使用这个，忽略其他expires 和 max-age</li><li>public/private 表示资源是否能够被缓存服务器缓存， 不过一般缓存服务器不会处理这个字段，照样缓存。</li><li>no-cache/no store，no-cache在请求中时，表示不使用缓存服务器资源，使用源资源，同时也可以向源资源表示，使用最新资源。在响应中需要使用no-store 才表示真正的不缓存</li><li>no-cache 不进行强缓存（重要）</li><li>no-store 不强缓存，也不协商缓存。</li></ul><h3 id="协商缓存"><a href="#协商缓存" class="headerlink" title="协商缓存"></a>协商缓存</h3><h4 id="Last-Modified-和-If-Modified-Since"><a href="#Last-Modified-和-If-Modified-Since" class="headerlink" title="Last-Modified 和 If-Modified-Since"></a>Last-Modified 和 If-Modified-Since</h4><p>Last-Modified 资源最后修改时间，浏览器接收当前资源后，下次在请求头中添加If-Modified-Since 字段。服务器验证是否有效，有效返回304。无效返回200、最新资源和最新的Last-Modified</p><p>Last-Modified值实列如下，时间精度到秒<code>Last-Modified: Fri , 14 May 2021 17:23:13 GMT</code>。如果资源是毫秒级别的更新，可能会出现资源不是最新的情况。所以新出现了Etag和If-None-Match</p><h4 id="Etag-和-If-None-match"><a href="#Etag-和-If-None-match" class="headerlink" title="Etag 和 If-None-match"></a>Etag 和 If-None-match</h4><p>Etag在响应头中返回，用于标志资源的唯一性，资源每次变化时，Etag会重新生成。浏览器下次发送请求通过If-None-match发送。服务器对比处理逻辑同Last-Modified</p><h3 id="缓存位置"><a href="#缓存位置" class="headerlink" title="缓存位置"></a>缓存位置</h3><ul><li>memory cache 内存缓存</li><li>disk cache</li></ul><h3 id="缓存时间如何计算"><a href="#缓存时间如何计算" class="headerlink" title="缓存时间如何计算"></a>缓存时间如何计算</h3><p>缓存新鲜度 = max-age || (expires - date)  date 表示响应头中的Date字段<br>缓存使用期 = 响应使用期 + 传输延迟时间 + 停留缓存时间</p><ul><li>响应使用期 = max(0, response_time - date_value)，然后再和响应头age（秒）max</li><li>传输延迟时间 = 响应时间 - 请求时间</li><li>停留缓存时间 = now - 响应时间   now表示电脑当前时间。修改电脑时间使缓存失效的关键点。</li></ul><p>当缓存使用期大于缓存新鲜度时，强缓存会失效，会启用缓存协商，如果无协商缓存，会重新请求。</p><h3 id="启发式缓存"><a href="#启发式缓存" class="headerlink" title="启发式缓存"></a>启发式缓存</h3><p>上述可见强缓存新鲜度 = max-age || (expires - date)。如果max-age、expires、date不存在。缓存新鲜度计算规则 max(0, date - Last-Modified ) * 10%</p><h3 id="开发模式下的刷新操作"><a href="#开发模式下的刷新操作" class="headerlink" title="开发模式下的刷新操作"></a>开发模式下的刷新操作</h3><ul><li>硬性重新加载：不使用本地缓存，同时请求时在请求中添加cache-control: no-cache, 告知服务器和代理服务器不使用缓存。</li></ul><p>使用硬性加载没有用的原因是，这两个请求头仅在页面渲染时添加，通过动态脚本添加的资源不会添加这个请求头，还是会走强缓存。</p><ul><li>清空缓存并强制加载：清空本地缓存并硬性加载</li></ul><h3 id="spa情况下如何配置缓存策略"><a href="#spa情况下如何配置缓存策略" class="headerlink" title="spa情况下如何配置缓存策略"></a>spa情况下如何配置缓存策略</h3><p>spa通过加载一个index.html,index.html中再加载相关文件完成界面。这里就有两个地方index.html 和 其他资源。</p><ul><li><p>index.html 文件名不会变化，需要使用协商缓存，服务端配置max-age = 0, 但是不能配置cache-control: no-store</p></li><li><p>其余资源，设置强缓存。根据文件内容变化文件名，保证每次引用都是新的，也不会走缓存。</p></li></ul><h3 id="webpack-如何使用强缓存"><a href="#webpack-如何使用强缓存" class="headerlink" title="webpack 如何使用强缓存"></a>webpack 如何使用强缓存</h3><ul><li>hash 项目级别的hash</li><li>chunkhash 根据 入口文件相关的依赖进行hash</li><li>contenthash，根据每个文件内容变化的hash</li></ul><h3 id="nginx-如何配置缓存"><a href="#nginx-如何配置缓存" class="headerlink" title="nginx 如何配置缓存"></a>nginx 如何配置缓存</h3><ul><li>针对静态资源设置</li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;请求报文和相应报文&quot;&gt;&lt;a href=&quot;#请求报文和相应报文&quot; class=&quot;headerlink&quot; title=&quot;请求报文和相应报文&quot;&gt;&lt;/a&gt;请求报文和相应报文&lt;/h3&gt;&lt;p&gt;报文中报头部分使用冒号分隔的键值对组成，称为首部字段。部分首部字段在响应和请求中均有
       
     
     </summary>

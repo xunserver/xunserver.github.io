@@ -102,3 +102,21 @@ var a = new MyPromise((resolve, reject) => {
 })
 
 a.then(value => value + 1).then(console.log)
+
+Promise.myAll = function (list) {
+    let count = 0;
+    const result = [];
+
+    return new Promise((resolve, reject) => {
+        for(let i = 0; i < list.length; i++) {
+            list[i].then(res => {
+                count++;
+                result[i] = res;
+    
+                if(count >= list.length) {
+                    resolve(result)
+                }
+            }).catch(reject)
+        }
+    })
+}

@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Vue查漏补缺（二）双向绑定原理]]></title>
+    <url>%2Farchives%2F61b757b4.html</url>
+    <content type="text"><![CDATA[初始化对象123class Vue &#123; cont&#125;]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[Vue查漏补缺（一）生命周期]]></title>
+    <url>%2Farchives%2F69b5cd9a.html</url>
+    <content type="text"><![CDATA[生命周期解释生命周期函数是一个hook，类似于好莱坞的设计模式，hook是同步调用，在Vue执行的各个时间点被调用，能获取到对应时间点VM的状态 开始 赋值_self, vm=this 合并extend和mixin选型 初始化proxy拦截器 初始化render生成函数 初始化组件上的事件监听器 beforeCreate injection prop method data computed watch providercreated 编辑模板生成render函数 vm.$el 赋值（但是还未替换dom）beforeMount 执行render函数，生成vnode 挂载vnode到dom中mounted]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[json-schema-json]]></title>
     <url>%2Farchives%2Fe6d11dd8.html</url>
     <content type="text"><![CDATA[流程 form表单渲染schemaField schemaField中根据type渲染不同Field。 ObjectFiled，需要渲染容器 如果是其他类型，渲染由widget包裹的组件 widget是一个el-form-item]]></content>
