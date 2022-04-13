@@ -1,60 +1,62 @@
 class Vue {
-    construtor(options) {
+    constructor(options) {
         this.$options = options;
+        observe(this.$options.data);
 
-        const { data } = this.$options
-
-        observe(data);
-
-
+        const root = document.querySelector(this.options.el)
+        this.compile(root)
     }
+
+    compile(node) {
+        [].forEach.call(node.childNodes, child => {
+            if(!child.firstElementChild && /\{\{.*\}\}/.test(child.innerHTML)) {
+                const watcher = new Watcher(child);
+                watcher.updatet(this.data[key])
+            } else  if (child.firstElementChild){
+                this.compile(child)
+            }
+        })
+    }
+
+}
+
+function observe(data) {
+    Object.keys(data).forEach(key => {
+        let value  = data[key];
+        const dep = new Dep;
+        Object.defineProperty(data, key, {
+            get() {
+                dep.addSub(Dep.target)
+                return value
+            },
+            set(newValue) {
+                if(newValue === value) return
+                value = newValue;
+                dep.notify(value)
+            }
+        })
+    })
 }
 
 class Dep {
-    constructor() {
-        this.subs = []
-    }
-
+    sub = []
+    
     addSub(watcher) {
-        this.subs.push(watcher)
+        this.sub.push(watcher);
     }
 
-    notify() {
-        this.subs.forEach(watcher => watcher.update())
+    notify(value) {
+        this.sub.forEach(item => item.update(value))
     }
 }
 
 class Watcher {
-    update() {
-        console.log('update')
-    }
-}
-
-function cb(params) {
-    console.log('我被更新了')
-}
-
-function observe(obj, key, val) {
-    // 这儿使用val闭包来保存值
-    Object.defineProperty(obj, key, {
-        configurable: true,
-        enumerable: true,
-        get() {
-            return val
-        },
-        set(value) {
-            if (value === val) return
-            val = value;
-            cb()
-        }
-    })
-}
-
-
-const component1 = new Vue({
-    data: {
-        age: 18,
-        name: 'yangjiaxun'
+    constructor(node) {
+        this.node = node;
+        Dep.target = this;
     }
 
-})
+    update(value) {
+        this.node.innerHTML = value
+    }
+}

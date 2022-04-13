@@ -9,7 +9,5 @@ const add = (function () {
     }
 })()
 
-add(1)
-add(3)
-add(9)
-add(  '')
+add(1)(3)(9)
+add('')

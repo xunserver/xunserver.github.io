@@ -31,7 +31,6 @@ const curring = (fn, ...initArgs) => {
     }
 }
 
-
 const f1 = (x, y) => x + y + 1; 
 const f2 = (x) => x + 2; 
 const f3 = (x) => x + 3; 
