@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="down，bang">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="bang" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="基础教程setupsetup 函数只会执行一次，如果是if语句中创建的部分配置，可能无法访问。组合式函数需要同步调用，但是可以使用await语句。setup 单文件下如果语句使用了await 会自动将setup设置为async  模板中表达式的作用域是ctx，在模板中使用赋值语句如下1234&amp;lt;div class=&quot;about&quot;&amp;gt;  &amp;lt;button @click=&quot;increase">
+<meta name="keywords" content="博客,xunsever,bang">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue3">
+<meta property="og:url" content="https://blog.xunserver.cn/archives/9a707413.html">
+<meta property="og:site_name" content="bang">
+<meta property="og:description" content="基础教程setupsetup 函数只会执行一次，如果是if语句中创建的部分配置，可能无法访问。组合式函数需要同步调用，但是可以使用await语句。setup 单文件下如果语句使用了await 会自动将setup设置为async  模板中表达式的作用域是ctx，在模板中使用赋值语句如下1234&amp;lt;div class=&quot;about&quot;&amp;gt;  &amp;lt;button @click=&quot;increase">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2022-06-12T07:37:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue3">
+<meta name="twitter:description" content="基础教程setupsetup 函数只会执行一次，如果是if语句中创建的部分配置，可能无法访问。组合式函数需要同步调用，但是可以使用await语句。setup 单文件下如果语句使用了await 会自动将setup设置为async  模板中表达式的作用域是ctx，在模板中使用赋值语句如下1234&amp;lt;div class=&quot;about&quot;&amp;gt;  &amp;lt;button @click=&quot;increase">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://blog.xunserver.cn/archives/9a707413.html">
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "f81d2d8f"
+    });
+  daovoice('update');
+  </script>
+
+  <title>vue3 | bang</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-138453533-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?46adc4f6ca707e081b3f4e2bee76f673";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">bang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">生活总会有惊喜</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.xunserver.cn/archives/9a707413.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yangmanman">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="bang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">vue3</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-06-12T07:37:53+00:00">
+                2022-06-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/archives/9a707413.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/archives/9a707413.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/archives/9a707413.html" class="leancloud_visitors" data-flag-title="vue3">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                 <span>ºC</span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.4k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 </span>
+                
+                <span title="阅读时长">
+                  18 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="基础教程"><a href="#基础教程" class="headerlink" title="基础教程"></a>基础教程</h2><h3 id="setup"><a href="#setup" class="headerlink" title="setup"></a>setup</h3><p>setup 函数只会执行一次，如果是if语句中创建的部分配置，可能无法访问。组合式函数需要同步调用，但是可以使用await语句。setup 单文件下如果语句使用了await 会自动将setup设置为async </p>
+<h3 id="模板中表达式的作用域是ctx，在模板中使用赋值语句如下"><a href="#模板中表达式的作用域是ctx，在模板中使用赋值语句如下" class="headerlink" title="模板中表达式的作用域是ctx，在模板中使用赋值语句如下"></a>模板中表达式的作用域是ctx，在模板中使用赋值语句如下</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"about"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"increaseCount"</span>&gt;</span>&#123;&#123; (a = count) &#125;&#125;<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span>&gt;</span>&#123;&#123; a &#125;&#125;<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>会被转换如下<br><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; toDisplayString <span class="keyword">as</span> _toDisplayString, createElementVNode <span class="keyword">as</span> _createElementVNode, openBlock <span class="keyword">as</span> _openBlock, createElementBlock <span class="keyword">as</span> _createElementBlock &#125; <span class="keyword">from</span> <span class="string">"vue"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">render</span>(<span class="params">_ctx, _cache, $props, $setup, $data, $options</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (_openBlock(), _createElementBlock(<span class="string">"div"</span>, &#123; <span class="keyword">class</span>: <span class="string">"about"</span> &#125;, [</span><br><span class="line">    _createElementVNode(<span class="string">"button"</span>, &#123; onClick: _ctx.increaseCount &#125;, _toDisplayString((_ctx.a = _ctx.count)), <span class="number">9</span> <span class="comment">/* TEXT, PROPS */</span>, [<span class="string">"onClick"</span>]),</span><br><span class="line">    _createElementVNode(<span class="string">"button"</span>, <span class="literal">null</span>, _toDisplayString(_ctx.a), <span class="number">1</span> <span class="comment">/* TEXT */</span>)</span><br><span class="line">  ]))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Check the console for the AST</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="挂载到this-data上的值全部变成响应式"><a href="#挂载到this-data上的值全部变成响应式" class="headerlink" title="挂载到this data上的值全部变成响应式"></a>挂载到this data上的值全部变成响应式</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    data() &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            value: <span class="literal">null</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    created() &#123;</span><br><span class="line">        <span class="keyword">const</span> test1 = &#123;</span><br><span class="line">            value: <span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.value = test1;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// this.value 已经是一个proxy对象</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.value === test1 )  <span class="comment">// false</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="style-支持数组的样式对象，vue会自动补齐前缀"><a href="#style-支持数组的样式对象，vue会自动补齐前缀" class="headerlink" title=":style 支持数组的样式对象，vue会自动补齐前缀"></a>:style 支持数组的样式对象，vue会自动补齐前缀</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">:style</span>=<span class="string">"[styleObject1, styleObject2]"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="ref-和reactive"><a href="#ref-和reactive" class="headerlink" title="ref 和reactive"></a>ref 和reactive</h3><p>ref用于对非引用对象创建响应式<br>reactive 对数组或者对象创建响应式</p>
+<p>对一个响应式对象调用响应式依旧是响应式。。。。。</p>
+<h3 id="对reactive-原对象修改值，不会引起响应式变动，但会影响值。"><a href="#对reactive-原对象修改值，不会引起响应式变动，但会影响值。" class="headerlink" title="对reactive 原对象修改值，不会引起响应式变动，但会影响值。"></a>对reactive 原对象修改值，不会引起响应式变动，但会影响值。</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">    test: <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> state = reactive(obj); </span><br><span class="line">obj.test = <span class="number">2</span>  <span class="comment">// 不会导致响应式监听</span></span><br><span class="line"></span><br><span class="line">state.test === <span class="number">2</span> <span class="comment">// 但是读取值时会变动，可以用于手动控制视图更新</span></span><br></pre></td></tr></table></figure>
+<h3 id="ref的解包"><a href="#ref的解包" class="headerlink" title="ref的解包"></a>ref的解包</h3><ol>
+<li>声明在顶层作用域的ref在模板中会自动解包，:count=”count” 相当于:count=”count.value” 子组件收到的是原始值， 不是ref对象。 state.count 就不能自动解包， 因为只有state是顶层对象 </li>
+<li> 模板计算值如果是一个ref，会自动解包   不需要使用count.value</li>
+<li>如果一个ref是reactive 对象（不包括数组和其他集合类型set，map）的property， 那么和普通的property表现相同， 会自动解包<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> count = ref(<span class="number">9</span>);</span><br><span class="line"><span class="keyword">const</span> state = reactive(&#123;</span><br><span class="line">    count</span><br><span class="line">&#125;)</span><br><span class="line">state.count++ <span class="comment">// 不需要使用 state.count.value++</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> state1 = reactive([count])</span><br><span class="line">state[<span class="number">0</span>].value++   <span class="comment">// 数组需要</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="计算属性"><a href="#计算属性" class="headerlink" title="计算属性"></a>计算属性</h3><p>计算属性返回一个ref（将返回值用ref()包装起来， 如果返回的是一个reactive对象，就是ref(reactive(xxxx)), 如果是其他响应式对象，处理方式同上），支持set，get形式。可以用于v-model。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">computed(&#123;</span><br><span class="line">    <span class="keyword">get</span>() &#123;</span><br><span class="line">        <span class="keyword">return</span> props.modelValue</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">set</span>(value) &#123;</span><br><span class="line">        emits(<span class="string">'update:modelValue'</span>, value)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h3 id="style-和-class-绑定"><a href="#style-和-class-绑定" class="headerlink" title="style 和 class 绑定"></a>style 和 class 绑定</h3><ol>
+<li>内联式<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">:class</span>=<span class="string">"&#123;'is-error': isError, active: data.active.value, success: state.success&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> isError = ref(<span class="literal">false</span>);</span><br><span class="line"><span class="keyword">const</span> data = &#123;</span><br><span class="line">    active: ref(<span class="literal">true</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> state = reactive(&#123;</span><br><span class="line">    success: <span class="literal">true</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>对象式和计算属性<br>对象内部通过属性取值获取值（存疑），所以可以传入一个reactive对象。对象的键名作为class名称，属性值表示是否渲染<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">:style</span>=<span class="string">"styleObject"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> styleObject = reactive(&#123;</span><br><span class="line">    active: <span class="literal">false</span>,</span><br><span class="line">    <span class="string">'is-error'</span>: <span class="literal">true</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 同样可以使用计算属性</span></span><br><span class="line"><span class="keyword">const</span> active = ref(<span class="literal">false</span>)</span><br><span class="line"><span class="keyword">const</span> styleObject1 = computed(<span class="function"><span class="params">()</span>=&gt;</span> (&#123;</span><br><span class="line">    active: active.value </span><br><span class="line">&#125;))</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li><p>数组式<br><code>:class=&quot;[active, isError ? &#39;is-error&#39; : &#39;&#39;]&quot;</code>  可以传入一个空字符串不绑定class，数组每一项计算值直接作为class名称</p>
+</li>
+<li><p>style绑定对象时，对象的键作为属性，对象键值作为属性值。绑定数组时，每一项是一个样式对象。同理也支持字符串（空字符表示不渲染），可以通过alt html属性查看定义</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">:style</span>=<span class="string">"['color: red', '', [&#123;color: 'blue '&#125;]]"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>  // blue</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>样式绑定是自动添加浏览器前缀</p>
+</li>
+</ol>
+<h3 id="v-if-和-v-for"><a href="#v-if-和-v-for" class="headerlink" title="v-if 和 v-for"></a>v-if 和 v-for</h3><p>vue3 中 同时使用v-if 会先执行，vue2 中 v-for 会先执行，如果同时使用，建议使用计算属性或者将v-for 提升到template上面</p>
+<h3 id="vue3中的v-model"><a href="#vue3中的v-model" class="headerlink" title="vue3中的v-model"></a>vue3中的v-model</h3><p>vue3 中v-model 语法糖有所变化</p>
+<ol>
+<li><p>在原生html 表单控件中, 通过添加.lazy 修饰符可以将input 替换成change事件</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">:value</span>=<span class="string">"xxx"</span> @<span class="attr">input</span>=<span class="string">"event =&gt; xxx = event.target.value"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在组件中使用的是:modelValue 和 @update:modelValue实现，替代了.sync 功能</p>
+</li>
+<li>同时组件中支持v-model:arg1=”xxx” 这种参数。展开来是 :arg1=”xxx” @update:arg1。所以v-model是v-model:modelValue的简写。完全替代了.sync 修饰符</li>
+</ol>
+<h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><ol>
+<li>组合式api的生命周期始终在选项式前面执行</li>
+<li>组合式生命周期少了created和beforeCreate</li>
+<li>setup在beforeCreate 前面执行</li>
+</ol>
+<h3 id="watch-和-watchEffect"><a href="#watch-和-watchEffect" class="headerlink" title="watch 和 watchEffect"></a>watch 和 watchEffect</h3><p>watch 用于副作用操作，支持同步和异步的方式，能对ref、reactive对象（属性变化时监听，浅监听，支持第三个参数设置 { deep: true }）、getter函数（同计算属性），或者数组监听（任何一个变化都触发）。<br>watchEffect 时一种自动监听的方法，会默认执行一次回调函数，收集依赖（同计算属性），同时也支持异步的方式， 不过只会收集前面同步的依赖（比如第一个await 前的属性）。</p>
+<h4 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h4><p>如果一个getter函数返回的是响应式对象， 默认是浅监听，需要设置deep: true 才能生效。reactive对象直接作为监听项默认是深度监听 ，如果需要浅监听需要使用getter函数。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> url = ref(<span class="string">'https://www.xx.com'</span>);</span><br><span class="line"><span class="keyword">const</span> state = reactive(&#123;<span class="attr">url</span>: <span class="string">'xxx'</span>&#125;)</span><br><span class="line"><span class="keyword">const</span> state1 = reactive(&#123; <span class="comment">// 作为监听项时， 默认是深层监听，如果只想是浅，用 getter 函数, deep设置为false也无效。</span></span><br><span class="line">    data: &#123;</span><br><span class="line">        url: <span class="string">'xxx'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">const</span> data = ref(<span class="string">''</span>)</span><br><span class="line"><span class="keyword">const</span> stopRequest =  watch(url, <span class="keyword">async</span> (newValue, oldValue, cleanFn) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> request(newValue);</span><br><span class="line">    data.value = res.data;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 上述监听值还可以为 ()=&gt; url.value 、 [()=&gt;url.value, url]、 () =&gt; state.url  state。</span></span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>watch函数会返回一个stop函数，通过调用stop可以停止监听。</li>
+<li><p>watch回调函数支持第三个参数用于清理之前的正在执行的副作用，比如每次回调时清理前一个未完成的回调。cleanFn(() =&gt; { // 执行清理逻辑， 比如放弃上一次请求， 始终使用最新请求 })，会在每次回调前调用（第一次回调不调用）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">watch(count, (_, __, clearFn) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> timer = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(count.value);</span><br><span class="line">    &#125;, <span class="number">2000</span>);</span><br><span class="line"></span><br><span class="line">    clearFn(<span class="function"><span class="params">()</span> =&gt;</span> clearTimeout(timer));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>watch函数第三个参数时选项，{deep: boolean, immediate: boolean, flush: boolean}, 其中flush默认时pre 表示在dom更新前调用，post表示更新后（和设置pre然后nexttick()相同）。flush中pre，post都有缓冲队列机制，在同步操作中多次调用会放入到队列中，只会执行一次。这个机制同vue的默认机制。同时可以设置flush: sync 取消缓冲队列, 而且会立刻同步的调用的回调</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">state.data.url = <span class="number">123</span>;   <span class="comment">// 语句后立刻执行一次回调</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"xxx"</span>);   <span class="comment">// 然后打印 xxx</span></span><br><span class="line">state.data.url = <span class="number">1234</span>;  <span class="comment">// 语句又立刻执行一次回调</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果上面是post或者pre 则会打印 xxx 然后只执行一次回调</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>watch 同步创建watch监听器会在组件销毁时自动停止， 如果是异步创建的监听器，需要手动设置停止，尽量少创建异步监听器，可以使用判断语句异步转同步。</p>
+</li>
+</ol>
+<h3 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h3><p>把一个ref绑定到模板ref属性上，会自动绑定ref，同react。使用起来同ref对象一样，需要通过ref.value 来获取。</p>
+<h2 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h2><h3 id="defineProps和defineEmits"><a href="#defineProps和defineEmits" class="headerlink" title="defineProps和defineEmits"></a>defineProps和defineEmits</h3><p>都是sfc setup下面的宏。在sfc编译的时候回解析到相应的位置。</p>
+<h4 id="defineProps-详解"><a href="#defineProps-详解" class="headerlink" title="defineProps 详解"></a>defineProps 详解</h4><ol>
+<li><p>defineProps定义的属性会解析成选项式中props属性。defineProps的返回值解析成对setup(prop)中prop的引用。由于宏原因，defineProps中不能访问setup内部声明的变量，但是可以访问引用进来的。因为引用语句在总是上层</p>
+</li>
+<li><p>props如果接受到undefind值会触发自动default，如果未设置default，值为undefined。Boolean类型会自动转换成对应boolean值</p>
+</li>
+<li><p>props 是一个响应式对象，需要避免对齐解构，如果需要解构使用toRefs 或者toRef(props, xxx)</p>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> props = definedProps(&#123;</span><br><span class="line">	count: number,</span><br><span class="line">	info: <span class="literal">null</span>,  <span class="comment">// 或者undefined，设置这两个值时会跳过类型检查</span></span><br><span class="line">	data: &#123;</span><br><span class="line">		type: <span class="built_in">String</span> <span class="comment">// 支持对象式的配置</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 会转换成</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">	props: &#123;</span><br><span class="line">		count: number,</span><br><span class="line">		info: <span class="literal">null</span>,  <span class="comment">// 或者undefined，设置这两个值时会跳过类型检查</span></span><br><span class="line">		data: &#123;</span><br><span class="line">			type: <span class="built_in">String</span> <span class="comment">// 支持对象式的配置</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	setup(_props) &#123;</span><br><span class="line">		<span class="keyword">const</span> props =_ props;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p><code>&lt;CustomComp count /&gt;</code> 实际是<code>&lt;CustomComp count=&#39;&#39; /&gt;</code>的缩写，所以除了boolean类型总是会得到一个空字符串,boolean 类型在收到一个’’或者undefined时会触发default</p>
+</li>
+<li><p>模板中可以自动使用prop属性，比如上面的count, 可以直接，实际上也是宏的作用，在解析模板时，如果是变量是setup定义的，会使用ctx.count, 如果是宏定义的会使用宏的props.count, 如果都没定义使用ctx.count</p>
+</li>
+</ol>
+<h4 id="defineEmits"><a href="#defineEmits" class="headerlink" title="defineEmits"></a>defineEmits</h4><p>同defineProps一样会到解析到{emits: [] }中，支持对象语法实现拦截器或者hook，可以在每次触发的通过返回boolean进行校验。但是不支持混合书写。defineEmits返回的结果是setup(props, {emit: customEmit})中emit的别名，在模板中如果直接使用$emit,使用的是ctx.$emit。也可以把emit暴露到模板中直接使用customEmit(‘xxxx’)；</p>
+<p>组件内部实现了事件机制，对组件v-on或者onXxx的prop 会添加订阅，通过emit或者once(vue3 没得once)触发订阅。vue3不能取消订阅，可以通过触发拦截器实现。事件在beforeCreate前初始化，所谓在生命周期任何适合都可以用，可以通过@hook:created 实现对声明周期的监听</p>
+<h3 id="透传attribute"><a href="#透传attribute" class="headerlink" title="透传attribute"></a>透传attribute</h3><p>任何未在组件porps或者emit 声明的都是attribute，默认情况下attribute会绑定到组件根元素上，如果根元素不存在需要手动绑定$attr到制定元素，可以添加inheritAttrs: false 选项取消默认绑定。$attrs对象包含了所有的未声明$attrs, 会将v-on转换成onXxx形式的prop值传入（所以v-on 也可以用v-bind来实现）。通过这个机制可以实现事件的分发，比如可以把某个事件分布到多个子组件上，或则批量的设置样式。</p>
+<h3 id="关于事件的思考"><a href="#关于事件的思考" class="headerlink" title="关于事件的思考"></a>关于事件的思考</h3><p>对于组件v-bind:onXxx和直接v-on:xxx 相同(:onAdd = @add)， 针对原生元素@click 相当于v-bind:onClick。<br>针对以上特性所以在透传attrbute时，可以直接用v-bind 绑定事件,因为事件在处理成onXxx的prop属性值<br>这个特性可以用h函数解释，h函数的第二参数，以on开头的事件会被处理成事件</p>
+<p>vue2 特性待研究</p>
+<h3 id="插槽"><a href="#插槽" class="headerlink" title="插槽"></a>插槽</h3><p>直接第三个参数设置为对象传入，每个键是slot name，值是一个函数包括子组件传递的作用域。同理支持动态的slot name。指定插槽选项式使用的是this.$slot,setup() 函数用二参数中的slot属性<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">h(CustomComponent, &#123;</span><br><span class="line">    onClick: <span class="function"><span class="params">()</span> =&gt;</span> state.count++;</span><br><span class="line">&#125;, &#123;</span><br><span class="line">    <span class="keyword">default</span>: <span class="function">(<span class="params">user</span>) =&gt;</span> h(<span class="string">'span'</span>, [user.name, user.code]) <span class="comment">// &lt;CustomComponent&gt;&lt;template #default="user"&gt;&#123;&#123;user.name&#125;&#125;&#123;&#123;user.code&#125;&#125;&lt;/template&gt;&lt;/CustomComponent&gt;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>插槽的函数如下，每一个slot都是一个函数，通过传递函数参数实现作用域插槽<br><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> ComponentPublicInstance &#123;</span><br><span class="line">  $slots: &#123; [name: <span class="built_in">string</span>]: Slot &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Slot = <span class="function">(<span class="params">...args: <span class="built_in">any</span>[]</span>) =&gt;</span> VNode[]</span><br></pre></td></tr></table></figure></p>
+<p>因为render函数中，插槽是在子组件中调用的。所以子组件可以控制插槽延迟渲染，可以实现一个组件版本的v-if。这样可以升级权限指令为权限组件，实现更高级的功能。</p>
+<p>插槽的生命周期如下，parent init -&gt; parent beforeMounte -&gt; child init -&gt; child beforeMounte -&gt; child mounted -&gt; parent mounted </p>
+<h3 id="provide-和-inject"><a href="#provide-和-inject" class="headerlink" title="provide 和 inject"></a>provide 和 inject</h3><p>在vue3 provide 和 inject 的功能可以通过第三方store覆盖比如声明一个store 文件，里面简单的存放响应式对象即可实现。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> count = ref(<span class="number">0</span>)</span><br><span class="line">provide(<span class="string">'count'</span>, count)  <span class="comment">// 提供</span></span><br><span class="line"></span><br><span class="line">inject(<span class="string">'count'</span>, ref(<span class="number">2</span>))  <span class="comment">// 注入</span></span><br></pre></td></tr></table></figure></p>
+<p>实际可以用一个store.js实现, 然后在provide和inject的地方引入这个变量进行操作<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// store.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> count = ref(<span class="number">0</span>)</span><br></pre></td></tr></table></figure></p>
+<h3 id="组合式函数"><a href="#组合式函数" class="headerlink" title="组合式函数"></a>组合式函数</h3><ul>
+<li>组合式函数需要同步调用，因为需要感知当前的组件的实例，也可以在await 后调用(仅局限于sfc 的setup)，编译器会自动添加保存await前的实例。组合函数是逻辑复用的银弹，但不是唯一银弹，无渲染组件可以解决组件复用和逻辑复用。</li>
+<li>组合式函数仅会调用一次，如果是有副作用的操作，可以使用watch、effect等操作。</li>
+<li>约定组合式函数使用use命名开头</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; onMounted, onUnmounted, ref &#125; <span class="keyword">from</span> <span class="string">"vue"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> useEventListener = <span class="function">(<span class="params">target, name, callback</span>) =&gt;</span> &#123;</span><br><span class="line">  onMounted(<span class="function"><span class="params">()</span> =&gt;</span> &#123;  <span class="comment">// 可以感知当前绑定组件的实例</span></span><br><span class="line">    target.addEventListener(name, callback);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  onUnmounted(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    target.removeEventListener(name, callback);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> useMouse = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> x = ref(<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">const</span> y = ref(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  useEventListener(<span class="built_in">document</span>, <span class="string">"mousemove"</span>, (event) =&gt; &#123;</span><br><span class="line">    x.value = event.pageX;</span><br><span class="line">    y.value = event.pageY;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    x,</span><br><span class="line">    y,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h3><ul>
+<li>不建议在自定义组件上使用自定义指令，组件会透传指令。</li>
+<li>自定义组件还是有多个根元素，指令无法正确识别而且$attrs 也无法识别</li>
+<li>可以看到内置指令和自定义指令是两回事，自定义指令更多的是对dom操作。通过生成的vnode实现，但是不能改变创建的vnode。</li>
+</ul>
+<h3 id="teleporr"><a href="#teleporr" class="headerlink" title="teleporr"></a>teleporr</h3><p>支持to和disable prop。to变更实际上会导致el的变化，并不会导致重新生命周期。 to支持元素或者选择器</p>
+<h3 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h3><ul>
+<li>使用params和path不能同时使用，path需要改成name</li>
+<li>redirect 支持函数，参数是to，可以动态的重定向。重定向中相对路径相对于当前路由</li>
+<li>别名是多个path对应一个component, 别名的path也支持相对于当前路由的相对路劲，同时支持params</li>
+<li>支持路由组件传参的方式，将params 变成props，导航时设置props: true 即可。</li>
+</ul>
+<h3 id="渲染函数和jsx"><a href="#渲染函数和jsx" class="headerlink" title="渲染函数和jsx"></a>渲染函数和jsx</h3><ul>
+<li>在setup() 函数或者函数组件中返回vnode，参数都是setup(props, { emits, attrs, expose, slots})</li>
+<li><p>在render函数或者setup返回函数中，参数形式如下render(ctx)，其中ctx指的是vue实例, 也就是this。</p>
+</li>
+<li><p>setup暴露的出的属性方法默认不能通过ref查询到，可以通过expose暴露。</p>
+</li>
+</ul>
+<h3 id="插槽-1"><a href="#插槽-1" class="headerlink" title="插槽"></a>插槽</h3><p>slot需要通过slots.xxx() 渲染，而且如果是自定义组件需要通过函数或者对象函数的形式传入<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    render(ctx) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(ctx === <span class="keyword">this</span>) <span class="comment">// true</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> h(<span class="string">'span'</span>, <span class="comment">/** 没得选项，第二个参数直接变成slot **/</span>, <span class="number">123</span>) <span class="comment">// 不需要使用插槽</span></span><br><span class="line">        <span class="keyword">return</span> h(CustomComp, () =&gt; <span class="number">123</span>)  <span class="comment">// 传入default插槽 123</span></span><br><span class="line">        <span class="keyword">return</span> h(CustomComp, &#123; <span class="keyword">default</span>() &#123;<span class="keyword">return</span> <span class="number">123</span>&#125;, header() &#123;<span class="keyword">return</span> <span class="string">'header'</span>&#125; &#125;) <span class="comment">// 使用具名插槽，同时也可以给函数传入参数，</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// jsx中可以用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="指令-1"><a href="#指令-1" class="headerlink" title="指令"></a>指令</h4><p>withDirectives(vnode, [directives, params, modifier, data])。通过把vnode包装，实现一个有指令的vnode，可以通过resolvedirective找到指令。</p>
+<p>jsx中自定义指令和模板相同，v-model也是相同</p>
+<h4 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h4><p>使用props传入，变成onXxx形式，如果需要添加修饰符，需要将事件响应函数使用withModifiers(fun, [‘self’])这种形式包裹传入。</p>
+<h3 id="函数式组件"><a href="#函数式组件" class="headerlink" title="函数式组件"></a>函数式组件</h3><p>函数组件返回一个vnode。参数同setup相同，需要手动声明函数的props和emits。可以偷懒不声明，到attrs属性中获取，不过就不能获的devtools支持。</p>
+<p>声明方式在函数的的静态属性上， 同选项式api相同</p>
+<h3 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h3><p>插件是一个具有install属性的对象（或者就是一个install函数），通过app.use 调用。会传入app和options</p>
+<h3 id="全局对象"><a href="#全局对象" class="headerlink" title="全局对象"></a>全局对象</h3><p>vue3中不能通过vue.prototype.xx 来全局添加属性，需要通过app.config.globalProperties.xxx 来添加全局属性。</p>
+<h3 id="响应式基础"><a href="#响应式基础" class="headerlink" title="响应式基础"></a>响应式基础</h3><h4 id="ref-和-shadowRef"><a href="#ref-和-shadowRef" class="headerlink" title="ref 和 shadowRef"></a>ref 和 shadowRef</h4><p>当ref的参数是一个对象时，参数会被reactive调用，意味着对state.value.count.xxx 进行修改也会触发state.value 的变化，可以通过shadowRef避免这个问题。仅当对state.value进行修改时才触发。</p>
+<h4 id="reactive、shallowReactive"><a href="#reactive、shallowReactive" class="headerlink" title="reactive、shallowReactive"></a>reactive、shallowReactive</h4><p>对第一层reactive创建响应式，reactive对递归的将所有的子属性设置为reactive对象<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> _state = &#123;</span><br><span class="line">    user: &#123;</span><br><span class="line">        name: <span class="string">'xxx'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> state = reactive(_state)</span><br><span class="line">isReactive(state.user)  <span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="readonly和shallowReadonly"><a href="#readonly和shallowReadonly" class="headerlink" title="readonly和shallowReadonly"></a>readonly和shallowReadonly</h4><p>创建一个只读的响应式对象，接受一个对象、响应式对象或者ref。</p>
+<h4 id="CustomRef"><a href="#CustomRef" class="headerlink" title="CustomRef"></a>CustomRef</h4><p>创建一个自定义行为的ref，官方内置两种ref，可以通过CustomRef来实现自定义行为的ref。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> debounceRef = <span class="function">(<span class="params">value, delay</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> timer = <span class="literal">null</span>;</span><br><span class="line">    CustomRef(<span class="function">(<span class="params">track, trigger</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="keyword">get</span>() &#123;</span><br><span class="line">                track()</span><br><span class="line">                <span class="keyword">return</span> value</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">set</span>(v) &#123;</span><br><span class="line">                <span class="keyword">if</span>(!timer) &#123;</span><br><span class="line">                    value = v;</span><br><span class="line">                    track();</span><br><span class="line">                    timer = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">                        timer = <span class="literal">null</span>;</span><br><span class="line">                    &#125;, delay);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="强制触发ref的变化"><a href="#强制触发ref的变化" class="headerlink" title="强制触发ref的变化"></a>强制触发ref的变化</h4><p>对一个shallowRef对象使用triggerRef(ref)可以触发ref所有相关的副作用。不能触发computed<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> count = shallowRef(<span class="number">0</span>);</span><br><span class="line">watch(count, <span class="built_in">console</span>.log);</span><br><span class="line"></span><br><span class="line">count.value++;</span><br><span class="line"></span><br><span class="line">triggerRef(count) <span class="comment">// 1 --- 2</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="工具api"><a href="#工具api" class="headerlink" title="工具api"></a>工具api</h3><h4 id="toRef、toRefs、unref"><a href="#toRef、toRefs、unref" class="headerlink" title="toRef、toRefs、unref"></a>toRef、toRefs、unref</h4><p>将一个响应式对象(包括readonly)转换成每个子属性都是ref的，对象属性值的变更会导致ref也更新。</p>
+<p>unref将一个值（如果是非ref）转化成ref并返回<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> state = reactive(&#123;</span><br><span class="line">    count: <span class="number">1</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> count = state.count</span><br><span class="line">state.count++  <span class="comment">// count 不会变化，已经丢失响应式</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; count &#125; = toRefs(state)  <span class="comment">// 这样不会丢失响应式，对</span></span><br><span class="line"><span class="keyword">const</span> count = toRef(state, <span class="string">'count'</span>)</span><br><span class="line">isRef(count) <span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="isRef、isProxy、isReactive、isReadonly"><a href="#isRef、isProxy、isReactive、isReadonly" class="headerlink" title="isRef、isProxy、isReactive、isReadonly"></a>isRef、isProxy、isReactive、isReadonly</h3><p>isProxy检查 reactive、shallowReactive、readonly、shallowReadonly</p>
+<h3 id="toRaw、markRaw"><a href="#toRaw、markRaw" class="headerlink" title="toRaw、markRaw"></a>toRaw、markRaw</h3><p>toRaw 返回一个响应对象的原始对象的引用。markRaw将一个普通对象锁住，使其不能被转换成响应式对象。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> state = &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(toRaw(reactive(state)) === state) <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(isReactive(reactive(markRaw(state)))) <span class="comment">// false </span></span><br><span class="line"></span><br><span class="line">state.state = markRaw(&#123;&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(isReactive(reactive(state))) <span class="comment">// false 子属性也是能锁住</span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archives/280100fb.html" rel="next" title="vim">
+                <i class="fa fa-chevron-left"></i> vim
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archives/c9ab05c.html" rel="prev" title="css选择器学习">
+                css选择器学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="yangmanman">
+            
+              <p class="site-author-name" itemprop="name">yangmanman</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/xunserver" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础教程"><span class="nav-number">1.</span> <span class="nav-text">基础教程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#setup"><span class="nav-number">1.1.</span> <span class="nav-text">setup</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模板中表达式的作用域是ctx，在模板中使用赋值语句如下"><span class="nav-number">1.2.</span> <span class="nav-text">模板中表达式的作用域是ctx，在模板中使用赋值语句如下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#挂载到this-data上的值全部变成响应式"><span class="nav-number">1.3.</span> <span class="nav-text">挂载到this data上的值全部变成响应式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#style-支持数组的样式对象，vue会自动补齐前缀"><span class="nav-number">1.4.</span> <span class="nav-text">:style 支持数组的样式对象，vue会自动补齐前缀</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ref-和reactive"><span class="nav-number">1.5.</span> <span class="nav-text">ref 和reactive</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对reactive-原对象修改值，不会引起响应式变动，但会影响值。"><span class="nav-number">1.6.</span> <span class="nav-text">对reactive 原对象修改值，不会引起响应式变动，但会影响值。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ref的解包"><span class="nav-number">1.7.</span> <span class="nav-text">ref的解包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算属性"><span class="nav-number">1.8.</span> <span class="nav-text">计算属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#style-和-class-绑定"><span class="nav-number">1.9.</span> <span class="nav-text">style 和 class 绑定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v-if-和-v-for"><span class="nav-number">1.10.</span> <span class="nav-text">v-if 和 v-for</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vue3中的v-model"><span class="nav-number">1.11.</span> <span class="nav-text">vue3中的v-model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生命周期"><span class="nav-number">1.12.</span> <span class="nav-text">生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#watch-和-watchEffect"><span class="nav-number">1.13.</span> <span class="nav-text">watch 和 watchEffect</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#watch"><span class="nav-number">1.13.1.</span> <span class="nav-text">watch</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ref"><span class="nav-number">1.14.</span> <span class="nav-text">ref</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件"><span class="nav-number">2.</span> <span class="nav-text">组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#defineProps和defineEmits"><span class="nav-number">2.1.</span> <span class="nav-text">defineProps和defineEmits</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#defineProps-详解"><span class="nav-number">2.1.1.</span> <span class="nav-text">defineProps 详解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#defineEmits"><span class="nav-number">2.1.2.</span> <span class="nav-text">defineEmits</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#透传attribute"><span class="nav-number">2.2.</span> <span class="nav-text">透传attribute</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于事件的思考"><span class="nav-number">2.3.</span> <span class="nav-text">关于事件的思考</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插槽"><span class="nav-number">2.4.</span> <span class="nav-text">插槽</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#provide-和-inject"><span class="nav-number">2.5.</span> <span class="nav-text">provide 和 inject</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组合式函数"><span class="nav-number">2.6.</span> <span class="nav-text">组合式函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指令"><span class="nav-number">2.7.</span> <span class="nav-text">指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#teleporr"><span class="nav-number">2.8.</span> <span class="nav-text">teleporr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路由"><span class="nav-number">2.9.</span> <span class="nav-text">路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#渲染函数和jsx"><span class="nav-number">2.10.</span> <span class="nav-text">渲染函数和jsx</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插槽-1"><span class="nav-number">2.11.</span> <span class="nav-text">插槽</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#指令-1"><span class="nav-number">2.11.1.</span> <span class="nav-text">指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事件"><span class="nav-number">2.11.2.</span> <span class="nav-text">事件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数式组件"><span class="nav-number">2.12.</span> <span class="nav-text">函数式组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插件"><span class="nav-number">2.13.</span> <span class="nav-text">插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全局对象"><span class="nav-number">2.14.</span> <span class="nav-text">全局对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应式基础"><span class="nav-number">2.15.</span> <span class="nav-text">响应式基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ref-和-shadowRef"><span class="nav-number">2.15.1.</span> <span class="nav-text">ref 和 shadowRef</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#reactive、shallowReactive"><span class="nav-number">2.15.2.</span> <span class="nav-text">reactive、shallowReactive</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#readonly和shallowReadonly"><span class="nav-number">2.15.3.</span> <span class="nav-text">readonly和shallowReadonly</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CustomRef"><span class="nav-number">2.15.4.</span> <span class="nav-text">CustomRef</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#强制触发ref的变化"><span class="nav-number">2.15.5.</span> <span class="nav-text">强制触发ref的变化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工具api"><span class="nav-number">2.16.</span> <span class="nav-text">工具api</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#toRef、toRefs、unref"><span class="nav-number">2.16.1.</span> <span class="nav-text">toRef、toRefs、unref</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#isRef、isProxy、isReactive、isReadonly"><span class="nav-number">2.17.</span> <span class="nav-text">isRef、isProxy、isReactive、isReadonly</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#toRaw、markRaw"><span class="nav-number">2.18.</span> <span class="nav-text">toRaw、markRaw</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yangmanman</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">博客全站字数共计&#58;</span>
+    
+    <span title="博客全站字数共计">57.4k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom">蜀ICP备17019511号-2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: true,
+        notify: false,
+        appId: 'vuVpRBVLYgITznVd6lB3SmEO-gzGzoHsz',
+        appKey: 'joDjKEtGAKgsTOkptN9QqUQA',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("vuVpRBVLYgITznVd6lB3SmEO-gzGzoHsz", "joDjKEtGAKgsTOkptN9QqUQA");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/baidu.js"></script>
+</body>
+</html>
