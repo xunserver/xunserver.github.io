@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.xunserver.cn/"/>
-  <updated>2022-07-28T01:15:24.000Z</updated>
+  <updated>2022-08-02T00:58:37.000Z</updated>
   <id>https://blog.xunserver.cn/</id>
   
   <author>
@@ -15,6 +15,49 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>sass-less</title>
+    <link href="https://blog.xunserver.cn/archives/a8f35e34.html"/>
+    <id>https://blog.xunserver.cn/archives/a8f35e34.html</id>
+    <published>2022-08-02T00:58:37.000Z</published>
+    <updated>2022-08-02T00:58:37.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="scss"><a href="#scss" class="headerlink" title="scss"></a>scss</h2><h3 id="import"><a href="#import" class="headerlink" title="@import"></a>@import</h3><p>支持webpack导入，如果导入的文件是_开头，则导入内容不会编译，只会引用变量</p><h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>约定$name: value 形式的为变量。支持字符串（带有空格需要引号包裹），数字，数组（逗号或者空格分隔），对象（(key: value, key2: value2)），boolean。</p><p>变量区分为代码块内变量和代码块外变量。默认情况下，后申明的变量会覆盖前置变量（同作用域），通过$var: xxx !default 这种方式可以前置变量覆盖后置</p><h3 id="amp"><a href="#amp" class="headerlink" title="&amp;"></a>&amp;</h3><p>在嵌套中选择父元素</p><h3 id="mixin和-include"><a href="#mixin和-include" class="headerlink" title="@mixin和@include"></a>@mixin和@include</h3><p>通过@mixin 定义代码片段，通过@include引入片段实现复用。@mixin相当于代码片段的生成器，支持参数和默认参数。</p><h3 id="extend"><a href="#extend" class="headerlink" title="@extend"></a>@extend</h3><p>如果需要对某个类实现继承，使用@extend .classname 实现，会继承该类所有实现。该功能唯一用处是在该类实现比较多的场景。</p><h3 id="xxx-插值表达式"><a href="#xxx-插值表达式" class="headerlink" title="#{xxx}插值表达式"></a>#{xxx}插值表达式</h3><p>前面变量都是用在属性值上，#{}可以用在选择器或者属性名上面，实现动态生成类或者属性。</p><h2 id="less"><a href="#less" class="headerlink" title="less"></a>less</h2>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;scss&quot;&gt;&lt;a href=&quot;#scss&quot; class=&quot;headerlink&quot; title=&quot;scss&quot;&gt;&lt;/a&gt;scss&lt;/h2&gt;&lt;h3 id=&quot;import&quot;&gt;&lt;a href=&quot;#import&quot; class=&quot;headerlink&quot; title=&quot;@impo
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>前端大文件上传</title>
+    <link href="https://blog.xunserver.cn/archives/cbd08800.html"/>
+    <id>https://blog.xunserver.cn/archives/cbd08800.html</id>
+    <published>2022-07-29T07:52:50.000Z</published>
+    <updated>2022-07-29T07:52:50.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近弄公司的大文件上传，实现了分片、暂停、继续、断点续传和秒传，记录一些过程中的细节。</p><h3 id="buffer、blob和arrayBuffer"><a href="#buffer、blob和arrayBuffer" class="headerlink" title="buffer、blob和arrayBuffer"></a>buffer、blob和arrayBuffer</h3><p>所有文件都可以按照二进制解析，js宿主环境提供了对二进制的处理。</p><ul><li>buffer  nodejs提供的二进制缓冲区</li><li>blob和file   浏览器提供的二进制对象，通过操作对象来操作二进制</li><li>arrayBuffer  浏览器提供的一个具有窗口的二进制对象。</li></ul><p>file完全继承了blob所有的特性并添加了部分特性。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> blob = <span class="keyword">new</span> Blob()</span><br></pre></td></tr></table></figure></p><p>TODO:</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;最近弄公司的大文件上传，实现了分片、暂停、继续、断点续传和秒传，记录一些过程中的细节。&lt;/p&gt;
+&lt;h3 id=&quot;buffer、blob和ar
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>系统样式设计</title>
@@ -389,42 +432,6 @@
       
         &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;最近在公司碰到了内嵌的iframe始终提示未登录的问题，查询到时接口请求时未自动携带cookie，排查过程中一直没搞懂cookie携带的机制
       
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>network</title>
-    <link href="https://blog.xunserver.cn/archives/608487bc.html"/>
-    <id>https://blog.xunserver.cn/archives/608487bc.html</id>
-    <published>2022-01-26T21:55:20.000Z</published>
-    <updated>2022-01-26T21:55:20.000Z</updated>
-    
-    <content type="html"><![CDATA[<h4 id="console-线"><a href="#console-线" class="headerlink" title="console 线"></a>console 线</h4><p>一头网线，一头usb线的线，通过串口控制设备 一般是9600 8 0 配置</p><h4 id="盒式设备、框式设备"><a href="#盒式设备、框式设备" class="headerlink" title="盒式设备、框式设备"></a>盒式设备、框式设备</h4><p>盒式设备高度按照u来分区，一般一排网口的是半U，两排是1U。框式设备是一整块机柜，包含电源主从，控制主从等。</p><h4 id="MGT端口"><a href="#MGT端口" class="headerlink" title="MGT端口"></a>MGT端口</h4><p>通过两头网线控制，笔记和管理端口同网段即可</p><h4 id="mini-console"><a href="#mini-console" class="headerlink" title="mini-console"></a>mini-console</h4><p>一头usb，另一个mini-console接口，用于控制设备</p><h4 id="telnet和ssh"><a href="#telnet和ssh" class="headerlink" title="telnet和ssh"></a>telnet和ssh</h4><p>通过应用层协议连接</p><h4 id="rs232"><a href="#rs232" class="headerlink" title="rs232"></a>rs232</h4><p>9针口，现在的都集成变成usb</p><h4 id="telnet、ssh-端口"><a href="#telnet、ssh-端口" class="headerlink" title="telnet、ssh 端口"></a>telnet、ssh 端口</h4><p>telnet 23 ssh 22</p><h4 id="ISO，OSI"><a href="#ISO，OSI" class="headerlink" title="ISO，OSI"></a>ISO，OSI</h4><p>ISO 国际标准化组织<br>OSI 开放系统互联互通模型</p><h4 id="OSI-7层模型介绍"><a href="#OSI-7层模型介绍" class="headerlink" title="OSI 7层模型介绍"></a>OSI 7层模型介绍</h4><h5 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h5><p>物理层层面的0，1转换传输。以太帧</p><h5 id="链路层"><a href="#链路层" class="headerlink" title="链路层"></a>链路层</h5><p>物理上点到点的传输， Mac</p><h5 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h5><p>节点和节点的传输。IP</p><h5 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h5><p>端口到端口的传输</p><h4 id="命令行权限和用户权限"><a href="#命令行权限和用户权限" class="headerlink" title="命令行权限和用户权限"></a>命令行权限和用户权限</h4><p>命令权限有0-3级， 分别是观察级、监控级、配置级和管理级<br>用户权限有0-15级  前面和命令行对应。每一级可以使用前面所有等级命令</p><h4 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h4><p>用户视图  \&lt;host> 默认登录上的视图</p><p>系统视图 [host] 用户视图输入system-view 后进入</p><p>命令视图 系统视图下输入命令的视图</p><h4 id="配置ip地址"><a href="#配置ip地址" class="headerlink" title="配置ip地址"></a>配置ip地址</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">system-view <span class="comment"># 系统视图</span></span><br><span class="line">interface Ethernet 0/0/8 <span class="comment"># 接口视图</span></span><br><span class="line">ip address 192.168.1.2 24 <span class="comment"># 设置ip</span></span><br></pre></td></tr></table></figure><h4 id="开启telnet-登录"><a href="#开启telnet-登录" class="headerlink" title="开启telnet 登录"></a>开启telnet 登录</h4><h5 id="1-新建用户"><a href="#1-新建用户" class="headerlink" title="1. 新建用户"></a>1. 新建用户</h5><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">system-view </span><br><span class="line">aaa <span class="comment"># 进入aa模式</span></span><br><span class="line"><span class="built_in">local</span>-user <span class="built_in">test</span> password cipher <span class="built_in">test</span> <span class="comment"># 设置用户名密码</span></span><br><span class="line"><span class="built_in">local</span>-user <span class="built_in">test</span> service-type telnet <span class="comment"># 指定用户登录模式</span></span><br></pre></td></tr></table></figure><h5 id="2-分配vty"><a href="#2-分配vty" class="headerlink" title="2. 分配vty"></a>2. 分配vty</h5><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 需要指定用户登录的vty</span></span><br><span class="line">system-view </span><br><span class="line">user-interface vty 0 3 <span class="comment"># vty配置模式</span></span><br><span class="line">user privil level 3 <span class="comment"># vty 用户最大权限</span></span><br><span class="line">authentication-mode aaa <span class="comment"># 设置认证方式为aaa</span></span><br></pre></td></tr></table></figure><h5 id="网卡"><a href="#网卡" class="headerlink" title="网卡"></a>网卡</h5><p>CU: 控制单元<br>OB: 输出缓存<br>LC: 线路编码器<br>TX: 发射器   </p><p>RX: 接收器<br>LD: 线路解码器<br>IB: 输入缓冲<br>CU从网络层获取到packet，在CU封装成frame帧，帧传递到OB，OB会按照帧的接受顺序排列成队列，依次传递到LC。LC把一个一个的帧编码成 0 1物理电平传递给TX, TX将物理的电平增加功率，发送出去双绞线。</p><p>同理，RX,LD,OB也相同。</p><p>交换机的网卡和主机网卡在CU处理方面不同，交换机接收到帧做泛洪，舍弃，点对点转发。主机网卡接收到帧后，会解开帧后转交给上层的网络层处理。</p><h5 id="mac地址"><a href="#mac地址" class="headerlink" title="mac地址"></a>mac地址</h5><p>MAC 地址有48位，区分为单播MAC（首字节末尾是0），组播MAC（首字节末尾是1），广播MAC（全是1，所以是一种特殊组播），网卡的MAC又称BIA地址，前24位是厂商向IEEE申请，后24位厂商自行分配。前24位是OUI地址。</p><h5 id="以太帧"><a href="#以太帧" class="headerlink" title="以太帧"></a>以太帧</h5><p>目前使用的以太帧有IEEE 802.3 和 Ethernet II 两种格式。Ethernet II格式简单使用广泛，IEEE 802.3用于某些特殊协议。</p><p>Ethernet II由以下组成，目的MAC，源MAC，2字节表示类型，载荷，和CRC校验和结尾。</p><h5 id="2的次方速记"><a href="#2的次方速记" class="headerlink" title="2的次方速记"></a>2的次方速记</h5><p>一个字节8位，两个16进制计数。<br>2 ^ 8 = 65536;2 ^ 16 = 16777216 </p><h5 id="帧的流转"><a href="#帧的流转" class="headerlink" title="帧的流转"></a>帧的流转</h5><p>帧在交换机端口中进入时，会查找MAC表中是否存在映射，不存在时执行泛洪，并保存将帧的源MAC和端口保存更新到MAC表中。MAC和端口是多对一的关系。主机MAC在接收到单播帧时，会检查BIA地址和目的MAC是否一致，如果不一致则会丢弃帧。接收到广播帧时，CU会传递到上层模块</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h4 id=&quot;console-线&quot;&gt;&lt;a href=&quot;#console-线&quot; class=&quot;headerlink&quot; title=&quot;console 线&quot;&gt;&lt;/a&gt;console 线&lt;/h4&gt;&lt;p&gt;一头网线，一头usb线的线，通过串口控制设备 一般是9600 8 0 配置&lt;/p&gt;
-
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>hcna</title>
-    <link href="https://blog.xunserver.cn/archives/548c626e.html"/>
-    <id>https://blog.xunserver.cn/archives/548c626e.html</id>
-    <published>2022-01-26T21:35:23.000Z</published>
-    <updated>2022-01-26T21:35:23.000Z</updated>
-    
-    <summary type="html">
     
     </summary>
     
