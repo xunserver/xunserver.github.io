@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[sass-less]]></title>
     <url>%2Farchives%2Fa8f35e34.html</url>
-    <content type="text"><![CDATA[scss@import支持webpack导入，如果导入的文件是_开头，则导入内容不会编译，只会引用变量 变量约定$name: value 形式的为变量。支持字符串（带有空格需要引号包裹），数字，数组（逗号或者空格分隔），对象（(key: value, key2: value2)），boolean。 变量区分为代码块内变量和代码块外变量。默认情况下，后申明的变量会覆盖前置变量（同作用域），通过$var: xxx !default 这种方式可以前置变量覆盖后置 &amp;在嵌套中选择父元素 @mixin和@include通过@mixin 定义代码片段，通过@include引入片段实现复用。@mixin相当于代码片段的生成器，支持参数和默认参数。 @extend如果需要对某个类实现继承，使用@extend .classname 实现，会继承该类所有实现。该功能唯一用处是在该类实现比较多的场景。 #{xxx}插值表达式前面变量都是用在属性值上，#{}可以用在选择器或者属性名上面，实现动态生成类或者属性。 less]]></content>
+    <content type="text"><![CDATA[scss@import支持webpack导入，如果导入的文件是_开头，则导入内容不会编译，只会引用变量 变量约定$name: value 形式的为变量。支持字符串（带有空格需要引号包裹），数字，数组（逗号或者空格分隔），对象（(key: value, key2: value2)），boolean。 变量区分为代码块内变量和代码块外变量。默认情况下，后申明的变量会覆盖前置变量（同作用域），通过$var: xxx !default 这种方式可以前置变量覆盖后置。12$color: green;$color: red !default; // 不添加!default red 会覆盖前面，添加!default 后面声明的不会覆盖green &amp;在嵌套中选择父元素 @mixin和@include通过@mixin 定义代码片段，通过@include引入片段实现复用。@mixin相当于代码片段的生成器，支持参数和默认参数。 @extend如果需要对某个类实现继承，使用@extend .classname 实现，会继承该类所有实现。该功能唯一用处是在该类实现比较多的场景。 #{xxx}插值表达式前面变量都是用在属性值上，#{}可以用在选择器或者属性名上面，实现动态生成类或者属性。 lessless解析时区大概两个步骤 按照层级确定变量 根据变量赋值变量@name: value 形式声明变量，变量用在css属性值、属性、类定义包括动态变量中12345678@error: red;@color: color;@red: blue;.error &#123; color: @error; // 属性值 background-@&#123;color&#125;: @@&#123;error&#125;; // 作为属性时需要@&#123;&#125;包裹，作为动态变量需要@@&#125; less支持在块中将属性作为变量名，规则同变量。总是先变量整个快作用域确定变量，然后再赋值。12345678910.error &#123; color: red; .success &#123; color: green; background-color: $color &#125; color: yellow;&#125; less 支持lazy load，可以先使用变量再声明变量。这种特性总是后声明的覆盖前面。]]></content>
   </entry>
   <entry>
     <title><![CDATA[前端大文件上传]]></title>
