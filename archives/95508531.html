@@ -470,7 +470,7 @@
 <li>extends，返回一个有config属性的对象。config属性对应的是配置文件，见后文如何提供一个eslint-plugin。extends都是由插件导入。</li>
 <li>plugins 提供rules的解析，和extends的区别是plugin 提供的是rule规则，但是还未配置。所以一般使用plugin后需要配置相应的extend。plugin 还提供了processor 能力。</li>
 <li>processor 是由plugin 提供，能对非js文件中的js片段提取进行eslint检查。一般都是对应Plugin的extend配置提供。</li>
-<li>overrides 可以覆盖默认的parse，可以针对不能目录的文件单独配置parse</li>
+<li>overrides 可以覆盖默认的配置，会和全局的定义的配置进行合并</li>
 </ul>
 <p>eslint-plugin-vue <a href="https://eslint.vuejs.org/rules/" target="_blank" rel="noopener">https://eslint.vuejs.org/rules/</a></p>
 <p>下面配置vue3 eslint为例</p>
@@ -759,7 +759,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">58.4k</span>
+    <span title="博客全站字数共计">58.5k</span>
   
 </div>
 

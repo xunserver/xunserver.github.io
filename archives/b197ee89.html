@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  592 字
+                  633 字
                 </span>
               
 
@@ -474,6 +474,7 @@
 <p>preset-env对polyfill的处理是，corejs和regenerator全局注入，helper在模块注入（在模块现场申明一个helper，和transform-runtime区别在transform-runtime的helper是由corejs导出的，每个地方都可以复用），这样会污染全局环境。</p>
 <p>@bebel/plugin-transform-runtime 将全局的注入全部改成模块的注入。缺点是不支持target，总是会做polyfill操作。</p>
 <p>得到一个最终的版本<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        [<span class="string">'transform-runtime'</span>, &#123;</span><br><span class="line">            corejs: <span class="number">3</span></span><br><span class="line">        &#125;]</span><br><span class="line">    ],</span><br><span class="line">    presets: [</span><br><span class="line">        [<span class="string">'env'</span>, &#123;</span><br><span class="line">            corejs: <span class="number">3</span>,</span><br><span class="line">            useBuiltIns: <span class="string">'usage'</span></span><br><span class="line">        &#125;]</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="执行实现配置文件"><a href="#执行实现配置文件" class="headerlink" title="执行实现配置文件"></a>执行实现配置文件</h3><p>导出配置文件即可，在需要引用的地方extends合并。需要注意的时，preset文件中不能包含extends</p>
 
       
     </div>
@@ -663,7 +664,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简述"><span class="nav-number">1.</span> <span class="nav-text">简述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组成"><span class="nav-number">2.</span> <span class="nav-text">组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">3.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#presets"><span class="nav-number">3.1.</span> <span class="nav-text">presets</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#plugins"><span class="nav-number">3.2.</span> <span class="nav-text">plugins</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#babel-preset-env"><span class="nav-number">3.3.</span> <span class="nav-text">@babel/preset-env</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bebel-preset-env-和-bebel-plugin-transform-runtime"><span class="nav-number">3.4.</span> <span class="nav-text">bebel/preset-env 和 @bebel/plugin-transform-runtime</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简述"><span class="nav-number">1.</span> <span class="nav-text">简述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组成"><span class="nav-number">2.</span> <span class="nav-text">组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">3.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#presets"><span class="nav-number">3.1.</span> <span class="nav-text">presets</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#plugins"><span class="nav-number">3.2.</span> <span class="nav-text">plugins</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#babel-preset-env"><span class="nav-number">3.3.</span> <span class="nav-text">@babel/preset-env</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bebel-preset-env-和-bebel-plugin-transform-runtime"><span class="nav-number">3.4.</span> <span class="nav-text">bebel/preset-env 和 @bebel/plugin-transform-runtime</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#执行实现配置文件"><span class="nav-number">3.5.</span> <span class="nav-text">执行实现配置文件</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -697,7 +698,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">58.4k</span>
+    <span title="博客全站字数共计">58.5k</span>
   
 </div>
 
