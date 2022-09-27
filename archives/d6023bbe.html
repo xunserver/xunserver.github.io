@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  962 字
+                  1.6k 字
                 </span>
               
 
@@ -432,7 +432,7 @@
                   <span class="post-meta-item-text">阅读时长 </span>
                 
                 <span title="阅读时长">
-                  3 分钟
+                  6 分钟
                 </span>
               
             </div>
@@ -459,7 +459,8 @@
 <ul>
 <li>可以只引入类型。使用import xx = require(‘xx’)时导入的是类型。ts3.8后使用import type { xx } from ‘xx’导入类型。</li>
 <li>可以import <em> as xx from ‘xx’, 也可以export </em> as xx</li>
-<li></li>
+<li>新版本对package.json处理有更新<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"main"</span>: <span class="string">"./dist/lib/index.js"</span>,</span><br><span class="line">  <span class="attr">"module"</span>: <span class="string">"./dist/es/index.js"</span>,</span><br><span class="line">  <span class="attr">"types"</span>: <span class="string">"dist/types/index.d.ts"</span>,</span><br><span class="line">  "exports": &#123;  // 优先</span><br><span class="line">    ".": &#123;</span><br><span class="line">      "types": "dist/types/index.d.ts",</span><br><span class="line">      "import": "./dist/es/index.js",</span><br><span class="line">      "require": "./dist/lib/index.js"</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 <h3 id="模块解析"><a href="#模块解析" class="headerlink" title="模块解析"></a>模块解析</h3><p>如果tsconfig中moduleResolution: Node 时，按照node的模块查找规则。查找规则按照path+place 的方式</p>
 <p>path是相对或者绝对路径时，直接按照路径解析。相对路径不包含 ‘xx/‘<br>path是动态路径时，比如<strong> import xx from ‘xx’ </strong>。从当前文件开始查找同级目录是否存在node_modules/xx。</p>
@@ -473,20 +474,29 @@
 <p>同时针对文件扩展名，按照.ts .tsx .d.ts 顺序解析。</p>
 <p>另外还可以通过修改设置baseUrl和paths 映射来修改这种行为。默认情况下只要设置了baseUrl,paths会默认添加 { “<em>“: [“./</em>“] } 配置<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"compilerOptions"</span>: &#123;</span><br><span class="line">        "baseUrl": ".",  // 相对于tsconfig.json</span><br><span class="line">        "paths": &#123;</span><br><span class="line">            "*": ["*"],  // 前面一个*表示module,后面一个表示相对路baseurl的module</span><br><span class="line">            "@/*": ["src/*"], // "@/xxx" =&gt; baseUrl + src + xxx</span><br><span class="line">            "jquery": ["some/path/jquery"]  // "jquery" =&gt; "some/path/jquery"</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>如果想追踪每个module的解析情况，可以使用traceResolution: true 打印解析日志<br>tsc编译时会从入口文件开始，将相关的依赖文件同时编译。如果配置了noResolve选项指定了某些模块不编译，编译会报错。</p>
+<p>rollup，webpack，tsc，nodejs对模块的处理都不同，都是对js文件处理。特别是ts还隐藏了一层类型查找的问题。</p>
 <blockquote>
-<p>每个编译器所使用的的module解析方式不同，特别是在对package.json字段统一。</p>
+<p>每个编译器所使用的的module解析方式不同，特别是在对package.json字段未统一。</p>
 </blockquote>
-<h3 id="d-ts作用"><a href="#d-ts作用" class="headerlink" title="*.d.ts作用"></a>*.d.ts作用</h3><p>tsc 编译时通过 declaration: true 能自动生成.d.ts文件。</p>
+<p>从变量引用和类型引用两个角度分析。<br>变量角度<br><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; a &#125; <span class="keyword">from</span> <span class="string">"a"</span>  <span class="comment">// 1. 寻找是否能根据baseUrl和paths匹配到模块 2.依次向上查询node_modules/a是否存在 3.如果是文件夹，先检查package.json描述,如果package.json 不存在，检查index.ts 是否存在。</span></span><br><span class="line"><span class="keyword">import</span> b <span class="keyword">from</span> <span class="string">"a/b"</span> <span class="comment">// 1. 同上 2. 检查node_modules/a/b 是否存在。 3. 同上3</span></span><br><span class="line"><span class="keyword">import</span> c <span class="keyword">from</span> <span class="string">'./c'</span> <span class="comment">// 1. 检查是否配置了rootDirs。 2. ./c是否是文件夹，如果是参考1.3 </span></span><br><span class="line"><span class="keyword">import</span> d <span class="keyword">from</span> <span class="string">'d.xx'</span> <span class="comment">// 1. 同上1</span></span><br></pre></td></tr></table></figure></p>
+<p>类型角度<br><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; a &#125; <span class="keyword">from</span> <span class="string">"a"</span>  <span class="comment">// 1. 寻找是否能根据baseUrl和paths匹配到模块,a.ts存在，直接导出a.ts的命名空间,如果只有a.js存在，需要查找a.d.ts，如果a.d.ts未查找到，同时allowJS: false，在查询是否存在当前module的 declararion 声明，查找终止。</span></span><br><span class="line">                       <span class="comment">// 2. 向上查找node_modules/a.d.ts，如果是文件夹，先查找package.json相关定义，再查找node_modules/a/index.d.ts。再加载同级@types/a 文件夹，按照上述步骤处理。 </span></span><br><span class="line"><span class="keyword">import</span> b <span class="keyword">from</span> <span class="string">"a/b"</span> <span class="comment">// 1. 同上1 2.</span></span><br><span class="line"><span class="keyword">import</span> c <span class="keyword">from</span> <span class="string">'./c'</span> <span class="comment">// 1. 同上述文件夹处理方式 2. 检查是否有declaration 声明</span></span><br><span class="line"><span class="keyword">import</span> d <span class="keyword">from</span> <span class="string">'./d.xx'</span> <span class="comment">// 后缀当做文件名处理</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="d-ts作用"><a href="#d-ts作用" class="headerlink" title="*.d.ts作用"></a>*.d.ts作用</h3><p>tsc 编译时通过 declaration: true 能自动生成.d.ts文件。如果某个模块还未被声明，ts会自动加载同名的x.d.ts作为声明文件。</p>
 <h3 id="target和module"><a href="#target和module" class="headerlink" title="target和module"></a>target和module</h3><p>通过module: “Commonjs”, ts代码可以编译成cjs，amd，cmd和esm。但是cjs和amd中只支持导出一个对象这和ts export defalt, { xxx }行为不兼容。如果明确代码需要转换成cjs，需要按照如下方式编写<br><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> xx = <span class="built_in">require</span>(<span class="string">'xxx'</span>)  <span class="comment">// 如果是export = xxx模式导出，必须使用这种默认引入</span></span><br><span class="line"><span class="keyword">const</span> a = <span class="number">123</span>;</span><br><span class="line"><span class="keyword">export</span> = a;</span><br></pre></td></tr></table></figure></p>
-<h3 id="类型查找"><a href="#类型查找" class="headerlink" title="类型查找"></a>类型查找</h3><p>分为包类型查找和变量类型查找。</p>
-<ul>
-<li>包类型查找，如果包是相对引用时，1.查到当前变量空间是有包的申明； 2.根据模块解析的规则查找同名的*.d.ts文件； 3. 如果非相对路径则添加，则去node_modules/@type中查找。</li>
-<li>变量</li>
-</ul>
 <h3 id="tsconfig重点字段详解"><a href="#tsconfig重点字段详解" class="headerlink" title="tsconfig重点字段详解"></a>tsconfig重点字段详解</h3><h4 id="types、typeRoot和node-modules-type"><a href="#types、typeRoot和node-modules-type" class="headerlink" title="types、typeRoot和node_modules/@type"></a>types、typeRoot和node_modules/@type</h4><p>默认情况下，tsc会加载编译上下文中所有<em>.d.ts、同时还会加载node_modules/@type文件中所有的</em>.dt.ts，以及向上目录的所有node_modules/@type。通过typeRoot指定默认文件夹（不会在向上循环查找），或者通过types指定typeRoot中需要加载部分*.d.ts文件。</p>
 <h4 id="extends"><a href="#extends" class="headerlink" title="extends"></a>extends</h4><p>可以继承多个配置，在需要打包不同的library时有用。不同配置文件中的配置的路径是根据该配置文件相对。</p>
-<h4 id="rootDir-和-rootDirs"><a href="#rootDir-和-rootDirs" class="headerlink" title="rootDir 和 rootDirs"></a>rootDir 和 rootDirs</h4><p>rootDirs用于把多个不同实际位置的目录组合到一个虚拟目录中，方便引用。比如src/a.ts 和src1/b.ts，组合到一个虚拟目录中后可以import xx from ‘./b’ TODO: rootDirs 和 include和extend关系</p>
-<p>rootDir设置单个的虚拟目录，用于解决打包后文件目录和src不一致问题。<br>TODO: rootDir和rootDirs解析流程</p>
+<h4 id="rootDir-和-rootDirs"><a href="#rootDir-和-rootDirs" class="headerlink" title="rootDir 和 rootDirs"></a>rootDir 和 rootDirs</h4><p>rootDirs用于把多个不同实际位置的目录组合到一个虚拟目录中，方便引用。比如src/a.ts 和src1/b.ts，组合到一个虚拟目录中后可以import xx from ‘./b’    </p>
+<p>rootDir设置单个的虚拟目录，用于解决打包后文件目录和src不一致问题。默认值所有非声明输入文件的最长公共路径。相当于打包前将包含的文件放置到路径.replace(rootDir, dist)。</p>
+<h4 id="baseurl和path"><a href="#baseurl和path" class="headerlink" title="baseurl和path"></a>baseurl和path</h4><p>baseUrl用于处理module中non-relative，默认会在node_modules 前查找。配置paths使用可以自定义路径别名</p>
+<p>path用于配置别名 alias: baseUrl + path。和webpack</p>
+<h4 id="declaration"><a href="#declaration" class="headerlink" title="declaration"></a>declaration</h4><p>declaration: true， 开启编译时生成.d.ts文件，默认情况下声明文件和编译后的js文件放在同一位置，通过declarationDir: ‘path’指定声明文件存放路径，声明文件的</p>
+<h3 id="allowJS-和-checkJS"><a href="#allowJS-和-checkJS" class="headerlink" title="allowJS 和 checkJS"></a>allowJS 和 checkJS</h3><p>allowJS: true 允许在ts中直接在加载js文件，即使这个js文件没有.d.ts。</p>
+<p>checkJS 加载js文件时，同样检查js的类型系统</p>
+<h3 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a>装饰器</h3><p>function curry(fn) {<br>  // your code here<br>  const resultFn = (…args1) =&gt; {<br>    const arg = args1.filter(arg =&gt; arg != curry.placeholder)<br>    if(arg.length &gt;= fn.length) {<br>      return fn(…arg)<br>    }<br>    return (…args2) =&gt; resultFn(…arg, …args2)<br>  }</p>
+<p>  return resultFn;<br>}<br>const  join = (a, b, c) =&gt; {<br>   return <code>${a}_${b}_${c}</code><br>}</p>
+<p>const curriedJoin = curry(join)<br>const _ = curry.placeholder</p>
+<p>curriedJoin(1, 2, 3) // ‘1_2_3’</p>
+<p>curriedJoin(_, 2)(1, 3) // ‘1_2_3’</p>
+<p>curriedJoin(_, _, <em>)(1)(</em>, 3)(2) // ‘1_2_3’</p>
 
       
     </div>
@@ -676,7 +686,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量申明空间和类型申明空间"><span class="nav-number">1.</span> <span class="nav-text">变量申明空间和类型申明空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#命令空间"><span class="nav-number">2.</span> <span class="nav-text">命令空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块"><span class="nav-number">3.</span> <span class="nav-text">模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块解析"><span class="nav-number">4.</span> <span class="nav-text">模块解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#d-ts作用"><span class="nav-number">5.</span> <span class="nav-text">*.d.ts作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#target和module"><span class="nav-number">6.</span> <span class="nav-text">target和module</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型查找"><span class="nav-number">7.</span> <span class="nav-text">类型查找</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tsconfig重点字段详解"><span class="nav-number">8.</span> <span class="nav-text">tsconfig重点字段详解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#types、typeRoot和node-modules-type"><span class="nav-number">8.1.</span> <span class="nav-text">types、typeRoot和node_modules/@type</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#extends"><span class="nav-number">8.2.</span> <span class="nav-text">extends</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rootDir-和-rootDirs"><span class="nav-number">8.3.</span> <span class="nav-text">rootDir 和 rootDirs</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量申明空间和类型申明空间"><span class="nav-number">1.</span> <span class="nav-text">变量申明空间和类型申明空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#命令空间"><span class="nav-number">2.</span> <span class="nav-text">命令空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块"><span class="nav-number">3.</span> <span class="nav-text">模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块解析"><span class="nav-number">4.</span> <span class="nav-text">模块解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#d-ts作用"><span class="nav-number">5.</span> <span class="nav-text">*.d.ts作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#target和module"><span class="nav-number">6.</span> <span class="nav-text">target和module</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tsconfig重点字段详解"><span class="nav-number">7.</span> <span class="nav-text">tsconfig重点字段详解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#types、typeRoot和node-modules-type"><span class="nav-number">7.1.</span> <span class="nav-text">types、typeRoot和node_modules/@type</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#extends"><span class="nav-number">7.2.</span> <span class="nav-text">extends</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rootDir-和-rootDirs"><span class="nav-number">7.3.</span> <span class="nav-text">rootDir 和 rootDirs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#baseurl和path"><span class="nav-number">7.4.</span> <span class="nav-text">baseurl和path</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#declaration"><span class="nav-number">7.5.</span> <span class="nav-text">declaration</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#allowJS-和-checkJS"><span class="nav-number">8.</span> <span class="nav-text">allowJS 和 checkJS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#装饰器"><span class="nav-number">9.</span> <span class="nav-text">装饰器</span></a></li></ol></div>
             
 
           </div>
@@ -710,7 +720,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">59.4k</span>
+    <span title="博客全站字数共计">60k</span>
   
 </div>
 
