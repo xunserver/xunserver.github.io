@@ -88,18 +88,18 @@
 
 
 
-<meta name="description" content="泄露 500, 5000, 50000 个人信息关键数据库 ！！！！脱敏">
+<meta name="description" content="基础代码在平台运行时会通过backend对外通过调式协议暴露出运行时各种状态，各种调试工具通过解析调试协议实现UI界面（frontend）。chrome使用的是CDP(chrome devtools protocol)。 谷歌浏览器中有些devtool插件，比如vue devtools 和 react devtool。浏览器插件分为两个部分，一个是可以注入到当前页面的content script，">
 <meta name="keywords" content="博客,xunsever,bang">
 <meta property="og:type" content="article">
-<meta property="og:title" content="爬虫">
-<meta property="og:url" content="https://blog.xunserver.cn/archives/7ade1d5c.html">
+<meta property="og:title" content="chrome调试通关笔记">
+<meta property="og:url" content="https://blog.xunserver.cn/archives/a6025488.html">
 <meta property="og:site_name" content="bang">
-<meta property="og:description" content="泄露 500, 5000, 50000 个人信息关键数据库 ！！！！脱敏">
+<meta property="og:description" content="基础代码在平台运行时会通过backend对外通过调式协议暴露出运行时各种状态，各种调试工具通过解析调试协议实现UI界面（frontend）。chrome使用的是CDP(chrome devtools protocol)。 谷歌浏览器中有些devtool插件，比如vue devtools 和 react devtool。浏览器插件分为两个部分，一个是可以注入到当前页面的content script，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-30T01:43:06.000Z">
+<meta property="og:updated_time" content="2022-10-09T01:21:41.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="爬虫">
-<meta name="twitter:description" content="泄露 500, 5000, 50000 个人信息关键数据库 ！！！！脱敏">
+<meta name="twitter:title" content="chrome调试通关笔记">
+<meta name="twitter:description" content="基础代码在平台运行时会通过backend对外通过调式协议暴露出运行时各种状态，各种调试工具通过解析调试协议实现UI界面（frontend）。chrome使用的是CDP(chrome devtools protocol)。 谷歌浏览器中有些devtool插件，比如vue devtools 和 react devtool。浏览器插件分为两个部分，一个是可以注入到当前页面的content script，">
 
 
 
@@ -129,7 +129,7 @@
 
 
 
-  <link rel="canonical" href="https://blog.xunserver.cn/archives/7ade1d5c.html">
+  <link rel="canonical" href="https://blog.xunserver.cn/archives/a6025488.html">
 
 
 
@@ -143,7 +143,7 @@
   daovoice('update');
   </script>
 
-  <title>爬虫 | bang</title>
+  <title>chrome调试通关笔记 | bang</title>
   
 
 
@@ -331,7 +331,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.xunserver.cn/archives/7ade1d5c.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.xunserver.cn/archives/a6025488.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yangmanman">
@@ -348,7 +348,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">爬虫</h2>
+          <h2 class="post-title" itemprop="name headline">chrome调试通关笔记</h2>
         
 
         <div class="post-meta">
@@ -360,8 +360,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-30T01:43:06+00:00">
-                2019-10-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-10-09T01:21:41+00:00">
+                2022-10-09
               </time>
             
 
@@ -379,8 +379,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/archives/7ade1d5c.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/archives/7ade1d5c.html" itemprop="commentCount"></span>
+                <a href="/archives/a6025488.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/archives/a6025488.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -388,7 +388,7 @@
 
           
           
-             <span id="/archives/7ade1d5c.html" class="leancloud_visitors" data-flag-title="爬虫">
+             <span id="/archives/a6025488.html" class="leancloud_visitors" data-flag-title="chrome调试通关笔记">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  16 字
+                  1k 字
                 </span>
               
 
@@ -432,7 +432,7 @@
                   <span class="post-meta-item-text">阅读时长 </span>
                 
                 <span title="阅读时长">
-                  1 分钟
+                  4 分钟
                 </span>
               
             </div>
@@ -453,7 +453,19 @@
       
 
       
-        <h2 id="泄露-500-5000-50000-个人信息"><a href="#泄露-500-5000-50000-个人信息" class="headerlink" title="泄露 500, 5000, 50000 个人信息"></a>泄露 500, 5000, 50000 个人信息</h2><h2 id="关键数据库-！！！！脱敏"><a href="#关键数据库-！！！！脱敏" class="headerlink" title="关键数据库 ！！！！脱敏"></a>关键数据库 ！！！！脱敏</h2>
+        <h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><p>代码在平台运行时会通过backend对外通过调式协议暴露出运行时各种状态，各种调试工具通过解析调试协议实现UI界面（frontend）。chrome使用的是CDP(chrome devtools protocol)。</p>
+<p>谷歌浏览器中有些devtool插件，比如vue devtools 和 react devtool。浏览器插件分为两个部分，一个是可以注入到当前页面的content script，一个是常驻的background部分。此外如果是扩展的devtool部分，还可以有一个devtool page部分。devtool插件通过content script向当前页面注入backend.js（负责收集运行时数据）,页面的backend.js 通过background通道暴露调试协议，devtool page解析调试协议形成页面。</p>
+<p>vscode也可以调试chrome和nodejs中运行时代码，同理vscode也实现了一个frontend，只不过vscode在解析协议上还做了一层adapter，因为vscode不止可以调试js代码。</p>
+<h3 id="chrome-devtool-protocol"><a href="#chrome-devtool-protocol" class="headerlink" title="chrome devtool protocol"></a>chrome devtool protocol</h3><p>chrome通过ws暴露协议，vscode中配置文件如下,主要有两种方式启动chrome调试，request: “launch” 表示启动一个新的chrome示例，默认配置好ws端口。 request: “attach”表示关联到现有的浏览器示例，这个需要在启动浏览器时指定参数（–remote-debugging-port=9222 –user-data-dir=你自己创建的某个目录）</p>
+<p>需要注意的是如果我们手动启动浏览器需要指定–user-data-dir，这个目录保存了当前浏览器的所有配置缓存插件等,而且一个浏览器实例只能同时使用一个数据目录。所以我们在使用launch模式时需要注意，useDataDir的指定，false 表示使用默认（如果已经开了其他实例，启动会失败）,true使用临时目录(默认值)或者指定一个目录</p>
+<p>通过下载金丝雀版本的chrome可以解决这个问题</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">// .vscode/launch.json</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">"configurations"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"name"</span>: <span class="string">"Launch Chrome"</span>,</span><br><span class="line">            "request": "launch",  // attach</span><br><span class="line">            "type": "chrome",</span><br><span class="line">            "url": "http://localhost:3000",</span><br><span class="line">            "webRoot": "$&#123;workspaceFolder&#125;",  // 相当于指定pathMapping: &#123;"/":"$&#123;workspaceFolder&#125;/"&#125;</span><br><span class="line">            "port": 9222, // 如果type: attach需要指定</span><br><span class="line">            "runtimeExecutable": "canary",  // type修改成 pwd-chrome</span><br><span class="line">            "useDatadir": false,  // 使用默认用户目录</span><br><span class="line">            // "type": "pwd-chrome" </span><br><span class="line">            "runtimeArgs": "--auto-open-devtools-for-tabs", // 额外的启动参数   --auto-open-devtools-for-tabs 自动打开控制台 --incognito 匿名启动</span><br><span class="line">            // 某些情况下sourcemap解析的文件地址和本地目录结构不一致，需要重新修正</span><br><span class="line">            "sourceMapPathOverrides": &#123;  // bunld.js =&gt; source  =&gt; localfile</span><br><span class="line">                "webpack://?:*/*": "$&#123;workspaceFolder&#125;/*" // ?:* 表示匹配不映射， * 表示匹配并映射。 该规则表示</span><br><span class="line">            &#125;,</span><br><span class="line">            // 针对静态文件重新调整</span><br><span class="line">            "pathMapping": &#123;</span><br><span class="line">                "static/js/": "src/js/"</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="sourcemap"><a href="#sourcemap" class="headerlink" title="sourcemap"></a>sourcemap</h3><p>sourcemap是对源码的描述，大部分dev tool都实现了sourcemap的解析，格式如下<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    version : <span class="number">3</span>,  <span class="comment">// 版本</span></span><br><span class="line">    file: <span class="string">"out.js"</span>,</span><br><span class="line">    sourceRoot : <span class="string">""</span>,</span><br><span class="line">    sources: [<span class="string">"foo.js"</span>, <span class="string">"bar.js"</span>],  <span class="comment">// 多个源文件</span></span><br><span class="line">    names: [<span class="string">"a"</span>, <span class="string">"b"</span>],</span><br><span class="line">    mappings: <span class="string">"AAgBC,SAAQ,CAAEA;AAAEA"</span>, <span class="comment">// 最重要的描述文件</span></span><br><span class="line">    sourcesContent: [<span class="string">'const a = 1; console.log(a)'</span>, <span class="string">'const b = 2; console.log(b)'</span>] <span class="comment">// 原始代码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>存在一个问题，webpack中开发环境可能会使用eval函数模拟require，eval函数中无法针对字符串实现断点。如果在eval中添加sourceUrl=xxx，会直接添加eval函数的内容到根目录下的xxx，可以实现对eval执行断点。<br>同时，sourceMap可以递归，eval映射出的文件还可以再次指定sourceMapUrl映射到其他目录。</p>
+<p>针对线上环境，打包时生成sourceMap文件，但是放在本地，在浏览器调试时使用filesystem将对线上的sourcemap映射到本地，实现本地调试线上环境(待实验),或者重定向到本地代码</p>
+<p>sourceMap配置参考这个正则表达式<br>/^(eval-|inline-|hidden-)?(noresource-)?(cheap-(module-)?)?source-map?$/<br>eval：在eval函数中添加sourceUrl在调试环境中添加文件。<br>inline：在bundle.js 中sourceMapUrl直接跟sourceMap内容。<br>hidden: 表示不在bundle在关联sourceMap，但是要生成。<br>noresource: 不在sourcemap中包含原始代码<br>cheap: sourcemap只定位到行错误，不到列错误<br>module: sourcemap生成时会包含每个loader处理的sourceMap（关键配置）</p>
+<h3 id="vue中sourceMap存在hash问题"><a href="#vue中sourceMap存在hash问题" class="headerlink" title="vue中sourceMap存在hash问题"></a>vue中sourceMap存在hash问题</h3><p>使用eval会使映射添加hash后缀，最好的办法是不使用hash, 修改devtool: ‘source-map’，或者使用sourceMapPathOverrides重新映射（未成功实现）</p>
+
       
     </div>
     
@@ -477,8 +489,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/archives/19889329.html" rel="next" title="etcd使用">
-                <i class="fa fa-chevron-left"></i> etcd使用
+              <a href="/archives/a8f35e34.html" rel="next" title="sass-less">
+                <i class="fa fa-chevron-left"></i> sass-less
               </a>
             
           </div>
@@ -486,10 +498,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/archives/129533de.html" rel="prev" title="开发小技巧">
-                开发小技巧 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -642,7 +650,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#泄露-500-5000-50000-个人信息"><span class="nav-number">1.</span> <span class="nav-text">泄露 500, 5000, 50000 个人信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关键数据库-！！！！脱敏"><span class="nav-number">2.</span> <span class="nav-text">关键数据库 ！！！！脱敏</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chrome-devtool-protocol"><span class="nav-number">2.</span> <span class="nav-text">chrome devtool protocol</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sourcemap"><span class="nav-number">3.</span> <span class="nav-text">sourcemap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vue中sourceMap存在hash问题"><span class="nav-number">4.</span> <span class="nav-text">vue中sourceMap存在hash问题</span></a></li></ol></div>
             
 
           </div>

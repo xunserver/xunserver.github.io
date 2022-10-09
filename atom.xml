@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.xunserver.cn/"/>
-  <updated>2022-08-02T00:58:37.000Z</updated>
+  <updated>2022-10-09T01:21:41.000Z</updated>
   <id>https://blog.xunserver.cn/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>chrome调试通关笔记</title>
+    <link href="https://blog.xunserver.cn/archives/a6025488.html"/>
+    <id>https://blog.xunserver.cn/archives/a6025488.html</id>
+    <published>2022-10-09T01:21:41.000Z</published>
+    <updated>2022-10-09T01:21:41.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><p>代码在平台运行时会通过backend对外通过调式协议暴露出运行时各种状态，各种调试工具通过解析调试协议实现UI界面（frontend）。chrome使用的是CDP(chrome devtools protocol)。</p><p>谷歌浏览器中有些devtool插件，比如vue devtools 和 react devtool。浏览器插件分为两个部分，一个是可以注入到当前页面的content script，一个是常驻的background部分。此外如果是扩展的devtool部分，还可以有一个devtool page部分。devtool插件通过content script向当前页面注入backend.js（负责收集运行时数据）,页面的backend.js 通过background通道暴露调试协议，devtool page解析调试协议形成页面。</p><p>vscode也可以调试chrome和nodejs中运行时代码，同理vscode也实现了一个frontend，只不过vscode在解析协议上还做了一层adapter，因为vscode不止可以调试js代码。</p><h3 id="chrome-devtool-protocol"><a href="#chrome-devtool-protocol" class="headerlink" title="chrome devtool protocol"></a>chrome devtool protocol</h3><p>chrome通过ws暴露协议，vscode中配置文件如下,主要有两种方式启动chrome调试，request: “launch” 表示启动一个新的chrome示例，默认配置好ws端口。 request: “attach”表示关联到现有的浏览器示例，这个需要在启动浏览器时指定参数（–remote-debugging-port=9222 –user-data-dir=你自己创建的某个目录）</p><p>需要注意的是如果我们手动启动浏览器需要指定–user-data-dir，这个目录保存了当前浏览器的所有配置缓存插件等,而且一个浏览器实例只能同时使用一个数据目录。所以我们在使用launch模式时需要注意，useDataDir的指定，false 表示使用默认（如果已经开了其他实例，启动会失败）,true使用临时目录(默认值)或者指定一个目录</p><p>通过下载金丝雀版本的chrome可以解决这个问题</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">// .vscode/launch.json</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">"configurations"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"name"</span>: <span class="string">"Launch Chrome"</span>,</span><br><span class="line">            "request": "launch",  // attach</span><br><span class="line">            "type": "chrome",</span><br><span class="line">            "url": "http://localhost:3000",</span><br><span class="line">            "webRoot": "$&#123;workspaceFolder&#125;",  // 相当于指定pathMapping: &#123;"/":"$&#123;workspaceFolder&#125;/"&#125;</span><br><span class="line">            "port": 9222, // 如果type: attach需要指定</span><br><span class="line">            "runtimeExecutable": "canary",  // type修改成 pwd-chrome</span><br><span class="line">            "useDatadir": false,  // 使用默认用户目录</span><br><span class="line">            // "type": "pwd-chrome" </span><br><span class="line">            "runtimeArgs": "--auto-open-devtools-for-tabs", // 额外的启动参数   --auto-open-devtools-for-tabs 自动打开控制台 --incognito 匿名启动</span><br><span class="line">            // 某些情况下sourcemap解析的文件地址和本地目录结构不一致，需要重新修正</span><br><span class="line">            "sourceMapPathOverrides": &#123;  // bunld.js =&gt; source  =&gt; localfile</span><br><span class="line">                "webpack://?:*/*": "$&#123;workspaceFolder&#125;/*" // ?:* 表示匹配不映射， * 表示匹配并映射。 该规则表示</span><br><span class="line">            &#125;,</span><br><span class="line">            // 针对静态文件重新调整</span><br><span class="line">            "pathMapping": &#123;</span><br><span class="line">                "static/js/": "src/js/"</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="sourcemap"><a href="#sourcemap" class="headerlink" title="sourcemap"></a>sourcemap</h3><p>sourcemap是对源码的描述，大部分dev tool都实现了sourcemap的解析，格式如下<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    version : <span class="number">3</span>,  <span class="comment">// 版本</span></span><br><span class="line">    file: <span class="string">"out.js"</span>,</span><br><span class="line">    sourceRoot : <span class="string">""</span>,</span><br><span class="line">    sources: [<span class="string">"foo.js"</span>, <span class="string">"bar.js"</span>],  <span class="comment">// 多个源文件</span></span><br><span class="line">    names: [<span class="string">"a"</span>, <span class="string">"b"</span>],</span><br><span class="line">    mappings: <span class="string">"AAgBC,SAAQ,CAAEA;AAAEA"</span>, <span class="comment">// 最重要的描述文件</span></span><br><span class="line">    sourcesContent: [<span class="string">'const a = 1; console.log(a)'</span>, <span class="string">'const b = 2; console.log(b)'</span>] <span class="comment">// 原始代码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>存在一个问题，webpack中开发环境可能会使用eval函数模拟require，eval函数中无法针对字符串实现断点。如果在eval中添加sourceUrl=xxx，会直接添加eval函数的内容到根目录下的xxx，可以实现对eval执行断点。<br>同时，sourceMap可以递归，eval映射出的文件还可以再次指定sourceMapUrl映射到其他目录。</p><p>针对线上环境，打包时生成sourceMap文件，但是放在本地，在浏览器调试时使用filesystem将对线上的sourcemap映射到本地，实现本地调试线上环境(待实验),或者重定向到本地代码</p><p>sourceMap配置参考这个正则表达式<br>/^(eval-|inline-|hidden-)?(noresource-)?(cheap-(module-)?)?source-map?$/<br>eval：在eval函数中添加sourceUrl在调试环境中添加文件。<br>inline：在bundle.js 中sourceMapUrl直接跟sourceMap内容。<br>hidden: 表示不在bundle在关联sourceMap，但是要生成。<br>noresource: 不在sourcemap中包含原始代码<br>cheap: sourcemap只定位到行错误，不到列错误<br>module: sourcemap生成时会包含每个loader处理的sourceMap（关键配置）</p><h3 id="vue中sourceMap存在hash问题"><a href="#vue中sourceMap存在hash问题" class="headerlink" title="vue中sourceMap存在hash问题"></a>vue中sourceMap存在hash问题</h3><p>使用eval会使映射添加hash后缀，最好的办法是不使用hash, 修改devtool: ‘source-map’，或者使用sourceMapPathOverrides重新映射（未成功实现）</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;基础&quot;&gt;&lt;a href=&quot;#基础&quot; class=&quot;headerlink&quot; title=&quot;基础&quot;&gt;&lt;/a&gt;基础&lt;/h3&gt;&lt;p&gt;代码在平台运行时会通过backend对外通过调式协议暴露出运行时各种状态，各种调试工具通过解析调试协议实现UI界面（frontend）。ch
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>sass-less</title>
@@ -410,27 +431,6 @@
 &lt;li&gt;网络进程&lt;/li&gt;
 &lt;li&gt;GUI进程&lt;/li&gt;
 &lt;li&gt;多个插件进程&lt;/li
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>cookie</title>
-    <link href="https://blog.xunserver.cn/archives/8ae0ba66.html"/>
-    <id>https://blog.xunserver.cn/archives/8ae0ba66.html</id>
-    <published>2022-02-24T22:40:45.000Z</published>
-    <updated>2022-02-24T22:40:45.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近在公司碰到了内嵌的iframe始终提示未登录的问题，查询到时接口请求时未自动携带cookie，排查过程中一直没搞懂cookie携带的机制。将排查后学习到总计一下。</p><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>先来几个问题</p><ol><li>cookie是怎么设置到浏览器中，设置cookie有什么限制</li><li>什么样的请求能携带cookie，能携带哪些cookie</li><li>cookie存储方式是什么</li><li>cookie 和 storeage 区别</li><li>跨域和跨站</li></ol><h2 id="跨域和跨站"><a href="#跨域和跨站" class="headerlink" title="跨域和跨站"></a>跨域和跨站</h2><p>同域: 协议、域名、端口相同，反之是跨域<br>同站: eTLD + 1, 顶级域名 + 1 相同则是同站，反之是跨站</p><h2 id="请求的场景"><a href="#请求的场景" class="headerlink" title="请求的场景"></a>请求的场景</h2><p>假设当前网站是xunserver.cn, 页面地址是<a href="http://cloud.xunserver.cn/file。这个页面发出的请求有以下几种" target="_blank" rel="noopener">http://cloud.xunserver.cn/file。这个页面发出的请求有以下几种</a></p><ol><li>同域请求，<a href="http://cloud.xunserver.cn/patha" target="_blank" rel="noopener">http://cloud.xunserver.cn/patha</a></li><li>跨域请求不跨站  <a href="https://cloud.xunserver.cn/patha" target="_blank" rel="noopener">https://cloud.xunserver.cn/patha</a> 和 <a href="http://cloud.xunserver.cn:8088/patha" target="_blank" rel="noopener">http://cloud.xunserver.cn:8088/patha</a></li><li>子域名请求 <a href="http://nps.cloud.xunserver.cn/patha" target="_blank" rel="noopener">http://nps.cloud.xunserver.cn/patha</a></li><li>跨域同时跨站 <a href="http://docker.xunserver.com/patha" target="_blank" rel="noopener">http://docker.xunserver.com/patha</a></li><li>上级域名请求 <a href="http://xunserver.cn" target="_blank" rel="noopener">http://xunserver.cn</a></li></ol><h2 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h2><h3 id="cookie组成"><a href="#cookie组成" class="headerlink" title="cookie组成"></a>cookie组成</h3><p>cookie 包括name, value, domain, path, expire, httpOnly, secure, samesite。</p><h3 id="cookie-如何被设置"><a href="#cookie-如何被设置" class="headerlink" title="cookie 如何被设置"></a>cookie 如何被设置</h3><p>有两种设置cookie的方法</p><ol><li>请求响应头中set-cookie</li><li>前端JS代码document.cookie。</li></ol><p>通过响应设置cookie时， domian默认是当前请求的eTLD + 1， 路径默认是/。可以设置上级域名和上级路径的cookie，如果设置子域名或者子路径，cookie设置会无效，而且会被抛弃。</p><p>document.cookie 设置和set cookie类似，前者被限制于当前文档的地址（浏览器地址栏）,而且不能设置httpOnly和secure 属性。</p><h3 id="cookie-如何被携带"><a href="#cookie-如何被携带" class="headerlink" title="cookie 如何被携带"></a>cookie 如何被携带</h3><p>当浏览器发送请求时，根据请求的场景携带cookie不同。</p><ol><li>同域请求， 自动携带当前请求所有的子域名和父路径, 会携带path=/patha、path=/ 和 domain=cloud.xunserver.cn、xunserver.cn的cookie</li><li>cookie不区分端口和协议，所以同上一致</li><li>会携带domain=nps.cloud.xunserver.cn 以及上级域名</li><li>携带domian=docker.xunserver.cn</li><li>携带domain=xunsrever.cn 不会携带cloud.xunserver.cn 域名</li></ol><h4 id="samesite-是啥"><a href="#samesite-是啥" class="headerlink" title="samesite 是啥"></a>samesite 是啥</h4><p>用户在银行登录了系统，这个时候浏览器嵌入了cookie，如果恶意网站中有一个form表单，提交地址是银行的链接，用户在点击链接后就会触发接口，因为请求携带了cookie，所以银行会判断为正常用户，从而带来不安全。或者恶意网站嵌套i银行frame，诱导用户点击，实际点击到了银行网站的接口。<br>samesite有三个值,strict, lax 和none<br>strict 表示只有请求在同站的情况下，才会携带cookie。<br>lax 表示除了a标签、预加载、get表单能cookie外，其余场景都不能携带，包括iframe<br>none 表示不限制    </p><p>samesite 如何设置，浏览器默认是lax, 匿名浏览器如果关闭第三方共享是strict。如果设置none，需要同时secure，同时在https下设置</p><h3 id="跨域如何携带cookie"><a href="#跨域如何携带cookie" class="headerlink" title="跨域如何携带cookie"></a>跨域如何携带cookie</h3><h4 id="哪些些请求能跨域"><a href="#哪些些请求能跨域" class="headerlink" title="哪些些请求能跨域"></a>哪些些请求能跨域</h4><p>link、img、script 标签支持跨域，但是new Image不支持。跨域能发送请求，但是不能解析响应。<br>其余的通过axios或者fetch发送跨域请求，<br>axios 需要添加withCredentials: true支持跨域携带cookie<br>fetch 需要添加withCredentials: include属性</p><h4 id="fetch-withCredentials解析"><a href="#fetch-withCredentials解析" class="headerlink" title="fetch withCredentials解析"></a>fetch withCredentials解析</h4><p>omit 跨域不打送cookie<br>include 总是发送<br>same-origin 同站才发送</p><h3 id="storage"><a href="#storage" class="headerlink" title="storage"></a>storage</h3><p>localstorage 和 sessionStorage 严格按照同源原则。</p><h3 id="document-domain-用来干嘛"><a href="#document-domain-用来干嘛" class="headerlink" title="document.domain 用来干嘛"></a>document.domain 用来干嘛</h3><p>可以把父页面和iframe的domain设置成一个（都需要设置，因为document.domain调用后端口会被设置为null），父页面可以拿到iframe的window对象，从而调用iframe中的方法实现跨域。设置document.domain 仅设置自身或者上级域名，不能设置为其他或者子域名。</p><p>也可以通过window.open 获取引用</p><h3 id="如何检查浏览器同时打开多个相同页面"><a href="#如何检查浏览器同时打开多个相同页面" class="headerlink" title="如何检查浏览器同时打开多个相同页面"></a>如何检查浏览器同时打开多个相同页面</h3><p>循环检查localStorage</p><h3 id="host、referer和origin"><a href="#host、referer和origin" class="headerlink" title="host、referer和origin"></a>host、referer和origin</h3><p>host: 指向请求的host和端口号，任何请求都有<br>referer: 当前请求发起的来源，一个页面跳转到另一个页面指向的是之前的页面，页面内发起的资源请求，指向当前文档的地址，不包含hash<br>origin: 跨域请求中常见 ，指向原始</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;最近在公司碰到了内嵌的iframe始终提示未登录的问题，查询到时接口请求时未自动携带cookie，排查过程中一直没搞懂cookie携带的机制
       
     
     </summary>
