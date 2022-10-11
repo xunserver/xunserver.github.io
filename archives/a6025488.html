@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1k 字
+                  1.6k 字
                 </span>
               
 
@@ -432,7 +432,7 @@
                   <span class="post-meta-item-text">阅读时长 </span>
                 
                 <span title="阅读时长">
-                  4 分钟
+                  5 分钟
                 </span>
               
             </div>
@@ -463,8 +463,28 @@
 <h3 id="sourcemap"><a href="#sourcemap" class="headerlink" title="sourcemap"></a>sourcemap</h3><p>sourcemap是对源码的描述，大部分dev tool都实现了sourcemap的解析，格式如下<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    version : <span class="number">3</span>,  <span class="comment">// 版本</span></span><br><span class="line">    file: <span class="string">"out.js"</span>,</span><br><span class="line">    sourceRoot : <span class="string">""</span>,</span><br><span class="line">    sources: [<span class="string">"foo.js"</span>, <span class="string">"bar.js"</span>],  <span class="comment">// 多个源文件</span></span><br><span class="line">    names: [<span class="string">"a"</span>, <span class="string">"b"</span>],</span><br><span class="line">    mappings: <span class="string">"AAgBC,SAAQ,CAAEA;AAAEA"</span>, <span class="comment">// 最重要的描述文件</span></span><br><span class="line">    sourcesContent: [<span class="string">'const a = 1; console.log(a)'</span>, <span class="string">'const b = 2; console.log(b)'</span>] <span class="comment">// 原始代码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>存在一个问题，webpack中开发环境可能会使用eval函数模拟require，eval函数中无法针对字符串实现断点。如果在eval中添加sourceUrl=xxx，会直接添加eval函数的内容到根目录下的xxx，可以实现对eval执行断点。<br>同时，sourceMap可以递归，eval映射出的文件还可以再次指定sourceMapUrl映射到其他目录。</p>
 <p>针对线上环境，打包时生成sourceMap文件，但是放在本地，在浏览器调试时使用filesystem将对线上的sourcemap映射到本地，实现本地调试线上环境(待实验),或者重定向到本地代码</p>
-<p>sourceMap配置参考这个正则表达式<br>/^(eval-|inline-|hidden-)?(noresource-)?(cheap-(module-)?)?source-map?$/<br>eval：在eval函数中添加sourceUrl在调试环境中添加文件。<br>inline：在bundle.js 中sourceMapUrl直接跟sourceMap内容。<br>hidden: 表示不在bundle在关联sourceMap，但是要生成。<br>noresource: 不在sourcemap中包含原始代码<br>cheap: sourcemap只定位到行错误，不到列错误<br>module: sourcemap生成时会包含每个loader处理的sourceMap（关键配置）</p>
+<p>sourceMap配置参考这个正则表达式<br>/^(eval-|inline-|hidden-)?(noresources-)?(cheap-(module-)?)?source-map?$/<br>eval：在eval函数中添加sourceUrl在调试环境中添加文件。<br>inline：在bundle.js 中sourceMapUrl直接跟sourceMap内容。<br>hidden: 表示不在bundle在关联sourceMap，但是要生成。<br>noresource: 不在sourcemap中包含原始代码<br>cheap: sourcemap只定位到行错误，不到列错误<br>module: sourcemap生成时会包含每个loader处理的sourceMap（关键配置）</p>
 <h3 id="vue中sourceMap存在hash问题"><a href="#vue中sourceMap存在hash问题" class="headerlink" title="vue中sourceMap存在hash问题"></a>vue中sourceMap存在hash问题</h3><p>使用eval会使映射添加hash后缀，最好的办法是不使用hash, 修改devtool: ‘source-map’，或者使用sourceMapPathOverrides重新映射（未成功实现）</p>
+<h3 id="线上问题如何调试"><a href="#线上问题如何调试" class="headerlink" title="线上问题如何调试"></a>线上问题如何调试</h3><p>目前有几种方案解决</p>
+<ol>
+<li><p>线上环境使用noresources构建sourcemap，通过vscode的detools连接到浏览器实现调试</p>
+</li>
+<li><p>把本地的sourcemap文件添加到filesystem，然后对出错的代码文件右键添加sourcemap，选择filesystem中对应sourcemap文件。这种方式不要设置hidden-source-map</p>
+</li>
+<li><p>打包后服务器手动删除所有sourcemap文件，本地保留一份。这样请求map时总是会404， 然后把本地的sourcemap文件添加到filesystem</p>
+</li>
+<li><p>生产环境正常打包sourcemap，但是在请求.map文件时无权限人员加载404，有权限人员能请求，这样既可以在vscode调试，也能在浏览器调试。不过也有问题，每个bundle中会存在sourceUrl，会增大一点包的体积</p>
+</li>
+<li><p>在打包时对每个chunk和map生成一个映射表（hidden方案），在请求chunk时，通过代理对每个chunk后面添加sourcemap语句，sourcemap指向对应的服务（本地或者远端，或者filesystem），这种方式可以在vscode和浏览器。</p>
+</li>
+<li><p>每次打包时总是生成两份dist,一份配置（hidden方案）,另一份正常配置sourcemap(输出目录配置成线上域地址)，通过overrides将线上的请求代理到本地，这样请求的bundle文件就是本地的带有sourcemap的文件，filesystem添加带有sourcemap的文件夹到调试环境中。这种方式不能在vscode中实现调试</p>
+</li>
+<li><p>针对客户浏览器出现的问题，搜集客户代码报错的行和列，通过sourcemap文件反向查找出错误地址，如果sourcemap配置了sourceContent，还可以直接定位具体的文件。</p>
+</li>
+</ol>
+<p>目前最优的方案还是针对不同的用户，展示不同bundle文件。</p>
+<h3 id="pathMapping-和-sourceMapPathOverrides的区别"><a href="#pathMapping-和-sourceMapPathOverrides的区别" class="headerlink" title="pathMapping 和 sourceMapPathOverrides的区别"></a>pathMapping 和 sourceMapPathOverrides的区别</h3><p>前者是对network中是在的请求资源的映射（会自动忽略查询参数），后者是对sourcemap生成的源文件的映射(sourcemap生成文件在请求中是不存在的)。</p>
+<h3 id="filesystem-和-overrides区别"><a href="#filesystem-和-overrides区别" class="headerlink" title="filesystem 和 overrides区别"></a>filesystem 和 overrides区别</h3><p>浏览器请求时总是先对overrides进行查找，然后是服务端，再对filesystem查找。</p>
 
       
     </div>
@@ -650,7 +670,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chrome-devtool-protocol"><span class="nav-number">2.</span> <span class="nav-text">chrome devtool protocol</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sourcemap"><span class="nav-number">3.</span> <span class="nav-text">sourcemap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vue中sourceMap存在hash问题"><span class="nav-number">4.</span> <span class="nav-text">vue中sourceMap存在hash问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chrome-devtool-protocol"><span class="nav-number">2.</span> <span class="nav-text">chrome devtool protocol</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sourcemap"><span class="nav-number">3.</span> <span class="nav-text">sourcemap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vue中sourceMap存在hash问题"><span class="nav-number">4.</span> <span class="nav-text">vue中sourceMap存在hash问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线上问题如何调试"><span class="nav-number">5.</span> <span class="nav-text">线上问题如何调试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pathMapping-和-sourceMapPathOverrides的区别"><span class="nav-number">6.</span> <span class="nav-text">pathMapping 和 sourceMapPathOverrides的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#filesystem-和-overrides区别"><span class="nav-number">7.</span> <span class="nav-text">filesystem 和 overrides区别</span></a></li></ol></div>
             
 
           </div>
@@ -684,7 +704,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">61k</span>
+    <span title="博客全站字数共计">62.3k</span>
   
 </div>
 

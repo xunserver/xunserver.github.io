@@ -88,18 +88,18 @@
 
 
 
-<meta name="description" content="前言新坑，TS类型编程学习 知识记录any 和 unknown区别any可以接受任何值，也可以赋值 keyof 用于把索引类型变成联合类型1234567interface Person &amp;#123;    name: string    age: number;&amp;#125;type Test = keyof Person // &quot;name&quot; | &quot;age&quot;type Test1 = &quot;name&quot; e">
+<meta name="description" content="前言新坑，TS类型编程学习 知识记录any 和 unknown区别any可以接受任何值，也可以赋值unknown可以接受任何值，但是不能赋值给any和unknown之外的类型 keyof 用于把索引类型变成联合类型1234567interface Person &amp;#123;    name: string    age: number;&amp;#125;type Test = keyof Person">
 <meta name="keywords" content="博客,xunsever,bang">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ts-type-practice">
 <meta property="og:url" content="https://blog.xunserver.cn/archives/e961b2fe.html">
 <meta property="og:site_name" content="bang">
-<meta property="og:description" content="前言新坑，TS类型编程学习 知识记录any 和 unknown区别any可以接受任何值，也可以赋值 keyof 用于把索引类型变成联合类型1234567interface Person &amp;#123;    name: string    age: number;&amp;#125;type Test = keyof Person // &quot;name&quot; | &quot;age&quot;type Test1 = &quot;name&quot; e">
+<meta property="og:description" content="前言新坑，TS类型编程学习 知识记录any 和 unknown区别any可以接受任何值，也可以赋值unknown可以接受任何值，但是不能赋值给any和unknown之外的类型 keyof 用于把索引类型变成联合类型1234567interface Person &amp;#123;    name: string    age: number;&amp;#125;type Test = keyof Person">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2022-04-11T17:27:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ts-type-practice">
-<meta name="twitter:description" content="前言新坑，TS类型编程学习 知识记录any 和 unknown区别any可以接受任何值，也可以赋值 keyof 用于把索引类型变成联合类型1234567interface Person &amp;#123;    name: string    age: number;&amp;#125;type Test = keyof Person // &quot;name&quot; | &quot;age&quot;type Test1 = &quot;name&quot; e">
+<meta name="twitter:description" content="前言新坑，TS类型编程学习 知识记录any 和 unknown区别any可以接受任何值，也可以赋值unknown可以接受任何值，但是不能赋值给any和unknown之外的类型 keyof 用于把索引类型变成联合类型1234567interface Person &amp;#123;    name: string    age: number;&amp;#125;type Test = keyof Person">
 
 
 
@@ -454,7 +454,7 @@
 
       
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>新坑，TS类型编程学习</p>
-<h2 id="知识记录"><a href="#知识记录" class="headerlink" title="知识记录"></a>知识记录</h2><h3 id="any-和-unknown区别"><a href="#any-和-unknown区别" class="headerlink" title="any 和 unknown区别"></a>any 和 unknown区别</h3><p>any可以接受任何值，也可以赋值</p>
+<h2 id="知识记录"><a href="#知识记录" class="headerlink" title="知识记录"></a>知识记录</h2><h3 id="any-和-unknown区别"><a href="#any-和-unknown区别" class="headerlink" title="any 和 unknown区别"></a>any 和 unknown区别</h3><p>any可以接受任何值，也可以赋值<br>unknown可以接受任何值，但是不能赋值给any和unknown之外的类型</p>
 <h3 id="keyof-用于把索引类型变成联合类型"><a href="#keyof-用于把索引类型变成联合类型" class="headerlink" title="keyof 用于把索引类型变成联合类型"></a>keyof 用于把索引类型变成联合类型</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> Person &#123;</span><br><span class="line">    name: <span class="built_in">string</span></span><br><span class="line">    age: <span class="built_in">number</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">type</span> Test = keyof Person <span class="comment">// "name" | "age"</span></span><br><span class="line"><span class="keyword">type</span> Test1 = <span class="string">"name"</span> <span class="keyword">extends</span> keyof Person ? <span class="literal">true</span> : <span class="literal">false</span> <span class="comment">// true</span></span><br><span class="line"><span class="keyword">const</span> a: Test = <span class="string">"name"</span></span><br></pre></td></tr></table></figure>
 <h3 id="extends-详解"><a href="#extends-详解" class="headerlink" title="extends 详解"></a>extends 详解</h3><p>满足下面条件，判断为true</p>
 <ol>
@@ -742,7 +742,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">61k</span>
+    <span title="博客全站字数共计">62.3k</span>
   
 </div>
 
