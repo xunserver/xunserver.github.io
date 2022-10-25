@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="down，bang">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="bang" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="介绍最近在折腾家里的网路设备，原因娃要出生了， 搞一个好点的存储设备来保存娃的照片视频等，顺便把屋里的设备升级一下。先介绍下现在屋里的网络布局 光猫光猫买的是华为的B610-4E替换了运营商送的光猫，比较稳定而且可以自由改桥接。该光猫有4个千兆口，规划如下  eth0: 网络桥接端口，桥接光猫和软路由(二层端口) eth1: 光猫管理端口，192.168.2.4（三层端口） eth2: 备用端口，">
+<meta name="keywords" content="博客,xunsever,bang">
+<meta property="og:type" content="article">
+<meta property="og:title" content="all-in-boom">
+<meta property="og:url" content="https://blog.xunserver.cn/archives/ff614c6c.html">
+<meta property="og:site_name" content="bang">
+<meta property="og:description" content="介绍最近在折腾家里的网路设备，原因娃要出生了， 搞一个好点的存储设备来保存娃的照片视频等，顺便把屋里的设备升级一下。先介绍下现在屋里的网络布局 光猫光猫买的是华为的B610-4E替换了运营商送的光猫，比较稳定而且可以自由改桥接。该光猫有4个千兆口，规划如下  eth0: 网络桥接端口，桥接光猫和软路由(二层端口) eth1: 光猫管理端口，192.168.2.4（三层端口） eth2: 备用端口，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://blog.xunserver.cn/post-images/all-in-boom/家庭网络拓扑.drawio.png">
+<meta property="og:updated_time" content="2022-10-22T01:49:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="all-in-boom">
+<meta name="twitter:description" content="介绍最近在折腾家里的网路设备，原因娃要出生了， 搞一个好点的存储设备来保存娃的照片视频等，顺便把屋里的设备升级一下。先介绍下现在屋里的网络布局 光猫光猫买的是华为的B610-4E替换了运营商送的光猫，比较稳定而且可以自由改桥接。该光猫有4个千兆口，规划如下  eth0: 网络桥接端口，桥接光猫和软路由(二层端口) eth1: 光猫管理端口，192.168.2.4（三层端口） eth2: 备用端口，">
+<meta name="twitter:image" content="https://blog.xunserver.cn/post-images/all-in-boom/家庭网络拓扑.drawio.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://blog.xunserver.cn/archives/ff614c6c.html">
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "f81d2d8f"
+    });
+  daovoice('update');
+  </script>
+
+  <title>all-in-boom | bang</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-138453533-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?46adc4f6ca707e081b3f4e2bee76f673";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">bang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">生活总会有惊喜</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.xunserver.cn/archives/ff614c6c.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yangmanman">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="bang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">all-in-boom</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-10-22T01:49:50+00:00">
+                2022-10-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/archives/ff614c6c.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/archives/ff614c6c.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/archives/ff614c6c.html" class="leancloud_visitors" data-flag-title="all-in-boom">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                 <span>ºC</span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.4k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 </span>
+                
+                <span title="阅读时长">
+                  12 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>最近在折腾家里的网路设备，原因娃要出生了， 搞一个好点的存储设备来保存娃的照片视频等，顺便把屋里的设备升级一下。<br>先介绍下现在屋里的网络布局<br><img src="/post-images/all-in-boom/家庭网络拓扑.drawio.png" alt="家庭网络拓扑图"></p>
+<h3 id="光猫"><a href="#光猫" class="headerlink" title="光猫"></a>光猫</h3><p>光猫买的是华为的B610-4E替换了运营商送的光猫，比较稳定而且可以自由改桥接。该光猫有4个千兆口，规划如下</p>
+<ul>
+<li>eth0: 网络桥接端口，桥接光猫和软路由(二层端口)</li>
+<li>eth1: 光猫管理端口，192.168.2.4（三层端口）</li>
+<li>eth2: 备用端口，如果路由器故障，通过光猫拨号</li>
+<li>eth3: 电视桥接端口，同网络桥接端口</li>
+</ul>
+<p>需要注意的是，华为的三层lan不是桥接接口， 不能勾选多个三层lan。路由器配置页面的使能啥啥的，就是是否启用。<br>wan口配置三个接口</p>
+<ol>
+<li>桥接模式lan1，路由器拨号</li>
+<li>桥接模式lan4，电视拨号</li>
+<li>路由模式lan3，但是不启用</li>
+</ol>
+<h3 id="软路由"><a href="#软路由" class="headerlink" title="软路由"></a>软路由</h3><p>接下来是软路由的选购。i255 2.5G网口虽然更便宜，但是有断流问题，二来屋里交换机都是千兆，用不上。N5105发热过大，不适合放在弱电箱。单内存的机器在esxi下，装两个虚拟机内存就不够。没法all-in-boom。</p>
+<p>选了倍控家的j4125 4*i211千兆 双内存的这款机器两个内存累计最多16G，j4125 4C4T 2.0Ghz。还支持一个2.5寸的硬盘，刚好能够满足路由器 + homeassistant + nas的需求。网口刚好做以下规划</p>
+<ul>
+<li>eth0: esxi 虚拟路由器的接口 （上面桥接了hass 和 esxi 的管理端口）</li>
+<li>eth1: 连接光猫桥接的lan1，作为路由器的wan口</li>
+<li>eth2: 路由器的lan口</li>
+<li>eth3: 直通给nas</li>
+</ul>
+<h3 id="交换机"><a href="#交换机" class="headerlink" title="交换机"></a>交换机</h3><p>弱电箱: 里面有7个通向客厅房间的网口，电视柜两个，客厅电话线（被我替换成了网线）1个，三个房间4个（主卧两个）。光猫3个（除了光猫的桥接口连接到软路由上）， nas和esxi加起来一个，电视桥接口一个。需要一个16口的交换机。把三个设备塞到一起还是需要费点时间。</p>
+<p>书房: 有个双路的x99机器，一共6个网口。安转的esxi虚拟了三个虚拟机，作为平常生产工具用。直通了3个网口。由于书房只有一个网口，也需要一个交换机来扩展网口，其实可以用路由器的ap模式来扩展，但是我只有三个网口的小米路由器R3G。搞了一个8口千兆交换机</p>
+<p>客厅中电视柜: 机顶盒 <em> 1、switch </em> 1、摄像头 <em> 2、小米AX 6000 </em> 1。之前电视柜还有个做nas的主机(升级后不需要)。 也是需要一个8口千兆交换机</p>
+<h3 id="AP部分"><a href="#AP部分" class="headerlink" title="AP部分"></a>AP部分</h3><ul>
+<li>客厅AX6000使用的小米默认固件开启AP模式，5G网络满足几个笔记本和手机打游戏需求。2.4G 网络用于物联网设备的接入、包括窗帘、客厅灯、电脑开机卡、万能红外遥控器、小米多模网关、小爱音响、斐讯音响、门锁、客厅空调、斐讯空气净化器、厨房的冰箱、电饭煲、洗衣机、加湿器还有各种涂鸦智能的开关（设备就是这么多）</li>
+<li>卧室中关门信号就弱，两个卧室各安转了一个小米R3G（便宜而且体积不占地方），刷了breed安装了H大固件，开启AP模式，同时将发射功率调整到原来的20%。卧室中路由器通过交换机模式满足电视的上网，通过2.4G支持卧室中的物联网设备(遥控器、床头小爱音响、房间灯、空调等)，5G用于平常上网。</li>
+</ul>
+<p>全屋漫游问题，由于小米的固件是在太垃圾，而且试用过小米的漫游方案，确实效果一般，bug还多。采用了弱信号剔除和一致性SSID的方案，把全屋各个WIFI名字设置成一致。各个AP降低放射功率，开启弱信号替换。弱信号的方案成本较低。</p>
+<h3 id="NAS-和-HomeAssistant"><a href="#NAS-和-HomeAssistant" class="headerlink" title="NAS 和 HomeAssistant"></a>NAS 和 HomeAssistant</h3><p>NAS采用的群晖方案，对于小白来说比较简单。j4125中直接虚拟一个，然后RDM直通硬盘<br>HomeAssistant使用官方提供的虚拟机镜像，直接安装。</p>
+<h3 id="各种物联网设备"><a href="#各种物联网设备" class="headerlink" title="各种物联网设备"></a>各种物联网设备</h3><ul>
+<li>小米系列<ul>
+<li>小米触屏音响必须要买，家里的语音交互、TTS、主动问询等功能都依赖该设备。主卧放一个小个、客厅放一个打的当电子相框用。</li>
+<li>小米多模网关、小米系的传感器依赖</li>
+<li>小米传感器: 光照传感器（配合窗帘自动开关），人体传感器、米家蓝牙夜灯（带人体传感器和光照传感器）、门窗传感器，温湿度传感器</li>
+<li>小米家电: 小米空调、小米电视、小米洗衣机、小米冰箱、小米扫地机器人、小米门锁。</li>
+</ul>
+</li>
+<li>涂鸦系<ul>
+<li>涂鸦系的红外万能遥控器，PDD 19块钱包邮，多买几个、控制老电视和其他牌子的空调必备。</li>
+<li>涂鸦系的wifi开关 19包邮，多买几个</li>
+<li>涂鸦系的射频遥控器  淘宝69一个</li>
+</ul>
+</li>
+<li>HomeAssistant论坛<ul>
+<li>窗帘电机 298，支持mqtt、html、tcp等多个协议、通过巴法云可以接入小爱。</li>
+<li>各种开关，把墙上的开关内都置换上。也是支持ha接入。 </li>
+</ul>
+</li>
+<li>其他<ul>
+<li>斐讯N1，刷YYF看电视</li>
+<li>斐讯R1，安转DLAN 放会儿歌</li>
+<li>斐讯m1，空气质量检测，配置ha使用</li>
+<li>各类摄像头，摄像头推荐雄迈（记得关闭外网访问），能够接入ha，小米系的没法接入。</li>
+<li>开机卡，用于打开电脑和关闭电脑。</li>
+</ul>
+</li>
+</ul>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="j4125-安装esxi"><a href="#j4125-安装esxi" class="headerlink" title="j4125 安装esxi"></a>j4125 安装esxi</h3><p>倍控家j4125 + 4 * i211网卡+双内存版本准系统670R。如果对断流能够忍耐的也可选2.5G，准系统550R。准系统需要笔记本内存条DDR4L，最高2666MHZ，单个内存最多支持8G。闲鱼买大概120一根，建议买三星。还需要一个msata的硬盘，最小准备一个64G的盘。</p>
+<p>需要直通的硬盘记得先在PE上面把分区表删除掉保存，修改分区表格式和msata盘一致。</p>
+<p>硬件安装步骤如下</p>
+<ol>
+<li>拆开主机外壳，找到内存插槽，内存条上有个缺口，缺口左右一长一短。斜向上对准主板插口，擦入后，按一下，听见咔一声即可。拆内存时，先把两边的卡扣向外拉一下，内存就自动弹出来了。</li>
+<li>主板上有两个接口和msata硬盘的接口长得一样，注意看有一个写了个WIFI，安装到没写wifi的接口上，先把接口上的固定硬盘的螺丝取下来。插入硬盘后安装螺丝固定。</li>
+<li>安装机械硬盘，先使用送的sata转接线连接硬盘，这个比较简单，然后找主板上的sata接口和供电接口，供电接口是4针的，sata接口长的和硬盘的上接口一致。连接好后，把硬盘固定到主机的背板上。背板是要扣回主机的，硬盘要安装在背板里面，塞进主机。</li>
+</ol>
+<p>系统安装esxi比较稳定，我连续100天没关机。自行官网下载esxi镜像，或者在恩山论坛x86专区下载别人编译好的镜像。</p>
+<ol>
+<li>找一个U盘，最好16G，usb3.0。使用软碟通写入镜像到U盘，或者使用balenaEtcher软件写盘</li>
+<li>U盘插入倍控，连接好键盘。插上电源线后狂按F11进入bios界面。先恢bios到默认设置，检查下VT-D是否开启。选择U盘启动</li>
+<li>进入esxi加载页面后，会有5S等待时间，5S内按下shift + o 键编辑安转设置，输入空格autoPartitionOSDataSize=8192（这一步必要的，用于调整虚拟闪存大小，错过了关机重来）。然后回车进入安装界面，然后根据提示一路默认，系统记得安装到msata盘上。</li>
+<li>系统安装好会需要在控制台调整管理端口，开机进入系统后，按F2进入网络配置，选择network adaptor，用一根网线连接电脑和主机的eth0口，观察哪个控制台哪个是connect的，选择这个网口作为管理端口。ESC退出后会重启网络端口，在进入ipv4配置页面，将管理端口的IP设置为192.168.2.16，网管设置为192.168.2.2 掩码 255.255.255.0，保存后退出。</li>
+<li>电脑网线连接eth0的网口，电脑设置静态IP为192.168.2.21 掩码 255.255.255.0 网关192.168.2.2。</li>
+<li>设置好电脑IP后，登录<a href="https://192.168.2.16进入esxi管理页。" target="_blank" rel="noopener">https://192.168.2.16进入esxi管理页。</a></li>
+</ol>
+<h3 id="esxi-直通切换"><a href="#esxi-直通切换" class="headerlink" title="esxi 直通切换"></a>esxi 直通切换</h3><p>安装好esxi系统后，首先规划好网口，按照先前介绍的来规划，将eth1 eth2 eth3 切换成直通。按照下图来切换</p>
+<h3 id="安装openwrt"><a href="#安装openwrt" class="headerlink" title="安装openwrt"></a>安装openwrt</h3><ol>
+<li>恩山下载任意的x86镜像。一般镜像都有EFI和不带EFI的进项，选择带有EFI字样镜像。下载后解压成.img格式为止</li>
+<li>安装写盘工具写虚拟硬盘，百度<code>starwindconverter官网</code>, 随意填写些信息开始下载。根据提示开始转换，local file =&gt; localfile =&gt; vmdk =&gt; esxi server img =&gt; preallocat。一定要选择预分配，没必要选灵活增长。</li>
+<li>esxi创建openwrt虚拟机，兼容性选择最新的那个(7.0 U2)，系统类型选择linux, linux5.x 64位 或则更高。</li>
+<li>储存选择默认，在下一步都要删除的。</li>
+<li>下一步硬件配置中把所有的设备删除干净，存储、usb和控制器都不要。删除后保存创建虚拟机，路由器CPU 2核心，单插槽两个2核心，内存选2G。不要开机</li>
+<li>重新编辑刚才创建好的虚拟机添加硬盘，选择已有的硬盘，在弹出页中将刚才在用starwindconverter转换好的两个vmdk文件上传，并选择。</li>
+<li>添加直通的两个网口，点击添加其他设备，添加PCI设备，选择需要直通的网卡。保存后退出，不要开机</li>
+<li>开启esxi的ssh访问，然后电脑上ssh <a href="mailto:root@192.168.2.16ssh" target="_blank" rel="noopener">root@192.168.2.16ssh</a>连接上esxi宿主机。使用vmkfstools 对vmdk文件进行扩容 vmkdstools -X 2G /vmfs/volumns/datastore1/router/xxxx.vmdk，一般2G足够应付后面的需求了。</li>
+<li>再到网页编辑虚拟机选择，引导默认取消安全引导，使用EFI引导。</li>
+<li>开机，进入到正常的跑代码openwrt安装完成</li>
+</ol>
+<h3 id="x86路由器-系统配置"><a href="#x86路由器-系统配置" class="headerlink" title="x86路由器 系统配置"></a>x86路由器 系统配置</h3><ol>
+<li>系统安装完成后，电脑网线在eth1、eth2刚才直通给openwrt网口上来回试，如果哪个网口能正常分配IP，表示这个网口是lan口（注意先把网口静态地址设置为DHCP）。</li>
+<li>连接上lan口，根据网关地址找到openwrt的管理地址。根据自己的喜好调整lan配置，我一般习惯把lan口管理地址设置为192.168.2.2，同时设置DHCP 地址为192.168.2.100 ~ 192.168.2.240。192.168.2.100 之前作为屋里设备的静态地址，后面作为那些无关设备的动态地址。</li>
+<li>配置wan口拨号，找运营商要个拨号账密，前提是光猫改了桥接才能使用。光猫改桥接找安装宽带的师傅要个超级密码，登录光猫后删除TR69端口，然后每个页面的都拍照备份一次就可以随意折腾了。</li>
+<li>配置好wan口，lan口就可以替换原有的上网设备了。 光猫桥接口连接wan口，openwrtlan口连接原来的路由器的lan（使原有的路由变成一个AP交换机），先临时这么用</li>
+</ol>
+<p>安装x86路由器的原因是里面有很多固件，可以自由折腾，比如我的就是fast.com测试就有1.2GBPS，还安转了DDNSTO，在外面随时网页连接屋里的设备，还有NPS和zerotier。有了这个路由器，屋里的ATV随时随地可以看YouTube，检索内容也更快。</p>
+<h3 id="安装DSM"><a href="#安装DSM" class="headerlink" title="安装DSM"></a>安装DSM</h3><p>DSM大致和上面的openwrt差不多，把网上下载的好的img镜像转换成vmdk，网上img镜像也只是一个引导镜像，不需要扩容，nas需要的大流量传输，配置好直通网卡。同样是删除所有其他的设备，只添加一个sata控制器。硬盘的话添加转换的镜像，然后需要到ssh中配置RDM直通，到设备管理器中查询需要直通的硬盘ID，vmkfstools -Z /vmfs/disks/xxxx /vmfs/volunms/datastore1/xxx.vmdk。再在虚拟配置中添加这个vmdk硬盘。<br>需要注意的是添加的vmdk文件都需要放在sata控制器上，同时添加引导文件在前，直通硬盘在后。同时也别忘了取消EFI安全引导。</p>
+<p>正常开机后，注意选择sata引导，等1分钟后，到路由器的设备列表中查找是否存在dsm设备的获取到IP。浏览器输入http://获取到的IP:5000 进入dsm安装页面。按照提示上传pat文件，按照提示格式化第二个硬盘，等待10分钟后DSM安装完成。</p>
+<h3 id="安装HomeAssistant"><a href="#安装HomeAssistant" class="headerlink" title="安装HomeAssistant"></a>安装HomeAssistant</h3>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archives/a6025488.html" rel="next" title="chrome调试通关笔记">
+                <i class="fa fa-chevron-left"></i> chrome调试通关笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="yangmanman">
+            
+              <p class="site-author-name" itemprop="name">yangmanman</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">84</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/xunserver" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#光猫"><span class="nav-number">1.1.</span> <span class="nav-text">光猫</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软路由"><span class="nav-number">1.2.</span> <span class="nav-text">软路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交换机"><span class="nav-number">1.3.</span> <span class="nav-text">交换机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AP部分"><span class="nav-number">1.4.</span> <span class="nav-text">AP部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NAS-和-HomeAssistant"><span class="nav-number">1.5.</span> <span class="nav-text">NAS 和 HomeAssistant</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#各种物联网设备"><span class="nav-number">1.6.</span> <span class="nav-text">各种物联网设备</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#j4125-安装esxi"><span class="nav-number">2.1.</span> <span class="nav-text">j4125 安装esxi</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#esxi-直通切换"><span class="nav-number">2.2.</span> <span class="nav-text">esxi 直通切换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装openwrt"><span class="nav-number">2.3.</span> <span class="nav-text">安装openwrt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x86路由器-系统配置"><span class="nav-number">2.4.</span> <span class="nav-text">x86路由器 系统配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装DSM"><span class="nav-number">2.5.</span> <span class="nav-text">安装DSM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装HomeAssistant"><span class="nav-number">2.6.</span> <span class="nav-text">安装HomeAssistant</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yangmanman</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">博客全站字数共计&#58;</span>
+    
+    <span title="博客全站字数共计">69.1k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom">蜀ICP备17019511号-2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: true,
+        notify: false,
+        appId: 'vuVpRBVLYgITznVd6lB3SmEO-gzGzoHsz',
+        appKey: 'joDjKEtGAKgsTOkptN9QqUQA',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("vuVpRBVLYgITznVd6lB3SmEO-gzGzoHsz", "joDjKEtGAKgsTOkptN9QqUQA");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/baidu.js"></script>
+</body>
+</html>
