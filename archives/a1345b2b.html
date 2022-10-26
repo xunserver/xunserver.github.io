@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.7k 字
+                  2.3k 字
                 </span>
               
 
@@ -432,7 +432,7 @@
                   <span class="post-meta-item-text">阅读时长 </span>
                 
                 <span title="阅读时长">
-                  6 分钟
+                  8 分钟
                 </span>
               
             </div>
@@ -515,10 +515,16 @@
 <li>如果是CI在构建，是否需要在CI环境上构建packageB</li>
 <li>本地构建开发环境时，如何引入packageB的包，引入的是构建前的包还是构建后的包</li>
 <li>本地开发环境如何对packageB的代码进行调试</li>
-<li>packageA需要依赖packageB的老版本，但是当前项目中packageB是新版本，如何解决。</li>
-<li>如何和webpack的模块联邦结合</li>
+<li>packageA需要依赖packageB的老版本，但是当前项目中packageB是新版本，如何解决</li>
 </ol>
-<p>packageJson中依赖通过workspace: x.x.x 指定，如果本地项目中存在对应的版本，会使用对应版本，如果不存在，会使用npm仓库的版本</p>
+<p>packageJson中依赖通过workspace: x.x.x 指定，如果当前项目需要workspace中的版本，则通过这种方式指定，如果当前项目依赖的是老版本，则通过删除workspace的指定</p>
+<p>pnpm -F 支持依赖的层级的选择，pnpm -F @xunserver/test… run build。会依次的查找@xunserver/test 依赖的同时存在项目中的包执行build，比如@packageA定义了依赖packageB， npm -F @packageA… run build 会先执行packageB的build，在执行packageA的build</p>
+<p>问题一：解决如下，如果依赖的packageB已经发布，同时项目中的packageB比较新，packageA依赖的旧版本的packageB，则应该修改packageA的package删除workspace协议。如果需要使用的packageB是本地最新的，则按照workspace的方式使用，如果使用的是打包后的B，直接在本地执行B的打包</p>
+<p>问题二：解决方案同问题一，主要看是否需要使用workspace中的代码，如果需要使用workspace的代码，使用依赖层层构建的方式</p>
+<p>问题三 ：这个情况有两种场景，一般来说引入packageB不会引入B的源码，都是引入的构建后的代码，因为packageB和packageA不一定使用的相同的构建工具和流程，但是也有packageB的是packageA的子项目，这个时候也就不存在packageB源码的生产代码有区别，直接引用即可，<br>如果packageB引入的是构建后代码，那么调试的时候就没法找到是哪个文件出错，需要引入sourcemap的调试方法，同时在vscode中源码映射的方式来实现调试。还有个问题需要解决的是，packageB每次调试改动后如何通知packageA重新构建，将watch选项添加到生产环境的构建流程中，新增production:watch的构建选项</p>
+<p>问题四：本地开发时如何对packageA的依赖项packageB进行调试，packageB在构建时始终构建sourcemap，特别是在本地开发环境中。针对线上环境，通过调整packageA构建的参数来屏蔽packageB的sourcemap是否引入。packageB构建参数sourcemap后，参考前面的devtools通关秘籍进行调试</p>
+<p>问题五：前面已经论述</p>
+<h3 id="pnpm-发布流程控制"><a href="#pnpm-发布流程控制" class="headerlink" title="pnpm 发布流程控制"></a>pnpm 发布流程控制</h3><h3 id="只允许pnpm"><a href="#只允许pnpm" class="headerlink" title="只允许pnpm"></a>只允许pnpm</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"preinstall"</span>: <span class="string">"npx only-allow pnpm"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="n-包管理器是啥"><a href="#n-包管理器是啥" class="headerlink" title="n 包管理器是啥"></a>n 包管理器是啥</h3><p>ni xx -S =&gt; npm i xxx -S<br>nr =&gt; npm run<br>nrm =&gt; npm uninstall<br>nx =&gt; npm execute </p>
 <p>n 会自动检查项目下存在package-lock.json、yarn.lock或者pnpm-lock.yaml 自动选择包管理器安装。</p>
 <h3 id="npmrc、-yarnrc和-pnpmrc"><a href="#npmrc、-yarnrc和-pnpmrc" class="headerlink" title=".npmrc、.yarnrc和.pnpmrc"></a>.npmrc、.yarnrc和.pnpmrc</h3><p>npmrc格式是key=value的形式 value和key有空格需要用””包起来<br>yarnrc格式是key value 的形式，有空格需要用””包裹<br>pnpmrc使用的npmrc配置</p>
@@ -711,7 +717,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#npm-下载包流程"><span class="nav-number">1.</span> <span class="nav-text">npm 下载包流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#npm-本地添加离线包"><span class="nav-number">2.</span> <span class="nav-text">npm 本地添加离线包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yarn-常用命令"><span class="nav-number">3.</span> <span class="nav-text">yarn 常用命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mutilRepo-和-monoRepo"><span class="nav-number">4.</span> <span class="nav-text">mutilRepo 和 monoRepo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#npm-痛点"><span class="nav-number">5.</span> <span class="nav-text">npm 痛点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pnpm-解决的痛点"><span class="nav-number">6.</span> <span class="nav-text">pnpm 解决的痛点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pnpm"><span class="nav-number">7.</span> <span class="nav-text">pnpm</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常用的命令"><span class="nav-number">7.1.</span> <span class="nav-text">常用的命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#npm-config"><span class="nav-number">7.2.</span> <span class="nav-text">npm_config</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#packageJSON需要关注的字段"><span class="nav-number">7.3.</span> <span class="nav-text">packageJSON需要关注的字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pnpm-解决patch问题"><span class="nav-number">7.4.</span> <span class="nav-text">pnpm 解决patch问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pnpm-命令补全"><span class="nav-number">7.5.</span> <span class="nav-text">pnpm 命令补全</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用好pnpm的关键-–filter-F"><span class="nav-number">7.6.</span> <span class="nav-text">用好pnpm的关键  –filter -F</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pnpm生产实战"><span class="nav-number">7.7.</span> <span class="nav-text">pnpm生产实战</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#n-包管理器是啥"><span class="nav-number">8.</span> <span class="nav-text">n 包管理器是啥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#npmrc、-yarnrc和-pnpmrc"><span class="nav-number">9.</span> <span class="nav-text">.npmrc、.yarnrc和.pnpmrc</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#npm-下载包流程"><span class="nav-number">1.</span> <span class="nav-text">npm 下载包流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#npm-本地添加离线包"><span class="nav-number">2.</span> <span class="nav-text">npm 本地添加离线包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yarn-常用命令"><span class="nav-number">3.</span> <span class="nav-text">yarn 常用命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mutilRepo-和-monoRepo"><span class="nav-number">4.</span> <span class="nav-text">mutilRepo 和 monoRepo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#npm-痛点"><span class="nav-number">5.</span> <span class="nav-text">npm 痛点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pnpm-解决的痛点"><span class="nav-number">6.</span> <span class="nav-text">pnpm 解决的痛点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pnpm"><span class="nav-number">7.</span> <span class="nav-text">pnpm</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常用的命令"><span class="nav-number">7.1.</span> <span class="nav-text">常用的命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#npm-config"><span class="nav-number">7.2.</span> <span class="nav-text">npm_config</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#packageJSON需要关注的字段"><span class="nav-number">7.3.</span> <span class="nav-text">packageJSON需要关注的字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pnpm-解决patch问题"><span class="nav-number">7.4.</span> <span class="nav-text">pnpm 解决patch问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pnpm-命令补全"><span class="nav-number">7.5.</span> <span class="nav-text">pnpm 命令补全</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用好pnpm的关键-–filter-F"><span class="nav-number">7.6.</span> <span class="nav-text">用好pnpm的关键  –filter -F</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pnpm生产实战"><span class="nav-number">7.7.</span> <span class="nav-text">pnpm生产实战</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pnpm-发布流程控制"><span class="nav-number">8.</span> <span class="nav-text">pnpm 发布流程控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#只允许pnpm"><span class="nav-number">9.</span> <span class="nav-text">只允许pnpm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#n-包管理器是啥"><span class="nav-number">10.</span> <span class="nav-text">n 包管理器是啥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#npmrc、-yarnrc和-pnpmrc"><span class="nav-number">11.</span> <span class="nav-text">.npmrc、.yarnrc和.pnpmrc</span></a></li></ol></div>
             
 
           </div>
@@ -745,7 +751,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">69.2k</span>
+    <span title="博客全站字数共计">69.8k</span>
   
 </div>
 
