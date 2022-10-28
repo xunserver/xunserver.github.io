@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.xunserver.cn/"/>
-  <updated>2022-10-22T01:49:50.000Z</updated>
+  <updated>2022-10-27T03:01:53.000Z</updated>
   <id>https://blog.xunserver.cn/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>模块联邦</title>
+    <link href="https://blog.xunserver.cn/archives/eb9216b6.html"/>
+    <id>https://blog.xunserver.cn/archives/eb9216b6.html</id>
+    <published>2022-10-27T03:01:53.000Z</published>
+    <updated>2022-10-27T03:01:53.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>模块联邦提供了一种运行时的加载其他服务下模块的能力,通过下面几个问题来解决生产中模块联邦的问题</p><ol><li>模块联邦在项目源码中并不会体现，如果packageA引入了packageB，如何保证自动补全、ts类型等功能</li><li>项目工程化如何设计，单仓库还是多仓库，项目如何启动</li><li>开发环境和线上环境如何设计</li><li>和微服务框架如何结合</li></ol><h3 id="webpack中的模块联邦"><a href="#webpack中的模块联邦" class="headerlink" title="webpack中的模块联邦"></a>webpack中的模块联邦</h3><p>webpack中通过MF插件提供了简单配置容器和加载容器的功能<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    .....</span><br><span class="line">    plugins: [<span class="keyword">new</span> webpack.ModuleFederationPlugin(&#123;</span><br><span class="line">        name: <span class="string">"main_app"</span>, <span class="comment">// 本身对外暴露出的入口</span></span><br><span class="line">        filename: <span class="string">"remoteEntry.js"</span>,  <span class="comment">// 入口文件</span></span><br><span class="line">        exposes: &#123;</span><br><span class="line">            <span class="string">'./functionA'</span>: <span class="string">'./src/xxx/a.js'</span>  <span class="comment">// 暴露出的文件</span></span><br><span class="line">        &#125;,</span><br><span class="line">        share: [<span class="string">'vue'</span>], <span class="comment">// 共享的模块， 不会重复打包</span></span><br><span class="line">        remote: &#123;  <span class="comment">// 需要加载的远程package</span></span><br><span class="line">            <span class="string">'packageB'</span>: <span class="string">'packageB@http://localhost:3001/remoteEntry.js'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)]  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>在packageA中使用packageB的方法<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> functionA <span class="keyword">from</span> <span class="string">"packageB/functionA"</span></span><br><span class="line"><span class="built_in">console</span>.log(functionA)</span><br></pre></td></tr></table></figure></p><h3 id="在vite中使用模块联邦"><a href="#在vite中使用模块联邦" class="headerlink" title="在vite中使用模块联邦"></a>在vite中使用模块联邦</h3><p>vite社区已经实现@originjs/vite-plugin-federation, 配置方式和webpack差不多</p><h3 id="如何保证packageB的自动补全"><a href="#如何保证packageB的自动补全" class="headerlink" title="如何保证packageB的自动补全"></a>如何保证packageB的自动补全</h3><p>有如下两种场景，一是packageB和packageA使用了pnpm的monorepo的方案，一种是packageB在另一个地方。第一种场景比较简单，直接在pnpm add packageB作为packageA为依赖，编辑器中就能获得所有补全，但是需要引入的packageB和源码结构类似。虽然在packageA中引用了packageB，但是并不会真正打包，这种情况存在路径映射的问题（通过package新特性支持，通过exports指明对应文件的type,这种方式需要在tsconfig中指定moduleRelution为我为Node16 或者nodenext）。第二种情况是packageB不和packageA在同一个仓库，需要对packageB进行申明文件构建，申明文件选择一个新的目录，在packageA的tsconfig中正常添加这个申明文件的引用，通过typeRoot添加一个。通过设置rootDir还能实现对第一种方案中路径映射的调整</p><h3 id="单仓库还是多仓库"><a href="#单仓库还是多仓库" class="headerlink" title="单仓库还是多仓库"></a>单仓库还是多仓库</h3><p>新项目无脑单仓库，自带补全功能美滋滋。</p><p>但是模块联邦目前不能很好的和monorepo结合，比如monorepo引用的是packageB的dist后的代码，但是模块联邦需要的是源码方便调试（也可以只把申明文件输出到dist目录中），两者存在冲突。模块联邦的这种黑科技方式对项目也是破坏性，所以还是推荐自行添加types到packageA的依赖中（生成声明文件时，声明文件也可以添加resouremap选项也能重定向到源代码，这个特性重要重要重要，需要珍藏）</p><h3 id="开发环境和线上环境的结合"><a href="#开发环境和线上环境的结合" class="headerlink" title="开发环境和线上环境的结合"></a>开发环境和线上环境的结合</h3><p>模块联邦主要的组件和复用，非应用的复用。在monorepo开发环境中，删除对模块联邦的使用，使用packageA打包packageB依赖（因为已经申明了packageB，可以放心大胆的删除），这个好处是不用启用多个服务，一个服务解决。</p><h3 id="和微服务框架如何结合"><a href="#和微服务框架如何结合" class="headerlink" title="和微服务框架如何结合"></a>和微服务框架如何结合</h3><p>微服务框架主要是对应用的复用和嵌套，模块联邦目前未能做到样式隔离等功能，只做到了加载器的功能。同时微服务对monorepo本地线上双模式支持也较弱。目前不考虑强行将微服务转换为模块联邦（一定不要）</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;模块联邦提供了一种运行时的加载其他服务下模块的能力,通过下面几个问题来解决生产中模块联邦的问题&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;模块联邦在项目源码
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>all-in-boom</title>
@@ -405,28 +428,6 @@
       
         &lt;h3 id=&quot;https-加密流程&quot;&gt;&lt;a href=&quot;#https-加密流程&quot; class=&quot;headerlink&quot; title=&quot;https 加密流程&quot;&gt;&lt;/a&gt;https 加密流程&lt;/h3&gt;&lt;ol&gt;
 &lt;li&gt;服务端使用第三方机构（ca）的私钥加密，获得一个公钥证书发给浏览
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>浏览器解析</title>
-    <link href="https://blog.xunserver.cn/archives/50c7c64b.html"/>
-    <id>https://blog.xunserver.cn/archives/50c7c64b.html</id>
-    <published>2022-03-01T07:35:42.000Z</published>
-    <updated>2022-03-01T07:35:42.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="浏览器渲染进程包含的线程"><a href="#浏览器渲染进程包含的线程" class="headerlink" title="浏览器渲染进程包含的线程"></a>浏览器渲染进程包含的线程</h3><ol><li>GUI 渲染线程，负责解析HTML，CSS，构建DOM、CSSOM和render tree, 布局和绘制。当页面回流时。</li><li>js引擎线程，一个渲染进程只有一个js引擎线程，负责解析执行js代码</li><li>事件线程，当事件触发时，会添加到队尾，等待js引擎执行</li><li>定时器线程，触发后放在队尾</li><li>htto请求线程，请求后放在队尾</li></ol><h3 id="简略版xuanran"><a href="#简略版xuanran" class="headerlink" title="简略版xuanran"></a>简略版xuanran</h3><ol><li>解析html，构建dom树</li><li>解析css,构建css树</li><li>cssom和dom合并成渲染树</li><li>根据渲染树计算节点位置，布局</li><li>调用GUI绘图，上色，合成图层，并渲染到界面上</li></ol><h3 id="html、css和js解析构建顺序"><a href="#html、css和js解析构建顺序" class="headerlink" title="html、css和js解析构建顺序"></a>html、css和js解析构建顺序</h3><ol><li>html解析从上到下解析文档，依次构建DOM</li><li>如果碰到link或者style，异步的进行cssom构建</li><li>如果碰到js脚本，会先等到前面的cssom构建完成，才会解析js脚本（可以先下载）。js脚本解析执行期间，html会停止解析</li><li>初始的html解析完成后，会触发documentContentLoad 事件。此时图片资源可能还未下载完成</li><li>load 事件表示初始html以及资源全部load</li></ol><h3 id="图层"><a href="#图层" class="headerlink" title="图层"></a>图层</h3><p>一个普通的文档流被视为一个图层，包括浮动和非（fixed）定位。对于频繁的渲染需要生成一个新的图层来操作。</p><ol><li>3D转换</li><li>fixed</li><li>动画</li></ol><h3 id="重绘和回流"><a href="#重绘和回流" class="headerlink" title="重绘和回流"></a>重绘和回流</h3><p>重绘不涉及布局和几何变化，比如改下颜色。<br>回流是指布局和几何外观的改变，需要渲染整个图层。<br>所有重绘和回流都只争对当前元素</p><h3 id="避免回流"><a href="#避免回流" class="headerlink" title="避免回流"></a>避免回流</h3><ol><li>translate 替换 top</li><li>选择器从右到左，避免dom查找过深</li></ol>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;浏览器渲染进程包含的线程&quot;&gt;&lt;a href=&quot;#浏览器渲染进程包含的线程&quot; class=&quot;headerlink&quot; title=&quot;浏览器渲染进程包含的线程&quot;&gt;&lt;/a&gt;浏览器渲染进程包含的线程&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;GUI 渲染线程，负责解析HTML，CSS，构建
       
     
     </summary>
