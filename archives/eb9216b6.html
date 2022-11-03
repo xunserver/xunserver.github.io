@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  868 字
+                  1.9k 字
                 </span>
               
 
@@ -432,7 +432,7 @@
                   <span class="post-meta-item-text">阅读时长 </span>
                 
                 <span title="阅读时长">
-                  3 分钟
+                  7 分钟
                 </span>
               
             </div>
@@ -462,12 +462,38 @@
 </ol>
 <h3 id="webpack中的模块联邦"><a href="#webpack中的模块联邦" class="headerlink" title="webpack中的模块联邦"></a>webpack中的模块联邦</h3><p>webpack中通过MF插件提供了简单配置容器和加载容器的功能<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    .....</span><br><span class="line">    plugins: [<span class="keyword">new</span> webpack.ModuleFederationPlugin(&#123;</span><br><span class="line">        name: <span class="string">"main_app"</span>, <span class="comment">// 本身对外暴露出的入口</span></span><br><span class="line">        filename: <span class="string">"remoteEntry.js"</span>,  <span class="comment">// 入口文件</span></span><br><span class="line">        exposes: &#123;</span><br><span class="line">            <span class="string">'./functionA'</span>: <span class="string">'./src/xxx/a.js'</span>  <span class="comment">// 暴露出的文件</span></span><br><span class="line">        &#125;,</span><br><span class="line">        share: [<span class="string">'vue'</span>], <span class="comment">// 共享的模块， 不会重复打包</span></span><br><span class="line">        remote: &#123;  <span class="comment">// 需要加载的远程package</span></span><br><span class="line">            <span class="string">'packageB'</span>: <span class="string">'packageB@http://localhost:3001/remoteEntry.js'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)]  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>在packageA中使用packageB的方法<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> functionA <span class="keyword">from</span> <span class="string">"packageB/functionA"</span></span><br><span class="line"><span class="built_in">console</span>.log(functionA)</span><br></pre></td></tr></table></figure></p>
+<h2 id="模块联邦"><a href="#模块联邦" class="headerlink" title="模块联邦"></a>模块联邦</h2><p>模块联邦提供了加载其他模块的能力，可以用于跨项目共享chunk。</p>
+<ul>
+<li>本地模块指的是入口文件构建的模块，远程模块是MF定义出的。相当于共享配置的两个入口文件。</li>
+<li>每个构建都是一个容器，容器可以加载远程模块。</li>
+<li>远程模块需要使用异步的方式加载。</li>
+<li>远程模块也可以作为容器加载其他远程模块。</li>
+<li>远程模块中，因为publicPath是简单的拼接，如果设置了publicPath会出现加载宿主域的问题。需要将publicPath设置为auto或则动态设置。</li>
+<li>远程模块至少会生成runtime、remote和module 3种chunk文件</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> MF = webpack.container.ModuleFederationPlugin;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="comment">// 打包逻辑 runtime -&gt; remote.js -&gt; ./componentA</span></span><br><span class="line">    <span class="keyword">new</span> MF(&#123;</span><br><span class="line">      name: <span class="string">'remote'</span>,  <span class="comment">// 远程模块名称</span></span><br><span class="line">      filename: <span class="string">'remote.js'</span>, <span class="comment">// 生成的远程模块文件，用于宿主容器加载</span></span><br><span class="line">      runtime: <span class="string">'remote.runtime.js'</span>, <span class="comment">// 默认情况下runtime文件生成在filename 定义的文件中，可以单独抽离出来。</span></span><br><span class="line">      exposes: [&#123;</span><br><span class="line">        <span class="string">'./componentA'</span>: <span class="string">'./src/componentA.vue'</span>  <span class="comment">// 需要使用./前缀，host 通过 import('remote/componentA')</span></span><br><span class="line">        <span class="string">'.'</span>: <span class="string">'src/componentA/index.js'</span>  <span class="comment">// import('remote')</span></span><br><span class="line">      &#125;]</span><br><span class="line">    &#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="动态设置publicPath"><a href="#动态设置publicPath" class="headerlink" title="动态设置publicPath"></a>动态设置publicPath</h3><p>因为runtime.js 需要加载remote.js和module.js 所以需要提前设置publicPath。MF在打包时如果container chunk和入口chunk同名，会合并。所以需要将name设置为一个入口name相同。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: &#123;</span><br><span class="line">    main: <span class="string">'./index.js'</span>,</span><br><span class="line">    remote: <span class="string">'./public-path.js'</span> <span class="comment">// 在入口文件中配置动态的js。</span></span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> MF(&#123;</span><br><span class="line">      name: <span class="string">'remote'</span>,  <span class="comment">// 远程模块名称</span></span><br><span class="line">      filename: <span class="string">'remote.js'</span>, <span class="comment">// 生成的远程模块文件，用于宿主容器加载</span></span><br><span class="line">      runtime: <span class="string">'remote.runtime.js'</span>, <span class="comment">// 默认情况下runtime文件生成在filename 定义的文件中，可以单独抽离出来。</span></span><br><span class="line">      exposes: [&#123;</span><br><span class="line">        <span class="string">'./componentA'</span>: <span class="string">'./src/componentA.vue'</span></span><br><span class="line">        <span class="string">'.'</span>: <span class="string">'src/componentA/index.js'</span></span><br><span class="line">      &#125;]</span><br><span class="line">    &#125;)</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="动态加载远程模块"><a href="#动态加载远程模块" class="headerlink" title="动态加载远程模块"></a>动态加载远程模块</h3><p>正常情况下远程模块是在webpack配置中制定的，可以手动实现远程模块的加载。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> loadModule = <span class="keyword">async</span> (url, containerName, <span class="built_in">module</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">await</span> loadScript(url);   <span class="comment">// 加载remoteEntry js 脚本。</span></span><br><span class="line">  <span class="keyword">const</span> container = <span class="built_in">window</span>[containerName];  <span class="comment">// 默认情况下remoteEntry 按照var 导出。 通过window containerName 可以获取到container。</span></span><br><span class="line">  <span class="keyword">const</span> factory = <span class="keyword">await</span> container.get(<span class="built_in">module</span>)  <span class="comment">// get方法是一个异步的方法，获取的是modules里的value。</span></span><br><span class="line">  <span class="keyword">return</span> factory()  <span class="comment">// 执行一次相当于执行了module文件。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面代码不够完整，缺少共享模块的加载以及重复引用下module不是单例问题。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> remoteModuleCache = <span class="keyword">new</span> <span class="keyword">set</span>();</span><br><span class="line">let loadModule = async (url, containerName, module) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span>(hasCache(container, <span class="built_in">module</span>)) &#123;</span><br><span class="line">    <span class="keyword">return</span> getCache()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">await</span> loadScript(url);   <span class="comment">// 加载remoteEntry js 脚本</span></span><br><span class="line">  <span class="keyword">await</span> __webpack_init_sharing__(<span class="string">'default'</span>)  <span class="comment">// 全局初始化共享模块</span></span><br><span class="line">  <span class="keyword">const</span> container = <span class="built_in">window</span>[containerName];  <span class="comment">// 默认情况下remoteEntry library 按照var 导出。 通过window containerName 可以获取到container。</span></span><br><span class="line">  container.init(__webpack_share_scoped__.default)</span><br><span class="line">  <span class="keyword">const</span> factory = <span class="keyword">await</span> container.get(<span class="built_in">module</span>)  <span class="comment">// get方法是一个异步的方法，获取的是modules里的value。</span></span><br><span class="line">  <span class="keyword">return</span> factory()  <span class="comment">// 执行一次相当于执行了module文件。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="远程模块加载流程"><a href="#远程模块加载流程" class="headerlink" title="远程模块加载流程"></a>远程模块加载流程</h3><ol>
+<li><strong>webpack_modules</strong> 声明了remoteEntry入口文件。</li>
+<li>通过<strong>webpack_require</strong>.e 调用 <strong>webpack</strong>require.f.remote 中间件加载入口js文件。</li>
+<li>入口js文件加载好后，在全局暴露remote变量</li>
+<li>host中加载远程模块的module会固定编译成 一个chunkid，</li>
+<li>host 会调用remote去获取这个chunkId对应的js文件，</li>
+<li>加载完成后回调在remote中，然后host执行这个remote中的回调函数得到module。</li>
+</ol>
+<h3 id="远程模块踩坑"><a href="#远程模块踩坑" class="headerlink" title="远程模块踩坑"></a>远程模块踩坑</h3><ol>
+<li>远程模块的异步chunk加载方式务必不要和host应用雷同，会出现覆盖host modules问题。大坑，使用 output.chunkLoadingGlobal、output.uniquename修改</li>
+<li>目前自动加载远程模块的方式仅默认方式能生效，即把远程模块绑定到全局变量上。其他的方式均需要自行加载远程模块</li>
+</ol>
 <h3 id="在vite中使用模块联邦"><a href="#在vite中使用模块联邦" class="headerlink" title="在vite中使用模块联邦"></a>在vite中使用模块联邦</h3><p>vite社区已经实现@originjs/vite-plugin-federation, 配置方式和webpack差不多</p>
 <h3 id="如何保证packageB的自动补全"><a href="#如何保证packageB的自动补全" class="headerlink" title="如何保证packageB的自动补全"></a>如何保证packageB的自动补全</h3><p>有如下两种场景，一是packageB和packageA使用了pnpm的monorepo的方案，一种是packageB在另一个地方。第一种场景比较简单，直接在pnpm add packageB作为packageA为依赖，编辑器中就能获得所有补全，但是需要引入的packageB和源码结构类似。虽然在packageA中引用了packageB，但是并不会真正打包，这种情况存在路径映射的问题（通过package新特性支持，通过exports指明对应文件的type,这种方式需要在tsconfig中指定moduleRelution为我为Node16 或者nodenext）。第二种情况是packageB不和packageA在同一个仓库，需要对packageB进行申明文件构建，申明文件选择一个新的目录，在packageA的tsconfig中正常添加这个申明文件的引用，通过typeRoot添加一个。通过设置rootDir还能实现对第一种方案中路径映射的调整</p>
 <h3 id="单仓库还是多仓库"><a href="#单仓库还是多仓库" class="headerlink" title="单仓库还是多仓库"></a>单仓库还是多仓库</h3><p>新项目无脑单仓库，自带补全功能美滋滋。</p>
 <p>但是模块联邦目前不能很好的和monorepo结合，比如monorepo引用的是packageB的dist后的代码，但是模块联邦需要的是源码方便调试（也可以只把申明文件输出到dist目录中），两者存在冲突。模块联邦的这种黑科技方式对项目也是破坏性，所以还是推荐自行添加types到packageA的依赖中（生成声明文件时，声明文件也可以添加resouremap选项也能重定向到源代码，这个特性重要重要重要，需要珍藏）</p>
 <h3 id="开发环境和线上环境的结合"><a href="#开发环境和线上环境的结合" class="headerlink" title="开发环境和线上环境的结合"></a>开发环境和线上环境的结合</h3><p>模块联邦主要的组件和复用，非应用的复用。在monorepo开发环境中，删除对模块联邦的使用，使用packageA打包packageB依赖（因为已经申明了packageB，可以放心大胆的删除），这个好处是不用启用多个服务，一个服务解决。</p>
 <h3 id="和微服务框架如何结合"><a href="#和微服务框架如何结合" class="headerlink" title="和微服务框架如何结合"></a>和微服务框架如何结合</h3><p>微服务框架主要是对应用的复用和嵌套，模块联邦目前未能做到样式隔离等功能，只做到了加载器的功能。同时微服务对monorepo本地线上双模式支持也较弱。目前不考虑强行将微服务转换为模块联邦（一定不要）</p>
+<h3 id="模块联邦如何动态设置publicPath"><a href="#模块联邦如何动态设置publicPath" class="headerlink" title="模块联邦如何动态设置publicPath"></a>模块联邦如何动态设置publicPath</h3><p>模块联邦中，如果子应用简单的设置了publicPath，不管是相对还是绝对路径都是对于主应用而言，这种情况下需要动态的配置publicPath使子应用正常。第一个方法是设置子应用的publicPath为auto。或者通过__webpack_public_path 动态设置，具体看webpack那篇博客</p>
 
       
     </div>
@@ -501,6 +527,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archives/3be36193.html" rel="prev" title="qiankun">
+                qiankun <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -581,7 +611,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">85</span>
+                  <span class="site-state-item-count">87</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -653,7 +683,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack中的模块联邦"><span class="nav-number">2.</span> <span class="nav-text">webpack中的模块联邦</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在vite中使用模块联邦"><span class="nav-number">3.</span> <span class="nav-text">在vite中使用模块联邦</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何保证packageB的自动补全"><span class="nav-number">4.</span> <span class="nav-text">如何保证packageB的自动补全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单仓库还是多仓库"><span class="nav-number">5.</span> <span class="nav-text">单仓库还是多仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开发环境和线上环境的结合"><span class="nav-number">6.</span> <span class="nav-text">开发环境和线上环境的结合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#和微服务框架如何结合"><span class="nav-number">7.</span> <span class="nav-text">和微服务框架如何结合</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack中的模块联邦"><span class="nav-number">2.</span> <span class="nav-text">webpack中的模块联邦</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#模块联邦"><span class="nav-number"></span> <span class="nav-text">模块联邦</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#动态设置publicPath"><span class="nav-number">1.</span> <span class="nav-text">动态设置publicPath</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态加载远程模块"><span class="nav-number">2.</span> <span class="nav-text">动态加载远程模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#远程模块加载流程"><span class="nav-number">3.</span> <span class="nav-text">远程模块加载流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#远程模块踩坑"><span class="nav-number">4.</span> <span class="nav-text">远程模块踩坑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在vite中使用模块联邦"><span class="nav-number">5.</span> <span class="nav-text">在vite中使用模块联邦</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何保证packageB的自动补全"><span class="nav-number">6.</span> <span class="nav-text">如何保证packageB的自动补全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单仓库还是多仓库"><span class="nav-number">7.</span> <span class="nav-text">单仓库还是多仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开发环境和线上环境的结合"><span class="nav-number">8.</span> <span class="nav-text">开发环境和线上环境的结合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#和微服务框架如何结合"><span class="nav-number">9.</span> <span class="nav-text">和微服务框架如何结合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块联邦如何动态设置publicPath"><span class="nav-number">10.</span> <span class="nav-text">模块联邦如何动态设置publicPath</span></a></li></ol></li></div>
             
 
           </div>
@@ -687,7 +717,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">70.6k</span>
+    <span title="博客全站字数共计">76.7k</span>
   
 </div>
 
