@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.xunserver.cn/"/>
-  <updated>2022-10-31T02:39:11.000Z</updated>
+  <updated>2022-11-06T14:19:53.000Z</updated>
   <id>https://blog.xunserver.cn/</id>
   
   <author>
@@ -15,6 +15,20 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>webpack-advance</title>
+    <link href="https://blog.xunserver.cn/archives/6537830c.html"/>
+    <id>https://blog.xunserver.cn/archives/6537830c.html</id>
+    <published>2022-11-06T14:19:53.000Z</published>
+    <updated>2022-11-06T14:19:53.000Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>家庭wifi组件方案</title>
@@ -403,27 +417,6 @@
       
       
         &lt;h3 id=&quot;初始化对象&quot;&gt;&lt;a href=&quot;#初始化对象&quot; class=&quot;headerlink&quot; title=&quot;初始化对象&quot;&gt;&lt;/a&gt;初始化对象&lt;/h3&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;p
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Vue查漏补缺（一）生命周期</title>
-    <link href="https://blog.xunserver.cn/archives/69b5cd9a.html"/>
-    <id>https://blog.xunserver.cn/archives/69b5cd9a.html</id>
-    <published>2022-03-24T00:03:10.000Z</published>
-    <updated>2022-03-24T00:03:10.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="生命周期解释"><a href="#生命周期解释" class="headerlink" title="生命周期解释"></a>生命周期解释</h3><p>生命周期函数是一个hook，类似于好莱坞的设计模式，hook是同步调用，在Vue执行的各个时间点被调用，能获取到对应时间点VM的状态</p><h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><ol><li>赋值_self, vm=this</li><li>合并extend和mixin选型</li><li>初始化proxy拦截器</li><li>初始化render生成函数</li><li>初始化组件上的事件监听器</li></ol><h3 id="beforeCreate"><a href="#beforeCreate" class="headerlink" title="beforeCreate"></a>beforeCreate</h3><ol><li>injection</li><li>prop</li><li>method</li><li>data</li><li>computed</li><li>watch</li><li>provider<h3 id="created"><a href="#created" class="headerlink" title="created"></a>created</h3></li><li>编辑模板生成render函数</li><li>vm.$el 赋值（但是还未替换dom）<h3 id="beforeMount"><a href="#beforeMount" class="headerlink" title="beforeMount"></a>beforeMount</h3></li><li>执行render函数，生成vnode</li><li>挂载vnode到dom中<h3 id="mounted"><a href="#mounted" class="headerlink" title="mounted"></a>mounted</h3></li></ol>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h3 id=&quot;生命周期解释&quot;&gt;&lt;a href=&quot;#生命周期解释&quot; class=&quot;headerlink&quot; title=&quot;生命周期解释&quot;&gt;&lt;/a&gt;生命周期解释&lt;/h3&gt;&lt;p&gt;生命周期函数是一个hook，类似于好莱坞的设计模式，hook是同步调用，在Vue执行的各个时间点被调用，能获
       
     
     </summary>
