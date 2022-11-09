@@ -88,18 +88,18 @@
 
 
 
-<meta name="description" content="随笔">
+<meta name="description" content="前言webpack优化指的两个方便，第一个是打包过程优化，提高打包效率，缩小打包时间。第二个是上线项目的优化，通过配置优化chunk，提高线上加载速度。 优化打包流程resolve.modules, resolve.extensions. resovle.modules 用于限定node_module查找范围，默认情况下是从会遍历到文件系统根目录，通过配置指定的node_module 减少查找范围">
 <meta name="keywords" content="博客,xunsever,bang">
 <meta property="og:type" content="article">
-<meta property="og:title" content="webpack-advance">
-<meta property="og:url" content="https://blog.xunserver.cn/archives/6537830c.html">
+<meta property="og:title" content="webpack 配置优化通用步骤">
+<meta property="og:url" content="https://blog.xunserver.cn/archives/4525b971.html">
 <meta property="og:site_name" content="bang">
-<meta property="og:description" content="随笔">
+<meta property="og:description" content="前言webpack优化指的两个方便，第一个是打包过程优化，提高打包效率，缩小打包时间。第二个是上线项目的优化，通过配置优化chunk，提高线上加载速度。 优化打包流程resolve.modules, resolve.extensions. resovle.modules 用于限定node_module查找范围，默认情况下是从会遍历到文件系统根目录，通过配置指定的node_module 减少查找范围">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2022-11-06T14:19:53.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="webpack-advance">
-<meta name="twitter:description" content="随笔">
+<meta name="twitter:title" content="webpack 配置优化通用步骤">
+<meta name="twitter:description" content="前言webpack优化指的两个方便，第一个是打包过程优化，提高打包效率，缩小打包时间。第二个是上线项目的优化，通过配置优化chunk，提高线上加载速度。 优化打包流程resolve.modules, resolve.extensions. resovle.modules 用于限定node_module查找范围，默认情况下是从会遍历到文件系统根目录，通过配置指定的node_module 减少查找范围">
 
 
 
@@ -129,7 +129,7 @@
 
 
 
-  <link rel="canonical" href="https://blog.xunserver.cn/archives/6537830c.html">
+  <link rel="canonical" href="https://blog.xunserver.cn/archives/4525b971.html">
 
 
 
@@ -143,7 +143,7 @@
   daovoice('update');
   </script>
 
-  <title>webpack-advance | bang</title>
+  <title>webpack 配置优化通用步骤 | bang</title>
   
 
 
@@ -331,7 +331,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.xunserver.cn/archives/6537830c.html">
+    <link itemprop="mainEntityOfPage" href="https://blog.xunserver.cn/archives/4525b971.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yangmanman">
@@ -348,7 +348,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">webpack-advance</h2>
+          <h2 class="post-title" itemprop="name headline">webpack 配置优化通用步骤</h2>
         
 
         <div class="post-meta">
@@ -379,8 +379,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/archives/6537830c.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/archives/6537830c.html" itemprop="commentCount"></span>
+                <a href="/archives/4525b971.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/archives/4525b971.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -388,7 +388,7 @@
 
           
           
-             <span id="/archives/6537830c.html" class="leancloud_visitors" data-flag-title="webpack-advance">
+             <span id="/archives/4525b971.html" class="leancloud_visitors" data-flag-title="webpack 配置优化通用步骤">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0 字
+                  303 字
                 </span>
               
 
@@ -453,7 +453,12 @@
       
 
       
-        
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>webpack优化指的两个方便，第一个是打包过程优化，提高打包效率，缩小打包时间。第二个是上线项目的优化，通过配置优化chunk，提高线上加载速度。</p>
+<h3 id="优化打包流程"><a href="#优化打包流程" class="headerlink" title="优化打包流程"></a>优化打包流程</h3><h4 id="resolve-modules-resolve-extensions"><a href="#resolve-modules-resolve-extensions" class="headerlink" title="resolve.modules, resolve.extensions"></a>resolve.modules, resolve.extensions</h4><p>. resovle.modules 用于限定node_module查找范围，默认情况下是从会遍历到文件系统根目录，通过配置指定的node_module 减少查找范围,配置到项目的node_module即可<br>. resolve.extensions 当解析模块时，模块无后缀名时查找顺序，使用正确的扩展名方便查询。如果是ts项目，将ts排列在最前面，如果是vue项目，添加vue到最前面(不过一般来说不同，vue项目要求需要将.vue在代码中补全，以获得编辑器的补全功能)</p>
+<h4 id="module-noParse"><a href="#module-noParse" class="headerlink" title="module.noParse"></a>module.noParse</h4><p>当引入第三方模块时，一般第三方已经编译过，没必要webpack再次编译处理。使用noParse让webpack停止对模块的继续解析。</p>
+<h4 id="module-rule-loader、resolveLoader"><a href="#module-rule-loader、resolveLoader" class="headerlink" title="module.rule.loader、resolveLoader"></a>module.rule.loader、resolveLoader</h4><p>在配置loader时，loader使用的require(‘xxx-loader’)来加载，也会遍历到根模块，使用一个绝对路径来配置。<br>resolveLoader 配置loader的查找目录</p>
+<p>#### </p>
+
       
     </div>
     
@@ -539,8 +544,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -620,6 +634,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化打包流程"><span class="nav-number">2.</span> <span class="nav-text">优化打包流程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#resolve-modules-resolve-extensions"><span class="nav-number">2.1.</span> <span class="nav-text">resolve.modules, resolve.extensions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#module-noParse"><span class="nav-number">2.2.</span> <span class="nav-text">module.noParse</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#module-rule-loader、resolveLoader"><span class="nav-number">2.3.</span> <span class="nav-text">module.rule.loader、resolveLoader</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -647,7 +677,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">77.4k</span>
+    <span title="博客全站字数共计">77.7k</span>
   
 </div>
 

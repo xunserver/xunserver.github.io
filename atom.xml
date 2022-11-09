@@ -17,13 +17,20 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>webpack-advance</title>
-    <link href="https://blog.xunserver.cn/archives/6537830c.html"/>
-    <id>https://blog.xunserver.cn/archives/6537830c.html</id>
+    <title>webpack 配置优化通用步骤</title>
+    <link href="https://blog.xunserver.cn/archives/4525b971.html"/>
+    <id>https://blog.xunserver.cn/archives/4525b971.html</id>
     <published>2022-11-06T14:19:53.000Z</published>
     <updated>2022-11-06T14:19:53.000Z</updated>
     
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>webpack优化指的两个方便，第一个是打包过程优化，提高打包效率，缩小打包时间。第二个是上线项目的优化，通过配置优化chunk，提高线上加载速度。</p><h3 id="优化打包流程"><a href="#优化打包流程" class="headerlink" title="优化打包流程"></a>优化打包流程</h3><h4 id="resolve-modules-resolve-extensions"><a href="#resolve-modules-resolve-extensions" class="headerlink" title="resolve.modules, resolve.extensions"></a>resolve.modules, resolve.extensions</h4><p>. resovle.modules 用于限定node_module查找范围，默认情况下是从会遍历到文件系统根目录，通过配置指定的node_module 减少查找范围,配置到项目的node_module即可<br>. resolve.extensions 当解析模块时，模块无后缀名时查找顺序，使用正确的扩展名方便查询。如果是ts项目，将ts排列在最前面，如果是vue项目，添加vue到最前面(不过一般来说不同，vue项目要求需要将.vue在代码中补全，以获得编辑器的补全功能)</p><h4 id="module-noParse"><a href="#module-noParse" class="headerlink" title="module.noParse"></a>module.noParse</h4><p>当引入第三方模块时，一般第三方已经编译过，没必要webpack再次编译处理。使用noParse让webpack停止对模块的继续解析。</p><h4 id="module-rule-loader、resolveLoader"><a href="#module-rule-loader、resolveLoader" class="headerlink" title="module.rule.loader、resolveLoader"></a>module.rule.loader、resolveLoader</h4><p>在配置loader时，loader使用的require(‘xxx-loader’)来加载，也会遍历到根模块，使用一个绝对路径来配置。<br>resolveLoader 配置loader的查找目录</p><p>#### </p>]]></content>
+    
     <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;webpack优化指的两个方便，第一个是打包过程优化，提高打包效率，缩小打包时间。第二个是上线项目的优化，通过配置优化chunk，提高线上加
+      
     
     </summary>
     
