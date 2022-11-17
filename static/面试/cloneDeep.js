@@ -1,43 +1,51 @@
-function cloneIteration(source) {
-    if(!isObject(source)) {
-        return source
+const isObject = target => typeof target === 'object' && target
+const deepClone1 = (target) => {
+    if(!isObject(target)) {
+        return target
     }
 
-    const root = Array.isArray(source) ? [] : {};
+    const cache = new Map()
 
-    const queueList = [{
+    const root = {};
+    const queue = Object.entries(target).map(([key, value]) => ({
         parent: root,
-        key: undefined,
-        data: source
-    }]
+        key,
+        value
+    }));
 
-    while(queueList.length) {
-        const node = queueList.pop()
-        const { parent, key, data } = node;
-
-        if (!isObject(data)) {
-            parent[key] = data;
-            continue;
-        }
+    while(queue.length) {
+        const { parent, key, value } = queue.pop();
         
-        let result = parent;
-        if(key !== undefined) {
-            result = parent[key] = {};
-        }
-
-        console.log(queueList.length)
-
-        Object.entries(data).forEach(([key, value]) => {
-            queueList.push({
+        if(!isObject(value)) {
+            parent[key] = value;
+        } else {
+            if(cache.has(value)) {
+                parent[key] = cache.get(value);
+                continue
+            }
+            const result = Array.isArray(value) ? [] : {};
+            parent[key] = result;
+            cache.set(value, result)
+            queue.push(...Object.entries(value).map(([key, value]) => ({
                 parent: result,
-                data: value,
-                key
-            })
-        })
+                key,
+                value
+            })))
+        }
     }
 
     return root
 }
+const a = {
+    a:123,
+    b: {
+        a: 123
+    },
+    c: [1, {a:123}, [3]]
+}
+a.a = a
+console.log(deepClone(a));
+
 
 const source = {
     a: 1,

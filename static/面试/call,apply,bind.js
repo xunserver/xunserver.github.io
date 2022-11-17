@@ -1,91 +1,74 @@
-function checkFunction(fn) {
-    return typeof fn === 'function'
+function isFunction(target) {
+    return typeof target === 'function'
 }
 
-function getArgs(args, startIndex, name = 'args') {
-    const result = []
-    for( let i = startIndex; i < args.length; i++) {
-        result.push(`${name}[${i}]`)
-    }
+function getContext(context) {
+    return context instanceof Object ? context : global
+}
 
-    return  result
+function getArgs(args) {
+    return Array.prototype.slice.call(args, 1)
 }
 
 Function.prototype.myCall = function(context) {
-    context = context || global
     const fn = this;
-    if(!checkFunction(fn)) {
+    if(!isFunction(fn)) {
         throw new Error('not function')
     }
+    const args = getArgs(arguments);
+    context = getContext(context);
 
-    const args = getArgs(arguments, 1)
-
-    const fnName = Symbol('fnName')
-
-    context[fnName] = fn;
-    const result = eval(`context[fnName](${args})`);
-    delete context[fnName]
+    const _fnName = Symbol();
+    context[_fnName] = fn;
+    const result = eval(`context[_fnName](${args.map((_, i) => `args[${i}]`)})`);
+    delete context[_fnName];
     return result
 }
 
-Function.prototype.myApply = function (context, args) {
-    const fn = this;
-    context = context || global;
-
-    const _args = getArgs(args, 0, 'args')
-
-    context.fn = fn;
-    const result = eval(`context.fn(${_args})`)
-    delete context.fn
-    return result
-}
-
-Function.prototype.myBind = function (context, ...initArgs) {
-    if(!checkFunction(this)) {
+Function.prototype.myApply = function(context, args= []) {
+    if(!isFunction(this)) {
         throw new Error('not function')
     }
-    context = context || global
-    const fn = this
+    if(Array.isArray(args)) {
+        context = getContext(context)
+        return eval(`this.myCall(context, ${args})`)
+    } 
+    throw new Error('arguments error, must be Array')
+}
 
-    const tempFn = function () {}
-    tempFn.prototype = this.prototype
+Function.prototype.myBind = function(context) {
+    if(!isFunction(this)) {
+        throw new Error('not function')
+    }
+    const fn = this;
+    const initArgs = getArgs(arguments);
+    context = getContext(context);
 
-    const fBind = function(...args) {
+    const fBind = function() {
+        const args = getArgs(arguments);
         return fn.myApply(this instanceof fn ? this : context, initArgs.concat(args))
     }
 
-    fBind.prototype = new tempFn
-
-    return fBind;
-}
-
-function newFn(fn, ...args) {
-    if(!checkFunction(fn)) {
-        throw new Error('not function')
-    }
-
-    const obj = Object.create(null)
-    obj.__proto__ = fn.prototype;
-
-    const result = fn.myApply(obj, args);
-
-    return (typeof result === 'object' ? result : obj) || obj
-}
-
-function log(...args) {
-    this.c = 1
-    console.log(this.a, ...args)
+    const tmpFn = function() {};
+    tmpFn.prototype = fn.prototype;
     
+    fBind.prototype = new tmpFn();
+
+    return fBind
 }
 
-log.prototype = {
-    c: 1
+const testFn = function(...args) {
+    console.log(this.a, args.length)
 }
+testFn.myApply({a: '123'});
+testFn.myApply();
+testFn.myApply(123, [123,33]);
 
-const a = {
-    a: 1
-}
+testFn.myCall(123, [123,33]);
 
-const Log = log.myBind(a, [2, 3 ,4, { a: 1 }])
+testFn.myBind({a: '123'})()
 
-console.log(new Log)
+a = new (testFn.myBind({a: '123'}))
+
+console.log(a.a);
+

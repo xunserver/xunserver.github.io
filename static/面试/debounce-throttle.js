@@ -4,6 +4,34 @@
 
 // 判断计时器是否存在，不存在执行函数，防抖和节流的区别是 定时器什么时候更新， 节流是始终更新定时器，防抖时定时不存在才更新
 
+const debounce1 = (fn, delay) => {
+    let timer = null
+    return function(...args) {
+        if(!timer) {
+            return fn.apply(this, args)
+        }
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+            clearTimeout(timer)
+            timer = null;
+            fn.apply(this, args)
+        }, delay);
+    }
+}
+
+const throttle1 = (fn, delay) => {
+    let timer = null
+    return function(...args) {
+        if(!timer) {
+            timer = setTimeout(() => {
+                clearTimeout(timer)
+                timer = null;
+            }, delay);
+            fn.apply(this, args)
+        }
+    }
+}
+
 const debounce = (fn, delay, immediate) => {
     let timer = null;
     return function(...args) {
