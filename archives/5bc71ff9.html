@@ -88,18 +88,18 @@
 
 
 
-<meta name="description" content="作用配置当前项目面向的平台，可以帮助babel、postcss识别出当前内容中哪些是需要转换 配置支持字符串和对象的配置防范，对于字符串的配置可以使用npx browserlist string 检查字符串配置是否有效。TODO: 字符串配置对象详解">
+<meta name="description" content="作用配置当前项目面向的平台，可以帮助babel、postcss识别出当前内容中哪些是需要转换 配置支持字符串和对象的配置防范，对于字符串的配置可以使用npx browserlist string 检查字符串配置是否有效。“,” 表示并集 and表示交集 browserslist webpack插件需求 页面加载时判断当前浏览器是否在兼容列表中，如果不存在，提示浏览器版本过低 离线判断，判断编译到代">
 <meta name="keywords" content="博客,xunsever,bang">
 <meta property="og:type" content="article">
 <meta property="og:title" content="browlist">
 <meta property="og:url" content="https://blog.xunserver.cn/archives/5bc71ff9.html">
 <meta property="og:site_name" content="bang">
-<meta property="og:description" content="作用配置当前项目面向的平台，可以帮助babel、postcss识别出当前内容中哪些是需要转换 配置支持字符串和对象的配置防范，对于字符串的配置可以使用npx browserlist string 检查字符串配置是否有效。TODO: 字符串配置对象详解">
+<meta property="og:description" content="作用配置当前项目面向的平台，可以帮助babel、postcss识别出当前内容中哪些是需要转换 配置支持字符串和对象的配置防范，对于字符串的配置可以使用npx browserlist string 检查字符串配置是否有效。“,” 表示并集 and表示交集 browserslist webpack插件需求 页面加载时判断当前浏览器是否在兼容列表中，如果不存在，提示浏览器版本过低 离线判断，判断编译到代">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2022-07-21T01:39:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="browlist">
-<meta name="twitter:description" content="作用配置当前项目面向的平台，可以帮助babel、postcss识别出当前内容中哪些是需要转换 配置支持字符串和对象的配置防范，对于字符串的配置可以使用npx browserlist string 检查字符串配置是否有效。TODO: 字符串配置对象详解">
+<meta name="twitter:description" content="作用配置当前项目面向的平台，可以帮助babel、postcss识别出当前内容中哪些是需要转换 配置支持字符串和对象的配置防范，对于字符串的配置可以使用npx browserlist string 检查字符串配置是否有效。“,” 表示并集 and表示交集 browserslist webpack插件需求 页面加载时判断当前浏览器是否在兼容列表中，如果不存在，提示浏览器版本过低 离线判断，判断编译到代">
 
 
 
@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  85 字
+                  440 字
                 </span>
               
 
@@ -454,7 +454,20 @@
 
       
         <h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>配置当前项目面向的平台，可以帮助babel、postcss识别出当前内容中哪些是需要转换</p>
-<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>支持字符串和对象的配置防范，对于字符串的配置可以使用npx browserlist string 检查字符串配置是否有效。<br>TODO: 字符串配置对象详解</p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>支持字符串和对象的配置防范，对于字符串的配置可以使用npx browserlist string 检查字符串配置是否有效。<br>“,” 表示并集 and表示交集</p>
+<h3 id="browserslist-webpack插件"><a href="#browserslist-webpack插件" class="headerlink" title="browserslist webpack插件"></a>browserslist webpack插件</h3><h4 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h4><ol>
+<li>页面加载时判断当前浏览器是否在兼容列表中，如果不存在，提示浏览器版本过低</li>
+<li>离线判断，判断编译到代码中</li>
+<li>打包时如果使用的浏览器是低版本，用户的浏览器高于高于这个版本处理。</li>
+<li>如果webpack打包的环境不具备联网功能，需要支持手动上传查询文件功能</li>
+</ol>
+<h4 id="技术预研"><a href="#技术预研" class="headerlink" title="技术预研"></a>技术预研</h4><ol>
+<li>离线判断需要编写webpack 插件，在生产打包时动态的查询然后将结果编译成chunk吗，并在入口文件中引用并提示。</li>
+<li>不能在每个页面都做判断逻辑，能不能只判断依次，然后将结果缓存起来。</li>
+</ol>
+<p>基于上面的逻辑找到了一个好东西 <a href="https://github.com/browserslist/browserslist-useragent-regexp，这个库可以根据配置生成" target="_blank" rel="noopener">https://github.com/browserslist/browserslist-useragent-regexp，这个库可以根据配置生成</a> js 正则表达式，不过这个库的查询逻辑是自行实现的，不支持用户实现查询好浏览器后手动添加。</p>
+<h4 id="解决-browserslist-useragent-regexp-缺少的离线查询功能"><a href="#解决-browserslist-useragent-regexp-缺少的离线查询功能" class="headerlink" title="解决 browserslist-useragent-regexp 缺少的离线查询功能"></a>解决 browserslist-useragent-regexp 缺少的离线查询功能</h4><p>原作者一直的更新，我们需要改动的只是 /src/browsers/browserslist.ts 中的getBrowsersList代码，新增从本地获取的逻辑。使用git action 每天定期的从原仓库拉取代码，如果有新的tag，将原始代码和本地代码混合， 重新打包发布新的。</p>
+<p>#### </p>
 
       
     </div>
@@ -572,7 +585,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-count">92</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -644,7 +657,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#作用"><span class="nav-number">1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置"><span class="nav-number">2.</span> <span class="nav-text">配置</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#作用"><span class="nav-number">1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置"><span class="nav-number">2.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#browserslist-webpack插件"><span class="nav-number">3.</span> <span class="nav-text">browserslist webpack插件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#需求"><span class="nav-number">3.1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#技术预研"><span class="nav-number">3.2.</span> <span class="nav-text">技术预研</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决-browserslist-useragent-regexp-缺少的离线查询功能"><span class="nav-number">3.3.</span> <span class="nav-text">解决 browserslist-useragent-regexp 缺少的离线查询功能</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -678,7 +691,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">77.7k</span>
+    <span title="博客全站字数共计">80.2k</span>
   
 </div>
 

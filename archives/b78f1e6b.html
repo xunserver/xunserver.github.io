@@ -438,7 +438,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  906 字
+                  2.3k 字
                 </span>
               
 
@@ -454,7 +454,7 @@
                   <span class="post-meta-item-text">阅读时长 </span>
                 
                 <span title="阅读时长">
-                  3 分钟
+                  8 分钟
                 </span>
               
             </div>
@@ -506,6 +506,60 @@
 <h2 id="任意高度的展开动画效果"><a href="#任意高度的展开动画效果" class="headerlink" title="任意高度的展开动画效果"></a>任意高度的展开动画效果</h2><p>通过过度 max-* 来实现效果<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">    <span class="attribute">max-height</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">overflow</span>: hidden;</span><br><span class="line">    <span class="attribute">transition</span>: max-height .<span class="number">25s</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.element</span><span class="selector-class">.active</span> &#123;</span><br><span class="line">    <span class="attribute">max-height</span>: <span class="number">666px</span>; <span class="comment">/* 一个足够大的最大高度值 */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h2 id="幽灵空白节点"><a href="#幽灵空白节点" class="headerlink" title="幽灵空白节点"></a>幽灵空白节点</h2><p>在 HTML5 文档声明中，内联元素的所有解析和渲染表现就如同每个行框盒子的前面有一个“空白节点”一样。<br><code>&lt;div&gt;&lt;span&gt;&lt;/span&gt;&lt;/div&gt;</code>  高度为span空白节点的高度</p>
 <h2 id="内联元素的定义"><a href="#内联元素的定义" class="headerlink" title="内联元素的定义"></a>内联元素的定义</h2><p>可以看做外在盒子是 inline 的元素</p>
+<h2 id="BFC"><a href="#BFC" class="headerlink" title="BFC"></a>BFC</h2><p>块级格式化上下文</p>
+<ol>
+<li>格式化上下文中的box在垂直方向排列</li>
+<li>上下文中的垂直margin会合并，取最大那个</li>
+<li>上下文中margin-left 会和容器的border-left 紧贴</li>
+<li>上下文中高度会考虑浮动元素</li>
+<li>上下文中的子元素不会和float-box 重叠</li>
+<li>两个不同的BFC不会触发margin 重叠</li>
+</ol>
+<p>盒子默认情况不下触发BFC，通过下面几种方式开启</p>
+<ol>
+<li>html 默认是BFC</li>
+<li>存在float</li>
+<li>overflow 不等于visible</li>
+<li>display: inline-block inline-table table-cell</li>
+<li>position 是absolute或者fixed </li>
+</ol>
+<h2 id="字体大小"><a href="#字体大小" class="headerlink" title="字体大小"></a>字体大小</h2><p>字体大小建议设置为偶数倍，因为windows的默认字体支持的是偶数倍，对于奇数字体会表现成大小相同，但是间距变大的情况</p>
+<p>## </p>
+<h2 id="元素设置100-的参考"><a href="#元素设置100-的参考" class="headerlink" title="元素设置100%的参考"></a>元素设置100%的参考</h2><p>padding: 包含块的宽度<br>margin: 包含块的宽度<br>border: // 不能使用百分比<br>font-size: 相对于父元素的文子大小<br>background-size： 相对于背景区域来设置图片大小，只设置一遍另一边会等图片比例获取（auto）<br>height: 包含块高度<br>width: 包含块宽度<br>left: 包含块宽度，从包含块的padding开始计算<br>top: 包含块高度<br>translate: 根据子元素本身，（考虑子元素box-size情况,相对的是border-box 计算的宽度或者高度（加了border还有padding还有content的宽度）</p>
+<h2 id="居中"><a href="#居中" class="headerlink" title="居中"></a>居中</h2><h3 id="水平居中"><a href="#水平居中" class="headerlink" title="水平居中"></a>水平居中</h3><ol>
+<li>inline-block + 父元素text-align: center</li>
+<li>absolute left:50%  margin-left: 50px;</li>
+<li>absolute left:calc(50% - 50px);</li>
+<li>absolute left: 0 right: 0  margin: auto;</li>
+<li>absolute left: 50%  transform: translate(-50%);</li>
+<li>flex  justify-content: center;</li>
+</ol>
+<h3 id="垂直居中"><a href="#垂直居中" class="headerlink" title="垂直居中"></a>垂直居中</h3><ol>
+<li>line-height 和 vertical-algin: middle </li>
+<li>flex align-items: center;<h2 id="css特殊关键字"><a href="#css特殊关键字" class="headerlink" title="css特殊关键字"></a>css特殊关键字</h2></li>
+<li>unset 如果该属性是能够继承，表现和inherit 相同，如果是不能继承，使用initial</li>
+<li>initial 初始值</li>
+<li>none 表示忽略这条属性的解析</li>
+<li>auto</li>
+<li>inherit  父元素的值, 即使当前属性不能被继承</li>
+</ol>
+<h4 id><a href="#" class="headerlink" title></a><color></color></h4><ol>
+<li>transparent  表示rgba(0, 0, 0, 0)</li>
+<li>currentColor 表示当前色，一般指文本的颜色</li>
+</ol>
+<h3 id="grid"><a href="#grid" class="headerlink" title="grid"></a>grid</h3><h4 id="规划单元格"><a href="#规划单元格" class="headerlink" title="规划单元格"></a>规划单元格</h4><p>grid-template: grid-template-rows / grid-template-columns  设置单元格轨道大小，fr 等比分配剩余空间，repeat类似于宏命令，会重复执行<br>在规划单元格时，通过 200px [col1-start] 这种方式可以给轨道线命令，如果一个轨道两侧的轨道线命令方式[x-start] 和 [x-end], 这个轨道将会被命令x   </p>
+<p>其中有auto-fill 和 auto-fit 能够在repeat中被使用，正常情况下，两个取值相同，在和minmax(200px, 1fr) 配置时有区别 ，autofill是使用先最小的200px来填充，比如总宽度是1500px, auto-fill 先填充7个单元格（即使没有7个项目），再将剩余的100px分配到7个单元格上面。auto-fit是先按照子项目个数来确定初始单元格，比如子项目只有3个， 单元格是按照3个来分配，再把剩余空间分配给这三个单元格。</p>
+<p>还有比较常见的是百分比，百分比大小是根据容器的的宽度或者高度来计算的，如果是存在gap的情况，比如3等分需要repeat(3, calc(100% - 2 * 10px) / 3)来计算</p>
+<p>还有个两个属性max-content和min-content, 一个会尽量把剩余空间填充满， 一个会最小填充。 auto等价于max-content</p>
+<p>通过grid-template-area: “top      top”<br>                        “content content”<br>                        “……. content”</p>
+<p>这种方式还能生成具名的轨道，其中连续的… 会被处理成匿名的块。生成具名的轨道也会默认生成轨道线,比如[top-start] 和 [top-end]</p>
+<p>大部分情况都写具体的属性， 不要用简写。不方便理解。</p>
+<h4 id="摆设单元格"><a href="#摆设单元格" class="headerlink" title="摆设单元格"></a>摆设单元格</h4><p>子项目通过摆设有三种情况，如果设置了order属性，按照order的大小，小的值有限排列<br>如果设置了grid-column或者grid-row，优先排列有定位属性的。，剩下的就是自动排列，规则是轨道的开始线必须要在上一个自动排序的项目后面</p>
+<p>grid-areas: 设置子项目的具名轨道或者是grid-row-start / grid-column-start/ xx /xx 的缩写</p>
+<p>子元素的定位是要么选择两边，要么选择一边再选择span的块，要么只选择span，span 指的是横跨的个数，也可以指定到横跨的具名轨道 span main表示横跨到下一个main之前(包含这个main)</p>
+<h4 id="对齐"><a href="#对齐" class="headerlink" title="对齐"></a>对齐</h4><p>容器对齐 如果容器中子元素并不能撑满容器，比如容器长1000px；规划了3个轨道，一个轨道长200px; 就会有400px的空白<br>通过 justify-content 主轴方向调整 align-content 副轴调整或者 place-content简写来调整</p>
+<p>子项目对齐，子项目能够通过容器统一调整或者子项目本身调整。<br>place-items = justify-items / align-items 容器统一调整<br>place-self = justify-self / align-self 子项目调整</p>
+<p>注意区分<br>space-around - 在每个网格项目之间放置均匀的空间，在远端有一半大小的空间（子项目左右两边有相同间距，两个子项目相邻就会有两个间距， 第一个项目左边的空间只有中间的空间的一半）<br>space-between - 在每个网格项目之间放置均匀的空间，远端没有空间<br>space-evenly - 在每个网格项目之间放置均匀的空间，包括远端（子项目左右共享间距，这样第一个子项目左边的空间和中间的间隙是相同的）</p>
 
       
     </div>
@@ -633,7 +687,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-count">92</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -705,7 +759,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#块级元素"><span class="nav-number">2.</span> <span class="nav-text">块级元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#list-item-出现项目符号理解"><span class="nav-number">3.</span> <span class="nav-text">list-item 出现项目符号理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#理解width：auto"><span class="nav-number">4.</span> <span class="nav-text">理解width：auto</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元素的宽度是由什么决定的？"><span class="nav-number">5.</span> <span class="nav-text">元素的宽度是由什么决定的？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#外部尺寸"><span class="nav-number">5.1.</span> <span class="nav-text">外部尺寸</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内部尺寸"><span class="nav-number">5.2.</span> <span class="nav-text">内部尺寸</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#伪元素-after-before-的定义"><span class="nav-number">6.</span> <span class="nav-text">伪元素::after ::before 的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#宽度分离"><span class="nav-number">7.</span> <span class="nav-text">宽度分离</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#宽度100-和-高度100"><span class="nav-number">8.</span> <span class="nav-text">宽度100% 和 高度100%</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何让高度支持100"><span class="nav-number">9.</span> <span class="nav-text">如何让高度支持100%</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#超越-important和超越最大"><span class="nav-number">10.</span> <span class="nav-text">超越! important和超越最大</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#任意高度的展开动画效果"><span class="nav-number">11.</span> <span class="nav-text">任意高度的展开动画效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#幽灵空白节点"><span class="nav-number">12.</span> <span class="nav-text">幽灵空白节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内联元素的定义"><span class="nav-number">13.</span> <span class="nav-text">内联元素的定义</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#块级元素"><span class="nav-number">2.</span> <span class="nav-text">块级元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#list-item-出现项目符号理解"><span class="nav-number">3.</span> <span class="nav-text">list-item 出现项目符号理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#理解width：auto"><span class="nav-number">4.</span> <span class="nav-text">理解width：auto</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元素的宽度是由什么决定的？"><span class="nav-number">5.</span> <span class="nav-text">元素的宽度是由什么决定的？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#外部尺寸"><span class="nav-number">5.1.</span> <span class="nav-text">外部尺寸</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内部尺寸"><span class="nav-number">5.2.</span> <span class="nav-text">内部尺寸</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#伪元素-after-before-的定义"><span class="nav-number">6.</span> <span class="nav-text">伪元素::after ::before 的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#宽度分离"><span class="nav-number">7.</span> <span class="nav-text">宽度分离</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#宽度100-和-高度100"><span class="nav-number">8.</span> <span class="nav-text">宽度100% 和 高度100%</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何让高度支持100"><span class="nav-number">9.</span> <span class="nav-text">如何让高度支持100%</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#超越-important和超越最大"><span class="nav-number">10.</span> <span class="nav-text">超越! important和超越最大</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#任意高度的展开动画效果"><span class="nav-number">11.</span> <span class="nav-text">任意高度的展开动画效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#幽灵空白节点"><span class="nav-number">12.</span> <span class="nav-text">幽灵空白节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内联元素的定义"><span class="nav-number">13.</span> <span class="nav-text">内联元素的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BFC"><span class="nav-number">14.</span> <span class="nav-text">BFC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字体大小"><span class="nav-number">15.</span> <span class="nav-text">字体大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元素设置100-的参考"><span class="nav-number">16.</span> <span class="nav-text">元素设置100%的参考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#居中"><span class="nav-number">17.</span> <span class="nav-text">居中</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#水平居中"><span class="nav-number">17.1.</span> <span class="nav-text">水平居中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#垂直居中"><span class="nav-number">17.2.</span> <span class="nav-text">垂直居中</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#css特殊关键字"><span class="nav-number">18.</span> <span class="nav-text">css特殊关键字</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#"><span class="nav-number">18.0.1.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#grid"><span class="nav-number">18.1.</span> <span class="nav-text">grid</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#规划单元格"><span class="nav-number">18.1.1.</span> <span class="nav-text">规划单元格</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#摆设单元格"><span class="nav-number">18.1.2.</span> <span class="nav-text">摆设单元格</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对齐"><span class="nav-number">18.1.3.</span> <span class="nav-text">对齐</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -739,7 +793,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">77.7k</span>
+    <span title="博客全站字数共计">80.2k</span>
   
 </div>
 
