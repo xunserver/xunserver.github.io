@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  347 字
+                  351 字
                 </span>
               
 
@@ -455,7 +455,7 @@
       
         <h3 id="axios-中间件"><a href="#axios-中间件" class="headerlink" title="axios 中间件"></a>axios 中间件</h3><p>axios将拦截函数处理成pormise的resolve和reject函数，通过promise链来完成中间件<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">axios.interceptors.request.use(<span class="function">(<span class="params">config</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        ...config,</span><br><span class="line">        name: <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;, (err) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        error: error</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">axios.use = <span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    axios.interceptorsData.push(&#123;</span><br><span class="line">        resolve, reject</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">axios.run = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> result = <span class="built_in">Promise</span>.resolve();</span><br><span class="line">    axios.interceptorsData.reduce(<span class="function">(<span class="params">promise, current</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> promise.then(current.resolve).catch(current.reject)</span><br><span class="line">    &#125;)  <span class="comment">// 通过一次性构建promise链实现</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h3 id="vuex中间件"><a href="#vuex中间件" class="headerlink" title="vuex中间件"></a>vuex中间件</h3><p>vuex 中间通过aop的方式添加中间件，在原有处理逻辑上增加前置或者后置操作<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">vuex.plugin = <span class="function">(<span class="params">&#123;before, after&#125;</span>) =&gt;</span> &#123;</span><br><span class="line">    vuex.dispatch.before(before)</span><br><span class="line">    vuex.dispatch.before(after)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Function</span>.prototype.before = <span class="function"><span class="keyword">function</span>(<span class="params">beforeFn</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> fn = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">...args</span>) </span>&#123;</span><br><span class="line">        beforeFn.apply(<span class="keyword">this</span>, args);</span><br><span class="line">        <span class="keyword">return</span> fn.apply(thism, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="reduce中间件"><a href="#reduce中间件" class="headerlink" title="reduce中间件"></a>reduce中间件</h3><p>通过组合函数的形式，将函数的结果传入下一个函数，compose(fn1, fn2, fn3) = fn3(fn2(fn1()))</p>
+<h3 id="reduce中间件"><a href="#reduce中间件" class="headerlink" title="reduce中间件"></a>reduce中间件</h3><p>通过组合函数的形式，将函数的结果传入下一个函数，compose(fn1, fn2, fn3) = fn3(fn2(fn1()))，见store篇章</p>
 <h3 id="koa中间件"><a href="#koa中间件" class="headerlink" title="koa中间件"></a>koa中间件</h3><p>有点像yeild的方式，每次调用中间件，都是把下一个中间的传入。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">middleware.use(<span class="function">(<span class="params">ctx, next</span>)=&gt;</span> &#123;</span><br><span class="line">    ctx.xxx = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">await</span> next()</span><br><span class="line">    <span class="built_in">console</span>.log(ctx.xxx)</span><br><span class="line">&#125;)</span><br><span class="line">middleware.run = <span class="function">(<span class="params">i=<span class="number">0</span></span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> current = middleware.data[i]   <span class="comment">// 保存的所有中间件</span></span><br><span class="line">    <span class="keyword">if</span>(!current[i]) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(fn(ctx, middleware.run(i + <span class="number">1</span>)))  <span class="comment">// 通过这种方式实现</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>本质上中间件是一个按照既定模板来实现流式编程的工具，通过这种方式，外部的代码可以侵入到内部实现去耦合</p>
 
@@ -491,6 +491,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archives/f235dcea.html" rel="prev" title="vue中的高阶组件">
+                vue中的高阶组件 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -571,7 +575,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">92</span>
+                  <span class="site-state-item-count">96</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -677,7 +681,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">80.2k</span>
+    <span title="博客全站字数共计">82.9k</span>
   
 </div>
 

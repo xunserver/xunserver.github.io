@@ -8,11 +8,9 @@ const compose = (...fns) => {
         }
     }
 
-    return function(...args) {
-        return fns.slice(1).reduce((pre, next) => {
-            return next.call(this, pre);
-        }, fns[0].apply(this, args))
-    }
+    return fns.reduce((a, b) => {
+        return (...args) => b(a(...args))
+    }) 
 }
 
 const curring = (fn, ...initArgs) => {
@@ -31,12 +29,13 @@ const curring = (fn, ...initArgs) => {
     }
 }
 
-const f1 = (x, y) => x + y + 1; 
-const f2 = (x) => x + 2; 
-const f3 = (x) => x + 3; 
-const f4 = (x) => x + 4; 
+const fn1 = (lastResult) => () => {
 
-var a = curring(f1, 1,)
+}
+
+const fn2 = (lastResult) => () => {
+
+}
 
 
 
