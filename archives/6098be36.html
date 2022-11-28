@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  278 字
+                  707 字
                 </span>
               
 
@@ -432,7 +432,7 @@
                   <span class="post-meta-item-text">阅读时长 </span>
                 
                 <span title="阅读时长">
-                  1 分钟
+                  2 分钟
                 </span>
               
             </div>
@@ -459,7 +459,7 @@
 </li>
 <li><p>嵌套路由中子路由如果使用绝对路径代表路由不嵌套，只嵌套组件。</p>
 </li>
-<li><p>新版本vue-router 支持正则表达式的匹配。详情见文档</p>
+<li><p>新版本vue-router 支持正则表达式的匹配，同时取消了*匹配符，404页面使用正则来匹配</p>
 </li>
 <li><p>支持命令路由和命令视图, 大致意思是同一个url，可以渲染多个视图。<router-view name="slider"> ，路由配置中通过components: {default: xxx, slider: xxx} 形式配置</router-view></p>
 </li>
@@ -468,8 +468,33 @@
 </li>
 <li><p>支持相对重定向和动态重定向，相对重定向对于当前路由，绝对重定向通过传入一个函数实现</p>
 </li>
+<li><p>router-link 支持v-slot，将跳转能力自自定义。</p>
+</li>
+<li><p>同时router-view 也支持v-slot，能将路由页面进行包裹</p>
+</li>
 </ol>
-<h3 id="路由导航"><a href="#路由导航" class="headerlink" title="路由导航"></a>路由导航</h3>
+<h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><ol>
+<li>组件内beforeRouterLeave</li>
+<li>全局的beforeEach</li>
+<li>路由的beforeEach</li>
+<li>组件内的beforeEnter</li>
+<li>全局的beforeResolve</li>
+<li>全局的afterEach</li>
+<li>新路由的beforeCreated到beforeMounted</li>
+<li>老路由组件的销毁</li>
+<li>新路由mounted</li>
+</ol>
+<h3 id="几个关键概念-RouterRecord-和-RouterLocation"><a href="#几个关键概念-RouterRecord-和-RouterLocation" class="headerlink" title="几个关键概念 RouterRecord 和 RouterLocation"></a>几个关键概念 RouterRecord 和 RouterLocation</h3><p>RouterRecord 表示路由表，指的是用户在配置路由时的定义，用户配置时RouterRecordRaw，vue-router内部补全成RouterRecordNormalized。理解成路由实例的构造器选项</p>
+<p>RouterLocation是实际生效的路由，理解成路由的实例化。其中RouterLocationRaw用于push的参数，相当于根据RouterLocationRaw查找到具体的路由。在to和from以及matched中$route均是这个对象</p>
+<h3 id="源码解析"><a href="#源码解析" class="headerlink" title="源码解析"></a>源码解析</h3><h4 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h4><ol>
+<li>通过mixin添加在beforeCreated中添加绑定_currentRoot._router和_currentRoot._route 属性，在Vue.prototype中将两个$route和$router代理到上面两个属性上.</li>
+<li>注册两个全局组件router-link 和 router-view</li>
+<li>同时还添加了防止重复安装的判断</li>
+</ol>
+<h4 id="new-VueRouter-Routes"><a href="#new-VueRouter-Routes" class="headerlink" title="new VueRouter(Routes)"></a>new VueRouter(Routes)</h4><p>大致过程就是递归的根据的传入的RouteRecordRaw 生成路由记录表，并生成nameMap和pathMap，同时生成match函数，通过调用match函数获取当前匹配的路由表</p>
+<h4 id="router-init"><a href="#router-init" class="headerlink" title="router.init()"></a>router.init()</h4><p>在安装插件时根据是否是根路由，对不同的路由模式添加监听，监听函数主要对url变化时，调整当前激活的路由写入到全局$route中</p>
+<h4 id="router-view"><a href="#router-view" class="headerlink" title="router-view"></a>router-view</h4><p>router总是监听当前$route的变化并喧嚷路由对应的界面。通过添加$dataView参数标记自身，查找自身的深度来渲染matched数组的第几项。</p>
+
       
     </div>
     
@@ -586,7 +611,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">96</span>
+                  <span class="site-state-item-count">98</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -658,7 +683,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础中需要注意的点"><span class="nav-number">1.</span> <span class="nav-text">基础中需要注意的点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路由导航"><span class="nav-number">2.</span> <span class="nav-text">路由导航</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础中需要注意的点"><span class="nav-number">1.</span> <span class="nav-text">基础中需要注意的点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生命周期"><span class="nav-number">2.</span> <span class="nav-text">生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几个关键概念-RouterRecord-和-RouterLocation"><span class="nav-number">3.</span> <span class="nav-text">几个关键概念 RouterRecord 和 RouterLocation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源码解析"><span class="nav-number">4.</span> <span class="nav-text">源码解析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装插件"><span class="nav-number">4.1.</span> <span class="nav-text">安装插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#new-VueRouter-Routes"><span class="nav-number">4.2.</span> <span class="nav-text">new VueRouter(Routes)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#router-init"><span class="nav-number">4.3.</span> <span class="nav-text">router.init()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#router-view"><span class="nav-number">4.4.</span> <span class="nav-text">router-view</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -692,7 +717,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">82.9k</span>
+    <span title="博客全站字数共计">84.8k</span>
   
 </div>
 
