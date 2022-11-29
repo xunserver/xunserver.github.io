@@ -88,18 +88,18 @@
 
 
 
-<meta name="description" content="react 的 diffa b c da b c da d c blast 0last 0 a d b clast 0 a d c blast 0 a">
+<meta name="description" content="简单diff简单diff的思路是判断新列表的节点是否是递增的，如果不是递增的旧列表中的节点移动到新列表中节点的前一位的后面。1234567891011121314151617export const reactDiff = (prevVnodeList, newVnodeList) =&amp;gt; &amp;#123;    let lastIndex = 0;    for(let i = 0; i &amp;lt">
 <meta name="keywords" content="博客,xunsever,bang">
 <meta property="og:type" content="article">
 <meta property="og:title" content="diff算法">
 <meta property="og:url" content="https://blog.xunserver.cn/archives/3387ce12.html">
 <meta property="og:site_name" content="bang">
-<meta property="og:description" content="react 的 diffa b c da b c da d c blast 0last 0 a d b clast 0 a d c blast 0 a">
+<meta property="og:description" content="简单diff简单diff的思路是判断新列表的节点是否是递增的，如果不是递增的旧列表中的节点移动到新列表中节点的前一位的后面。1234567891011121314151617export const reactDiff = (prevVnodeList, newVnodeList) =&amp;gt; &amp;#123;    let lastIndex = 0;    for(let i = 0; i &amp;lt">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2022-11-23T03:26:05.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="diff算法">
-<meta name="twitter:description" content="react 的 diffa b c da b c da d c blast 0last 0 a d b clast 0 a d c blast 0 a">
+<meta name="twitter:description" content="简单diff简单diff的思路是判断新列表的节点是否是递增的，如果不是递增的旧列表中的节点移动到新列表中节点的前一位的后面。1234567891011121314151617export const reactDiff = (prevVnodeList, newVnodeList) =&amp;gt; &amp;#123;    let lastIndex = 0;    for(let i = 0; i &amp;lt">
 
 
 
@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  25 字
+                  127 字
                 </span>
               
 
@@ -453,8 +453,8 @@
       
 
       
-        <h3 id="react-的-diff"><a href="#react-的-diff" class="headerlink" title="react 的 diff"></a>react 的 diff</h3><p>a b c d<br>a b c d<br>a d c b<br>last 0<br>last 0 a d b c<br>last 0 a d c b<br>last 0 a</p>
-
+        <h3 id="简单diff"><a href="#简单diff" class="headerlink" title="简单diff"></a>简单diff</h3><p>简单diff的思路是判断新列表的节点是否是递增的，如果不是递增的旧列表中的节点移动到新列表中节点的前一位的后面。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> reactDiff = <span class="function">(<span class="params">prevVnodeList, newVnodeList</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> lastIndex = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; newVnodeList.length; i++) &#123;</span><br><span class="line">        <span class="keyword">const</span> newVnode = newVnodeList[i];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; newVnodeList.length; j++) &#123;</span><br><span class="line">            <span class="keyword">const</span> prevVnode = prevVnodeList[j];</span><br><span class="line">            <span class="keyword">if</span>(newVnode.key === prevVnode.key) &#123;</span><br><span class="line">                patchDom(prevVnode, newVnode)</span><br><span class="line">                <span class="keyword">if</span>(j &gt;= lastIndex) &#123;</span><br><span class="line">                    lastIndex = j;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    parent.insertBefore(newVnode.el, newChildren[i<span class="number">-1</span>].el.nextSibling)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="双端diff"><a href="#双端diff" class="headerlink" title="双端diff"></a>双端diff</h3>
       
     </div>
     
@@ -571,7 +571,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">98</span>
+                  <span class="site-state-item-count">99</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -643,7 +643,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#react-的-diff"><span class="nav-number">1.</span> <span class="nav-text">react 的 diff</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单diff"><span class="nav-number">1.</span> <span class="nav-text">简单diff</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#双端diff"><span class="nav-number">2.</span> <span class="nav-text">双端diff</span></a></li></ol></div>
             
 
           </div>
@@ -677,7 +677,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">84.8k</span>
+    <span title="博客全站字数共计">85.6k</span>
   
 </div>
 
