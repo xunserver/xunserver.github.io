@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.xunserver.cn/"/>
-  <updated>2022-11-29T05:10:59.000Z</updated>
+  <updated>2022-11-30T03:28:44.000Z</updated>
   <id>https://blog.xunserver.cn/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>npm包的CI和changeset</title>
+    <link href="https://blog.xunserver.cn/archives/69a9cdfe.html"/>
+    <id>https://blog.xunserver.cn/archives/69a9cdfe.html</id>
+    <published>2022-11-30T03:28:44.000Z</published>
+    <updated>2022-11-30T03:28:44.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>目前的config仓库按照monorepo的方式存放的，里面有完全不同种类的的config包，大部分包的依赖的都是独立的,也有部分公共的包比如typescript和prettier。同时各个仓库的发布阶段都是交给github-action在做CI如何设计。</p><h3 id="changeset"><a href="#changeset" class="headerlink" title="changeset"></a>changeset</h3><p>changeset生成能够被消耗的changeset描述文件, 开发自行调整描述文件， changeset version消耗描述文件，调整需要发布的包， changeset publish到各个包发布，流程很简单。<br>按照下面步骤描述下细节</p><ol><li><p>changeset init 初始化changeset配置</p></li><li><p>changeset add 对当前更改新增描述文件，changeset add 会自动的查找到当前的修改的包，前提是没有commit的情况下</p></li><li><p>选择包进入命令式的交互填写，主要写需要更新那些包。通过patch minor 或者major的方式更新包。</p></li><li><p>changeset version消耗刚才描述文件来对包进行version的更新。</p></li><li><p>changeset publish 会到各个包下面进行npm publish，这个步骤也可以通过自行publish实现</p></li></ol><h3 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h3><ol><li><p>每次在本地生成changeset文件，github action读取到有changeset 自动走changeset version 和 pnpm publish。这个方案发包总是要自己填一些交互文件，而且对于changeset version后新的version如何提交到仓库需要自行处理</p></li><li><p>本地只有提交代码，发布包的工作全部交给github action，实际上就是简化版本</p></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;目前的config仓库按照monorepo的方式存放的，里面有完全不同种类的的config包，大部分包的依赖的都是独立的,也有部分公共的包比
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>重绘回流</title>
@@ -410,20 +431,6 @@
         &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;最近弄公司的大文件上传，实现了分片、暂停、继续、断点续传和秒传，记录一些过程中的细节。&lt;/p&gt;
 &lt;h3 id=&quot;buffer、blob和ar
       
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>系统样式设计</title>
-    <link href="https://blog.xunserver.cn/archives/60273c5f.html"/>
-    <id>https://blog.xunserver.cn/archives/60273c5f.html</id>
-    <published>2022-07-28T01:15:24.000Z</published>
-    <updated>2022-07-28T01:15:24.000Z</updated>
-    
-    <summary type="html">
     
     </summary>
     

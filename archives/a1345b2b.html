@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.3k 字
+                  2.4k 字
                 </span>
               
 
@@ -432,7 +432,7 @@
                   <span class="post-meta-item-text">阅读时长 </span>
                 
                 <span title="阅读时长">
-                  8 分钟
+                  9 分钟
                 </span>
               
             </div>
@@ -528,6 +528,7 @@
 <h3 id="n-包管理器是啥"><a href="#n-包管理器是啥" class="headerlink" title="n 包管理器是啥"></a>n 包管理器是啥</h3><p>ni xx -S =&gt; npm i xxx -S<br>nr =&gt; npm run<br>nrm =&gt; npm uninstall<br>nx =&gt; npm execute </p>
 <p>n 会自动检查项目下存在package-lock.json、yarn.lock或者pnpm-lock.yaml 自动选择包管理器安装。</p>
 <h3 id="npmrc、-yarnrc和-pnpmrc"><a href="#npmrc、-yarnrc和-pnpmrc" class="headerlink" title=".npmrc、.yarnrc和.pnpmrc"></a>.npmrc、.yarnrc和.pnpmrc</h3><p>npmrc格式是key=value的形式 value和key有空格需要用””包起来<br>yarnrc格式是key value 的形式，有空格需要用””包裹<br>pnpmrc使用的npmrc配置</p>
+<h3 id="packageJson中需要关注的字段"><a href="#packageJson中需要关注的字段" class="headerlink" title="packageJson中需要关注的字段"></a>packageJson中需要关注的字段</h3><p>dependencies: 生产依赖，总是会被安装<br>dev dependencies: 如果这个包出现在首应用中，总是会被安装，如果是作为另一个包的依赖，则不会安装，比如A依赖了B，B中定义dev dependencies的不会被安装<br>peer dependencies：声明这个包不是我需要直接安装的，我只是需要这个包，要求依赖方自行安装依赖。npm7后也会自动安装。安装过程如果碰到重复依赖不能处理的情况会报错，添加–legacy-peer-dep 会忽略冲突的依赖，以先安装的为准</p>
 
       
     </div>
@@ -645,7 +646,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">99</span>
+                  <span class="site-state-item-count">100</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -717,7 +718,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#npm-下载包流程"><span class="nav-number">1.</span> <span class="nav-text">npm 下载包流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#npm-本地添加离线包"><span class="nav-number">2.</span> <span class="nav-text">npm 本地添加离线包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yarn-常用命令"><span class="nav-number">3.</span> <span class="nav-text">yarn 常用命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mutilRepo-和-monoRepo"><span class="nav-number">4.</span> <span class="nav-text">mutilRepo 和 monoRepo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#npm-痛点"><span class="nav-number">5.</span> <span class="nav-text">npm 痛点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pnpm-解决的痛点"><span class="nav-number">6.</span> <span class="nav-text">pnpm 解决的痛点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pnpm"><span class="nav-number">7.</span> <span class="nav-text">pnpm</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常用的命令"><span class="nav-number">7.1.</span> <span class="nav-text">常用的命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#npm-config"><span class="nav-number">7.2.</span> <span class="nav-text">npm_config</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#packageJSON需要关注的字段"><span class="nav-number">7.3.</span> <span class="nav-text">packageJSON需要关注的字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pnpm-解决patch问题"><span class="nav-number">7.4.</span> <span class="nav-text">pnpm 解决patch问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pnpm-命令补全"><span class="nav-number">7.5.</span> <span class="nav-text">pnpm 命令补全</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用好pnpm的关键-–filter-F"><span class="nav-number">7.6.</span> <span class="nav-text">用好pnpm的关键  –filter -F</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pnpm生产实战"><span class="nav-number">7.7.</span> <span class="nav-text">pnpm生产实战</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pnpm-发布流程控制"><span class="nav-number">8.</span> <span class="nav-text">pnpm 发布流程控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#只允许pnpm"><span class="nav-number">9.</span> <span class="nav-text">只允许pnpm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#n-包管理器是啥"><span class="nav-number">10.</span> <span class="nav-text">n 包管理器是啥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#npmrc、-yarnrc和-pnpmrc"><span class="nav-number">11.</span> <span class="nav-text">.npmrc、.yarnrc和.pnpmrc</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#npm-下载包流程"><span class="nav-number">1.</span> <span class="nav-text">npm 下载包流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#npm-本地添加离线包"><span class="nav-number">2.</span> <span class="nav-text">npm 本地添加离线包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yarn-常用命令"><span class="nav-number">3.</span> <span class="nav-text">yarn 常用命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mutilRepo-和-monoRepo"><span class="nav-number">4.</span> <span class="nav-text">mutilRepo 和 monoRepo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#npm-痛点"><span class="nav-number">5.</span> <span class="nav-text">npm 痛点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pnpm-解决的痛点"><span class="nav-number">6.</span> <span class="nav-text">pnpm 解决的痛点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pnpm"><span class="nav-number">7.</span> <span class="nav-text">pnpm</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常用的命令"><span class="nav-number">7.1.</span> <span class="nav-text">常用的命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#npm-config"><span class="nav-number">7.2.</span> <span class="nav-text">npm_config</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#packageJSON需要关注的字段"><span class="nav-number">7.3.</span> <span class="nav-text">packageJSON需要关注的字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pnpm-解决patch问题"><span class="nav-number">7.4.</span> <span class="nav-text">pnpm 解决patch问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pnpm-命令补全"><span class="nav-number">7.5.</span> <span class="nav-text">pnpm 命令补全</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用好pnpm的关键-–filter-F"><span class="nav-number">7.6.</span> <span class="nav-text">用好pnpm的关键  –filter -F</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pnpm生产实战"><span class="nav-number">7.7.</span> <span class="nav-text">pnpm生产实战</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pnpm-发布流程控制"><span class="nav-number">8.</span> <span class="nav-text">pnpm 发布流程控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#只允许pnpm"><span class="nav-number">9.</span> <span class="nav-text">只允许pnpm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#n-包管理器是啥"><span class="nav-number">10.</span> <span class="nav-text">n 包管理器是啥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#npmrc、-yarnrc和-pnpmrc"><span class="nav-number">11.</span> <span class="nav-text">.npmrc、.yarnrc和.pnpmrc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#packageJson中需要关注的字段"><span class="nav-number">12.</span> <span class="nav-text">packageJson中需要关注的字段</span></a></li></ol></div>
             
 
           </div>
@@ -751,7 +752,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">85.6k</span>
+    <span title="博客全站字数共计">86.1k</span>
   
 </div>
 
