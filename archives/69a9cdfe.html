@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  363 字
+                  408 字
                 </span>
               
 
@@ -467,11 +467,13 @@
 <li><p>changeset publish 会到各个包下面进行npm publish，这个步骤也可以通过自行publish实现</p>
 </li>
 </ol>
-<h3 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h3><ol>
-<li><p>每次在本地生成changeset文件，github action读取到有changeset 自动走changeset version 和 pnpm publish。这个方案发包总是要自己填一些交互文件，而且对于changeset version后新的version如何提交到仓库需要自行处理</p>
-</li>
-<li><p>本地只有提交代码，发布包的工作全部交给github action，实际上就是简化版本</p>
-</li>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><ol>
+<li>本地修改代码，运行changeset add 生成消耗文件，可以不修改文件，强行生成changeset文件。</li>
+<li>正常上传代码，github action 根据存在pub来决定是否打包</li>
+<li>github action 运行 changeset version 消耗文件同时修改版本号</li>
+<li>运行pnpm -F “[origin/xx]”… run build 来分别执行相关的包的build</li>
+<li>运行pnpm publish -F “[origin/xxx]” 发布包或者[HEAD]…（当前分支比较）</li>
+<li>使用<code>git add -A</code> git commit -m “” git push 推送包， 也可以通过merge来推送包避免多人修改时的问题</li>
 </ol>
 
       
@@ -506,6 +508,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archives/e4a9508d.html" rel="prev" title="child_process">
+                child_process <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -586,7 +592,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">100</span>
+                  <span class="site-state-item-count">103</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -658,7 +664,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#changeset"><span class="nav-number">2.</span> <span class="nav-text">changeset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案"><span class="nav-number">3.</span> <span class="nav-text">方案</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#changeset"><span class="nav-number">2.</span> <span class="nav-text">changeset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实战"><span class="nav-number">3.</span> <span class="nav-text">实战</span></a></li></ol></div>
             
 
           </div>
@@ -692,7 +698,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">86.1k</span>
+    <span title="博客全站字数共计">87.3k</span>
   
 </div>
 
