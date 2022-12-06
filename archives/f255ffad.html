@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  495 字
+                  1.2k 字
                 </span>
               
 
@@ -432,7 +432,7 @@
                   <span class="post-meta-item-text">阅读时长 </span>
                 
                 <span title="阅读时长">
-                  1 分钟
+                  4 分钟
                 </span>
               
             </div>
@@ -486,6 +486,26 @@
 <li>docker network ls 查看所有的网络</li>
 <li>docker network create -d bridge xxx 创建一个桥接网络（一个新的网络，桥接在原host上面的）</li>
 </ul>
+<p>docker 在安装时默认会生成host和bridge两个网络。重点是bridge网络，通过虚拟网桥docker0和容器的网口连接，虚拟网桥又通过宿主机的iptable进行转发。</p>
+<p>我们每创建一个网络就相当于开了一个子网，可以自定义网关和子网范围</p>
+<h3 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h3><p>docker 能够从Dockerfile文件创建镜像，一般社区中的镜像大部分都是Dockerfile创建，Dockerfile是由一系列指令构成，每一个指令都会构建一层，指令不要太多，功能类似的指令尽量放到一层</p>
+<ul>
+<li>FROM 镜像基础来源，可以是另一个镜像</li>
+<li>RUN 执行命令， 尽量将多个指令合并 &amp;&amp; \</li>
+<li>COPY 复制目录或者文件到镜像中，支持linux通配符 COPY home* /user/src/home, 会自动创建目录，而且会保留文件的元数据（权限等）</li>
+<li>ADD 如果是URL，会直接下载文件（权限600），如果是压缩包会解压。ADD指令不会缓存， 每次都会重新构建。总是使用COPY，需要解压时才使用ADD</li>
+<li>CMD 容器的启动命令，容器总是需要一个默认启动命令 CMD [“nginx”, “-g”, “xx”]</li>
+<li>ENTRYPOINT 如果指明了该项，CMD会作为ENTRYPOINT的参数拼接在后面，常用实现一个命令行工具，比如ENTRYPOINT实现指令 CMD实现参数</li>
+<li>ENV配置镜像默认环境变量，</li>
+<li>ARG 配置在构建过程中的环境变量，而且只在FROM后生效用于辅助构建。但是不会存在到镜像中。比如声明一些变量</li>
+<li>VOLUME 定义匿名卷，VOLUME /data 将/data挂载到匿名卷中，如果容器启动时没有指明卷，就会匿名生成一个，所以不是很关注的卷不需要自己再挂载目录</li>
+<li>EXPOSE 声明容器内部暴露的端口</li>
+<li>WORKDIR 声明每个指令镜像内的工作目录（和build时分开），注意在dockerfile中下面不会工作，因为每条指令是单独的，不会共享<br>  RUN cd /app<br>  RUN echo “sdf” &gt; xx.txt </li>
+<li>USER 指定当前指令之后所有的指令的user，同样也是要在FROM后，而且系统中必须要先创建这个角色</li>
+<li>SHELL 指定RUN ENTRYPOINT CMD指令在哪个shell下运行。默认是[“/bin/sh”, “-c”]</li>
+</ul>
+<h4 id="多阶段构建"><a href="#多阶段构建" class="headerlink" title="多阶段构建"></a>多阶段构建</h4><p>如果不用多阶段构建，需要将上一个容器的内容拷贝(docker cp)到宿主机，再用COPY拷贝到下一个阶段的容器中去<br>FROM ubuntu:lasted as builder<br>WORKDIR /app/data<br>COPY ./test ./test<br>RUN npm build<br>FROM ubuntu:lasted as builder  // 需要和上面一个FROM相同<br>RUN npm run deploy</p>
+<p>docker build -f xxxdockerfile -t nginx:tag ./xxx –target builder<br>注意最后一个./xx 表示构建过程中的上下文，比如COPY ./local/xxx /app 表示的是.local的相对位置， docker会将上下文目录中所有内容拷贝到镜像中，通过.dockerignore忽略部分文件</p>
 <h3 id="docker-compose"><a href="#docker-compose" class="headerlink" title="docker compose"></a>docker compose</h3><p>docker compose文件主要由两部分组成，公共部分和容器部分。公共部分指明当前compose需要创建的网络，数据卷等。容器部分和启动容器类似</p>
 
       
@@ -520,6 +540,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archives/aecba7e5.html" rel="prev" title="通配符">
+                通配符 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -600,7 +624,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">105</span>
+                  <span class="site-state-item-count">106</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -672,7 +696,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#镜像"><span class="nav-number">2.</span> <span class="nav-text">镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#镜像加速器"><span class="nav-number">2.1.</span> <span class="nav-text">镜像加速器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#容器"><span class="nav-number">3.</span> <span class="nav-text">容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据卷"><span class="nav-number">4.</span> <span class="nav-text">数据卷</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-网络"><span class="nav-number">5.</span> <span class="nav-text">docker 网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-compose"><span class="nav-number">6.</span> <span class="nav-text">docker compose</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#镜像"><span class="nav-number">2.</span> <span class="nav-text">镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#镜像加速器"><span class="nav-number">2.1.</span> <span class="nav-text">镜像加速器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#容器"><span class="nav-number">3.</span> <span class="nav-text">容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据卷"><span class="nav-number">4.</span> <span class="nav-text">数据卷</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-网络"><span class="nav-number">5.</span> <span class="nav-text">docker 网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dockerfile"><span class="nav-number">6.</span> <span class="nav-text">Dockerfile</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#多阶段构建"><span class="nav-number">6.1.</span> <span class="nav-text">多阶段构建</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-compose"><span class="nav-number">7.</span> <span class="nav-text">docker compose</span></a></li></ol></div>
             
 
           </div>
@@ -706,7 +730,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">88k</span>
+    <span title="博客全站字数共计">89.2k</span>
   
 </div>
 
