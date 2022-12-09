@@ -88,18 +88,18 @@
 
 
 
-<meta name="description" content="截取字符串\${day_id:0:7} 0 起始位置 7 截取多少个 替换字符串${file/dir/path}：将第一个dir 替换为path：/path1/dir2/dir3/my.file.txt${file//dir/path}：将全部 dir 替换为 path：/path1/path2/path3/my.file.txt 一串的命令执行()和{}()和{}都是对一串的命令进行执行,但有所">
+<meta name="description" content="前言开发中总是遇到各种脚本，目前只能对普调的脚本进行阅读和编写，系统性的记录一篇开发中所需要的脚本技能，同时将平常遇到的脚本难点作为讲解。脚本分为shell脚本和bat脚本 shell脚本处理程序如果对脚本程序需要直接执行，在脚本前面添加#!/user/bin/env sh使用默认执行程序，/user/bin/env 会自动查找环境的sh的程序来执行 对于需要全局使用的脚本，有两种方式，第一个是软">
 <meta name="keywords" content="博客,xunsever,bang">
 <meta property="og:type" content="article">
 <meta property="og:title" content="shell笔记">
 <meta property="og:url" content="https://blog.xunserver.cn/archives/c3711ab9.html">
 <meta property="og:site_name" content="bang">
-<meta property="og:description" content="截取字符串\${day_id:0:7} 0 起始位置 7 截取多少个 替换字符串${file/dir/path}：将第一个dir 替换为path：/path1/dir2/dir3/my.file.txt${file//dir/path}：将全部 dir 替换为 path：/path1/path2/path3/my.file.txt 一串的命令执行()和{}()和{}都是对一串的命令进行执行,但有所">
+<meta property="og:description" content="前言开发中总是遇到各种脚本，目前只能对普调的脚本进行阅读和编写，系统性的记录一篇开发中所需要的脚本技能，同时将平常遇到的脚本难点作为讲解。脚本分为shell脚本和bat脚本 shell脚本处理程序如果对脚本程序需要直接执行，在脚本前面添加#!/user/bin/env sh使用默认执行程序，/user/bin/env 会自动查找环境的sh的程序来执行 对于需要全局使用的脚本，有两种方式，第一个是软">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2020-01-07T08:58:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="shell笔记">
-<meta name="twitter:description" content="截取字符串\${day_id:0:7} 0 起始位置 7 截取多少个 替换字符串${file/dir/path}：将第一个dir 替换为path：/path1/dir2/dir3/my.file.txt${file//dir/path}：将全部 dir 替换为 path：/path1/path2/path3/my.file.txt 一串的命令执行()和{}()和{}都是对一串的命令进行执行,但有所">
+<meta name="twitter:description" content="前言开发中总是遇到各种脚本，目前只能对普调的脚本进行阅读和编写，系统性的记录一篇开发中所需要的脚本技能，同时将平常遇到的脚本难点作为讲解。脚本分为shell脚本和bat脚本 shell脚本处理程序如果对脚本程序需要直接执行，在脚本前面添加#!/user/bin/env sh使用默认执行程序，/user/bin/env 会自动查找环境的sh的程序来执行 对于需要全局使用的脚本，有两种方式，第一个是软">
 
 
 
@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  266 字
+                  1.2k 字
                 </span>
               
 
@@ -432,7 +432,7 @@
                   <span class="post-meta-item-text">阅读时长 </span>
                 
                 <span title="阅读时长">
-                  1 分钟
+                  5 分钟
                 </span>
               
             </div>
@@ -453,11 +453,45 @@
       
 
       
-        <h2 id="截取字符串"><a href="#截取字符串" class="headerlink" title="截取字符串"></a>截取字符串</h2><p>\${day_id:0:7} 0 起始位置 7 截取多少个</p>
-<h2 id="替换字符串"><a href="#替换字符串" class="headerlink" title="替换字符串"></a>替换字符串</h2><p>${file/dir/path}：将第一个dir 替换为path：/path1/dir2/dir3/my.file.txt<br>${file//dir/path}：将全部 dir 替换为 path：/path1/path2/path3/my.file.txt</p>
-<h2 id="一串的命令执行-和"><a href="#一串的命令执行-和" class="headerlink" title="一串的命令执行()和{}"></a>一串的命令执行()和{}</h2><p>()和{}都是对一串的命令进行执行,但有所区别：<br><strong>相同点</strong>：<br>()和{}都是把一串的命令放在括号里面,并且命令之间用;号隔开<br><strong>不同点</strong><br>()只是对一串命令重新开一个子 shell 进行执行,{}对一串命令在当前 shell 执行<br>()最后一个命令可以不用分号,{}最后一个命令要用分号<br>()里的第一个命令和左边括号不必有空格,{}的第一个命令和左括号之间必须要有一个空格<br>()和{}中括号里面的某个命令的重定向只影响该命令,但括号外的重定向则影响到括号里的所有命令</p>
-<h2 id="时间处理函数"><a href="#时间处理函数" class="headerlink" title="时间处理函数"></a>时间处理函数</h2><pre><code>${date -d &quot;-6 days 2019-01-22&quot; +%Y-%m-%d}   // 2019-01-16
-</code></pre>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>开发中总是遇到各种脚本，目前只能对普调的脚本进行阅读和编写，系统性的记录一篇开发中所需要的脚本技能，同时将平常遇到的脚本难点作为讲解。脚本分为shell脚本和bat脚本</p>
+<h3 id="shell"><a href="#shell" class="headerlink" title="shell"></a>shell</h3><h4 id="脚本处理程序"><a href="#脚本处理程序" class="headerlink" title="脚本处理程序"></a>脚本处理程序</h4><p>如果对脚本程序需要直接执行，在脚本前面添加#!/user/bin/env sh使用默认执行程序，/user/bin/env 会自动查找环境的sh的程序来执行</p>
+<p>对于需要全局使用的脚本，有两种方式，第一个是软连接或者放到/usr/local/bin/ 中，第二个是使用别名 alias some=”/path/xxx”</p>
+<h4 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h4><p>read 能从当前stdin获取输入并存储到某个变量中<br>        read -p “请输入值” -n 10 -s -t 20 someValue # -n 限制文本长度 -s 密码输入，不会显示， -e 启用命令补全 -t 输入时长<br>        echo “$someValue”</p>
+<p>echo “”转义输出echo ‘’不转义输出 echo <code></code>执行转义后的结果并输出</p>
+<p>printf 是高级的输出工具，具有序列化的功能。printf “string” …args<br>        printf “%s-5 %c $-4.2f” 郭靖 男 66.1234</p>
+<p>shell执行时总是默认开启了三个文件描述符为0 1 2 用于输入，输出和stderr。在shell中执行的命令默认也是使用这三个文件。通过 command &gt; file; command &gt;&gt; file 将 stdout指向另一个文件。 使用 2 &amp;&gt; 1（&amp;&gt; file） 将stderr 指向 stdout ，使用 command &lt; file 将stdin 指向file</p>
+<h4 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h4><p>command1;command2; 命令都是按照;结尾（换行符前面的可以省），命令都是从前往后执行，即使前面的命令错误<br>command1 &amp;&amp; command2 || command3 如果命令command1 成功则执行command2，失败则执行command3。成功错误失败根据进程返回0 1 2来判断</p>
+<h4 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h4><p>只有字符串，没有数字布尔等类型，变量默认只在当前shell或者脚本(新开了一个子shell来执行脚本)中有效。变量通过$name 或者 ${name}来获取</p>
+<h5 id="截取字符串"><a href="#截取字符串" class="headerlink" title="截取字符串"></a>截取字符串</h5><p>\${day_id:0:7} 0 起始位置 7 截取多少个</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">text=<span class="string">"wo shi yi da shuai bi"</span></span><br><span class="line"><span class="comment"># 截取</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"who are you: <span class="variable">$&#123;text:0:2&#125;</span>"</span>  <span class="comment"># wo</span></span><br><span class="line"><span class="comment"># 替换</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"who are you: <span class="variable">$&#123;text/shuai bi/sha bi&#125;</span>"</span>  <span class="comment"># wo shi yi ge da sha bi</span></span><br><span class="line"><span class="comment"># 删除留剩下的</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"who are you"</span>: <span class="variable">$&#123;text%%shuai*&#125;</span></span><br></pre></td></tr></table></figure>
+<h4 id="if控制"><a href="#if控制" class="headerlink" title="if控制"></a>if控制</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="built_in">command</span>; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">command</span>;</span><br><span class="line"><span class="keyword">elif</span> <span class="built_in">command</span>; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">command</span></span><br><span class="line"><span class="keyword">else</span> </span><br><span class="line">    <span class="built_in">command</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<p>控制语句如上，command表示退出码，除了0是成功其余都是失败，如果要测试表达式的退出码，使用[expr] 来判断</p>
+<h4 id="case控制"><a href="#case控制" class="headerlink" title="case控制"></a>case控制</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> word <span class="keyword">in</span> </span><br><span class="line">glob)</span><br><span class="line">    <span class="built_in">command</span>;; <span class="built_in">break</span>，不在执行后面的语句</span><br><span class="line">    <span class="built_in">command</span>;&amp;  执行当前语句并在接着进入下一个语句（不匹配直接执行）</span><br><span class="line">    <span class="built_in">command</span>;;&amp; 继续下一个语句的匹配</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt; TIP</span><br><span class="line">你最喜欢哪个国家</span><br><span class="line">1. 中国</span><br><span class="line">2. 日本</span><br><span class="line">3. 美国</span><br><span class="line">TIP</span><br><span class="line"><span class="built_in">read</span> choose</span><br><span class="line"><span class="keyword">case</span> <span class="variable">$choose</span> <span class="keyword">in</span></span><br><span class="line">    1) </span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"选择了中国，真棒"</span>;</span><br><span class="line">        lang=ch</span><br><span class="line">    2) </span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"选择了日本，给你一棒子"</span>;</span><br><span class="line">        lang=jap;;</span><br><span class="line">    3) </span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"选择了美国，小垃圾"</span>;</span><br><span class="line">        lang=a</span><br><span class="line"><span class="keyword">esac</span></span><br><span class="line"><span class="built_in">printf</span> <span class="string">"%s %s"</span> choose lang</span><br></pre></td></tr></table></figure>
+<h4 id="while-循环"><a href="#while-循环" class="headerlink" title="while 循环"></a>while 循环</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> commmand; <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">command</span>;</span><br><span class="line"><span class="keyword">done</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="for-循环"><a href="#for-循环" class="headerlink" title="for 循环"></a>for 循环</h4><p>用于循环数组<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> (1 2 3 4 5); <span class="keyword">do</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$item</span>;</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><p>some=(v1, v2, v3)</p>
+<h4 id="算数表达式"><a href="#算数表达式" class="headerlink" title="算数表达式"></a>算数表达式</h4><p>shell没有内置表达式，只有单纯的变量声明，一切基于指令，部分指令提供了简写的形式。表示式都是被指令支持的。不能直接sum=1+1<br>比如 let sum=1+1, 理解成let指令，传入了一个sum=1+1 参数。let指令可以简写成((sum=1+1))</p>
+<h4 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">add</span>() &#123;</span><br><span class="line">    let <span class="attribute">sum</span>=1+1</span><br><span class="line">    return</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>shell的函数没有返回值，只是单纯的调用。函数内部有一些特殊的变量$0(脚本名)，$N(参数1~N),$#(参数个数), $@ 全部参数</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">add</span></span>() &#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"当前参数个数: <span class="variable">$#</span>"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"当前函数名称: <span class="variable">$FUNCNAME</span>"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"分别是\n"</span></span><br><span class="line">    <span class="built_in">local</span> i=1</span><br><span class="line">    <span class="keyword">for</span> ((i &lt; <span class="variable">$#</span>))</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"<span class="variable">$&#123;i&#125;</span>"</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="特殊符号"><a href="#特殊符号" class="headerlink" title="特殊符号"></a>特殊符号</h4><ul>
+<li>$取变量值</li>
+<li>“”转义字符串</li>
+<li>‘’不转义</li>
+<li>()在子shell中执行()中的代码</li>
+<li>$() 将()中结果stdout，和反引号包裹相同，如果作为命令执行，是将结果执行，如果作为赋值，将结果赋值</li>
+<li>{} 在当前shell自行命令</li>
+<li>[] 变量的测试，用户id</li>
+</ul>
+<p>关于()和{}区别<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">name=<span class="built_in">test</span></span><br><span class="line">(name=test1)</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$name</span>  <span class="comment"># test</span></span><br><span class="line">&#123;name=test1&#125; <span class="comment"># </span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$name</span>  <span class="comment"># test1</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="算数运算"><a href="#算数运算" class="headerlink" title="算数运算"></a>算数运算</h4><p>expr 指令用于算数的计算，计算符号之前需要有空格，大致逻辑是expr 通过空格来区分不同的参数。[‘expr’, $a, “+”, $b]这种逻辑，expr运算后会返回结果</p>
+<p>((expr 1 + 1)) (expr 1 + 1)</p>
+<p>条件表达式需要放在[]中,而且只能在if语句中使用</p>
+<p>还有关系运算符 ! -eq -ne -gt -lt -ge -le 都只能在[]，注意中括号内两边都有空格</p>
+<p>提供了文件系统检查功能<br>[ -e file ] 文件是否存在<br>[ -d file ] 是否是目录</p>
+<p>从上面可以看出[ ] 也是一个命令，返回 0 1</p>
+<h4 id="grep-awk"><a href="#grep-awk" class="headerlink" title="grep awk"></a>grep awk</h4>
       
     </div>
     
@@ -646,7 +680,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#截取字符串"><span class="nav-number">1.</span> <span class="nav-text">截取字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#替换字符串"><span class="nav-number">2.</span> <span class="nav-text">替换字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一串的命令执行-和"><span class="nav-number">3.</span> <span class="nav-text">一串的命令执行()和{}</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间处理函数"><span class="nav-number">4.</span> <span class="nav-text">时间处理函数</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shell"><span class="nav-number">2.</span> <span class="nav-text">shell</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#脚本处理程序"><span class="nav-number">2.1.</span> <span class="nav-text">脚本处理程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输入输出"><span class="nav-number">2.2.</span> <span class="nav-text">输入输出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#命令执行"><span class="nav-number">2.3.</span> <span class="nav-text">命令执行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变量"><span class="nav-number">2.4.</span> <span class="nav-text">变量</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#截取字符串"><span class="nav-number">2.4.1.</span> <span class="nav-text">截取字符串</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#if控制"><span class="nav-number">2.5.</span> <span class="nav-text">if控制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#case控制"><span class="nav-number">2.6.</span> <span class="nav-text">case控制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#while-循环"><span class="nav-number">2.7.</span> <span class="nav-text">while 循环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#for-循环"><span class="nav-number">2.8.</span> <span class="nav-text">for 循环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数组"><span class="nav-number">2.9.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#算数表达式"><span class="nav-number">2.10.</span> <span class="nav-text">算数表达式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#函数"><span class="nav-number">2.11.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#特殊符号"><span class="nav-number">2.12.</span> <span class="nav-text">特殊符号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#算数运算"><span class="nav-number">2.13.</span> <span class="nav-text">算数运算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#grep-awk"><span class="nav-number">2.14.</span> <span class="nav-text">grep awk</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -680,7 +714,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">89.4k</span>
+    <span title="博客全站字数共计">90.3k</span>
   
 </div>
 
