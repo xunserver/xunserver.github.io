@@ -28,3 +28,7 @@ echo %c%
 
 @REM 也能直接使用环境变量，在系统配置中可以自定义
 echo %PATH%
+
+:: 变量不区分大小写
+set AA=123
+echo %aa%
