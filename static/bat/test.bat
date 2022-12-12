@@ -1,11 +1,15 @@
 @echo off
-SETLOCAL
-CALL :SetValue value1,value2
-echo %value1%
-echo %value2%
-EXIT /B %ERRORLEVEL%
-:SetValue
-set "%~1=5"
-set "%~2=10"
-EXIT /B 0
 
+call:sum 4 5 result
+echo %result%
+
+:: 函数需要放在最后或者单独定义一个函数区来跳过
+goto func_end
+:func_start
+:sum
+echo %1
+echo %2
+set /a %~3=%1+%2
+echo %~3
+goto:eof
+:func_end
