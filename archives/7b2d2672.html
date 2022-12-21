@@ -88,17 +88,18 @@
 
 
 
-<meta name="description" content="随笔">
+<meta name="description" content="前言记录下平常工作中接触的硬盘、分区和卷等概念，同时理解下电视盒子和各种中路由中分区的作用 硬盘大部分场景中硬盘和磁盘多理解成物理的设备。我们常见的机械硬盘，固态硬盘。根据接口不同又有sata盘，m2盘，m2-sata盘。在linux中 /dev/sda /dev/sdb 就表示的两个磁盘 分区通常情况下，硬盘不能直接使用，op总是只能识别特定的文件系统。通过对硬盘进行划分成不同的区域，对不同的区">
 <meta name="keywords" content="博客,xunsever,bang">
-<meta property="og:type" content="website">
-<meta property="og:title" content="bang">
-<meta property="og:url" content="https://blog.xunserver.cn/archives/2022/03/index.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="硬盘分区和卷">
+<meta property="og:url" content="https://blog.xunserver.cn/archives/7b2d2672.html">
 <meta property="og:site_name" content="bang">
-<meta property="og:description" content="随笔">
+<meta property="og:description" content="前言记录下平常工作中接触的硬盘、分区和卷等概念，同时理解下电视盒子和各种中路由中分区的作用 硬盘大部分场景中硬盘和磁盘多理解成物理的设备。我们常见的机械硬盘，固态硬盘。根据接口不同又有sata盘，m2盘，m2-sata盘。在linux中 /dev/sda /dev/sdb 就表示的两个磁盘 分区通常情况下，硬盘不能直接使用，op总是只能识别特定的文件系统。通过对硬盘进行划分成不同的区域，对不同的区">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2022-12-21T02:19:05.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="bang">
-<meta name="twitter:description" content="随笔">
+<meta name="twitter:title" content="硬盘分区和卷">
+<meta name="twitter:description" content="前言记录下平常工作中接触的硬盘、分区和卷等概念，同时理解下电视盒子和各种中路由中分区的作用 硬盘大部分场景中硬盘和磁盘多理解成物理的设备。我们常见的机械硬盘，固态硬盘。根据接口不同又有sata盘，m2盘，m2-sata盘。在linux中 /dev/sda /dev/sdb 就表示的两个磁盘 分区通常情况下，硬盘不能直接使用，op总是只能识别特定的文件系统。通过对硬盘进行划分成不同的区域，对不同的区">
 
 
 
@@ -128,7 +129,7 @@
 
 
 
-  <link rel="canonical" href="https://blog.xunserver.cn/archives/2022/03/">
+  <link rel="canonical" href="https://blog.xunserver.cn/archives/7b2d2672.html">
 
 
 
@@ -142,7 +143,7 @@
   daovoice('update');
   </script>
 
-  <title>归档 | bang</title>
+  <title>硬盘分区和卷 | bang</title>
   
 
 
@@ -180,7 +181,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -316,215 +317,206 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.xunserver.cn/archives/7b2d2672.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yangmanman">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="bang">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
-         
+          <h2 class="post-title" itemprop="name headline">硬盘分区和卷</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-12-21T02:19:05+00:00">
+                2022-12-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        很好! 目前共计 108 篇日志。 继续努力。
-      </span>
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h2 class="archive-year" id="archive-year-2022">2022</h2>
-          </div>
-        
-        
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/archives/7b2d2672.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/archives/7b2d2672.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
 
-        
+          
+          
+             <span id="/archives/7b2d2672.html" class="leancloud_visitors" data-flag-title="硬盘分区和卷">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                 <span>ºC</span>
+             </span>
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/archives/61b757b4.html" itemprop="url">
+          
+            <div class="post-wordcount">
               
-                <span itemprop="name">Vue查漏补缺（二）双向绑定原理</span>
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  713 字
+                </span>
               
-            </a>
-        
-      </h3>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2022-03-24T14:05:48+08:00" content="2022-03-24">
-          03-24
-        </time>
-      </div>
+              
+                <span class="post-meta-divider">|</span>
+              
 
-    </header>
-  </article>
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 </span>
+                
+                <span title="阅读时长">
+                  2 分钟
+                </span>
+              
+            </div>
+          
 
+          
 
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/archives/69b5cd9a.html" itemprop="url">
-              
-                <span itemprop="name">Vue查漏补缺（一）生命周期</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2022-03-24T08:03:10+08:00" content="2022-03-24">
-          03-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/archives/e6d11dd8.html" itemprop="url">
-              
-                <span itemprop="name">json-schema-json</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2022-03-15T14:42:52+08:00" content="2022-03-15">
-          03-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>记录下平常工作中接触的硬盘、分区和卷等概念，同时理解下电视盒子和各种中路由中分区的作用</p>
+<h3 id="硬盘"><a href="#硬盘" class="headerlink" title="硬盘"></a>硬盘</h3><p>大部分场景中硬盘和磁盘多理解成物理的设备。我们常见的机械硬盘，固态硬盘。根据接口不同又有sata盘，m2盘，m2-sata盘。<br>在linux中 /dev/sda /dev/sdb 就表示的两个磁盘</p>
+<h3 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h3><p>通常情况下，硬盘不能直接使用，op总是只能识别特定的文件系统。通过对硬盘进行划分成不同的区域，对不同的区域进行不同的格式为不同的文件系统。</p>
+<p>分区有MBR分区和GPT分区（重装系统的会经常看到），前者是老协议，后者较新，目前基本都是GPT</p>
+<p>MBR(master boot record) 主引导记录，使用硬盘的第一个扇区来记录硬盘分区信息。其中64B记录的是4个分区表，所以MBR的硬盘最多只能有4个主分区。或者3个主分区加一个扩展分区（扩展分区中再分区成逻辑分区才能使用）。分区表中记录的起始分区起始扇区和终止扇区，由于分区表大小有限，所以MBR分区不能识别2T以上的硬盘<br>除此之外起始扇区中还记录了主引导程序(446)</p>
+<p>GPT(GUID partition table) 全局分区表 GPT在硬盘的首尾都记录了关键信息，GPT中分区表大小是不是固定的。</p>
+<h3 id="卷"><a href="#卷" class="headerlink" title="卷"></a>卷</h3><p>卷是一个或者多个的分区组成的帮助操作系统管理的逻辑分组，windows中我们看到的卷和分区是相同，一个卷就包含一个分区，也能创建一个包含多个分区的卷，并且多个分区可以不是连续分区。</p>
+<p>所以分区是连续的，但是卷不一定是连续的。</p>
+<h3 id="系统分区、启动分区和活动分区"><a href="#系统分区、启动分区和活动分区" class="headerlink" title="系统分区、启动分区和活动分区"></a>系统分区、启动分区和活动分区</h3><p>系统分区指的是具有的引导程序的分区，启动分区是具有操作系统的分区，活动分区只能是主分区，而且一个硬盘只能有一个活动分区。分区表80开头的是活动分区。活动分区一定指向的是系统分区</p>
+<h3 id="电脑系统启动流程"><a href="#电脑系统启动流程" class="headerlink" title="电脑系统启动流程"></a>电脑系统启动流程</h3><p>MBR的方式启动。bios中选择启动哪个硬盘，启动硬盘中MBR存放的第一个引导程序，第一引导程序可能直接引导系统，也可能继续查找其他的主分区的引导程序。所以MBR的如果是单硬盘双系统不能定制图形化比较大的引导程序</p>
+<p>GPT的方式会查询硬盘中的各个分区中的EFI/boot/bootx64.efi文件做为引导项。</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/archives/756fdee8.html" itemprop="url">
-              
-                <span itemprop="name">http查漏补缺</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2022-03-03T17:43:40+08:00" content="2022-03-03">
-          03-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/archives/50c7c64b.html" itemprop="url">
-              
-                <span itemprop="name">浏览器解析</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2022-03-01T15:35:42+08:00" content="2022-03-01">
-          03-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archives/540c0c41.html" rel="next" title="每日一个linux命令">
+                <i class="fa fa-chevron-left"></i> 每日一个linux命令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/2022/03/page/2/">2</a><a class="extend next" rel="next" href="/archives/2022/03/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -532,6 +524,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
         </div>
         
           
@@ -551,8 +550,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -631,6 +639,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#硬盘"><span class="nav-number">2.</span> <span class="nav-text">硬盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分区"><span class="nav-number">3.</span> <span class="nav-text">分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#卷"><span class="nav-number">4.</span> <span class="nav-text">卷</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#系统分区、启动分区和活动分区"><span class="nav-number">5.</span> <span class="nav-text">系统分区、启动分区和活动分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#电脑系统启动流程"><span class="nav-number">6.</span> <span class="nav-text">电脑系统启动流程</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -776,6 +800,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
