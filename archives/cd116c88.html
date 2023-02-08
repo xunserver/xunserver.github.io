@@ -88,18 +88,18 @@
 
 
 
-<meta name="description" content="简介DHCP（dynamic host configuration protocol）动态主机配置协议。是一个应用层协议，用于给dhcp客户端配置ip，网关，dns等。 流程首次DHCP 客户端广播DISCOVER，要求当前广播域中的服务器提供可用的IP。 服务端广播OFFER，提供可选的IP。 客户端选择一个可用的IP，广播REQUEST，提示服务端已经选择某个OFFER。 服务端收到REQUE">
+<meta name="description" content="dhcpDHCP（dynamic host configuration protocol）动态主机配置协议。是一个应用层协议，用于给dhcp客户端配置ip，网关，dns等。 首次DHCP 客户端广播DISCOVER，要求当前广播域中的服务器提供可用的IP。 服务端广播OFFER，提供可选的IP。 客户端选择一个可用的IP，广播REQUEST，提示服务端已经选择某个OFFER，给我保留一下。 服务端">
 <meta name="keywords" content="博客,xunsever,bang">
 <meta property="og:type" content="article">
-<meta property="og:title" content="dhcp">
+<meta property="og:title" content="dhcp 和 arp">
 <meta property="og:url" content="https://blog.xunserver.cn/archives/cd116c88.html">
 <meta property="og:site_name" content="bang">
-<meta property="og:description" content="简介DHCP（dynamic host configuration protocol）动态主机配置协议。是一个应用层协议，用于给dhcp客户端配置ip，网关，dns等。 流程首次DHCP 客户端广播DISCOVER，要求当前广播域中的服务器提供可用的IP。 服务端广播OFFER，提供可选的IP。 客户端选择一个可用的IP，广播REQUEST，提示服务端已经选择某个OFFER。 服务端收到REQUE">
+<meta property="og:description" content="dhcpDHCP（dynamic host configuration protocol）动态主机配置协议。是一个应用层协议，用于给dhcp客户端配置ip，网关，dns等。 首次DHCP 客户端广播DISCOVER，要求当前广播域中的服务器提供可用的IP。 服务端广播OFFER，提供可选的IP。 客户端选择一个可用的IP，广播REQUEST，提示服务端已经选择某个OFFER，给我保留一下。 服务端">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2022-01-11T19:42:04.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="dhcp">
-<meta name="twitter:description" content="简介DHCP（dynamic host configuration protocol）动态主机配置协议。是一个应用层协议，用于给dhcp客户端配置ip，网关，dns等。 流程首次DHCP 客户端广播DISCOVER，要求当前广播域中的服务器提供可用的IP。 服务端广播OFFER，提供可选的IP。 客户端选择一个可用的IP，广播REQUEST，提示服务端已经选择某个OFFER。 服务端收到REQUE">
+<meta name="twitter:title" content="dhcp 和 arp">
+<meta name="twitter:description" content="dhcpDHCP（dynamic host configuration protocol）动态主机配置协议。是一个应用层协议，用于给dhcp客户端配置ip，网关，dns等。 首次DHCP 客户端广播DISCOVER，要求当前广播域中的服务器提供可用的IP。 服务端广播OFFER，提供可选的IP。 客户端选择一个可用的IP，广播REQUEST，提示服务端已经选择某个OFFER，给我保留一下。 服务端">
 
 
 
@@ -143,7 +143,7 @@
   daovoice('update');
   </script>
 
-  <title>dhcp | bang</title>
+  <title>dhcp 和 arp | bang</title>
   
 
 
@@ -348,7 +348,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">dhcp</h2>
+          <h2 class="post-title" itemprop="name headline">dhcp 和 arp</h2>
         
 
         <div class="post-meta">
@@ -388,7 +388,7 @@
 
           
           
-             <span id="/archives/cd116c88.html" class="leancloud_visitors" data-flag-title="dhcp">
+             <span id="/archives/cd116c88.html" class="leancloud_visitors" data-flag-title="dhcp 和 arp">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  348 字
+                  661 字
                 </span>
               
 
@@ -432,7 +432,7 @@
                   <span class="post-meta-item-text">阅读时长 </span>
                 
                 <span title="阅读时长">
-                  1 分钟
+                  2 分钟
                 </span>
               
             </div>
@@ -453,11 +453,11 @@
       
 
       
-        <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>DHCP（dynamic host configuration protocol）动态主机配置协议。是一个应用层协议，用于给dhcp客户端配置ip，网关，dns等。</p>
-<h3 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h3><h4 id="首次DHCP"><a href="#首次DHCP" class="headerlink" title="首次DHCP"></a>首次DHCP</h4><ol>
+        <h3 id="dhcp"><a href="#dhcp" class="headerlink" title="dhcp"></a>dhcp</h3><p>DHCP（dynamic host configuration protocol）动态主机配置协议。是一个应用层协议，用于给dhcp客户端配置ip，网关，dns等。</p>
+<h4 id="首次DHCP"><a href="#首次DHCP" class="headerlink" title="首次DHCP"></a>首次DHCP</h4><ol>
 <li>客户端广播DISCOVER，要求当前广播域中的服务器提供可用的IP。</li>
 <li>服务端广播OFFER，提供可选的IP。</li>
-<li>客户端选择一个可用的IP，广播REQUEST，提示服务端已经选择某个OFFER。</li>
+<li>客户端选择一个可用的IP，广播REQUEST，提示服务端已经选择某个OFFER，给我保留一下。</li>
 <li>服务端收到REQUEST后，记录已经分配的IP，并广播ACK。</li>
 <li>客户端收到ACK后，设置IP。</li>
 </ol>
@@ -470,12 +470,16 @@
 <li>如果T1时发送的包REQUEST未得到回应，会在87.5%时，发送第二次RESQUEST，流程同第一次</li>
 <li>如果租期到了，REQUEST还未得到回应，走DISCOVER流程</li>
 </ol>
-<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><ul>
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><ul>
 <li>配置默认网关</li>
 <li>配置主备DNS服务器</li>
 <li>配置开始的IP池，结束IP池</li>
 </ul>
-<h3 id="从DHCP服务器"><a href="#从DHCP服务器" class="headerlink" title="从DHCP服务器"></a>从DHCP服务器</h3><p>同一个广播域中可以存在多个DHCP服务器，所以DHCP流程有4步，不是2步。OFFER就相当于保价并保留短暂时间，如果客户端发起的REQUEST相当于通知其他DHCP没选择他们的OFFER</p>
+<h4 id="从DHCP服务器"><a href="#从DHCP服务器" class="headerlink" title="从DHCP服务器"></a>从DHCP服务器</h4><p>同一个广播域中可以存在多个DHCP服务器，所以DHCP流程有4步，不是2步。OFFER就相当于保价并保留短暂时间，如果客户端发起的REQUEST相当于通知其他DHCP没选择他们的OFFER。在多个dhcp 的子网环境中，dhcp客户端会选择最先收到的dhcp offer</p>
+<h3 id="arp"><a href="#arp" class="headerlink" title="arp"></a>arp</h3><p>arp协议稍微简单，是二层协议。流程如下，设备A需要向设备B发送数据<br>设备A不知道设备B的mac地址， 设备A发送arp广播，问 谁是ip 192.168.2.99的机器，请告诉我的你的mac地址。 并携带了自己的mac地址和ip<br>局域网中的其他设备也会收到这个消息，发现消息自己不匹配，舍弃掉。<br>局域网中的设备B发现自己匹配，向设备A发送单播我就是ip 192.168.2.99的机主，我的mac是xxxx。同时将设备A的ip和mac记录到arp缓存表中。<br>设备A接受到单播，更新自己的arp表。</p>
+<h4 id="arp缓存表"><a href="#arp缓存表" class="headerlink" title="arp缓存表"></a>arp缓存表</h4><p>当设备A知道了设备B的ip和mac，会缓存一段时间（180s），后续的请求不会再arp查询直到过期。</p>
+<h4 id="arp-声明"><a href="#arp-声明" class="headerlink" title="arp 声明"></a>arp 声明</h4><p>有时候设备也会自己广播自己的arp地址和ip，特别是设备知道自己的ip时候。 arp announcement 报文</p>
+<h3 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h3><p>dns分为迭代查询和递归查询。迭代查询是指自己去查询ip，递归查询是指你的dns服务器帮你做查询。</p>
 
       
     </div>
@@ -665,7 +669,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流程"><span class="nav-number">2.</span> <span class="nav-text">流程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#首次DHCP"><span class="nav-number">2.1.</span> <span class="nav-text">首次DHCP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#释放IP"><span class="nav-number">2.2.</span> <span class="nav-text">释放IP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#续租"><span class="nav-number">2.3.</span> <span class="nav-text">续租</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置"><span class="nav-number">3.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从DHCP服务器"><span class="nav-number">4.</span> <span class="nav-text">从DHCP服务器</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#dhcp"><span class="nav-number">1.</span> <span class="nav-text">dhcp</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#首次DHCP"><span class="nav-number">1.1.</span> <span class="nav-text">首次DHCP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#释放IP"><span class="nav-number">1.2.</span> <span class="nav-text">释放IP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#续租"><span class="nav-number">1.3.</span> <span class="nav-text">续租</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置"><span class="nav-number">1.4.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从DHCP服务器"><span class="nav-number">1.5.</span> <span class="nav-text">从DHCP服务器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#arp"><span class="nav-number">2.</span> <span class="nav-text">arp</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#arp缓存表"><span class="nav-number">2.1.</span> <span class="nav-text">arp缓存表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#arp-声明"><span class="nav-number">2.2.</span> <span class="nav-text">arp 声明</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DNS"><span class="nav-number">3.</span> <span class="nav-text">DNS</span></a></li></ol></div>
             
 
           </div>
@@ -699,7 +703,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">93.5k</span>
+    <span title="博客全站字数共计">93.9k</span>
   
 </div>
 

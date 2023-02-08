@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  665 字
+                  667 字
                 </span>
               
 
@@ -462,7 +462,6 @@
 <li>overflow 不为visible<h3 id="合成层"><a href="#合成层" class="headerlink" title="合成层"></a>合成层</h3>对于某些符合条件的渲染层会自动处理成合成层，每一个合成层都有一个独立的GraphicsLayer, 不满足和最近一个拥有图形层的共享。<br>下面这些条件能开启图形层</li>
 <li>3D transforms</li>
 <li>video canvas iframe // 即使video没有单独的渲染层，但是video在根元素下，也满足</li>
-<li>css 实现的opacity 动画</li>
 <li>will-change 属性</li>
 <li>position:fixed</li>
 <li>对 opacity、transform、fliter、backdropfilter 应用了 animation 或者 transition</li>
@@ -491,7 +490,7 @@
 <p>我们平常的说的重绘和回流都是针对某一个图形层来说的。 所以优化的思路从两个角度出发。</p>
 <ol>
 <li>尽可能避免回流操作，比如减少style直接js写值，减少对offset的读取。多个新增删除操作合并等。</li>
-<li>如果没办法避免回流操作，尽量将回流的范围缩小，比如将改动的元素提升到合成层中，注意的合成层的条件是现有渲染层，合成层是从渲染层中来的。常见的生成合成的操作有transform: translate，对</li>
+<li>如果没办法避免回流操作，尽量将回流的范围缩小，比如将改动的元素提升到合成层中，注意的合成层的条件是现有渲染层，合成层是从渲染层中来的。常见的生成合成的操作有transform: translate3D，或者简单粗暴添加will-change</li>
 </ol>
 
       
@@ -716,7 +715,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">93.5k</span>
+    <span title="博客全站字数共计">93.9k</span>
   
 </div>
 

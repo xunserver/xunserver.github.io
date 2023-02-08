@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  436 字
+                  468 字
                 </span>
               
 
@@ -474,17 +474,7 @@
 <li>初始的html解析完成后，会触发documentContentLoad 事件。此时图片资源可能还未下载完成</li>
 <li>load 事件表示初始html以及资源全部load</li>
 </ol>
-<h3 id="图层"><a href="#图层" class="headerlink" title="图层"></a>图层</h3><p>一个普通的文档流被视为一个图层，包括浮动和非（fixed）定位。对于频繁的渲染需要生成一个新的图层来操作。</p>
-<ol>
-<li>3D转换</li>
-<li>fixed</li>
-<li>动画</li>
-</ol>
-<h3 id="重绘和回流"><a href="#重绘和回流" class="headerlink" title="重绘和回流"></a>重绘和回流</h3><p>重绘不涉及布局和几何变化，比如改下颜色。<br>回流是指布局和几何外观的改变，需要渲染整个图层。<br>所有重绘和回流都只争对当前元素</p>
-<h3 id="避免回流"><a href="#避免回流" class="headerlink" title="避免回流"></a>避免回流</h3><ol>
-<li>translate 替换 top</li>
-<li>选择器从右到左，避免dom查找过深</li>
-</ol>
+<h3 id="渲染进程中各种线程的配合"><a href="#渲染进程中各种线程的配合" class="headerlink" title="渲染进程中各种线程的配合"></a>渲染进程中各种线程的配合</h3><p>js引擎线程会执行一个有多个字队列的队列，队列中每个子队列是由各种引擎推送的的。刚开始时会GUI线程会解析HTML，当碰到js代码会将js推送到js的引擎队列，这时js引擎会立即执行。中断GUI进程的渲染。在代码中js引擎可能会发起请求、定时器或者新建事件绑定，就是通知其他线程开始工作，<br>定时线程会在定时完成后将代码转移到js引擎的新子队列中。<br>事件引擎和网络同理</p>
 
       
     </div>
@@ -674,7 +664,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#浏览器渲染进程包含的线程"><span class="nav-number">1.</span> <span class="nav-text">浏览器渲染进程包含的线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简略版xuanran"><span class="nav-number">2.</span> <span class="nav-text">简略版xuanran</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#html、css和js解析构建顺序"><span class="nav-number">3.</span> <span class="nav-text">html、css和js解析构建顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图层"><span class="nav-number">4.</span> <span class="nav-text">图层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重绘和回流"><span class="nav-number">5.</span> <span class="nav-text">重绘和回流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#避免回流"><span class="nav-number">6.</span> <span class="nav-text">避免回流</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#浏览器渲染进程包含的线程"><span class="nav-number">1.</span> <span class="nav-text">浏览器渲染进程包含的线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简略版xuanran"><span class="nav-number">2.</span> <span class="nav-text">简略版xuanran</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#html、css和js解析构建顺序"><span class="nav-number">3.</span> <span class="nav-text">html、css和js解析构建顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#渲染进程中各种线程的配合"><span class="nav-number">4.</span> <span class="nav-text">渲染进程中各种线程的配合</span></a></li></ol></div>
             
 
           </div>
@@ -708,7 +698,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">93.5k</span>
+    <span title="博客全站字数共计">93.9k</span>
   
 </div>
 
