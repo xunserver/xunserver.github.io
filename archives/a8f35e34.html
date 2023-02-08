@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  991 字
+                  1k 字
                 </span>
               
 
@@ -457,9 +457,9 @@
 <h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>约定$name: value 形式的为变量。支持字符串（带有空格需要引号包裹），数字，数组（逗号或者空格分隔），对象（(key: value, key2: value2)），boolean。</p>
 <p>变量区分为代码块内变量和代码块外变量。默认情况下，后申明的变量会覆盖前置变量（同作用域），通过$var: xxx !default 这种方式可以前置变量覆盖后置。<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$color</span>: green;</span><br><span class="line"><span class="variable">$color</span>: red !default;  <span class="comment">// 不添加!default red 会覆盖前面，添加!default 后面声明的不会覆盖green</span></span><br></pre></td></tr></table></figure></p>
 <h3 id="amp"><a href="#amp" class="headerlink" title="&amp;"></a>&amp;</h3><p>在嵌套中选择父元素，使用后会忽略当前嵌套</p>
-<h3 id="mixin和-include"><a href="#mixin和-include" class="headerlink" title="@mixin和@include"></a>@mixin和@include</h3><p>通过@mixin 定义代码片段，通过@include引入片段实现复用。@mixin相当于代码片段的生成器，支持参数和默认参数。</p>
+<h3 id="mixin和-include"><a href="#mixin和-include" class="headerlink" title="@mixin和@include"></a>@mixin和@include</h3><p>通过@mixin 定义代码片段，通过@include引入片段实现复用。@mixin相当于代码片段的生成器，支持参数和默认参数。 支持@content 实现slot功能</p>
 <h3 id="extend"><a href="#extend" class="headerlink" title="@extend"></a>@extend</h3><p>如果需要对某个类实现继承，使用@extend .classname 实现，会继承该类所有实现。该功能唯一用处是在该类实现比较多的场景。<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.a</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: red;</span><br><span class="line"></span><br><span class="line">    &amp;:hover &#123;</span><br><span class="line">        <span class="attribute">color</span>: green</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">.c .a &#123;</span><br><span class="line">    color: xxx;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.b</span> &#123;</span><br><span class="line">    @<span class="keyword">extend</span> .a;</span><br><span class="line">    <span class="attribute">color</span>: white;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.b</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: red; </span><br><span class="line">    &amp;:hover &#123;</span><br><span class="line">        <span class="attribute">color</span>: green;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="attribute">color</span>: white;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.c</span> <span class="selector-class">.b</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: xxx;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="xxx-插值表达式"><a href="#xxx-插值表达式" class="headerlink" title="#{xxx}插值表达式"></a>#{xxx}插值表达式</h3><p>前面变量都是用在属性值上，#{}可以用在选择器或者属性名上面，实现动态生成类或者属性。</p>
+<h3 id="xxx-插值表达式"><a href="#xxx-插值表达式" class="headerlink" title="#{xxx}插值表达式"></a>#{xxx}插值表达式</h3><p>前面变量都是用在属性值上，#{}可以用在选择器或者属性名上面，实现动态生成类或者属性。或者强制计算，存在插值语句不会再重复计算</p>
 <h2 id="less"><a href="#less" class="headerlink" title="less"></a>less</h2><p>less解析时区大概两个步骤</p>
 <ol>
 <li>按照层级确定变量</li>
@@ -613,7 +613,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">108</span>
+                  <span class="site-state-item-count">109</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -705,7 +705,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -719,7 +719,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">92.5k</span>
+    <span title="博客全站字数共计">93.5k</span>
   
 </div>
 
