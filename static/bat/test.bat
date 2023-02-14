@@ -1,15 +1,15 @@
+@REM 复制所有的bat脚本到bat1文件夹
 @echo off
 
-call:sum 4 5 result
-echo %result%
+@REM 新建文件夹
+call :makedir bat1
 
-:: 函数需要放在最后或者单独定义一个函数区来跳过
-goto func_end
-:func_start
-:sum
-echo %1
-echo %2
-set /a %~3=%1+%2
-echo %~3
-goto:eof
-:func_end
+
+goto :eof
+:makedir
+if exist %1 (
+    echo dir is exist
+    del /q %1
+)
+md %1
+goto :eof
