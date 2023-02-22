@@ -91,14 +91,14 @@
 <meta name="description" content="dhcpDHCP（dynamic host configuration protocol）动态主机配置协议。是一个应用层协议，用于给dhcp客户端配置ip，网关，dns等。 首次DHCP 客户端广播DISCOVER，要求当前广播域中的服务器提供可用的IP。 服务端广播OFFER，提供可选的IP。 客户端选择一个可用的IP，广播REQUEST，提示服务端已经选择某个OFFER，给我保留一下。 服务端">
 <meta name="keywords" content="博客,xunsever,bang">
 <meta property="og:type" content="article">
-<meta property="og:title" content="dhcp 和 arp">
+<meta property="og:title" content="前端需要了解的网络知识">
 <meta property="og:url" content="https://blog.xunserver.cn/archives/cd116c88.html">
 <meta property="og:site_name" content="bang">
 <meta property="og:description" content="dhcpDHCP（dynamic host configuration protocol）动态主机配置协议。是一个应用层协议，用于给dhcp客户端配置ip，网关，dns等。 首次DHCP 客户端广播DISCOVER，要求当前广播域中的服务器提供可用的IP。 服务端广播OFFER，提供可选的IP。 客户端选择一个可用的IP，广播REQUEST，提示服务端已经选择某个OFFER，给我保留一下。 服务端">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2022-01-11T19:42:04.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="dhcp 和 arp">
+<meta name="twitter:title" content="前端需要了解的网络知识">
 <meta name="twitter:description" content="dhcpDHCP（dynamic host configuration protocol）动态主机配置协议。是一个应用层协议，用于给dhcp客户端配置ip，网关，dns等。 首次DHCP 客户端广播DISCOVER，要求当前广播域中的服务器提供可用的IP。 服务端广播OFFER，提供可选的IP。 客户端选择一个可用的IP，广播REQUEST，提示服务端已经选择某个OFFER，给我保留一下。 服务端">
 
 
@@ -143,7 +143,7 @@
   daovoice('update');
   </script>
 
-  <title>dhcp 和 arp | bang</title>
+  <title>前端需要了解的网络知识 | bang</title>
   
 
 
@@ -348,7 +348,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">dhcp 和 arp</h2>
+          <h2 class="post-title" itemprop="name headline">前端需要了解的网络知识</h2>
         
 
         <div class="post-meta">
@@ -388,7 +388,7 @@
 
           
           
-             <span id="/archives/cd116c88.html" class="leancloud_visitors" data-flag-title="dhcp 和 arp">
+             <span id="/archives/cd116c88.html" class="leancloud_visitors" data-flag-title="前端需要了解的网络知识">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  661 字
+                  1.7k 字
                 </span>
               
 
@@ -432,7 +432,7 @@
                   <span class="post-meta-item-text">阅读时长 </span>
                 
                 <span title="阅读时长">
-                  2 分钟
+                  6 分钟
                 </span>
               
             </div>
@@ -480,6 +480,27 @@
 <h4 id="arp缓存表"><a href="#arp缓存表" class="headerlink" title="arp缓存表"></a>arp缓存表</h4><p>当设备A知道了设备B的ip和mac，会缓存一段时间（180s），后续的请求不会再arp查询直到过期。</p>
 <h4 id="arp-声明"><a href="#arp-声明" class="headerlink" title="arp 声明"></a>arp 声明</h4><p>有时候设备也会自己广播自己的arp地址和ip，特别是设备知道自己的ip时候。 arp announcement 报文</p>
 <h3 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h3><p>dns分为迭代查询和递归查询。迭代查询是指自己去查询ip，递归查询是指你的dns服务器帮你做查询。</p>
+<h3 id="IP和路由"><a href="#IP和路由" class="headerlink" title="IP和路由"></a>IP和路由</h3><p>IP地址32位，一个字节为一组一共4组，按照点分十进制表示为192.168.2.9形式，IP按照有类地址和无类地址的方式划分。</p>
+<p>有类地址分为A(0开头的地址),B(10)开头,C(110开头)，通过256 - 掩码 可以确定区块大小，或者通过掩码0的个人确定大小。<br>192.168.2.98/26 的区块大小是64。分别是0 64 96 128。 192.168.2.98就在 192.168.2.96~192.168.2.127中，这个子网中子网地址是192.168.2.96，广播地址192.168.2.127 </p>
+<p>同时也有变长的子网规划方式，192.168.2.0/24 下可以规划25 25 27掩码的子网，需要注意的变长子网的规划时，子网的开头也必须遵循从0开始的等比序列，即不能出现192.168.2.98/26这种方式，只能是192.168.2.96/26</p>
+<p>ip报文中包含源ip和目的ip，根据目的IP去匹配当前路由表中的子网，如果路由表中多条记录命中了子网，以最小网段为准。</p>
+<p>比如 192.168.1.9这个目的ip可能位于 192.168.1.0/25  也可能位于 192.168.1.8/29</p>
+<h3 id="交换机如何处理帧"><a href="#交换机如何处理帧" class="headerlink" title="交换机如何处理帧"></a>交换机如何处理帧</h3><p>帧有单播帧和广播帧，单播帧是指定目的mac，广播帧是的目的mac是ff:ff:ff:ff:ff:ff。交换机有多个端口，同时保存了端口-mac映射表。当一条记录在表不存在是，交换器会将这条数据转发到所有端口中，与交换机相连的设备会检查目的mac是否和自己的匹配，如果不匹配则放弃该帧，等到真正的设备接受到消息时会回复帧，交换机总是会把端口传入帧的源mac记录到表中。当交换机接收到广播帧时，交换机会将广播帧转发到每个端口发送出去。</p>
+<h3 id="交换机的vlan"><a href="#交换机的vlan" class="headerlink" title="交换机的vlan"></a>交换机的vlan</h3><p>一般有两种vlan划分的方法， 第一个是基于端口的vlan, 802.q协议作为支持。第二个是基于mac地址的vlan。主要学习802.q的vlan。帧里面有个4字节表示tag，交换机有3中端口，access(用于交换机和终端连接)，trunk(交换机之间连接),hybrid(access和trunk的混合)。交换机内部的转发的帧都是带有tag，每个端口都是有一个缺省的vlan id，也称为pvid，同时默认情况下也会将缺省的vid设置为允许通过（不管是发送还是接受）的tag。<br>access</p>
+<pre><code>1. 接受untag包，会添加pvid，然后交给交换机内部交换
+2. 接收tag包，会和pvid 对比，如果相同通过，不相同则舍弃
+3. 发送包，总是将tag去掉，发送出去
+</code></pre><p>trunk</p>
+<pre><code>1. 接收untag包，添加pvid，检查pvid是否在允许通过的vlan列表中（一般都是允许，除非pvid不在允许的列表中）
+2. 直接对比tag包是否在允许的vlan id 中，在走转发
+3. 如果vlan id 和 pvid 相同，untag发出，否则带tag发出
+</code></pre><p>hybird</p>
+<pre><code>1. untag 和 trunk 相同
+2. 和 trunk 相同
+3. 是否untag可以随意指定
+</code></pre><h3 id="IPV6-入门"><a href="#IPV6-入门" class="headerlink" title="IPV6 入门"></a>IPV6 入门</h3><p>ipv6 是由128位组成，一般采用16进制的:分隔为8组，每组16位，用4个16进制组成。其中如果某个区段全是零，可以省略，但是只能省略一次，一个区段中的前置0可以省略。ipv6前面48位是组织前缀，中间16位是subnet掩码位（6w多个子网），后面64位是主机号（euid: 通过网卡48位在中间插入0xff）</p>
+<p>FE80/10 （链路本地地址）<br>FC00/7 （全局唯一本地）<br>2000/3  (全局单播)，比如2400(亚太前缀)</p>
+<p>一般移动的运营商会分配一个前缀60或者56，局域网中机器自行设置64即可。</p>
 
       
     </div>
@@ -597,7 +618,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">109</span>
+                  <span class="site-state-item-count">111</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -669,7 +690,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#dhcp"><span class="nav-number">1.</span> <span class="nav-text">dhcp</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#首次DHCP"><span class="nav-number">1.1.</span> <span class="nav-text">首次DHCP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#释放IP"><span class="nav-number">1.2.</span> <span class="nav-text">释放IP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#续租"><span class="nav-number">1.3.</span> <span class="nav-text">续租</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置"><span class="nav-number">1.4.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从DHCP服务器"><span class="nav-number">1.5.</span> <span class="nav-text">从DHCP服务器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#arp"><span class="nav-number">2.</span> <span class="nav-text">arp</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#arp缓存表"><span class="nav-number">2.1.</span> <span class="nav-text">arp缓存表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#arp-声明"><span class="nav-number">2.2.</span> <span class="nav-text">arp 声明</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DNS"><span class="nav-number">3.</span> <span class="nav-text">DNS</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#dhcp"><span class="nav-number">1.</span> <span class="nav-text">dhcp</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#首次DHCP"><span class="nav-number">1.1.</span> <span class="nav-text">首次DHCP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#释放IP"><span class="nav-number">1.2.</span> <span class="nav-text">释放IP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#续租"><span class="nav-number">1.3.</span> <span class="nav-text">续租</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置"><span class="nav-number">1.4.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从DHCP服务器"><span class="nav-number">1.5.</span> <span class="nav-text">从DHCP服务器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#arp"><span class="nav-number">2.</span> <span class="nav-text">arp</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#arp缓存表"><span class="nav-number">2.1.</span> <span class="nav-text">arp缓存表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#arp-声明"><span class="nav-number">2.2.</span> <span class="nav-text">arp 声明</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DNS"><span class="nav-number">3.</span> <span class="nav-text">DNS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IP和路由"><span class="nav-number">4.</span> <span class="nav-text">IP和路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交换机如何处理帧"><span class="nav-number">5.</span> <span class="nav-text">交换机如何处理帧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交换机的vlan"><span class="nav-number">6.</span> <span class="nav-text">交换机的vlan</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IPV6-入门"><span class="nav-number">7.</span> <span class="nav-text">IPV6 入门</span></a></li></ol></div>
             
 
           </div>
@@ -703,7 +724,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">94k</span>
+    <span title="博客全站字数共计">97.6k</span>
   
 </div>
 

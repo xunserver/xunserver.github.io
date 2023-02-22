@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/uploads/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/uploads/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="down，bang">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="bang" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="浏览器和网络浏览器的进程有哪些，分别作用浏览器的线程输入一个url，浏览器如何处理解析js引擎的执行，如何和各个线程配合什么请求会携带cookies任何请求都会携带cookies，最终能不能携带cookies还需要多步过滤。 cookies如何携带，如何设置。携带当前请求的父域名和父路径上的cookies，设置域名也是只能设置到当前请求的父域名路径 跨域场景的cookies是如何设置和携带的跨域和">
+<meta name="keywords" content="博客,xunsever,bang">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FE-advance">
+<meta property="og:url" content="https://blog.xunserver.cn/archives/fcb5ead3.html">
+<meta property="og:site_name" content="bang">
+<meta property="og:description" content="浏览器和网络浏览器的进程有哪些，分别作用浏览器的线程输入一个url，浏览器如何处理解析js引擎的执行，如何和各个线程配合什么请求会携带cookies任何请求都会携带cookies，最终能不能携带cookies还需要多步过滤。 cookies如何携带，如何设置。携带当前请求的父域名和父路径上的cookies，设置域名也是只能设置到当前请求的父域名路径 跨域场景的cookies是如何设置和携带的跨域和">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2023-02-15T08:45:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="FE-advance">
+<meta name="twitter:description" content="浏览器和网络浏览器的进程有哪些，分别作用浏览器的线程输入一个url，浏览器如何处理解析js引擎的执行，如何和各个线程配合什么请求会携带cookies任何请求都会携带cookies，最终能不能携带cookies还需要多步过滤。 cookies如何携带，如何设置。携带当前请求的父域名和父路径上的cookies，设置域名也是只能设置到当前请求的父域名路径 跨域场景的cookies是如何设置和携带的跨域和">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://blog.xunserver.cn/archives/fcb5ead3.html">
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "f81d2d8f"
+    });
+  daovoice('update');
+  </script>
+
+  <title>FE-advance | bang</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-138453533-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?46adc4f6ca707e081b3f4e2bee76f673";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">bang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">生活总会有惊喜</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.xunserver.cn/archives/fcb5ead3.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yangmanman">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="bang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">FE-advance</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-02-15T08:45:48+00:00">
+                2023-02-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/archives/fcb5ead3.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/archives/fcb5ead3.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/archives/fcb5ead3.html" class="leancloud_visitors" data-flag-title="FE-advance">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                 <span>ºC</span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.9k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 </span>
+                
+                <span title="阅读时长">
+                  7 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="浏览器和网络"><a href="#浏览器和网络" class="headerlink" title="浏览器和网络"></a>浏览器和网络</h3><h4 id="浏览器的进程有哪些，分别作用"><a href="#浏览器的进程有哪些，分别作用" class="headerlink" title="浏览器的进程有哪些，分别作用"></a>浏览器的进程有哪些，分别作用</h4><h4 id="浏览器的线程"><a href="#浏览器的线程" class="headerlink" title="浏览器的线程"></a>浏览器的线程</h4><h4 id="输入一个url，浏览器如何处理解析"><a href="#输入一个url，浏览器如何处理解析" class="headerlink" title="输入一个url，浏览器如何处理解析"></a>输入一个url，浏览器如何处理解析</h4><h4 id="js引擎的执行，如何和各个线程配合"><a href="#js引擎的执行，如何和各个线程配合" class="headerlink" title="js引擎的执行，如何和各个线程配合"></a>js引擎的执行，如何和各个线程配合</h4><h4 id="什么请求会携带cookies"><a href="#什么请求会携带cookies" class="headerlink" title="什么请求会携带cookies"></a>什么请求会携带cookies</h4><p>任何请求都会携带cookies，最终能不能携带cookies还需要多步过滤。</p>
+<h4 id="cookies如何携带，如何设置。"><a href="#cookies如何携带，如何设置。" class="headerlink" title="cookies如何携带，如何设置。"></a>cookies如何携带，如何设置。</h4><p>携带当前请求的父域名和父路径上的cookies，设置域名也是只能设置到当前请求的父域名路径</p>
+<h4 id="跨域场景的cookies是如何设置和携带的"><a href="#跨域场景的cookies是如何设置和携带的" class="headerlink" title="跨域场景的cookies是如何设置和携带的"></a>跨域场景的cookies是如何设置和携带的</h4><p>跨域和携带cookies不冲突，cookies是只看目的不看来源，对于xhr 和 fetch的请求，总是需要手动的设置的是否在请求中包含cookies。对于其他的比如标签，链接或者link等不考虑跨域。</p>
+<h4 id="什么是跨站，samesite是什么"><a href="#什么是跨站，samesite是什么" class="headerlink" title="什么是跨站，samesite是什么"></a>什么是跨站，samesite是什么</h4><p>只有两个请求的顶级有效域名 + 1相同，既是同站。samesite有lax、strict和none。老版本中samesite默认值是none, 意味着cookies的携带不看来源，目前各大浏览器统一设置为 lax, 对于跨站的请求只允许a标签、预加载和get 表单能携带cookies。 </p>
+<h4 id="浏览器的缓存有些那些"><a href="#浏览器的缓存有些那些" class="headerlink" title="浏览器的缓存有些那些"></a>浏览器的缓存有些那些</h4><h4 id="no-store和no-cache"><a href="#no-store和no-cache" class="headerlink" title="no-store和no-cache"></a>no-store和no-cache</h4><h4 id="webpack中的缓存如何配置"><a href="#webpack中的缓存如何配置" class="headerlink" title="webpack中的缓存如何配置"></a>webpack中的缓存如何配置</h4><h4 id="put、post、get区别，浏览器常见的状态码"><a href="#put、post、get区别，浏览器常见的状态码" class="headerlink" title="put、post、get区别，浏览器常见的状态码"></a>put、post、get区别，浏览器常见的状态码</h4><h4 id="跨域的几种方法和原理"><a href="#跨域的几种方法和原理" class="headerlink" title="跨域的几种方法和原理"></a>跨域的几种方法和原理</h4><h4 id="xss和crsf攻击是啥，如何防范"><a href="#xss和crsf攻击是啥，如何防范" class="headerlink" title="xss和crsf攻击是啥，如何防范"></a>xss和crsf攻击是啥，如何防范</h4><h4 id="postmessage如何实现，讲述一下为什么能实现跨域。"><a href="#postmessage如何实现，讲述一下为什么能实现跨域。" class="headerlink" title="postmessage如何实现，讲述一下为什么能实现跨域。"></a>postmessage如何实现，讲述一下为什么能实现跨域。</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建并获取其他窗口的引用</span></span><br><span class="line"><span class="keyword">const</span> iframe = <span class="built_in">document</span>.createElement(<span class="string">'IFRAME'</span>);</span><br><span class="line">insertIframe(iframe);</span><br><span class="line">iframe.addEventListener(<span class="string">'load'</span>, () =&gt; &#123;</span><br><span class="line">    iframe.contentWindow.postMessage(<span class="string">"some message"</span>, <span class="string">'/'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// iframe中</span></span><br><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'message'</span>, message =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span>(message.origin === <span class="string">'https://www.baidu.com'</span>) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(message.data)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">window</span>.parent.postMessage(<span class="string">'iframe message'</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>所有的跨域都基于信任链，子iframe手动添加了对父origin的信任，父origin也手动添加了对子的信任。</p>
+<p>还有基于window.domain的跨域，在两个页面是同站但是跨域的场景，手动将的两个站点的window.domain 设置为相同即可在两个页面分别直接获取window对象</p>
+<h4 id="access-control-allow流程。"><a href="#access-control-allow流程。" class="headerlink" title="access-control-allow流程。"></a>access-control-allow流程。</h4><ol>
+<li>判断当前请求是简单请求还是复杂请求，如果是简单请求直接请求，后端在响应中携带access-control-allow: * 对应的域，浏览器检查响应中是否有该字段并且能和当前的域匹配，响应才会被正确的解析。如果是复杂请求，浏览器先发送一个option请求， 不携带请求体，询问是否同意跨域，如果同意再发送简单请求。<h4 id="简单请求和复杂请求"><a href="#简单请求和复杂请求" class="headerlink" title="简单请求和复杂请求"></a>简单请求和复杂请求</h4>简单请求需要满足request method: option, get, post ，request header: accept accept-language 。content-language和 content-type 是 x-www-form-urlencode 和 mutilpart/formdata 以及 text/plain，注意不包括我们平常用的json。 其余的都是复杂请求。</li>
+</ol>
+<p>对于所有的跨域，请求中总是会携带当前域的信息通过origin 协议 host 和端口<br>其中简单请求服务端响应的有:<br>access-control-allow-origin: *（表示所有，但是不会携带cookies，即使设置了携带） ，对于开发环境，建议是正向代理总是将Origin，除了浏览器其他平台没有跨域问题<br>access-control-allow-credentials: 下次请求是否允许发送的cookie（要携带cookies， 两个条件缺一不可）</p>
+<p>对于复杂请求，还会添加 max-age: 表示多少时间内不需要再次预请求。 allow-method: 允许的请求的方法  allow-headers: *(除了 authoritie需要手动指定外，如果一定要手动指定，一定记得添加content-type 这样就能允许所有的content-type类型)</p>
+<h4 id="从浏览器上做优化有哪些-seo，多域名，"><a href="#从浏览器上做优化有哪些-seo，多域名，" class="headerlink" title="从浏览器上做优化有哪些(seo，多域名，)"></a>从浏览器上做优化有哪些(seo，多域名，)</h4><h4 id="获取其他页面的window，获取iframe的window，-iframe获取上级windows"><a href="#获取其他页面的window，获取iframe的window，-iframe获取上级windows" class="headerlink" title="获取其他页面的window，获取iframe的window， iframe获取上级windows"></a>获取其他页面的window，获取iframe的window， iframe获取上级windows</h4><h4 id="iframe如何创建最优，iframe对主页面的影响"><a href="#iframe如何创建最优，iframe对主页面的影响" class="headerlink" title="iframe如何创建最优，iframe对主页面的影响"></a>iframe如何创建最优，iframe对主页面的影响</h4><h3 id="css相关"><a href="#css相关" class="headerlink" title="css相关"></a>css相关</h3><h4 id="BFC是啥"><a href="#BFC是啥" class="headerlink" title="BFC是啥"></a>BFC是啥</h4><ol>
+<li>BFC外的浮动元素不会和BFC区域重叠</li>
+<li>BFC高度会计算浮动元素</li>
+<li>BFC不会和另一个BFC出现margin重叠</li>
+<li>BFC中的上下边距会重叠，取最大的那个</li>
+</ol>
+<h4 id="flex各个属性，flex实现居中-如何平分剩余空间等"><a href="#flex各个属性，flex实现居中-如何平分剩余空间等" class="headerlink" title="flex各个属性，flex实现居中, 如何平分剩余空间等"></a>flex各个属性，flex实现居中, 如何平分剩余空间等</h4><h4 id="重绘和回流是什么"><a href="#重绘和回流是什么" class="headerlink" title="重绘和回流是什么"></a>重绘和回流是什么</h4><h4 id="渲染层，合成层和图形层是啥"><a href="#渲染层，合成层和图形层是啥" class="headerlink" title="渲染层，合成层和图形层是啥"></a>渲染层，合成层和图形层是啥</h4><h4 id="animation和transition"><a href="#animation和transition" class="headerlink" title="animation和transition"></a>animation和transition</h4><h4 id="几个像素和viewport的关系"><a href="#几个像素和viewport的关系" class="headerlink" title="几个像素和viewport的关系"></a>几个像素和viewport的关系</h4><p>物理像素，指的是一个设备屏幕有多少个物理点，比如pc是1080 <em> 1920表示横向有1920个像素（系统本身不缩放的情况下）。有些设备屏幕是高清屏，用了多个物理像素来展示一个逻辑像素，称为像素比DPR，设备的DPR是固定的，比如苹果某些是2，有些设备是3。莫、默认情况下1 css px = 1 物理像素 </em> DPR（也就是所谓的设备像素，后文中device-width），但是又出现了缩放的场景， 这个时候 1 css px  = 1 物理像素 <em> DPR </em> 2。</p>
+<p>layoutview， 浏览器默认的窗口的大小，980px（css像素），如果不手动指定视图大小，浏览器会按照这个展示<br>visual view  可视窗口，总是理想窗口 / 缩放<br>ideal view   理想窗口，总是和设备像素相同</p>
+<p>在移动端中，大部分设备的DPR是固定的，设备像素也是固定的。但是在pc端因为2k和4k屏的出现，可以动态的调整DPR值，所以现在pc端也需要注意高清屏的问题</p>
+<p>我们在css中接触的总是css像素。下面举一个例子子来加强理解<br>设置 <strong><meat name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, minimum-scale=1"></meat></strong><br>如果上面的设备的DPR是2，物理像素是750，设备像素就是375，<br>这个时候1css像素就是 1 物理像素 <em> DPR </em> scale(1)就是1设备像素</p>
+<p>再考虑视图的问题，上面因为同时设置了width 和 scale，按照谁大取谁的方式，刚好device-width 和 initial-scale相同，所以layoutview是375px，如果页面中有元素设置500px，就会出现滚动条。可视区域的大小总是设备像素375px;换算成css就是375</p>
+<p>将scale = 2，这个时候因为width还是375，但是 initial-scale * ideal view = 750 大于375，所以最终的layoutview是750px。可视区域也变成了 375 / 2，所以滚动条会有 1 / 4</p>
+<h4 id="1px-解决"><a href="#1px-解决" class="headerlink" title="1px 解决"></a>1px 解决</h4><p>设计稿是750px, 750px中除了一个1px的，映射到实机就是0.5px，css不支持0.5px设置，有两种推荐的方案，第一个是通过transform: scale()来缩放。第二个是直接不用设备独立像素，把手机的像素扩展到最大，比如750px的设计稿，直接将取消缩放，让界面也是750px宽，在这个基础上再做rem等比的缩放。推荐第二种。</p>
+<h3 id="js基础"><a href="#js基础" class="headerlink" title="js基础"></a>js基础</h3><h4 id="执行上下文是啥，三大上下文类型，上下文的三大要素"><a href="#执行上下文是啥，三大上下文类型，上下文的三大要素" class="headerlink" title="执行上下文是啥，三大上下文类型，上下文的三大要素"></a>执行上下文是啥，三大上下文类型，上下文的三大要素</h4><h4 id="词法作用域和语法作用域，为什么js是词法作用域"><a href="#词法作用域和语法作用域，为什么js是词法作用域" class="headerlink" title="词法作用域和语法作用域，为什么js是词法作用域"></a>词法作用域和语法作用域，为什么js是词法作用域</h4><h4 id="this的绑定规则，bind后还能修改this吗（使用call修改）"><a href="#this的绑定规则，bind后还能修改this吗（使用call修改）" class="headerlink" title="this的绑定规则，bind后还能修改this吗（使用call修改）"></a>this的绑定规则，bind后还能修改this吗（使用call修改）</h4><h4 id="箭头函数中的上下文深入理解，实现一个调整箭头函数this绑定的函数"><a href="#箭头函数中的上下文深入理解，实现一个调整箭头函数this绑定的函数" class="headerlink" title="箭头函数中的上下文深入理解，实现一个调整箭头函数this绑定的函数"></a>箭头函数中的上下文深入理解，实现一个调整箭头函数this绑定的函数</h4><h4 id="作用域链是什么"><a href="#作用域链是什么" class="headerlink" title="作用域链是什么"></a>作用域链是什么</h4><h4 id="原型链是什么"><a href="#原型链是什么" class="headerlink" title="原型链是什么"></a>原型链是什么</h4><h4 id="如何实现继承，继承的几种方式对比"><a href="#如何实现继承，继承的几种方式对比" class="headerlink" title="如何实现继承，继承的几种方式对比"></a>如何实现继承，继承的几种方式对比</h4><h4 id="class继承和原型继承的区别"><a href="#class继承和原型继承的区别" class="headerlink" title="class继承和原型继承的区别"></a>class继承和原型继承的区别</h4><h4 id="几个原型相关的对象API"><a href="#几个原型相关的对象API" class="headerlink" title="几个原型相关的对象API"></a>几个原型相关的对象API</h4><h4 id="原型中的属性代理如何实现的"><a href="#原型中的属性代理如何实现的" class="headerlink" title="原型中的属性代理如何实现的"></a>原型中的属性代理如何实现的</h4><h4 id="实现一个instanceof-简单描述typeof-和-Object-prototype-toString-call"><a href="#实现一个instanceof-简单描述typeof-和-Object-prototype-toString-call" class="headerlink" title="实现一个instanceof, 简单描述typeof 和 Object.prototype.toString.call()"></a>实现一个instanceof, 简单描述typeof 和 Object.prototype.toString.call()</h4><h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><h4 id="几个有关原型的方法"><a href="#几个有关原型的方法" class="headerlink" title="几个有关原型的方法"></a>几个有关原型的方法</h4><h4 id="属性控制器"><a href="#属性控制器" class="headerlink" title="属性控制器"></a>属性控制器</h4><h4 id="可迭代对象的总结，如何快速转换成数组等。"><a href="#可迭代对象的总结，如何快速转换成数组等。" class="headerlink" title="可迭代对象的总结，如何快速转换成数组等。"></a>可迭代对象的总结，如何快速转换成数组等。</h4><h4 id="判断变量类型的的方法"><a href="#判断变量类型的的方法" class="headerlink" title="判断变量类型的的方法"></a>判断变量类型的的方法</h4><h3 id="手写代码"><a href="#手写代码" class="headerlink" title="手写代码"></a>手写代码</h3><h4 id="call-apply-bind"><a href="#call-apply-bind" class="headerlink" title="call, apply, bind"></a>call, apply, bind</h4><h4 id="实现promise"><a href="#实现promise" class="headerlink" title="实现promise"></a>实现promise</h4><h4 id="实现debounce-和-throlle"><a href="#实现debounce-和-throlle" class="headerlink" title="实现debounce 和 throlle"></a>实现debounce 和 throlle</h4><h4 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h4><h4 id="判断对象的类型，toString-实现"><a href="#判断对象的类型，toString-实现" class="headerlink" title="判断对象的类型，toString 实现"></a>判断对象的类型，toString 实现</h4>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archives/179039cd.html" rel="next" title="一起写UI库（三）----栅格布局">
+                <i class="fa fa-chevron-left"></i> 一起写UI库（三）----栅格布局
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archives/f112fe7a.html" rel="prev" title="js-context and scoped">
+                js-context and scoped <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="yangmanman">
+            
+              <p class="site-author-name" itemprop="name">yangmanman</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">111</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/xunserver" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#浏览器和网络"><span class="nav-number">1.</span> <span class="nav-text">浏览器和网络</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#浏览器的进程有哪些，分别作用"><span class="nav-number">1.1.</span> <span class="nav-text">浏览器的进程有哪些，分别作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#浏览器的线程"><span class="nav-number">1.2.</span> <span class="nav-text">浏览器的线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输入一个url，浏览器如何处理解析"><span class="nav-number">1.3.</span> <span class="nav-text">输入一个url，浏览器如何处理解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#js引擎的执行，如何和各个线程配合"><span class="nav-number">1.4.</span> <span class="nav-text">js引擎的执行，如何和各个线程配合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么请求会携带cookies"><span class="nav-number">1.5.</span> <span class="nav-text">什么请求会携带cookies</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cookies如何携带，如何设置。"><span class="nav-number">1.6.</span> <span class="nav-text">cookies如何携带，如何设置。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#跨域场景的cookies是如何设置和携带的"><span class="nav-number">1.7.</span> <span class="nav-text">跨域场景的cookies是如何设置和携带的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是跨站，samesite是什么"><span class="nav-number">1.8.</span> <span class="nav-text">什么是跨站，samesite是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#浏览器的缓存有些那些"><span class="nav-number">1.9.</span> <span class="nav-text">浏览器的缓存有些那些</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#no-store和no-cache"><span class="nav-number">1.10.</span> <span class="nav-text">no-store和no-cache</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#webpack中的缓存如何配置"><span class="nav-number">1.11.</span> <span class="nav-text">webpack中的缓存如何配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#put、post、get区别，浏览器常见的状态码"><span class="nav-number">1.12.</span> <span class="nav-text">put、post、get区别，浏览器常见的状态码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#跨域的几种方法和原理"><span class="nav-number">1.13.</span> <span class="nav-text">跨域的几种方法和原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#xss和crsf攻击是啥，如何防范"><span class="nav-number">1.14.</span> <span class="nav-text">xss和crsf攻击是啥，如何防范</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#postmessage如何实现，讲述一下为什么能实现跨域。"><span class="nav-number">1.15.</span> <span class="nav-text">postmessage如何实现，讲述一下为什么能实现跨域。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#access-control-allow流程。"><span class="nav-number">1.16.</span> <span class="nav-text">access-control-allow流程。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#简单请求和复杂请求"><span class="nav-number">1.17.</span> <span class="nav-text">简单请求和复杂请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从浏览器上做优化有哪些-seo，多域名，"><span class="nav-number">1.18.</span> <span class="nav-text">从浏览器上做优化有哪些(seo，多域名，)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取其他页面的window，获取iframe的window，-iframe获取上级windows"><span class="nav-number">1.19.</span> <span class="nav-text">获取其他页面的window，获取iframe的window， iframe获取上级windows</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#iframe如何创建最优，iframe对主页面的影响"><span class="nav-number">1.20.</span> <span class="nav-text">iframe如何创建最优，iframe对主页面的影响</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#css相关"><span class="nav-number">2.</span> <span class="nav-text">css相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#BFC是啥"><span class="nav-number">2.1.</span> <span class="nav-text">BFC是啥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#flex各个属性，flex实现居中-如何平分剩余空间等"><span class="nav-number">2.2.</span> <span class="nav-text">flex各个属性，flex实现居中, 如何平分剩余空间等</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重绘和回流是什么"><span class="nav-number">2.3.</span> <span class="nav-text">重绘和回流是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#渲染层，合成层和图形层是啥"><span class="nav-number">2.4.</span> <span class="nav-text">渲染层，合成层和图形层是啥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#animation和transition"><span class="nav-number">2.5.</span> <span class="nav-text">animation和transition</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#几个像素和viewport的关系"><span class="nav-number">2.6.</span> <span class="nav-text">几个像素和viewport的关系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1px-解决"><span class="nav-number">2.7.</span> <span class="nav-text">1px 解决</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#js基础"><span class="nav-number">3.</span> <span class="nav-text">js基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#执行上下文是啥，三大上下文类型，上下文的三大要素"><span class="nav-number">3.1.</span> <span class="nav-text">执行上下文是啥，三大上下文类型，上下文的三大要素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#词法作用域和语法作用域，为什么js是词法作用域"><span class="nav-number">3.2.</span> <span class="nav-text">词法作用域和语法作用域，为什么js是词法作用域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#this的绑定规则，bind后还能修改this吗（使用call修改）"><span class="nav-number">3.3.</span> <span class="nav-text">this的绑定规则，bind后还能修改this吗（使用call修改）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#箭头函数中的上下文深入理解，实现一个调整箭头函数this绑定的函数"><span class="nav-number">3.4.</span> <span class="nav-text">箭头函数中的上下文深入理解，实现一个调整箭头函数this绑定的函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#作用域链是什么"><span class="nav-number">3.5.</span> <span class="nav-text">作用域链是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原型链是什么"><span class="nav-number">3.6.</span> <span class="nav-text">原型链是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何实现继承，继承的几种方式对比"><span class="nav-number">3.7.</span> <span class="nav-text">如何实现继承，继承的几种方式对比</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#class继承和原型继承的区别"><span class="nav-number">3.8.</span> <span class="nav-text">class继承和原型继承的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#几个原型相关的对象API"><span class="nav-number">3.9.</span> <span class="nav-text">几个原型相关的对象API</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原型中的属性代理如何实现的"><span class="nav-number">3.10.</span> <span class="nav-text">原型中的属性代理如何实现的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现一个instanceof-简单描述typeof-和-Object-prototype-toString-call"><span class="nav-number">3.11.</span> <span class="nav-text">实现一个instanceof, 简单描述typeof 和 Object.prototype.toString.call()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象"><span class="nav-number">4.</span> <span class="nav-text">对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#几个有关原型的方法"><span class="nav-number">4.1.</span> <span class="nav-text">几个有关原型的方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#属性控制器"><span class="nav-number">4.2.</span> <span class="nav-text">属性控制器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可迭代对象的总结，如何快速转换成数组等。"><span class="nav-number">4.3.</span> <span class="nav-text">可迭代对象的总结，如何快速转换成数组等。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#判断变量类型的的方法"><span class="nav-number">4.4.</span> <span class="nav-text">判断变量类型的的方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#手写代码"><span class="nav-number">5.</span> <span class="nav-text">手写代码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#call-apply-bind"><span class="nav-number">5.1.</span> <span class="nav-text">call, apply, bind</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现promise"><span class="nav-number">5.2.</span> <span class="nav-text">实现promise</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现debounce-和-throlle"><span class="nav-number">5.3.</span> <span class="nav-text">实现debounce 和 throlle</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#深拷贝"><span class="nav-number">5.4.</span> <span class="nav-text">深拷贝</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#判断对象的类型，toString-实现"><span class="nav-number">5.5.</span> <span class="nav-text">判断对象的类型，toString 实现</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yangmanman</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">博客全站字数共计&#58;</span>
+    
+    <span title="博客全站字数共计">97.6k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom">蜀ICP备17019511号-2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: true,
+        notify: false,
+        appId: 'vuVpRBVLYgITznVd6lB3SmEO-gzGzoHsz',
+        appKey: 'joDjKEtGAKgsTOkptN9QqUQA',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("vuVpRBVLYgITznVd6lB3SmEO-gzGzoHsz", "joDjKEtGAKgsTOkptN9QqUQA");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/baidu.js"></script>
+</body>
+</html>

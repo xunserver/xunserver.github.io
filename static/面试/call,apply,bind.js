@@ -57,6 +57,29 @@ Function.prototype.myBind = function(context) {
     return fBind
 }
 
+Function.prototype.myApply = function(context, ...args) {
+    if(typeof this !== 'function') {
+        throw new Error('not function')
+    }
+
+    Array.prototype.slice.apply(arguments, 0)
+
+    const _temp = Symbol();
+    context[_temp] = fn;
+    const result = context[_temp](...args)
+    delete context[_temp]
+    return result
+}
+
+Function.prototype.myBind = function(context, ...args) {
+    const fn = this;
+
+    var fBind = function() {
+        
+        return fn.apply(this instanceof fn ? this : context, args.concat)
+    }
+}
+
 const testFn = function(...args) {
     console.log(this.a, args.length)
 }
