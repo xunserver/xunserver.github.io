@@ -88,18 +88,18 @@
 
 
 
-<meta name="description" content="Document                    title                             class Vue {             constructor(options) {                 this.data = new Observe(options.data)">
+<meta name="description" content="Document                    title                             // 工具方法         const isObject = target =&amp;gt; target &amp;&amp; typeof target === &apos;object&apos;;         const def = (target, key,">
 <meta name="keywords" content="博客,xunsever,bang">
 <meta property="og:type" content="website">
 <meta property="og:title" content="bang">
 <meta property="og:url" content="https://blog.xunserver.cn/static/面试/Vue.html">
 <meta property="og:site_name" content="bang">
-<meta property="og:description" content="Document                    title                             class Vue {             constructor(options) {                 this.data = new Observe(options.data)">
+<meta property="og:description" content="Document                    title                             // 工具方法         const isObject = target =&amp;gt; target &amp;&amp; typeof target === &apos;object&apos;;         const def = (target, key,">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2023-02-22T15:55:33.417Z">
+<meta property="og:updated_time" content="2023-02-25T14:23:04.641Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="bang">
-<meta name="twitter:description" content="Document                    title                             class Vue {             constructor(options) {                 this.data = new Observe(options.data)">
+<meta name="twitter:description" content="Document                    title                             // 工具方法         const isObject = target =&amp;gt; target &amp;&amp; typeof target === &apos;object&apos;;         const def = (target, key,">
 
 
 
@@ -353,10 +353,50 @@
     </div>
 
     <script>
+        // 工具方法
+        const isObject = target => target && typeof target === 'object';
+        const def = (target, key, value, enumerable = !!enumerable) => {
+            Object.defineProperty(target, key, {
+                value,
+                enumerable,
+                configurable: true,
+                writable: true
+            })
+        }
+        const defineReactive = (obj, key) => {
+            let _value = obj[key]
+            const dep = new Dep
+            Object.defineProperty(obj, key, {
+                get() {
+                    dep.addSub(Dep.target);
+
+                    return _value;
+                },
+                set(value) {
+                    _value = value;
+
+                    dep.notify(_value);
+                }
+            })
+        }
+
         class Vue {
             constructor(options) {
-                this.data = new Observe(options.data)
+                this.data = observe(options.data)
                 this.compile(document.querySelector(options.el))
+            }
+            observe(value) {
+                if(!isObject(value)) {
+                    return;
+                }
+                let ob
+                if(value.hasOwnProperty('__ob__') && value.__ob__ instanceof Observer) {
+                    ob = value.__ob__
+                } 
+                else {
+                    ob = new Observer(value)
+                }
+                return ob
             }
             compile(node) {
                 [].forEach.call(node.childNodes, (childNode) => {
@@ -368,26 +408,25 @@
             }
         }
 
-        class Observe {
-            constructor(obj) {
-                Object.keys(obj).forEach(key => {
-                    let value = obj[key];
-                    const dep = new Dep
-                    Object.defineProperty(obj, key, {
-                        get() {
-                            dep.addSub(Dep.target);
-                            Dep.target = null;
-                            return value
-                        },
-                        set(newValue) {
-                            if(value === newValue) return;
-                            value = newValue;
-                            dep.notify(newValue)
-                        }
-                    }) 
+        class Observer {
+            constructor(value) {
+                // value 一定是对象或者数组
+                this.value = value;
+                const dep = new Dep
+                // 将响应式对象添加到原始对象中
+                def(value, '__ob__', this)
+                
+                if(Array.isArray(value)) {
+
+                } else {
+                    this.walk(value)
+                }
+            }
+            walk(value) {
+                Object.keys(value).forEach((key) => {
+                    defineReactive(value, key) 
                 })
-                return obj
-            }  
+            }
         }
 
         class Dep {
@@ -491,7 +530,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">111</span>
+                  <span class="site-state-item-count">113</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -581,7 +620,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">97.6k</span>
+    <span title="博客全站字数共计">99.3k</span>
   
 </div>
 

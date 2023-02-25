@@ -88,18 +88,18 @@
 
 
 
-<meta name="description" content="生命周期解释生命周期函数是一个hook，类似于好莱坞的设计模式，hook是同步调用，在Vue执行的各个时间点被调用，能获取到对应时间点VM的状态 开始 赋值_self, vm=this 合并extend和mixin选型 初始化proxy拦截器 初始化render生成函数 初始化组件上的事件监听器  beforeCreate injection prop method data computed w">
+<meta name="description" content="生命周期解释生命周期函数是一个hook，类似于好莱坞的设计模式，hook是同步调用，在Vue执行的各个时间点被调用，能获取到对应时间点VM的状态 开始 赋值_self, vm=this 合并extend和mixin选型 初始化proxy拦截器 初始化h函数 初始化组件上的事件监听器  1234567Vue.prototype._init = function() &amp;#123;    initMix">
 <meta name="keywords" content="博客,xunsever,bang">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Vue查漏补缺（一）生命周期">
 <meta property="og:url" content="https://blog.xunserver.cn/archives/69b5cd9a.html">
 <meta property="og:site_name" content="bang">
-<meta property="og:description" content="生命周期解释生命周期函数是一个hook，类似于好莱坞的设计模式，hook是同步调用，在Vue执行的各个时间点被调用，能获取到对应时间点VM的状态 开始 赋值_self, vm=this 合并extend和mixin选型 初始化proxy拦截器 初始化render生成函数 初始化组件上的事件监听器  beforeCreate injection prop method data computed w">
+<meta property="og:description" content="生命周期解释生命周期函数是一个hook，类似于好莱坞的设计模式，hook是同步调用，在Vue执行的各个时间点被调用，能获取到对应时间点VM的状态 开始 赋值_self, vm=this 合并extend和mixin选型 初始化proxy拦截器 初始化h函数 初始化组件上的事件监听器  1234567Vue.prototype._init = function() &amp;#123;    initMix">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2022-03-24T00:03:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue查漏补缺（一）生命周期">
-<meta name="twitter:description" content="生命周期解释生命周期函数是一个hook，类似于好莱坞的设计模式，hook是同步调用，在Vue执行的各个时间点被调用，能获取到对应时间点VM的状态 开始 赋值_self, vm=this 合并extend和mixin选型 初始化proxy拦截器 初始化render生成函数 初始化组件上的事件监听器  beforeCreate injection prop method data computed w">
+<meta name="twitter:description" content="生命周期解释生命周期函数是一个hook，类似于好莱坞的设计模式，hook是同步调用，在Vue执行的各个时间点被调用，能获取到对应时间点VM的状态 开始 赋值_self, vm=this 合并extend和mixin选型 初始化proxy拦截器 初始化h函数 初始化组件上的事件监听器  1234567Vue.prototype._init = function() &amp;#123;    initMix">
 
 
 
@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  149 字
+                  225 字
                 </span>
               
 
@@ -458,14 +458,15 @@
 <li>赋值_self, vm=this</li>
 <li>合并extend和mixin选型</li>
 <li>初始化proxy拦截器</li>
-<li>初始化render生成函数</li>
+<li>初始化h函数</li>
 <li>初始化组件上的事件监听器</li>
 </ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Vue.prototype._init = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    initMixin()  <span class="comment">// 合并extend和mixin选项</span></span><br><span class="line">    stateMixin()  <span class="comment">// 初始化$set $watch $delete $get方法</span></span><br><span class="line">    eventMixin() <span class="comment">// 初始化 $on $once $emit $forceupdate等方法</span></span><br><span class="line">    lifecycleMixin() <span class="comment">// 初始化声明周期hook</span></span><br><span class="line">    renderMixin() <span class="comment">// 初始化渲染函数h</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="beforeCreate"><a href="#beforeCreate" class="headerlink" title="beforeCreate"></a>beforeCreate</h3><ol>
 <li>injection</li>
-<li>prop</li>
+<li>prop（options.propsData），解析父组件传入的初始值，建立响应式</li>
 <li>method</li>
-<li>data</li>
+<li>data (使用observe 建立响应式)</li>
 <li>computed</li>
 <li>watch</li>
 <li>provider<h3 id="created"><a href="#created" class="headerlink" title="created"></a>created</h3></li>
@@ -499,8 +500,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/archives/e6d11dd8.html" rel="next" title="json-schema-json">
-                <i class="fa fa-chevron-left"></i> json-schema-json
+              <a href="/archives/d0fc54e0.html" rel="next" title="Vue查漏补缺（四）渲染流程中的细节">
+                <i class="fa fa-chevron-left"></i> Vue查漏补缺（四）渲染流程中的细节
               </a>
             
           </div>
@@ -592,7 +593,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">111</span>
+                  <span class="site-state-item-count">113</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -698,7 +699,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">97.6k</span>
+    <span title="博客全站字数共计">99.3k</span>
   
 </div>
 
