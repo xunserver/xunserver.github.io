@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  873 字
+                  1.1k 字
                 </span>
               
 
@@ -432,7 +432,7 @@
                   <span class="post-meta-item-text">阅读时长 </span>
                 
                 <span title="阅读时长">
-                  3 分钟
+                  4 分钟
                 </span>
               
             </div>
@@ -474,8 +474,40 @@
 <p>源码中可以发现，还支持sync参数，不讲watcher添加到任务队列，直接更新</p>
 <h3 id="computed"><a href="#computed" class="headerlink" title="computed"></a>computed</h3><p>computed同理，外号computed-watcher, 和watcher区别是拼接getter函数不一样，getter里面可能会涉及对多个getter对象读取，所以也具有if里面的语句如果第一次未收集不会添加到依赖项中</p>
 <h3 id="nexttick"><a href="#nexttick" class="headerlink" title="nexttick"></a>nexttick</h3><p>如果想要获取更新的dom，需要用到该api。nexttick实际就是将代码放置到当前周期最后通过微任务或者宏任务添加。nexttick 函数返回一个promise对象，表示当前这个回调执行完毕</p>
+<script>
+// @ is an alias to /src
+import HelloWorld from '@/components/HelloWorld.vue'
+
+export default {
+  name: 'HomeView',
+  data() {
+    return {
+      msg: 'message'
+    }
+  },
+  components: {
+    HelloWorld
+  },
+  mounted() {
+    this.msg = '123';
+    this.$nextTick(() => {
+      debugger // 理论上这个debugger时界面应该是白屏
+      alert()  // 实际上debugger不会阻止渲染线程，还是alert大爷出马
+    })
+  },
+  render(h) {
+    const vNode = h('HelloWorld', {props: {msg: this.msg}}, h('div',{}, ''))
+    return vNode
+  }
+}
+</script>
+
+
+
 <h3 id="异步队列"><a href="#异步队列" class="headerlink" title="异步队列"></a>异步队列</h3><p>会将所有set中触发的watcher添加到异步队列中，如果watcher已经存在在队列中，放置到队列最后。异步队列的执行总是在当前周期优先通过nexttick（）添加。</p>
 <h3 id="forceUpdate"><a href="#forceUpdate" class="headerlink" title="$forceUpdate()"></a>$forceUpdate()</h3><p>同步的执行当前异步队列并清空（不是删除nexttick中执行函数，只是清空），注意同步，意味着不需要再使用nexttick 就能获取更新后dom</p>
+<p>上面的理解是错误的， 并不是同步的，forceUpdate只是让当前Vue实例上的所有watcher.upadte(将自身添加到异步队列中，无论对应的依赖是否有更新),话说一个组件中也不会有太多watcher</p>
+<h3 id="事件原理"><a href="#事件原理" class="headerlink" title="事件原理"></a>事件原理</h3><p>主要是通过对模版的分析转换成vnode，vnode中通过on和nativeOn分别放入componentOptions, 在组件实例化时，如果是原生事件，在转换到dom时添加到dom上面，如果是自定义事件，直接走的Vue.prototype.$on监听(和代码中自定义事件差不多)</p>
 
       
     </div>
@@ -661,7 +693,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#get和set中的ob"><span class="nav-number">2.</span> <span class="nav-text">get和set中的ob</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#set"><span class="nav-number">3.</span> <span class="nav-text">$set</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#array魔改"><span class="nav-number">4.</span> <span class="nav-text">array魔改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#watch"><span class="nav-number">5.</span> <span class="nav-text">watch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#computed"><span class="nav-number">6.</span> <span class="nav-text">computed</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nexttick"><span class="nav-number">7.</span> <span class="nav-text">nexttick</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异步队列"><span class="nav-number">8.</span> <span class="nav-text">异步队列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#forceUpdate"><span class="nav-number">9.</span> <span class="nav-text">$forceUpdate()</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#get和set中的ob"><span class="nav-number">2.</span> <span class="nav-text">get和set中的ob</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#set"><span class="nav-number">3.</span> <span class="nav-text">$set</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#array魔改"><span class="nav-number">4.</span> <span class="nav-text">array魔改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#watch"><span class="nav-number">5.</span> <span class="nav-text">watch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#computed"><span class="nav-number">6.</span> <span class="nav-text">computed</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nexttick"><span class="nav-number">7.</span> <span class="nav-text">nexttick</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异步队列"><span class="nav-number">8.</span> <span class="nav-text">异步队列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#forceUpdate"><span class="nav-number">9.</span> <span class="nav-text">$forceUpdate()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件原理"><span class="nav-number">10.</span> <span class="nav-text">事件原理</span></a></li></ol></div>
             
 
           </div>
@@ -695,7 +727,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">99.3k</span>
+    <span title="博客全站字数共计">99.6k</span>
   
 </div>
 
