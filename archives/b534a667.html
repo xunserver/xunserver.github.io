@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.1k 字
+                  1.2k 字
                 </span>
               
 
@@ -469,10 +469,11 @@
 <li>在初始化数组响应式时，如果数组存在上面原型的方法，重写当前方法，将添加的每个值变成响应式。</li>
 <li>通知<strong>ob</strong>.dep.notify() 更新</li>
 </ol>
-<h3 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h3><p>watch算是比较简单的，有两种使用方法，在选项中声明watch，二是在原型上面this.$watch 动态声明。watch申明了一个user-watcher, user-watcher会对一个响应式对象进行监听(get)，在update中将新值和旧值传递给回调函数。属于最简单的watcher应用。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Watcher(vm, getter,....)</span><br></pre></td></tr></table></figure></p>
-<p>关键就是这个getter，当执行时，当前全局的Dep.target指向的是当前这个watcher，当getter里面数据变化时，当前这个watcher就会执行</p>
+<h3 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h3><p>watch算是比较简单的，有两种使用方法，在选项中声明watch，二是在原型上面this.$watch 动态声明。watch申明了一个user-watcher, user-watcher会对一个响应式对象进行监听(get)，在update中将新值和旧值传递给回调函数。属于最简单的watcher应用。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Watcher(vm, getter, cb)</span><br></pre></td></tr></table></figure></p>
+<p>关键就是这个getter，当执行时，当前全局的Dep.target指向的是当前这个watcher，当getter里面数据变化时，当前这个watcher就会执行, 当watcher初始化时，会立即执行一次来天添加依赖。当依赖变化时会执行watcher.update(), 添加到异步队列，异步队列又会添加到nexttick中依次执行watcher.run,watcher.run 会执行cb(this.getter())</p>
+<p>cb(this.getter())，无论是会有两个执行，render-watcher 就是放在this.getter()触发的updateComponent(), 同理computed也是没有CB只有getter</p>
 <p>源码中可以发现，还支持sync参数，不讲watcher添加到任务队列，直接更新</p>
-<h3 id="computed"><a href="#computed" class="headerlink" title="computed"></a>computed</h3><p>computed同理，外号computed-watcher, 和watcher区别是拼接getter函数不一样，getter里面可能会涉及对多个getter对象读取，所以也具有if里面的语句如果第一次未收集不会添加到依赖项中</p>
+<h3 id="computed"><a href="#computed" class="headerlink" title="computed"></a>computed</h3><p>computed同理，外号computed-watcher, 和watcher区别是拼接getter函数不一样，getter里面可能会涉及对多个getter对象读取，所以也具有if里面的语句如果第一次未收集不会添加到依赖项中, computed懒实现原理是</p>
 <h3 id="nexttick"><a href="#nexttick" class="headerlink" title="nexttick"></a>nexttick</h3><p>如果想要获取更新的dom，需要用到该api。nexttick实际就是将代码放置到当前周期最后通过微任务或者宏任务添加。nexttick 函数返回一个promise对象，表示当前这个回调执行完毕</p>
 <script>
 // @ is an alias to /src
@@ -727,7 +728,7 @@ export default {
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">99.6k</span>
+    <span title="博客全站字数共计">100.1k</span>
   
 </div>
 

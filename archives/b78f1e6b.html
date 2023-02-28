@@ -526,7 +526,7 @@
 <h2 id="字体大小"><a href="#字体大小" class="headerlink" title="字体大小"></a>字体大小</h2><p>字体大小建议设置为偶数倍，因为windows的默认字体支持的是偶数倍，对于奇数字体会表现成大小相同，但是间距变大的情况</p>
 <p>## </p>
 <h2 id="元素设置100-的参考"><a href="#元素设置100-的参考" class="headerlink" title="元素设置100%的参考"></a>元素设置100%的参考</h2><p>padding: 包含块的宽度<br>margin: 包含块的宽度<br>border: // 不能使用百分比<br>font-size: 相对于父元素的文子大小<br>background-size： 相对于背景区域来设置图片大小，只设置一遍另一边会等图片比例获取（auto）<br>height: 包含块高度<br>width: 包含块宽度<br>left: 包含块宽度，从包含块的padding开始计算<br>top: 包含块高度<br>translate: 根据子元素本身，（考虑子元素box-size情况,相对的是border-box 计算的宽度或者高度（加了border还有padding还有content的宽度）</p>
-<p>总结下来两个点，padding根据的包含块宽度，translate 根据自身的border-box 宽度来计算，其余的都是常规逻辑</p>
+<p>总结下来两个点，padding根据的包含块宽度，margin竖直方式按照包含块宽度translate 根据自身的border-box 宽度来计算，其余的都是常规逻辑</p>
 <h2 id="居中"><a href="#居中" class="headerlink" title="居中"></a>居中</h2><h3 id="水平居中"><a href="#水平居中" class="headerlink" title="水平居中"></a>水平居中</h3><ol>
 <li>inline-block + 父元素text-align: center</li>
 <li>absolute left:50%  margin-left: 50px;</li>
@@ -794,7 +794,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">99.6k</span>
+    <span title="博客全站字数共计">100.1k</span>
   
 </div>
 
