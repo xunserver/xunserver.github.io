@@ -88,18 +88,18 @@
 
 
 
-<meta name="description" content="前言">
+<meta name="description" content="前言组件实例中令人疑惑的两个属性，名字相同表现却不同 组件Vnode和元素vnode的区别元素的vnode比较简单，会children这个属性，组件没有123456789101112131415161718192021222324252627282930313233343536373839// element vnodeinterface ElementVnode &amp;#123;    tag: s">
 <meta name="keywords" content="博客,xunsever,bang">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Vue查漏补缺（五）_vnode和$vnode">
 <meta property="og:url" content="https://blog.xunserver.cn/archives/6a9cccb0.html">
 <meta property="og:site_name" content="bang">
-<meta property="og:description" content="前言">
+<meta property="og:description" content="前言组件实例中令人疑惑的两个属性，名字相同表现却不同 组件Vnode和元素vnode的区别元素的vnode比较简单，会children这个属性，组件没有123456789101112131415161718192021222324252627282930313233343536373839// element vnodeinterface ElementVnode &amp;#123;    tag: s">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2022-03-24T00:03:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue查漏补缺（五）_vnode和$vnode">
-<meta name="twitter:description" content="前言">
+<meta name="twitter:description" content="前言组件实例中令人疑惑的两个属性，名字相同表现却不同 组件Vnode和元素vnode的区别元素的vnode比较简单，会children这个属性，组件没有123456789101112131415161718192021222324252627282930313233343536373839// element vnodeinterface ElementVnode &amp;#123;    tag: s">
 
 
 
@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2 字
+                  274 字
                 </span>
               
 
@@ -453,7 +453,11 @@
       
 
       
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>组件实例中令人疑惑的两个属性，名字相同表现却不同</p>
+<h3 id="组件Vnode和元素vnode的区别"><a href="#组件Vnode和元素vnode的区别" class="headerlink" title="组件Vnode和元素vnode的区别"></a>组件Vnode和元素vnode的区别</h3><p>元素的vnode比较简单，会children这个属性，组件没有<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// element vnode</span></span><br><span class="line">interface ElementVnode &#123;</span><br><span class="line">    tag: string;</span><br><span class="line">    data: &#123;</span><br><span class="line">        on: &#123;&#125;,</span><br><span class="line">        attrs: &#123; </span><br><span class="line">            [p: string]:</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    parent: Vnode,  <span class="comment">// 在写render函数时没有这个parent，在_render()中添加Vnode的parent为当前Vnode</span></span><br><span class="line">    Children: Vnode[]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// component vnode</span></span><br><span class="line">render(h) &#123;</span><br><span class="line">    <span class="keyword">return</span> &lt;HelloWorld msg=&#123;123&#125; vOn:click=&#123;() =&gt; &#123;&#125;&#125;&gt; 123 &lt;/HelloWorld&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> componentVnode = &#123;</span><br><span class="line">    tag: <span class="string">'vue-component-2-HelloWorld'</span>,</span><br><span class="line">    data: &#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">    componentOptions: &#123;</span><br><span class="line">        Ctor: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;   <span class="comment">// 组件的构造函数</span></span><br><span class="line">        children: [Vnode]   <span class="comment">// 123那个文本节点</span></span><br><span class="line">        listeners: &#123;  <span class="comment">// 运行时数据</span></span><br><span class="line">            click: <span class="function"><span class="params">()</span> =&gt;</span> &#123;&#125;</span><br><span class="line">        &#125;</span><br><span class="line">        propsData： &#123;  <span class="comment">// 运行时传入的一些数据</span></span><br><span class="line">            msg: <span class="number">123</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    componentInstance: <span class="literal">undefined</span>,</span><br><span class="line">    children: <span class="literal">undefined</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 构造函数上是组件申明时的一些数据</span></span><br><span class="line">Ctor.options</span><br></pre></td></tr></table></figure></p>
+<h3 id="vnode-来源"><a href="#vnode-来源" class="headerlink" title="_vnode 来源"></a>_vnode 来源</h3><p>指的就是当前实例render后产生的vnode<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Vue.prototype._update = <span class="function"><span class="keyword">function</span> (<span class="params">vnode, hydrating</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> vm = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">var</span> prevEl = vm.$el;</span><br><span class="line">    <span class="keyword">var</span> prevVnode = vm._vnode;</span><br><span class="line">    <span class="keyword">var</span> restoreActiveInstance = setActiveInstance(vm);</span><br><span class="line">    vm._vnode = vnode;</span><br><span class="line">    <span class="comment">// ....</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="vnode"><a href="#vnode" class="headerlink" title="$vnode"></a>$vnode</h3><p>指的是该组件对应的vnode，在父组件中该组件的vnode，也就是tag: ‘vue-component-2-helloWorld’ 这个vnode</p>
+
       
     </div>
     
@@ -642,7 +646,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组件Vnode和元素vnode的区别"><span class="nav-number">2.</span> <span class="nav-text">组件Vnode和元素vnode的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vnode-来源"><span class="nav-number">3.</span> <span class="nav-text">_vnode 来源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vnode"><span class="nav-number">4.</span> <span class="nav-text">$vnode</span></a></li></ol></div>
             
 
           </div>
@@ -676,7 +680,7 @@
     
       <span class="post-meta-item-text">博客全站字数共计&#58;</span>
     
-    <span title="博客全站字数共计">105.1k</span>
+    <span title="博客全站字数共计">106.1k</span>
   
 </div>
 
