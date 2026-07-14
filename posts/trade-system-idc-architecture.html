@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>量化交易系统IDC侧架构 | Bang</title>
+    <meta name="description" content="量化交易系统IDC侧架构">
+    <meta name="generator" content="VitePress v1.6.4">
+    <link rel="preload stylesheet" href="/assets/style.UFRra1hw.css" as="style">
+    <link rel="preload stylesheet" href="/vp-icons.css" as="style">
+    
+    <script type="module" src="/assets/app.B0AyA5T9.js"></script>
+    <link rel="preload" href="/assets/inter-roman-latin.Di8DUHzh.woff2" as="font" type="font/woff2" crossorigin="">
+    <link rel="modulepreload" href="/assets/chunks/framework.CS9vaShW.js">
+    <link rel="modulepreload" href="/assets/chunks/theme.By9jdrIs.js">
+    <link rel="modulepreload" href="/assets/chunks/mermaid.core.DVZDsq-a.js">
+    <link rel="modulepreload" href="/assets/chunks/virtual_mermaid-config.SxEyMT6P.js">
+    <link rel="modulepreload" href="/assets/posts_trade-system-idc-architecture.md.DkaxNdX9.lean.js">
+    <script id="check-dark-mode">(()=>{const e=localStorage.getItem("vitepress-theme-appearance")||"auto",a=window.matchMedia("(prefers-color-scheme: dark)").matches;(!e||e==="auto"?a:e==="dark")&&document.documentElement.classList.add("dark")})();</script>
+    <script id="check-mac-os">document.documentElement.classList.toggle("mac",/Mac|iPhone|iPod|iPad/i.test(navigator.platform));</script>
+  </head>
+  <body>
+    <div id="app"><!--[--><div class="Layout" data-v-cdc7d10c><!--[--><!--]--><!--[--><span tabindex="-1" data-v-7f3df1d8></span><a href="#VPContent" class="VPSkipLink visually-hidden" data-v-7f3df1d8>Skip to content</a><!--]--><!----><header class="VPNav" data-v-cdc7d10c data-v-5fca68b6><div class="VPNavBar" data-v-5fca68b6 data-v-2b5a5ed6><div class="wrapper" data-v-2b5a5ed6><div class="container" data-v-2b5a5ed6><div class="title" data-v-2b5a5ed6><div class="VPNavBarTitle" data-v-2b5a5ed6 data-v-ffbf8a87><a class="title" href="/" data-v-ffbf8a87><!--[--><!--]--><!--[--><img class="VPImage logo" src="/logo.svg" alt data-v-d72457bf><!--]--><span data-v-ffbf8a87>Bang</span><!--[--><!--]--></a></div></div><div class="content" data-v-2b5a5ed6><div class="content-body" data-v-2b5a5ed6><!--[--><!--]--><div class="VPNavBarSearch search" data-v-2b5a5ed6><!--[--><!----><div id="local-search"><button type="button" class="DocSearch DocSearch-Button" aria-label="Search"><span class="DocSearch-Button-Container"><span class="vp-icon DocSearch-Search-Icon"></span><span class="DocSearch-Button-Placeholder">Search</span></span><span class="DocSearch-Button-Keys"><kbd class="DocSearch-Button-Key"></kbd><kbd class="DocSearch-Button-Key">K</kbd></span></button></div><!--]--></div><nav aria-labelledby="main-nav-aria-label" class="VPNavBarMenu menu" data-v-2b5a5ed6 data-v-536dd768><span id="main-nav-aria-label" class="visually-hidden" data-v-536dd768> Main Navigation </span><!--[--><!--[--><a class="VPLink link VPNavBarMenuLink" href="/" tabindex="0" data-v-536dd768 data-v-c1ee5e52><!--[--><span data-v-c1ee5e52>首页</span><!--]--></a><!--]--><!--[--><a class="VPLink link VPNavBarMenuLink" href="/pages/daily" tabindex="0" data-v-536dd768 data-v-c1ee5e52><!--[--><span data-v-c1ee5e52>每日记录</span><!--]--></a><!--]--><!--[--><a class="VPLink link VPNavBarMenuLink" href="/pages/ai" tabindex="0" data-v-536dd768 data-v-c1ee5e52><!--[--><span data-v-c1ee5e52>AI</span><!--]--></a><!--]--><!--[--><a class="VPLink link VPNavBarMenuLink" href="/pages/finance" tabindex="0" data-v-536dd768 data-v-c1ee5e52><!--[--><span data-v-c1ee5e52>金融经济</span><!--]--></a><!--]--><!--[--><a class="VPLink link VPNavBarMenuLink" href="/pages/quant" tabindex="0" data-v-536dd768 data-v-c1ee5e52><!--[--><span data-v-c1ee5e52>量化交易</span><!--]--></a><!--]--><!--[--><a class="VPLink link VPNavBarMenuLink" href="/pages/tech" tabindex="0" data-v-536dd768 data-v-c1ee5e52><!--[--><span data-v-c1ee5e52>技术</span><!--]--></a><!--]--><!--]--></nav><!----><div class="VPNavBarAppearance appearance" data-v-2b5a5ed6 data-v-cbc7240c><button class="VPSwitch VPSwitchAppearance" type="button" role="switch" title aria-checked="false" data-v-cbc7240c data-v-508c0b0b data-v-e0e75657><span class="check" data-v-e0e75657><span class="icon" data-v-e0e75657><!--[--><span class="vpi-sun sun" data-v-508c0b0b></span><span class="vpi-moon moon" data-v-508c0b0b></span><!--]--></span></span></button></div><div class="VPSocialLinks VPNavBarSocialLinks social-links" data-v-2b5a5ed6 data-v-36512d61 data-v-8b820f66><!--[--><a class="VPSocialLink no-icon" href="https://github.com/xunserver" aria-label="github" target="_blank" rel="noopener" data-v-8b820f66 data-v-84254c99><span class="vpi-social-github"></span></a><!--]--></div><div class="VPFlyout VPNavBarExtra extra" data-v-2b5a5ed6 data-v-9d0f5384 data-v-85a90720><button type="button" class="button" aria-haspopup="true" aria-expanded="false" aria-label="extra navigation" data-v-85a90720><span class="vpi-more-horizontal icon" data-v-85a90720></span></button><div class="menu" data-v-85a90720><div class="VPMenu" data-v-85a90720 data-v-4f305f9a><!----><!--[--><!--[--><!----><div class="group" data-v-9d0f5384><div class="item appearance" data-v-9d0f5384><p class="label" data-v-9d0f5384>Appearance</p><div class="appearance-action" data-v-9d0f5384><button class="VPSwitch VPSwitchAppearance" type="button" role="switch" title aria-checked="false" data-v-9d0f5384 data-v-508c0b0b data-v-e0e75657><span class="check" data-v-e0e75657><span class="icon" data-v-e0e75657><!--[--><span class="vpi-sun sun" data-v-508c0b0b></span><span class="vpi-moon moon" data-v-508c0b0b></span><!--]--></span></span></button></div></div></div><div class="group" data-v-9d0f5384><div class="item social-links" data-v-9d0f5384><div class="VPSocialLinks social-links-list" data-v-9d0f5384 data-v-8b820f66><!--[--><a class="VPSocialLink no-icon" href="https://github.com/xunserver" aria-label="github" target="_blank" rel="noopener" data-v-8b820f66 data-v-84254c99><span class="vpi-social-github"></span></a><!--]--></div></div></div><!--]--><!--]--></div></div></div><!--[--><!--]--><button type="button" class="VPNavBarHamburger hamburger" aria-label="mobile navigation" aria-expanded="false" aria-controls="VPNavScreen" data-v-2b5a5ed6 data-v-6f0b2969><span class="container" data-v-6f0b2969><span class="top" data-v-6f0b2969></span><span class="middle" data-v-6f0b2969></span><span class="bottom" data-v-6f0b2969></span></span></button></div></div></div></div><div class="divider" data-v-2b5a5ed6><div class="divider-line" data-v-2b5a5ed6></div></div></div><!----></header><div class="VPLocalNav empty fixed" data-v-cdc7d10c data-v-4f130669><div class="container" data-v-4f130669><!----><div class="VPLocalNavOutlineDropdown" style="--vp-vh:0px;" data-v-4f130669 data-v-5ec6a1d0><button data-v-5ec6a1d0>Return to top</button><!----></div></div></div><!----><div class="VPContent" id="VPContent" data-v-cdc7d10c data-v-cc874180><div class="VPDoc has-aside" data-v-cc874180 data-v-c4a21dec><!--[--><!--]--><div class="container" data-v-c4a21dec><div class="aside" data-v-c4a21dec><div class="aside-curtain" data-v-c4a21dec></div><div class="aside-container" data-v-c4a21dec><div class="aside-content" data-v-c4a21dec><div class="VPDocAside" data-v-c4a21dec data-v-72065fad><!--[--><!--]--><!--[--><!--]--><nav aria-labelledby="doc-outline-aria-label" class="VPDocAsideOutline" data-v-72065fad data-v-37d62526><div class="content" data-v-37d62526><div class="outline-marker" data-v-37d62526></div><div aria-level="2" class="outline-title" id="doc-outline-aria-label" role="heading" data-v-37d62526>目录</div><ul class="VPDocOutlineItem root" data-v-37d62526 data-v-946c99d9><!--[--><!--]--></ul></div></nav><!--[--><!--]--><div class="spacer" data-v-72065fad></div><!--[--><!--]--><!----><!--[--><!--]--><!--[--><!--]--></div></div></div></div><div class="content" data-v-c4a21dec><div class="content-container" data-v-c4a21dec><!--[--><!--[--><!--[--><section class="article-meta" aria-label="文章统计"><div class="article-meta__stats"><span class="article-meta__item"><span class="article-meta__label">字数</span><strong>2,989</strong></span><span class="article-meta__item"><span class="article-meta__label">阅读</span><strong aria-live="polite">—</strong><span>次</span></span></div></section><!--]--><!--]--><!--]--><main class="main" data-v-c4a21dec><div style="position:relative;" class="vp-doc _posts_trade-system-idc-architecture" data-v-c4a21dec><div><h1 id="自有机房侧平台与模块设计文档" tabindex="-1">自有机房侧平台与模块设计文档 <a class="header-anchor" href="#自有机房侧平台与模块设计文档" aria-label="Permalink to &quot;自有机房侧平台与模块设计文档&quot;">​</a></h1><blockquote><p>版本：v0.1<br> 范围：私募基金高频量化交易系统 —— 自有机房侧<br> 口径：交易系统为整体；自有机房侧由多个平台组成；平台内部由模块组成。<br> 当前版本：不建设仿真交易平台；仿真能力后续可放在 Colo 侧，以“模拟柜台进程”方式实现。</p></blockquote><hr><h2 id="_1-设计目标" tabindex="-1">1. 设计目标 <a class="header-anchor" href="#_1-设计目标" aria-label="Permalink to &quot;1. 设计目标&quot;">​</a></h2><p>自有机房侧不参与微秒级交易决策，不直接承载低延迟撮合链路。它的定位是交易系统的 <strong>生产管理中枢、数据中枢、研发中枢、运维中枢和审计中枢</strong>。</p><p>核心目标：</p><ol><li><strong>可控</strong>：能够启动、停止、暂停、恢复、全撤、禁买、禁卖、Kill Switch。</li><li><strong>可观测</strong>：能够查看机器、进程、行情、信号、订单、成交、PnL、延迟、日志、时钟状态。</li><li><strong>可配置</strong>：能够管理并下发信号参数、交易机器人参数、柜台参数、风控参数、账户配置、标的池等。</li><li><strong>可审计</strong>：所有控制指令、参数变更、发布操作、应急操作、权限操作都可追溯。</li><li><strong>可结算</strong>：能够完成成交、持仓、资金、费用、PnL、券商数据的日终对账。</li><li><strong>可研发</strong>：支持研究平台、回测分析、实验管理和行情数据查询。</li><li><strong>可运维</strong>：支持部署发布、日志归档、任务调度、备份恢复、基础设施管理。</li></ol><hr><h2 id="_2-自有机房侧总体边界" tabindex="-1">2. 自有机房侧总体边界 <a class="header-anchor" href="#_2-自有机房侧总体边界" aria-label="Permalink to &quot;2. 自有机房侧总体边界&quot;">​</a></h2><p>自有机房侧当前版本建议由四类平台组成：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>自有机房侧</span></span>
+<span class="line"><span>├── 1. 管控平台</span></span>
+<span class="line"><span>├── 2. 研究平台</span></span>
+<span class="line"><span>├── 3. 行情数据管理平台</span></span>
+<span class="line"><span>└── 4. 基础设施平台</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>其中：</p><table tabindex="0"><thead><tr><th>平台</th><th>定位</th><th>是否核心</th></tr></thead><tbody><tr><td>管控平台</td><td>生产交易系统的统一管理入口</td><td>是</td></tr><tr><td>研究平台</td><td>面向策略研究、回测分析、实验管理</td><td>是</td></tr><tr><td>行情数据管理平台</td><td>面向行情数据采集、清洗、存储、查询、回放数据准备</td><td>是</td></tr><tr><td>基础设施平台</td><td>支撑计算、存储、网络、数据库、消息、权限、备份等底层能力</td><td>是</td></tr></tbody></table><hr><h2 id="_3-总体架构图" tabindex="-1">3. 总体架构图 <a class="header-anchor" href="#_3-总体架构图" aria-label="Permalink to &quot;3. 总体架构图&quot;">​</a></h2><!----><hr><h2 id="_4-平台职责总览" tabindex="-1">4. 平台职责总览 <a class="header-anchor" href="#_4-平台职责总览" aria-label="Permalink to &quot;4. 平台职责总览&quot;">​</a></h2><!----><hr><h2 id="_5-管控平台设计" tabindex="-1">5. 管控平台设计 <a class="header-anchor" href="#_5-管控平台设计" aria-label="Permalink to &quot;5. 管控平台设计&quot;">​</a></h2><h3 id="_5-1-管控平台定位" tabindex="-1">5.1 管控平台定位 <a class="header-anchor" href="#_5-1-管控平台定位" aria-label="Permalink to &quot;5.1 管控平台定位&quot;">​</a></h3><p>管控平台是自有机房侧最核心的平台，是生产交易系统的统一操作入口。</p><p>它负责：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>1. 管理 Colo 侧行情进程、信号进程、交易机器人进程、柜台发单进程、管控代理进程、运维进程组。</span></span>
+<span class="line"><span>2. 查看实时订单、成交、持仓、资金、PnL、延迟、日志、风控事件。</span></span>
+<span class="line"><span>3. 管理和下发信号参数、交易机器人参数、柜台参数、风控参数、账户配置、标的池。</span></span>
+<span class="line"><span>4. 管理部署、发布、回滚和版本切换。</span></span>
+<span class="line"><span>5. 执行应急控制，例如禁买、禁卖、全撤、Kill Switch。</span></span>
+<span class="line"><span>6. 承担权限、审批、审计和操作留痕。</span></span>
+<span class="line"><span>7. 组织盘前、盘中、盘后和日终任务。</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h3 id="_5-2-管控平台内部模块" tabindex="-1">5.2 管控平台内部模块 <a class="header-anchor" href="#_5-2-管控平台内部模块" aria-label="Permalink to &quot;5.2 管控平台内部模块&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>管控平台</span></span>
+<span class="line"><span>├── 1. 交易机器人管控模块</span></span>
+<span class="line"><span>├── 2. 信号进程管控模块</span></span>
+<span class="line"><span>├── 3. 柜台发单管控模块</span></span>
+<span class="line"><span>├── 4. 订单与成交模块</span></span>
+<span class="line"><span>├── 5. 持仓与 PnL 模块</span></span>
+<span class="line"><span>├── 6. 参数与配置模块</span></span>
+<span class="line"><span>├── 7. 结算与对账模块</span></span>
+<span class="line"><span>├── 8. 观测模块</span></span>
+<span class="line"><span>├── 9. 部署与发布模块</span></span>
+<span class="line"><span>├── 10. 权限与审计模块</span></span>
+<span class="line"><span>├── 11. 日志与事件模块</span></span>
+<span class="line"><span>├── 12. 时间与时钟状态模块</span></span>
+<span class="line"><span>├── 13. 任务调度模块</span></span>
+<span class="line"><span>└── 14. 应急控制模块</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br></div></div><hr><h3 id="_5-3-管控平台架构图" tabindex="-1">5.3 管控平台架构图 <a class="header-anchor" href="#_5-3-管控平台架构图" aria-label="Permalink to &quot;5.3 管控平台架构图&quot;">​</a></h3><!----><hr><h3 id="_5-4-交易机器人管控模块" tabindex="-1">5.4 交易机器人管控模块 <a class="header-anchor" href="#_5-4-交易机器人管控模块" aria-label="Permalink to &quot;5.4 交易机器人管控模块&quot;">​</a></h3><h4 id="_5-4-1-模块定位" tabindex="-1">5.4.1 模块定位 <a class="header-anchor" href="#_5-4-1-模块定位" aria-label="Permalink to &quot;5.4.1 模块定位&quot;">​</a></h4><p>交易机器人管控模块负责管理 Colo 侧所有交易机器人进程的运行状态、交易状态、参数状态、订单成交状态和应急控制。</p><h4 id="_5-4-2-功能清单" tabindex="-1">5.4.2 功能清单 <a class="header-anchor" href="#_5-4-2-功能清单" aria-label="Permalink to &quot;5.4.2 功能清单&quot;">​</a></h4><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>交易机器人管控模块</span></span>
+<span class="line"><span>├── 机器人列表</span></span>
+<span class="line"><span>├── 机器人详情</span></span>
+<span class="line"><span>├── 机器人运行状态</span></span>
+<span class="line"><span>├── 机器人交易状态</span></span>
+<span class="line"><span>├── 机器人当前参数</span></span>
+<span class="line"><span>├── 机器人当前订单</span></span>
+<span class="line"><span>├── 机器人实时成交</span></span>
+<span class="line"><span>├── 机器人实时持仓</span></span>
+<span class="line"><span>├── 机器人实时 PnL</span></span>
+<span class="line"><span>├── 机器人日志查询</span></span>
+<span class="line"><span>├── 启动机器人</span></span>
+<span class="line"><span>├── 停止机器人</span></span>
+<span class="line"><span>├── 暂停交易</span></span>
+<span class="line"><span>├── 恢复交易</span></span>
+<span class="line"><span>├── 禁买</span></span>
+<span class="line"><span>├── 禁卖</span></span>
+<span class="line"><span>├── 单机器人全撤</span></span>
+<span class="line"><span>├── 修改机器人参数</span></span>
+<span class="line"><span>├── 下发机器人参数</span></span>
+<span class="line"><span>└── 机器人操作审计</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br></div></div><h4 id="_5-4-3-输入与输出" tabindex="-1">5.4.3 输入与输出 <a class="header-anchor" href="#_5-4-3-输入与输出" aria-label="Permalink to &quot;5.4.3 输入与输出&quot;">​</a></h4><table tabindex="0"><thead><tr><th>类型</th><th>内容</th></tr></thead><tbody><tr><td>输入</td><td>用户控制指令、参数变更、权限校验结果、机器人状态上报、订单成交事件</td></tr><tr><td>输出</td><td>控制指令、参数下发、状态展示、审计事件、告警事件</td></tr></tbody></table><h4 id="_5-4-4-关键状态" tabindex="-1">5.4.4 关键状态 <a class="header-anchor" href="#_5-4-4-关键状态" aria-label="Permalink to &quot;5.4.4 关键状态&quot;">​</a></h4><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>机器人生命周期状态：</span></span>
+<span class="line"><span>- 未部署</span></span>
+<span class="line"><span>- 已部署</span></span>
+<span class="line"><span>- 未启动</span></span>
+<span class="line"><span>- 启动中</span></span>
+<span class="line"><span>- 运行中</span></span>
+<span class="line"><span>- 暂停交易</span></span>
+<span class="line"><span>- 停止中</span></span>
+<span class="line"><span>- 已停止</span></span>
+<span class="line"><span>- 异常</span></span>
+<span class="line"><span>- 失联</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>机器人交易状态：</span></span>
+<span class="line"><span>- 正常交易</span></span>
+<span class="line"><span>- 只撤不报</span></span>
+<span class="line"><span>- 禁买</span></span>
+<span class="line"><span>- 禁卖</span></span>
+<span class="line"><span>- 已全撤</span></span>
+<span class="line"><span>- 已 Kill</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br></div></div><h4 id="_5-4-5-控制流程" tabindex="-1">5.4.5 控制流程 <a class="header-anchor" href="#_5-4-5-控制流程" aria-label="Permalink to &quot;5.4.5 控制流程&quot;">​</a></h4><!----><hr><h3 id="_5-5-信号进程管控模块" tabindex="-1">5.5 信号进程管控模块 <a class="header-anchor" href="#_5-5-信号进程管控模块" aria-label="Permalink to &quot;5.5 信号进程管控模块&quot;">​</a></h3><h4 id="_5-5-1-模块定位" tabindex="-1">5.5.1 模块定位 <a class="header-anchor" href="#_5-5-1-模块定位" aria-label="Permalink to &quot;5.5.1 模块定位&quot;">​</a></h4><p>信号进程管控模块负责管理信号进程的运行状态、信号输出状态、信号参数、信号延迟和异常信号。</p><h4 id="_5-5-2-功能清单" tabindex="-1">5.5.2 功能清单 <a class="header-anchor" href="#_5-5-2-功能清单" aria-label="Permalink to &quot;5.5.2 功能清单&quot;">​</a></h4><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>信号进程管控模块</span></span>
+<span class="line"><span>├── 信号进程列表</span></span>
+<span class="line"><span>├── 信号进程详情</span></span>
+<span class="line"><span>├── 信号进程运行状态</span></span>
+<span class="line"><span>├── 信号输入行情状态</span></span>
+<span class="line"><span>├── 信号输出状态</span></span>
+<span class="line"><span>├── 信号频率监控</span></span>
+<span class="line"><span>├── 信号延迟监控</span></span>
+<span class="line"><span>├── 当前信号值查看</span></span>
+<span class="line"><span>├── 异常信号查看</span></span>
+<span class="line"><span>├── 信号参数查看</span></span>
+<span class="line"><span>├── 信号参数下发</span></span>
+<span class="line"><span>├── 信号进程启动</span></span>
+<span class="line"><span>├── 信号进程停止</span></span>
+<span class="line"><span>├── 信号进程重启</span></span>
+<span class="line"><span>├── 信号版本切换</span></span>
+<span class="line"><span>└── 信号日志查询</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br></div></div><h4 id="_5-5-3-输入与输出" tabindex="-1">5.5.3 输入与输出 <a class="header-anchor" href="#_5-5-3-输入与输出" aria-label="Permalink to &quot;5.5.3 输入与输出&quot;">​</a></h4><table tabindex="0"><thead><tr><th>类型</th><th>内容</th></tr></thead><tbody><tr><td>输入</td><td>信号进程状态、信号值、信号频率、参数变更请求、行情状态</td></tr><tr><td>输出</td><td>信号进程控制指令、信号参数、异常告警、审计事件</td></tr></tbody></table><h4 id="_5-5-4-关键指标" tabindex="-1">5.5.4 关键指标 <a class="header-anchor" href="#_5-5-4-关键指标" aria-label="Permalink to &quot;5.5.4 关键指标&quot;">​</a></h4><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>- 信号计算延迟</span></span>
+<span class="line"><span>- 信号输出频率</span></span>
+<span class="line"><span>- 信号有效率</span></span>
+<span class="line"><span>- 信号为空比例</span></span>
+<span class="line"><span>- 异常信号数量</span></span>
+<span class="line"><span>- 输入行情延迟</span></span>
+<span class="line"><span>- 输出到交易机器人的延迟</span></span>
+<span class="line"><span>- 信号进程 CPU / 内存</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h4 id="_5-5-5-信号参数下发流程" tabindex="-1">5.5.5 信号参数下发流程 <a class="header-anchor" href="#_5-5-5-信号参数下发流程" aria-label="Permalink to &quot;5.5.5 信号参数下发流程&quot;">​</a></h4><!----><hr><h3 id="_5-6-柜台发单管控模块" tabindex="-1">5.6 柜台发单管控模块 <a class="header-anchor" href="#_5-6-柜台发单管控模块" aria-label="Permalink to &quot;5.6 柜台发单管控模块&quot;">​</a></h3><h4 id="_5-6-1-模块定位" tabindex="-1">5.6.1 模块定位 <a class="header-anchor" href="#_5-6-1-模块定位" aria-label="Permalink to &quot;5.6.1 模块定位&quot;">​</a></h4><p>柜台发单管控模块负责管理 Colo 侧柜台发单进程，包括柜台连接状态、账户登录状态、报撤单通道状态、回报状态、拒单状态、流控状态、风控拦截状态和应急操作。</p><h4 id="_5-6-2-功能清单" tabindex="-1">5.6.2 功能清单 <a class="header-anchor" href="#_5-6-2-功能清单" aria-label="Permalink to &quot;5.6.2 功能清单&quot;">​</a></h4><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>柜台发单管控模块</span></span>
+<span class="line"><span>├── 柜台连接状态</span></span>
+<span class="line"><span>├── 账户登录状态</span></span>
+<span class="line"><span>├── 报单通道状态</span></span>
+<span class="line"><span>├── 撤单通道状态</span></span>
+<span class="line"><span>├── 订单回报状态</span></span>
+<span class="line"><span>├── 成交回报状态</span></span>
+<span class="line"><span>├── 拒单明细</span></span>
+<span class="line"><span>├── 流控状态</span></span>
+<span class="line"><span>├── 风控拦截明细</span></span>
+<span class="line"><span>├── 柜台参数查看</span></span>
+<span class="line"><span>├── 柜台参数修改</span></span>
+<span class="line"><span>├── 风控参数查看</span></span>
+<span class="line"><span>├── 风控参数修改</span></span>
+<span class="line"><span>├── 柜台连接启动</span></span>
+<span class="line"><span>├── 柜台连接停止</span></span>
+<span class="line"><span>├── 柜台重连</span></span>
+<span class="line"><span>├── 单账户全撤</span></span>
+<span class="line"><span>├── 单策略全撤</span></span>
+<span class="line"><span>├── 只撤不报</span></span>
+<span class="line"><span>└── 全局 Kill Switch</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br></div></div><h4 id="_5-6-3-当前阶段风控边界" tabindex="-1">5.6.3 当前阶段风控边界 <a class="header-anchor" href="#_5-6-3-当前阶段风控边界" aria-label="Permalink to &quot;5.6.3 当前阶段风控边界&quot;">​</a></h4><p>当前阶段，实时硬风控由 Colo 侧柜台发单进程执行。管控平台负责：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>1. 管理风控参数。</span></span>
+<span class="line"><span>2. 下发风控参数。</span></span>
+<span class="line"><span>3. 查看风控拦截事件。</span></span>
+<span class="line"><span>4. 查看风控规则命中原因。</span></span>
+<span class="line"><span>5. 审计风控规则变更。</span></span>
+<span class="line"><span>6. 执行应急风控指令。</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><h4 id="_5-6-4-柜台状态监控流程" tabindex="-1">5.6.4 柜台状态监控流程 <a class="header-anchor" href="#_5-6-4-柜台状态监控流程" aria-label="Permalink to &quot;5.6.4 柜台状态监控流程&quot;">​</a></h4><!----><hr><h3 id="_5-7-订单与成交模块" tabindex="-1">5.7 订单与成交模块 <a class="header-anchor" href="#_5-7-订单与成交模块" aria-label="Permalink to &quot;5.7 订单与成交模块&quot;">​</a></h3><h4 id="_5-7-1-模块定位" tabindex="-1">5.7.1 模块定位 <a class="header-anchor" href="#_5-7-1-模块定位" aria-label="Permalink to &quot;5.7.1 模块定位&quot;">​</a></h4><p>订单与成交模块负责接收、存储、查询、展示和追踪盘中订单、撤单、成交、拒单、风控拦截等交易事件。</p><h4 id="_5-7-2-功能清单" tabindex="-1">5.7.2 功能清单 <a class="header-anchor" href="#_5-7-2-功能清单" aria-label="Permalink to &quot;5.7.2 功能清单&quot;">​</a></h4><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>订单与成交模块</span></span>
+<span class="line"><span>├── 实时订单列表</span></span>
+<span class="line"><span>├── 实时成交列表</span></span>
+<span class="line"><span>├── 撤单列表</span></span>
+<span class="line"><span>├── 拒单列表</span></span>
+<span class="line"><span>├── 风控拦截列表</span></span>
+<span class="line"><span>├── 按机器人查询订单</span></span>
+<span class="line"><span>├── 按策略查询订单</span></span>
+<span class="line"><span>├── 按账户查询订单</span></span>
+<span class="line"><span>├── 按产品查询订单</span></span>
+<span class="line"><span>├── 按标的查询订单</span></span>
+<span class="line"><span>├── 订单状态流转追踪</span></span>
+<span class="line"><span>├── 成交明细追踪</span></span>
+<span class="line"><span>├── 撤单状态追踪</span></span>
+<span class="line"><span>├── 拒单原因分析</span></span>
+<span class="line"><span>├── 订单延迟分析</span></span>
+<span class="line"><span>├── 订单事件回放</span></span>
+<span class="line"><span>└── 订单成交导出</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br></div></div><h4 id="_5-7-3-订单状态模型" tabindex="-1">5.7.3 订单状态模型 <a class="header-anchor" href="#_5-7-3-订单状态模型" aria-label="Permalink to &quot;5.7.3 订单状态模型&quot;">​</a></h4><!----><h4 id="_5-7-4-订单事件流" tabindex="-1">5.7.4 订单事件流 <a class="header-anchor" href="#_5-7-4-订单事件流" aria-label="Permalink to &quot;5.7.4 订单事件流&quot;">​</a></h4><!----><hr><h3 id="_5-8-持仓与-pnl-模块" tabindex="-1">5.8 持仓与 PnL 模块 <a class="header-anchor" href="#_5-8-持仓与-pnl-模块" aria-label="Permalink to &quot;5.8 持仓与 PnL 模块&quot;">​</a></h3><h4 id="_5-8-1-模块定位" tabindex="-1">5.8.1 模块定位 <a class="header-anchor" href="#_5-8-1-模块定位" aria-label="Permalink to &quot;5.8.1 模块定位&quot;">​</a></h4><p>持仓与 PnL 模块负责基于昨夜持仓、盘中订单成交、实时行情和费用规则，计算账户、产品、策略、机器人、标的等维度的持仓、资金、冻结和 PnL。</p><h4 id="_5-8-2-功能清单" tabindex="-1">5.8.2 功能清单 <a class="header-anchor" href="#_5-8-2-功能清单" aria-label="Permalink to &quot;5.8.2 功能清单&quot;">​</a></h4><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>持仓与 PnL 模块</span></span>
+<span class="line"><span>├── 实时持仓</span></span>
+<span class="line"><span>├── 实时资金</span></span>
+<span class="line"><span>├── 实时冻结</span></span>
+<span class="line"><span>├── 实时可用</span></span>
+<span class="line"><span>├── 实时 PnL</span></span>
+<span class="line"><span>├── 日内 PnL</span></span>
+<span class="line"><span>├── 隔夜 PnL</span></span>
+<span class="line"><span>├── 策略 PnL</span></span>
+<span class="line"><span>├── 机器人 PnL</span></span>
+<span class="line"><span>├── 账户 PnL</span></span>
+<span class="line"><span>├── 产品 PnL</span></span>
+<span class="line"><span>├── 标的 PnL</span></span>
+<span class="line"><span>├── 手续费估算</span></span>
+<span class="line"><span>├── 滑点分析</span></span>
+<span class="line"><span>├── 成交成本分析</span></span>
+<span class="line"><span>├── 收益归因基础版</span></span>
+<span class="line"><span>└── PnL 异常告警</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br></div></div><h4 id="_5-8-3-输入与输出" tabindex="-1">5.8.3 输入与输出 <a class="header-anchor" href="#_5-8-3-输入与输出" aria-label="Permalink to &quot;5.8.3 输入与输出&quot;">​</a></h4><table tabindex="0"><thead><tr><th>类型</th><th>内容</th></tr></thead><tbody><tr><td>输入</td><td>昨夜持仓、盘中成交、订单状态、实时行情、费用规则、账户信息</td></tr><tr><td>输出</td><td>实时持仓、实时资金、实时 PnL、冻结资金、风险指标、结算输入</td></tr></tbody></table><h4 id="_5-8-4-pnl-计算数据流" tabindex="-1">5.8.4 PnL 计算数据流 <a class="header-anchor" href="#_5-8-4-pnl-计算数据流" aria-label="Permalink to &quot;5.8.4 PnL 计算数据流&quot;">​</a></h4><!----><hr><h3 id="_5-9-参数与配置模块" tabindex="-1">5.9 参数与配置模块 <a class="header-anchor" href="#_5-9-参数与配置模块" aria-label="Permalink to &quot;5.9 参数与配置模块&quot;">​</a></h3><h4 id="_5-9-1-模块定位" tabindex="-1">5.9.1 模块定位 <a class="header-anchor" href="#_5-9-1-模块定位" aria-label="Permalink to &quot;5.9.1 模块定位&quot;">​</a></h4><p>参数与配置模块负责统一管理信号参数、交易机器人参数、柜台参数、风控参数、账户配置、产品配置、标的池、黑白名单、交易日历、进程配置等。</p><h4 id="_5-9-2-功能清单" tabindex="-1">5.9.2 功能清单 <a class="header-anchor" href="#_5-9-2-功能清单" aria-label="Permalink to &quot;5.9.2 功能清单&quot;">​</a></h4><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>参数与配置模块</span></span>
+<span class="line"><span>├── 信号参数管理</span></span>
+<span class="line"><span>├── 交易机器人参数管理</span></span>
+<span class="line"><span>├── 柜台参数管理</span></span>
+<span class="line"><span>├── 风控参数管理</span></span>
+<span class="line"><span>├── 账户配置管理</span></span>
+<span class="line"><span>├── 产品配置管理</span></span>
+<span class="line"><span>├── 交易标的池管理</span></span>
+<span class="line"><span>├── 黑白名单管理</span></span>
+<span class="line"><span>├── 交易日历管理</span></span>
+<span class="line"><span>├── 交易时段管理</span></span>
+<span class="line"><span>├── 机器配置管理</span></span>
+<span class="line"><span>├── 进程配置管理</span></span>
+<span class="line"><span>├── 参数版本管理</span></span>
+<span class="line"><span>├── 参数审批</span></span>
+<span class="line"><span>├── 参数灰度</span></span>
+<span class="line"><span>├── 参数下发</span></span>
+<span class="line"><span>├── 参数回滚</span></span>
+<span class="line"><span>└── 参数变更审计</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br></div></div><h4 id="_5-9-3-参数对象模型" tabindex="-1">5.9.3 参数对象模型 <a class="header-anchor" href="#_5-9-3-参数对象模型" aria-label="Permalink to &quot;5.9.3 参数对象模型&quot;">​</a></h4><!----><h4 id="_5-9-4-参数发布流程" tabindex="-1">5.9.4 参数发布流程 <a class="header-anchor" href="#_5-9-4-参数发布流程" aria-label="Permalink to &quot;5.9.4 参数发布流程&quot;">​</a></h4><!----><hr><h3 id="_5-10-结算与对账模块" tabindex="-1">5.10 结算与对账模块 <a class="header-anchor" href="#_5-10-结算与对账模块" aria-label="Permalink to &quot;5.10 结算与对账模块&quot;">​</a></h3><h4 id="_5-10-1-模块定位" tabindex="-1">5.10.1 模块定位 <a class="header-anchor" href="#_5-10-1-模块定位" aria-label="Permalink to &quot;5.10.1 模块定位&quot;">​</a></h4><p>结算与对账模块负责盘后和日终处理，包括成交汇总、持仓计算、资金计算、费用计算、券商数据对账、差异处理和报表生成。</p><h4 id="_5-10-2-功能清单" tabindex="-1">5.10.2 功能清单 <a class="header-anchor" href="#_5-10-2-功能清单" aria-label="Permalink to &quot;5.10.2 功能清单&quot;">​</a></h4><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>结算与对账模块</span></span>
+<span class="line"><span>├── 日终成交汇总</span></span>
+<span class="line"><span>├── 日终持仓计算</span></span>
+<span class="line"><span>├── 日终资金计算</span></span>
+<span class="line"><span>├── 日终 PnL 计算</span></span>
+<span class="line"><span>├── 券商成交对账</span></span>
+<span class="line"><span>├── 券商持仓对账</span></span>
+<span class="line"><span>├── 券商资金对账</span></span>
+<span class="line"><span>├── 交易费用计算</span></span>
+<span class="line"><span>├── 印花税/过户费/规费计算</span></span>
+<span class="line"><span>├── 策略盈亏汇总</span></span>
+<span class="line"><span>├── 产品盈亏汇总</span></span>
+<span class="line"><span>├── 账户盈亏汇总</span></span>
+<span class="line"><span>├── 对账差异检查</span></span>
+<span class="line"><span>├── 差异处理流程</span></span>
+<span class="line"><span>├── 结算报表生成</span></span>
+<span class="line"><span>└── 次日初始持仓生成</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br></div></div><h4 id="_5-10-3-日终结算流程" tabindex="-1">5.10.3 日终结算流程 <a class="header-anchor" href="#_5-10-3-日终结算流程" aria-label="Permalink to &quot;5.10.3 日终结算流程&quot;">​</a></h4><!----><hr><h3 id="_5-11-观测模块" tabindex="-1">5.11 观测模块 <a class="header-anchor" href="#_5-11-观测模块" aria-label="Permalink to &quot;5.11 观测模块&quot;">​</a></h3><h4 id="_5-11-1-模块定位" tabindex="-1">5.11.1 模块定位 <a class="header-anchor" href="#_5-11-1-模块定位" aria-label="Permalink to &quot;5.11.1 模块定位&quot;">​</a></h4><p>观测模块负责生产系统运行状态监控，覆盖系统观测和业务观测。</p><h4 id="_5-11-2-功能清单" tabindex="-1">5.11.2 功能清单 <a class="header-anchor" href="#_5-11-2-功能清单" aria-label="Permalink to &quot;5.11.2 功能清单&quot;">​</a></h4><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>观测模块</span></span>
+<span class="line"><span>├── Colo 机器状态</span></span>
+<span class="line"><span>├── 进程状态</span></span>
+<span class="line"><span>├── CPU 监控</span></span>
+<span class="line"><span>├── 内存监控</span></span>
+<span class="line"><span>├── 磁盘监控</span></span>
+<span class="line"><span>├── 网卡监控</span></span>
+<span class="line"><span>├── 网络延迟监控</span></span>
+<span class="line"><span>├── 行情延迟监控</span></span>
+<span class="line"><span>├── 信号延迟监控</span></span>
+<span class="line"><span>├── 发单延迟监控</span></span>
+<span class="line"><span>├── 回报延迟监控</span></span>
+<span class="line"><span>├── 订单量监控</span></span>
+<span class="line"><span>├── 撤单量监控</span></span>
+<span class="line"><span>├── 成交量监控</span></span>
+<span class="line"><span>├── 拒单量监控</span></span>
+<span class="line"><span>├── 风控拦截监控</span></span>
+<span class="line"><span>├── 告警规则管理</span></span>
+<span class="line"><span>└── 告警通知</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br></div></div><h4 id="_5-11-3-观测分类" tabindex="-1">5.11.3 观测分类 <a class="header-anchor" href="#_5-11-3-观测分类" aria-label="Permalink to &quot;5.11.3 观测分类&quot;">​</a></h4><table tabindex="0"><thead><tr><th>分类</th><th>监控对象</th><th>示例</th></tr></thead><tbody><tr><td>系统观测</td><td>机器、进程、网络、磁盘、CPU、内存</td><td>机器宕机、进程退出、网卡丢包</td></tr><tr><td>业务观测</td><td>行情、信号、订单、成交、风控、PnL</td><td>行情断流、拒单过高、撤单率异常</td></tr><tr><td>延迟观测</td><td>行情链路、信号链路、发单链路、回报链路</td><td>行情接收延迟、柜台回报延迟</td></tr><tr><td>时间观测</td><td>PTP/NTP、时钟漂移、时间源</td><td>时钟漂移过大、时间源不可用</td></tr></tbody></table><h4 id="_5-11-4-观测数据流" tabindex="-1">5.11.4 观测数据流 <a class="header-anchor" href="#_5-11-4-观测数据流" aria-label="Permalink to &quot;5.11.4 观测数据流&quot;">​</a></h4><!----><hr><h3 id="_5-12-部署与发布模块" tabindex="-1">5.12 部署与发布模块 <a class="header-anchor" href="#_5-12-部署与发布模块" aria-label="Permalink to &quot;5.12 部署与发布模块&quot;">​</a></h3><h4 id="_5-12-1-模块定位" tabindex="-1">5.12.1 模块定位 <a class="header-anchor" href="#_5-12-1-模块定位" aria-label="Permalink to &quot;5.12.1 模块定位&quot;">​</a></h4><p>部署与发布模块负责程序、配置、脚本、风控规则等发布对象从自有机房到 Colo 的发布、灰度、验证和回滚。</p><h4 id="_5-12-2-功能清单" tabindex="-1">5.12.2 功能清单 <a class="header-anchor" href="#_5-12-2-功能清单" aria-label="Permalink to &quot;5.12.2 功能清单&quot;">​</a></h4><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>部署与发布模块</span></span>
+<span class="line"><span>├── 构建管理</span></span>
+<span class="line"><span>├── 制品管理</span></span>
+<span class="line"><span>├── 版本管理</span></span>
+<span class="line"><span>├── 环境管理</span></span>
+<span class="line"><span>├── 发布申请</span></span>
+<span class="line"><span>├── 发布审批</span></span>
+<span class="line"><span>├── 发布计划</span></span>
+<span class="line"><span>├── 发布到测试环境</span></span>
+<span class="line"><span>├── 发布到 Colo 环境</span></span>
+<span class="line"><span>├── 灰度发布</span></span>
+<span class="line"><span>├── 发布前检查</span></span>
+<span class="line"><span>├── 发布后验证</span></span>
+<span class="line"><span>├── 进程重启</span></span>
+<span class="line"><span>├── 配置热更新</span></span>
+<span class="line"><span>├── 版本回滚</span></span>
+<span class="line"><span>└── 发布审计</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br></div></div><h4 id="_5-12-3-发布对象" tabindex="-1">5.12.3 发布对象 <a class="header-anchor" href="#_5-12-3-发布对象" aria-label="Permalink to &quot;5.12.3 发布对象&quot;">​</a></h4><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>- 行情进程</span></span>
+<span class="line"><span>- 信号进程</span></span>
+<span class="line"><span>- 交易机器人进程</span></span>
+<span class="line"><span>- 柜台发单进程</span></span>
+<span class="line"><span>- 管控代理进程</span></span>
+<span class="line"><span>- 运维进程组</span></span>
+<span class="line"><span>- 策略参数</span></span>
+<span class="line"><span>- 风控参数</span></span>
+<span class="line"><span>- 柜台参数</span></span>
+<span class="line"><span>- 配置文件</span></span>
+<span class="line"><span>- 运维脚本</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><h4 id="_5-12-4-发布流程" tabindex="-1">5.12.4 发布流程 <a class="header-anchor" href="#_5-12-4-发布流程" aria-label="Permalink to &quot;5.12.4 发布流程&quot;">​</a></h4><!----><hr><h3 id="_5-13-权限与审计模块" tabindex="-1">5.13 权限与审计模块 <a class="header-anchor" href="#_5-13-权限与审计模块" aria-label="Permalink to &quot;5.13 权限与审计模块&quot;">​</a></h3><h4 id="_5-13-1-模块定位" tabindex="-1">5.13.1 模块定位 <a class="header-anchor" href="#_5-13-1-模块定位" aria-label="Permalink to &quot;5.13.1 模块定位&quot;">​</a></h4><p>权限与审计模块负责用户身份、角色权限、操作审批、敏感操作复核和全链路审计。</p><h4 id="_5-13-2-功能清单" tabindex="-1">5.13.2 功能清单 <a class="header-anchor" href="#_5-13-2-功能清单" aria-label="Permalink to &quot;5.13.2 功能清单&quot;">​</a></h4><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>权限与审计模块</span></span>
+<span class="line"><span>├── 用户管理</span></span>
+<span class="line"><span>├── 角色管理</span></span>
+<span class="line"><span>├── 权限管理</span></span>
+<span class="line"><span>├── 登录审计</span></span>
+<span class="line"><span>├── 操作审计</span></span>
+<span class="line"><span>├── 参数变更审计</span></span>
+<span class="line"><span>├── 发布审计</span></span>
+<span class="line"><span>├── 控制指令审计</span></span>
+<span class="line"><span>├── 风控规则审计</span></span>
+<span class="line"><span>├── 敏感操作二次确认</span></span>
+<span class="line"><span>├── 双人复核</span></span>
+<span class="line"><span>├── 审批流管理</span></span>
+<span class="line"><span>└── 审计日志归档</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><h4 id="_5-13-3-敏感操作清单" tabindex="-1">5.13.3 敏感操作清单 <a class="header-anchor" href="#_5-13-3-敏感操作清单" aria-label="Permalink to &quot;5.13.3 敏感操作清单&quot;">​</a></h4><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>- 启动交易机器人</span></span>
+<span class="line"><span>- 停止交易机器人</span></span>
+<span class="line"><span>- 停止信号进程</span></span>
+<span class="line"><span>- 修改信号参数</span></span>
+<span class="line"><span>- 修改交易机器人参数</span></span>
+<span class="line"><span>- 修改柜台参数</span></span>
+<span class="line"><span>- 修改风控参数</span></span>
+<span class="line"><span>- 下发参数</span></span>
+<span class="line"><span>- 柜台重连</span></span>
+<span class="line"><span>- 单策略全撤</span></span>
+<span class="line"><span>- 单账户全撤</span></span>
+<span class="line"><span>- 全局 Kill Switch</span></span>
+<span class="line"><span>- 发布程序</span></span>
+<span class="line"><span>- 回滚程序</span></span>
+<span class="line"><span>- 修改权限</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br></div></div><h4 id="_5-13-4-权限审计流程" tabindex="-1">5.13.4 权限审计流程 <a class="header-anchor" href="#_5-13-4-权限审计流程" aria-label="Permalink to &quot;5.13.4 权限审计流程&quot;">​</a></h4><!----><hr><h3 id="_5-14-日志与事件模块" tabindex="-1">5.14 日志与事件模块 <a class="header-anchor" href="#_5-14-日志与事件模块" aria-label="Permalink to &quot;5.14 日志与事件模块&quot;">​</a></h3><h4 id="_5-14-1-模块定位" tabindex="-1">5.14.1 模块定位 <a class="header-anchor" href="#_5-14-1-模块定位" aria-label="Permalink to &quot;5.14.1 模块定位&quot;">​</a></h4><p>日志与事件模块负责采集、存储、查询和归档系统日志、业务日志、订单事件、成交事件、控制事件、发布事件、风控事件等。</p><h4 id="_5-14-2-功能清单" tabindex="-1">5.14.2 功能清单 <a class="header-anchor" href="#_5-14-2-功能清单" aria-label="Permalink to &quot;5.14.2 功能清单&quot;">​</a></h4><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>日志与事件模块</span></span>
+<span class="line"><span>├── 系统日志采集</span></span>
+<span class="line"><span>├── 业务日志采集</span></span>
+<span class="line"><span>├── 订单事件采集</span></span>
+<span class="line"><span>├── 成交事件采集</span></span>
+<span class="line"><span>├── 风控事件采集</span></span>
+<span class="line"><span>├── 控制事件采集</span></span>
+<span class="line"><span>├── 发布事件采集</span></span>
+<span class="line"><span>├── 参数事件采集</span></span>
+<span class="line"><span>├── 异常事件采集</span></span>
+<span class="line"><span>├── 日志查询</span></span>
+<span class="line"><span>├── 事件查询</span></span>
+<span class="line"><span>├── Trace ID 关联查询</span></span>
+<span class="line"><span>├── 日志归档</span></span>
+<span class="line"><span>├── 日志压缩</span></span>
+<span class="line"><span>└── 日志留存策略</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><h4 id="_5-14-3-统一事件字段" tabindex="-1">5.14.3 统一事件字段 <a class="header-anchor" href="#_5-14-3-统一事件字段" aria-label="Permalink to &quot;5.14.3 统一事件字段&quot;">​</a></h4><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>- event_id</span></span>
+<span class="line"><span>- trace_id</span></span>
+<span class="line"><span>- event_type</span></span>
+<span class="line"><span>- source_platform</span></span>
+<span class="line"><span>- source_process</span></span>
+<span class="line"><span>- source_module</span></span>
+<span class="line"><span>- account_id</span></span>
+<span class="line"><span>- product_id</span></span>
+<span class="line"><span>- strategy_id</span></span>
+<span class="line"><span>- robot_id</span></span>
+<span class="line"><span>- symbol</span></span>
+<span class="line"><span>- order_id</span></span>
+<span class="line"><span>- event_time</span></span>
+<span class="line"><span>- receive_time</span></span>
+<span class="line"><span>- payload</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br></div></div><h4 id="_5-14-4-日志事件链路" tabindex="-1">5.14.4 日志事件链路 <a class="header-anchor" href="#_5-14-4-日志事件链路" aria-label="Permalink to &quot;5.14.4 日志事件链路&quot;">​</a></h4><!----><hr><h3 id="_5-15-时间与时钟状态模块" tabindex="-1">5.15 时间与时钟状态模块 <a class="header-anchor" href="#_5-15-时间与时钟状态模块" aria-label="Permalink to &quot;5.15 时间与时钟状态模块&quot;">​</a></h3><h4 id="_5-15-1-模块定位" tabindex="-1">5.15.1 模块定位 <a class="header-anchor" href="#_5-15-1-模块定位" aria-label="Permalink to &quot;5.15.1 模块定位&quot;">​</a></h4><p>时间与时钟状态模块负责监控 Colo 机器和自有机房机器的 PTP/NTP 状态、时间源状态、时钟漂移和关键业务链路时间戳。</p><h4 id="_5-15-2-功能清单" tabindex="-1">5.15.2 功能清单 <a class="header-anchor" href="#_5-15-2-功能清单" aria-label="Permalink to &quot;5.15.2 功能清单&quot;">​</a></h4><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>时间与时钟状态模块</span></span>
+<span class="line"><span>├── Colo 机器时钟状态</span></span>
+<span class="line"><span>├── 自有机房机器时钟状态</span></span>
+<span class="line"><span>├── PTP 状态</span></span>
+<span class="line"><span>├── NTP 状态</span></span>
+<span class="line"><span>├── 时间源状态</span></span>
+<span class="line"><span>├── 时钟漂移监控</span></span>
+<span class="line"><span>├── 各进程时间戳检查</span></span>
+<span class="line"><span>├── 行情时间戳对齐</span></span>
+<span class="line"><span>├── 订单时间戳对齐</span></span>
+<span class="line"><span>├── 成交时间戳对齐</span></span>
+<span class="line"><span>├── 延迟分段统计</span></span>
+<span class="line"><span>└── 时间异常告警</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><h4 id="_5-15-3-延迟分段" tabindex="-1">5.15.3 延迟分段 <a class="header-anchor" href="#_5-15-3-延迟分段" aria-label="Permalink to &quot;5.15.3 延迟分段&quot;">​</a></h4><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>交易所行情时间</span></span>
+<span class="line"><span>    ↓</span></span>
+<span class="line"><span>行情接收时间</span></span>
+<span class="line"><span>    ↓</span></span>
+<span class="line"><span>行情解析完成时间</span></span>
+<span class="line"><span>    ↓</span></span>
+<span class="line"><span>信号生成时间</span></span>
+<span class="line"><span>    ↓</span></span>
+<span class="line"><span>交易机器人生成订单时间</span></span>
+<span class="line"><span>    ↓</span></span>
+<span class="line"><span>柜台发单进程接收订单时间</span></span>
+<span class="line"><span>    ↓</span></span>
+<span class="line"><span>柜台发送时间</span></span>
+<span class="line"><span>    ↓</span></span>
+<span class="line"><span>柜台回报时间</span></span>
+<span class="line"><span>    ↓</span></span>
+<span class="line"><span>成交回报时间</span></span>
+<span class="line"><span>    ↓</span></span>
+<span class="line"><span>管控平台接收时间</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br></div></div><h4 id="_5-15-4-时间戳链路图" tabindex="-1">5.15.4 时间戳链路图 <a class="header-anchor" href="#_5-15-4-时间戳链路图" aria-label="Permalink to &quot;5.15.4 时间戳链路图&quot;">​</a></h4><!----><hr><h3 id="_5-16-任务调度模块" tabindex="-1">5.16 任务调度模块 <a class="header-anchor" href="#_5-16-任务调度模块" aria-label="Permalink to &quot;5.16 任务调度模块&quot;">​</a></h3><h4 id="_5-16-1-模块定位" tabindex="-1">5.16.1 模块定位 <a class="header-anchor" href="#_5-16-1-模块定位" aria-label="Permalink to &quot;5.16.1 模块定位&quot;">​</a></h4><p>任务调度模块负责管理日前、盘前、盘中、盘后、日终、夜间任务，支撑结算、对账、数据同步、行情归档、日志归档、备份、回测和研究任务。</p><h4 id="_5-16-2-功能清单" tabindex="-1">5.16.2 功能清单 <a class="header-anchor" href="#_5-16-2-功能清单" aria-label="Permalink to &quot;5.16.2 功能清单&quot;">​</a></h4><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>任务调度模块</span></span>
+<span class="line"><span>├── 日前任务</span></span>
+<span class="line"><span>├── 盘前任务</span></span>
+<span class="line"><span>├── 盘中任务</span></span>
+<span class="line"><span>├── 盘后任务</span></span>
+<span class="line"><span>├── 日终任务</span></span>
+<span class="line"><span>├── 夜间任务</span></span>
+<span class="line"><span>├── 数据同步任务</span></span>
+<span class="line"><span>├── 行情归档任务</span></span>
+<span class="line"><span>├── 日志归档任务</span></span>
+<span class="line"><span>├── 结算任务</span></span>
+<span class="line"><span>├── 对账任务</span></span>
+<span class="line"><span>├── 报表任务</span></span>
+<span class="line"><span>├── 回测任务</span></span>
+<span class="line"><span>├── 研究任务</span></span>
+<span class="line"><span>├── 任务依赖管理</span></span>
+<span class="line"><span>├── 任务失败重试</span></span>
+<span class="line"><span>├── 任务告警</span></span>
+<span class="line"><span>└── 任务执行审计</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br></div></div><h4 id="_5-16-3-交易日任务流" tabindex="-1">5.16.3 交易日任务流 <a class="header-anchor" href="#_5-16-3-交易日任务流" aria-label="Permalink to &quot;5.16.3 交易日任务流&quot;">​</a></h4><!----><hr><h3 id="_5-17-应急控制模块" tabindex="-1">5.17 应急控制模块 <a class="header-anchor" href="#_5-17-应急控制模块" aria-label="Permalink to &quot;5.17 应急控制模块&quot;">​</a></h3><h4 id="_5-17-1-模块定位" tabindex="-1">5.17.1 模块定位 <a class="header-anchor" href="#_5-17-1-模块定位" aria-label="Permalink to &quot;5.17.1 模块定位&quot;">​</a></h4><p>应急控制模块负责高风险场景下的快速止损和交易系统保护。它和普通控制不同，需要更严格的权限、二次确认、操作审计和结果追踪。</p><h4 id="_5-17-2-功能清单" tabindex="-1">5.17.2 功能清单 <a class="header-anchor" href="#_5-17-2-功能清单" aria-label="Permalink to &quot;5.17.2 功能清单&quot;">​</a></h4><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>应急控制模块</span></span>
+<span class="line"><span>├── 全局 Kill Switch</span></span>
+<span class="line"><span>├── 单账户 Kill Switch</span></span>
+<span class="line"><span>├── 单产品 Kill Switch</span></span>
+<span class="line"><span>├── 单策略 Kill Switch</span></span>
+<span class="line"><span>├── 单机器人 Kill Switch</span></span>
+<span class="line"><span>├── 禁买</span></span>
+<span class="line"><span>├── 禁卖</span></span>
+<span class="line"><span>├── 只撤不报</span></span>
+<span class="line"><span>├── 全撤</span></span>
+<span class="line"><span>├── 停止发单</span></span>
+<span class="line"><span>├── 停止信号</span></span>
+<span class="line"><span>├── 停止机器人</span></span>
+<span class="line"><span>├── 柜台断开</span></span>
+<span class="line"><span>├── 应急参数切换</span></span>
+<span class="line"><span>├── 应急预案执行</span></span>
+<span class="line"><span>└── 应急操作审计</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br></div></div><h4 id="_5-17-3-应急控制流程" tabindex="-1">5.17.3 应急控制流程 <a class="header-anchor" href="#_5-17-3-应急控制流程" aria-label="Permalink to &quot;5.17.3 应急控制流程&quot;">​</a></h4><!----><hr><h2 id="_6-研究平台设计" tabindex="-1">6. 研究平台设计 <a class="header-anchor" href="#_6-研究平台设计" aria-label="Permalink to &quot;6. 研究平台设计&quot;">​</a></h2><h3 id="_6-1-平台定位" tabindex="-1">6.1 平台定位 <a class="header-anchor" href="#_6-1-平台定位" aria-label="Permalink to &quot;6.1 平台定位&quot;">​</a></h3><p>研究平台面向策略研究员、量化开发和数据研究人员，负责策略研究、因子研究、回测分析、参数扫描、实验管理和研究报告。</p><p>研究平台不直接控制实盘交易，不直接操作 Colo 侧生产进程。</p><h3 id="_6-2-研究平台模块" tabindex="-1">6.2 研究平台模块 <a class="header-anchor" href="#_6-2-研究平台模块" aria-label="Permalink to &quot;6.2 研究平台模块&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>研究平台</span></span>
+<span class="line"><span>├── 1. 策略研究模块</span></span>
+<span class="line"><span>├── 2. 因子研究模块</span></span>
+<span class="line"><span>├── 3. 特征工程模块</span></span>
+<span class="line"><span>├── 4. 回测分析模块</span></span>
+<span class="line"><span>├── 5. 参数扫描模块</span></span>
+<span class="line"><span>├── 6. 实验管理模块</span></span>
+<span class="line"><span>├── 7. 研究报告模块</span></span>
+<span class="line"><span>└── 8. Notebook / 研究环境模块</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><h3 id="_6-3-研究平台架构图" tabindex="-1">6.3 研究平台架构图 <a class="header-anchor" href="#_6-3-研究平台架构图" aria-label="Permalink to &quot;6.3 研究平台架构图&quot;">​</a></h3><!----><h3 id="_6-4-主要模块功能" tabindex="-1">6.4 主要模块功能 <a class="header-anchor" href="#_6-4-主要模块功能" aria-label="Permalink to &quot;6.4 主要模块功能&quot;">​</a></h3><h3 id="策略研究模块" tabindex="-1">策略研究模块 <a class="header-anchor" href="#策略研究模块" aria-label="Permalink to &quot;策略研究模块&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>策略研究模块</span></span>
+<span class="line"><span>├── 策略逻辑开发</span></span>
+<span class="line"><span>├── 策略样本选择</span></span>
+<span class="line"><span>├── 策略指标计算</span></span>
+<span class="line"><span>├── 策略表现分析</span></span>
+<span class="line"><span>├── 策略版本管理</span></span>
+<span class="line"><span>└── 策略上线候选生成</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h3 id="因子研究模块" tabindex="-1">因子研究模块 <a class="header-anchor" href="#因子研究模块" aria-label="Permalink to &quot;因子研究模块&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>因子研究模块</span></span>
+<span class="line"><span>├── 因子定义</span></span>
+<span class="line"><span>├── 因子计算</span></span>
+<span class="line"><span>├── 因子清洗</span></span>
+<span class="line"><span>├── 因子 IC 分析</span></span>
+<span class="line"><span>├── 因子分层回测</span></span>
+<span class="line"><span>├── 因子稳定性分析</span></span>
+<span class="line"><span>└── 因子入库</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h3 id="特征工程模块" tabindex="-1">特征工程模块 <a class="header-anchor" href="#特征工程模块" aria-label="Permalink to &quot;特征工程模块&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>特征工程模块</span></span>
+<span class="line"><span>├── 特征定义</span></span>
+<span class="line"><span>├── 特征计算</span></span>
+<span class="line"><span>├── 特征归一化</span></span>
+<span class="line"><span>├── 特征缺失处理</span></span>
+<span class="line"><span>├── 特征版本管理</span></span>
+<span class="line"><span>└── 特征数据导出</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h3 id="回测分析模块" tabindex="-1">回测分析模块 <a class="header-anchor" href="#回测分析模块" aria-label="Permalink to &quot;回测分析模块&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>回测分析模块</span></span>
+<span class="line"><span>├── 历史行情加载</span></span>
+<span class="line"><span>├── 历史订单簿重建</span></span>
+<span class="line"><span>├── 策略回测运行</span></span>
+<span class="line"><span>├── 成本模型</span></span>
+<span class="line"><span>├── 滑点模型</span></span>
+<span class="line"><span>├── 成交模型</span></span>
+<span class="line"><span>├── 延迟模型</span></span>
+<span class="line"><span>├── 回测指标计算</span></span>
+<span class="line"><span>├── 回测结果分析</span></span>
+<span class="line"><span>└── 回测报告生成</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><h3 id="参数扫描模块" tabindex="-1">参数扫描模块 <a class="header-anchor" href="#参数扫描模块" aria-label="Permalink to &quot;参数扫描模块&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>参数扫描模块</span></span>
+<span class="line"><span>├── 参数空间定义</span></span>
+<span class="line"><span>├── 批量任务生成</span></span>
+<span class="line"><span>├── 并行回测</span></span>
+<span class="line"><span>├── 结果聚合</span></span>
+<span class="line"><span>├── 最优参数筛选</span></span>
+<span class="line"><span>├── 稳定性分析</span></span>
+<span class="line"><span>└── 参数候选输出</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h3 id="实验管理模块" tabindex="-1">实验管理模块 <a class="header-anchor" href="#实验管理模块" aria-label="Permalink to &quot;实验管理模块&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>实验管理模块</span></span>
+<span class="line"><span>├── 实验创建</span></span>
+<span class="line"><span>├── 实验版本管理</span></span>
+<span class="line"><span>├── 输入数据版本记录</span></span>
+<span class="line"><span>├── 策略代码版本记录</span></span>
+<span class="line"><span>├── 参数版本记录</span></span>
+<span class="line"><span>├── 回测结果记录</span></span>
+<span class="line"><span>├── 实验对比</span></span>
+<span class="line"><span>└── 实验归档</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><h3 id="研究报告模块" tabindex="-1">研究报告模块 <a class="header-anchor" href="#研究报告模块" aria-label="Permalink to &quot;研究报告模块&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>研究报告模块</span></span>
+<span class="line"><span>├── 策略报告</span></span>
+<span class="line"><span>├── 因子报告</span></span>
+<span class="line"><span>├── 回测报告</span></span>
+<span class="line"><span>├── 参数扫描报告</span></span>
+<span class="line"><span>├── 实盘复盘报告</span></span>
+<span class="line"><span>└── 报告归档</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h3 id="_6-5-策略研究到参数候选流程" tabindex="-1">6.5 策略研究到参数候选流程 <a class="header-anchor" href="#_6-5-策略研究到参数候选流程" aria-label="Permalink to &quot;6.5 策略研究到参数候选流程&quot;">​</a></h3><!----><hr><h2 id="_7-行情数据管理平台设计" tabindex="-1">7. 行情数据管理平台设计 <a class="header-anchor" href="#_7-行情数据管理平台设计" aria-label="Permalink to &quot;7. 行情数据管理平台设计&quot;">​</a></h2><h3 id="_7-1-平台定位" tabindex="-1">7.1 平台定位 <a class="header-anchor" href="#_7-1-平台定位" aria-label="Permalink to &quot;7.1 平台定位&quot;">​</a></h3><p>行情数据管理平台负责行情数据的采集、清洗、存储、校验、查询、导出和回放数据准备。它是研究、回测、复盘、风控分析和交易成本分析的数据底座。</p><h3 id="_7-2-行情数据管理平台模块" tabindex="-1">7.2 行情数据管理平台模块 <a class="header-anchor" href="#_7-2-行情数据管理平台模块" aria-label="Permalink to &quot;7.2 行情数据管理平台模块&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>行情数据管理平台</span></span>
+<span class="line"><span>├── 1. 原始行情管理模块</span></span>
+<span class="line"><span>├── 2. 标准化行情管理模块</span></span>
+<span class="line"><span>├── 3. 订单簿数据模块</span></span>
+<span class="line"><span>├── 4. 数据清洗模块</span></span>
+<span class="line"><span>├── 5. 数据校验模块</span></span>
+<span class="line"><span>├── 6. 数据补全模块</span></span>
+<span class="line"><span>├── 7. 数据查询模块</span></span>
+<span class="line"><span>├── 8. 数据导出模块</span></span>
+<span class="line"><span>├── 9. 数据版本管理模块</span></span>
+<span class="line"><span>└── 10. 数据权限模块</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><h3 id="_7-3-行情数据平台架构图" tabindex="-1">7.3 行情数据平台架构图 <a class="header-anchor" href="#_7-3-行情数据平台架构图" aria-label="Permalink to &quot;7.3 行情数据平台架构图&quot;">​</a></h3><!----><h3 id="_7-4-主要模块功能" tabindex="-1">7.4 主要模块功能 <a class="header-anchor" href="#_7-4-主要模块功能" aria-label="Permalink to &quot;7.4 主要模块功能&quot;">​</a></h3><h3 id="原始行情管理模块" tabindex="-1">原始行情管理模块 <a class="header-anchor" href="#原始行情管理模块" aria-label="Permalink to &quot;原始行情管理模块&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>原始行情管理模块</span></span>
+<span class="line"><span>├── 原始行情包接收</span></span>
+<span class="line"><span>├── 原始行情包落盘</span></span>
+<span class="line"><span>├── 原始行情包索引</span></span>
+<span class="line"><span>├── 原始行情包压缩</span></span>
+<span class="line"><span>├── 原始行情包校验</span></span>
+<span class="line"><span>├── 原始行情包归档</span></span>
+<span class="line"><span>└── 原始行情包恢复</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h3 id="标准化行情管理模块" tabindex="-1">标准化行情管理模块 <a class="header-anchor" href="#标准化行情管理模块" aria-label="Permalink to &quot;标准化行情管理模块&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>标准化行情管理模块</span></span>
+<span class="line"><span>├── 行情字段标准化</span></span>
+<span class="line"><span>├── 证券代码标准化</span></span>
+<span class="line"><span>├── 交易所字段映射</span></span>
+<span class="line"><span>├── 时间戳标准化</span></span>
+<span class="line"><span>├── 价格精度处理</span></span>
+<span class="line"><span>├── 数量单位处理</span></span>
+<span class="line"><span>└── 标准化行情入库</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h3 id="订单簿数据模块" tabindex="-1">订单簿数据模块 <a class="header-anchor" href="#订单簿数据模块" aria-label="Permalink to &quot;订单簿数据模块&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>订单簿数据模块</span></span>
+<span class="line"><span>├── 历史订单簿重建</span></span>
+<span class="line"><span>├── 快照订单簿管理</span></span>
+<span class="line"><span>├── 增量订单簿管理</span></span>
+<span class="line"><span>├── 档位数据查询</span></span>
+<span class="line"><span>├── 订单簿一致性检查</span></span>
+<span class="line"><span>└── 订单簿回放数据生成</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h3 id="数据清洗模块" tabindex="-1">数据清洗模块 <a class="header-anchor" href="#数据清洗模块" aria-label="Permalink to &quot;数据清洗模块&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>数据清洗模块</span></span>
+<span class="line"><span>├── 重复数据去重</span></span>
+<span class="line"><span>├── 异常价格处理</span></span>
+<span class="line"><span>├── 异常数量处理</span></span>
+<span class="line"><span>├── 异常时间戳处理</span></span>
+<span class="line"><span>├── 停牌数据处理</span></span>
+<span class="line"><span>├── 涨跌停数据处理</span></span>
+<span class="line"><span>└── 缺失字段处理</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h3 id="数据校验模块" tabindex="-1">数据校验模块 <a class="header-anchor" href="#数据校验模块" aria-label="Permalink to &quot;数据校验模块&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>数据校验模块</span></span>
+<span class="line"><span>├── 行情连续性校验</span></span>
+<span class="line"><span>├── 序号连续性校验</span></span>
+<span class="line"><span>├── 时间戳校验</span></span>
+<span class="line"><span>├── 价格边界校验</span></span>
+<span class="line"><span>├── 成交量校验</span></span>
+<span class="line"><span>├── 快照增量一致性校验</span></span>
+<span class="line"><span>└── 数据完整性报告</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h3 id="数据补全模块" tabindex="-1">数据补全模块 <a class="header-anchor" href="#数据补全模块" aria-label="Permalink to &quot;数据补全模块&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>数据补全模块</span></span>
+<span class="line"><span>├── 缺失行情识别</span></span>
+<span class="line"><span>├── 多源数据比对</span></span>
+<span class="line"><span>├── 数据补采</span></span>
+<span class="line"><span>├── 数据修复</span></span>
+<span class="line"><span>├── 修复版本生成</span></span>
+<span class="line"><span>└── 修复记录审计</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h3 id="数据查询模块" tabindex="-1">数据查询模块 <a class="header-anchor" href="#数据查询模块" aria-label="Permalink to &quot;数据查询模块&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>数据查询模块</span></span>
+<span class="line"><span>├── 按日期查询</span></span>
+<span class="line"><span>├── 按市场查询</span></span>
+<span class="line"><span>├── 按标的查询</span></span>
+<span class="line"><span>├── 按数据类型查询</span></span>
+<span class="line"><span>├── 按时间区间查询</span></span>
+<span class="line"><span>├── 按版本查询</span></span>
+<span class="line"><span>└── 查询权限控制</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h3 id="数据导出模块" tabindex="-1">数据导出模块 <a class="header-anchor" href="#数据导出模块" aria-label="Permalink to &quot;数据导出模块&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>数据导出模块</span></span>
+<span class="line"><span>├── 批量导出</span></span>
+<span class="line"><span>├── 分区导出</span></span>
+<span class="line"><span>├── 回测数据导出</span></span>
+<span class="line"><span>├── 研究数据导出</span></span>
+<span class="line"><span>├── 压缩导出</span></span>
+<span class="line"><span>└── 导出记录审计</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h3 id="_7-5-行情数据入库流程" tabindex="-1">7.5 行情数据入库流程 <a class="header-anchor" href="#_7-5-行情数据入库流程" aria-label="Permalink to &quot;7.5 行情数据入库流程&quot;">​</a></h3><!----><hr><h2 id="_8-基础设施平台设计" tabindex="-1">8. 基础设施平台设计 <a class="header-anchor" href="#_8-基础设施平台设计" aria-label="Permalink to &quot;8. 基础设施平台设计&quot;">​</a></h2><h3 id="_8-1-平台定位" tabindex="-1">8.1 平台定位 <a class="header-anchor" href="#_8-1-平台定位" aria-label="Permalink to &quot;8.1 平台定位&quot;">​</a></h3><p>基础设施平台为管控平台、研究平台、行情数据管理平台提供底层计算、网络、存储、数据库、消息队列、权限认证、备份恢复和安全访问能力。</p><h3 id="_8-2-基础设施模块" tabindex="-1">8.2 基础设施模块 <a class="header-anchor" href="#_8-2-基础设施模块" aria-label="Permalink to &quot;8.2 基础设施模块&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>基础设施平台</span></span>
+<span class="line"><span>├── 1. 服务器资源模块</span></span>
+<span class="line"><span>├── 2. 网络模块</span></span>
+<span class="line"><span>├── 3. 存储模块</span></span>
+<span class="line"><span>├── 4. 数据库模块</span></span>
+<span class="line"><span>├── 5. 消息队列模块</span></span>
+<span class="line"><span>├── 6. 权限认证模块</span></span>
+<span class="line"><span>├── 7. 密钥与证书模块</span></span>
+<span class="line"><span>├── 8. 备份恢复模块</span></span>
+<span class="line"><span>├── 9. 服务发现模块</span></span>
+<span class="line"><span>├── 10. 内部 DNS 模块</span></span>
+<span class="line"><span>└── 11. 基础监控模块</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><h3 id="_8-3-基础设施架构图" tabindex="-1">8.3 基础设施架构图 <a class="header-anchor" href="#_8-3-基础设施架构图" aria-label="Permalink to &quot;8.3 基础设施架构图&quot;">​</a></h3><!----><h3 id="_8-4-主要模块功能" tabindex="-1">8.4 主要模块功能 <a class="header-anchor" href="#_8-4-主要模块功能" aria-label="Permalink to &quot;8.4 主要模块功能&quot;">​</a></h3><h3 id="服务器资源模块" tabindex="-1">服务器资源模块 <a class="header-anchor" href="#服务器资源模块" aria-label="Permalink to &quot;服务器资源模块&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>服务器资源模块</span></span>
+<span class="line"><span>├── 服务器资产管理</span></span>
+<span class="line"><span>├── 资源分配</span></span>
+<span class="line"><span>├── CPU/内存/磁盘信息管理</span></span>
+<span class="line"><span>├── 操作系统版本管理</span></span>
+<span class="line"><span>├── 机器标签管理</span></span>
+<span class="line"><span>└── 资源使用统计</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h3 id="网络模块" tabindex="-1">网络模块 <a class="header-anchor" href="#网络模块" aria-label="Permalink to &quot;网络模块&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>网络模块</span></span>
+<span class="line"><span>├── 自有机房网络管理</span></span>
+<span class="line"><span>├── Colo 专线管理</span></span>
+<span class="line"><span>├── 网络隔离</span></span>
+<span class="line"><span>├── 防火墙规则</span></span>
+<span class="line"><span>├── 访问控制</span></span>
+<span class="line"><span>├── 网络连通性检查</span></span>
+<span class="line"><span>└── 网络延迟监控</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h3 id="存储模块" tabindex="-1">存储模块 <a class="header-anchor" href="#存储模块" aria-label="Permalink to &quot;存储模块&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>存储模块</span></span>
+<span class="line"><span>├── 热数据存储</span></span>
+<span class="line"><span>├── 冷数据存储</span></span>
+<span class="line"><span>├── 对象存储</span></span>
+<span class="line"><span>├── 文件存储</span></span>
+<span class="line"><span>├── 容量管理</span></span>
+<span class="line"><span>├── 存储生命周期管理</span></span>
+<span class="line"><span>└── 存储访问权限</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h3 id="数据库模块" tabindex="-1">数据库模块 <a class="header-anchor" href="#数据库模块" aria-label="Permalink to &quot;数据库模块&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>数据库模块</span></span>
+<span class="line"><span>├── 关系型数据库</span></span>
+<span class="line"><span>├── 时序数据库</span></span>
+<span class="line"><span>├── 日志数据库</span></span>
+<span class="line"><span>├── 行情数据库</span></span>
+<span class="line"><span>├── 元数据数据库</span></span>
+<span class="line"><span>├── 数据库备份</span></span>
+<span class="line"><span>├── 数据库恢复</span></span>
+<span class="line"><span>└── 数据库权限</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><h3 id="消息队列模块" tabindex="-1">消息队列模块 <a class="header-anchor" href="#消息队列模块" aria-label="Permalink to &quot;消息队列模块&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>消息队列模块</span></span>
+<span class="line"><span>├── 业务事件队列</span></span>
+<span class="line"><span>├── 订单成交事件队列</span></span>
+<span class="line"><span>├── 日志事件队列</span></span>
+<span class="line"><span>├── 任务事件队列</span></span>
+<span class="line"><span>├── 消息重试</span></span>
+<span class="line"><span>├── 消息积压监控</span></span>
+<span class="line"><span>└── 消息权限控制</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><h3 id="权限认证模块" tabindex="-1">权限认证模块 <a class="header-anchor" href="#权限认证模块" aria-label="Permalink to &quot;权限认证模块&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>权限认证模块</span></span>
+<span class="line"><span>├── 用户认证</span></span>
+<span class="line"><span>├── 单点登录</span></span>
+<span class="line"><span>├── Token 管理</span></span>
+<span class="line"><span>├── 服务间认证</span></span>
+<span class="line"><span>├── API 访问控制</span></span>
+<span class="line"><span>└── 权限同步</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h3 id="密钥与证书模块" tabindex="-1">密钥与证书模块 <a class="header-anchor" href="#密钥与证书模块" aria-label="Permalink to &quot;密钥与证书模块&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>密钥与证书模块</span></span>
+<span class="line"><span>├── 数据库密码管理</span></span>
+<span class="line"><span>├── API Key 管理</span></span>
+<span class="line"><span>├── SSH Key 管理</span></span>
+<span class="line"><span>├── 证书管理</span></span>
+<span class="line"><span>├── 证书到期提醒</span></span>
+<span class="line"><span>└── 敏感配置加密</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h3 id="备份恢复模块" tabindex="-1">备份恢复模块 <a class="header-anchor" href="#备份恢复模块" aria-label="Permalink to &quot;备份恢复模块&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>备份恢复模块</span></span>
+<span class="line"><span>├── 数据库备份</span></span>
+<span class="line"><span>├── 行情数据备份</span></span>
+<span class="line"><span>├── 配置备份</span></span>
+<span class="line"><span>├── 日志备份</span></span>
+<span class="line"><span>├── 制品备份</span></span>
+<span class="line"><span>├── 备份校验</span></span>
+<span class="line"><span>├── 恢复演练</span></span>
+<span class="line"><span>└── 恢复审计</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><hr><h2 id="_9-自有机房与-colo-侧交互设计" tabindex="-1">9. 自有机房与 Colo 侧交互设计 <a class="header-anchor" href="#_9-自有机房与-colo-侧交互设计" aria-label="Permalink to &quot;9. 自有机房与 Colo 侧交互设计&quot;">​</a></h2><h3 id="_9-1-交互对象" tabindex="-1">9.1 交互对象 <a class="header-anchor" href="#_9-1-交互对象" aria-label="Permalink to &quot;9.1 交互对象&quot;">​</a></h3><p>自有机房侧不直接连接 Colo 内部所有进程，而是通过 Colo 侧 <strong>管控代理进程</strong> 进行交互。</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>自有机房管控平台</span></span>
+<span class="line"><span>    ↓↑</span></span>
+<span class="line"><span>Colo 管控代理进程</span></span>
+<span class="line"><span>    ↓↑</span></span>
+<span class="line"><span>行情进程 / 信号进程 / 交易机器人进程 / 柜台发单进程 / 运维进程组</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h3 id="_9-2-控制指令流" tabindex="-1">9.2 控制指令流 <a class="header-anchor" href="#_9-2-控制指令流" aria-label="Permalink to &quot;9.2 控制指令流&quot;">​</a></h3><!----><h3 id="_9-3-状态上报流" tabindex="-1">9.3 状态上报流 <a class="header-anchor" href="#_9-3-状态上报流" aria-label="Permalink to &quot;9.3 状态上报流&quot;">​</a></h3><!----><h3 id="_9-4-数据传输类型" tabindex="-1">9.4 数据传输类型 <a class="header-anchor" href="#_9-4-数据传输类型" aria-label="Permalink to &quot;9.4 数据传输类型&quot;">​</a></h3><table tabindex="0"><thead><tr><th>类型</th><th>方向</th><th>示例</th></tr></thead><tbody><tr><td>控制指令</td><td>自有机房 → Colo</td><td>启停、参数下发、全撤、Kill Switch</td></tr><tr><td>配置数据</td><td>自有机房 → Colo</td><td>策略参数、柜台参数、风控参数、标的池</td></tr><tr><td>业务事件</td><td>Colo → 自有机房</td><td>订单、成交、拒单、风控拦截</td></tr><tr><td>观测指标</td><td>Colo → 自有机房</td><td>CPU、内存、延迟、订单量、撤单量</td></tr><tr><td>日志事件</td><td>Colo → 自有机房</td><td>业务日志、系统日志、异常日志</td></tr><tr><td>行情数据</td><td>Colo → 自有机房</td><td>原始行情、标准化行情、订单簿数据</td></tr></tbody></table><hr><h2 id="_10-关键业务流程" tabindex="-1">10. 关键业务流程 <a class="header-anchor" href="#_10-关键业务流程" aria-label="Permalink to &quot;10. 关键业务流程&quot;">​</a></h2><h3 id="_10-1-盘前流程" tabindex="-1">10.1 盘前流程 <a class="header-anchor" href="#_10-1-盘前流程" aria-label="Permalink to &quot;10.1 盘前流程&quot;">​</a></h3><!----><h3 id="_10-2-盘中流程" tabindex="-1">10.2 盘中流程 <a class="header-anchor" href="#_10-2-盘中流程" aria-label="Permalink to &quot;10.2 盘中流程&quot;">​</a></h3><!----><h3 id="_10-3-盘后流程" tabindex="-1">10.3 盘后流程 <a class="header-anchor" href="#_10-3-盘后流程" aria-label="Permalink to &quot;10.3 盘后流程&quot;">​</a></h3><!----><h3 id="_10-4-异常处理流程" tabindex="-1">10.4 异常处理流程 <a class="header-anchor" href="#_10-4-异常处理流程" aria-label="Permalink to &quot;10.4 异常处理流程&quot;">​</a></h3><!----><hr><h2 id="_11-当前版本建设范围" tabindex="-1">11. 当前版本建设范围 <a class="header-anchor" href="#_11-当前版本建设范围" aria-label="Permalink to &quot;11. 当前版本建设范围&quot;">​</a></h2><p>当前版本建议建设范围：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>当前版本建设范围</span></span>
+<span class="line"><span>├── 管控平台</span></span>
+<span class="line"><span>│   ├── 交易机器人管控</span></span>
+<span class="line"><span>│   ├── 信号进程管控</span></span>
+<span class="line"><span>│   ├── 柜台发单管控</span></span>
+<span class="line"><span>│   ├── 订单与成交</span></span>
+<span class="line"><span>│   ├── 持仓与 PnL</span></span>
+<span class="line"><span>│   ├── 参数与配置</span></span>
+<span class="line"><span>│   ├── 结算与对账</span></span>
+<span class="line"><span>│   ├── 观测</span></span>
+<span class="line"><span>│   ├── 部署与发布</span></span>
+<span class="line"><span>│   ├── 权限与审计</span></span>
+<span class="line"><span>│   ├── 日志与事件</span></span>
+<span class="line"><span>│   ├── 时间与时钟状态</span></span>
+<span class="line"><span>│   ├── 任务调度</span></span>
+<span class="line"><span>│   └── 应急控制</span></span>
+<span class="line"><span>│</span></span>
+<span class="line"><span>├── 研究平台</span></span>
+<span class="line"><span>│   ├── 策略研究</span></span>
+<span class="line"><span>│   ├── 因子研究</span></span>
+<span class="line"><span>│   ├── 回测分析</span></span>
+<span class="line"><span>│   ├── 参数扫描</span></span>
+<span class="line"><span>│   └── 实验管理</span></span>
+<span class="line"><span>│</span></span>
+<span class="line"><span>├── 行情数据管理平台</span></span>
+<span class="line"><span>│   ├── 原始行情</span></span>
+<span class="line"><span>│   ├── 标准化行情</span></span>
+<span class="line"><span>│   ├── 订单簿数据</span></span>
+<span class="line"><span>│   ├── 数据清洗</span></span>
+<span class="line"><span>│   ├── 数据校验</span></span>
+<span class="line"><span>│   └── 数据查询</span></span>
+<span class="line"><span>│</span></span>
+<span class="line"><span>└── 基础设施平台</span></span>
+<span class="line"><span>    ├── 服务器</span></span>
+<span class="line"><span>    ├── 网络</span></span>
+<span class="line"><span>    ├── 存储</span></span>
+<span class="line"><span>    ├── 数据库</span></span>
+<span class="line"><span>    ├── 消息队列</span></span>
+<span class="line"><span>    ├── 权限认证</span></span>
+<span class="line"><span>    └── 备份恢复</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br></div></div><p>当前版本不包含：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>- 仿真交易平台</span></span>
+<span class="line"><span>- Colo 侧模拟柜台进程</span></span>
+<span class="line"><span>- 复杂模型训练平台</span></span>
+<span class="line"><span>- 完整自动化合规报送平台</span></span>
+<span class="line"><span>- 多地域灾备自动切换平台</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><hr><h2 id="_12-建设优先级" tabindex="-1">12. 建设优先级 <a class="header-anchor" href="#_12-建设优先级" aria-label="Permalink to &quot;12. 建设优先级&quot;">​</a></h2><h3 id="_12-1-p0-生产可控" tabindex="-1">12.1 P0：生产可控 <a class="header-anchor" href="#_12-1-p0-生产可控" aria-label="Permalink to &quot;12.1 P0：生产可控&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>1. 交易机器人管控模块</span></span>
+<span class="line"><span>2. 信号进程管控模块</span></span>
+<span class="line"><span>3. 柜台发单管控模块</span></span>
+<span class="line"><span>4. 订单与成交模块</span></span>
+<span class="line"><span>5. 参数与配置模块</span></span>
+<span class="line"><span>6. 应急控制模块</span></span>
+<span class="line"><span>7. 权限与审计模块</span></span>
+<span class="line"><span>8. 观测模块</span></span>
+<span class="line"><span>9. 日志与事件模块</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><p>目标：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>能启动、能停止、能看状态、能查订单成交、能下参数、能审计、能应急停止。</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br></div></div><h3 id="_12-2-p1-生产闭环" tabindex="-1">12.2 P1：生产闭环 <a class="header-anchor" href="#_12-2-p1-生产闭环" aria-label="Permalink to &quot;12.2 P1：生产闭环&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>1. 持仓与 PnL 模块</span></span>
+<span class="line"><span>2. 结算与对账模块</span></span>
+<span class="line"><span>3. 部署与发布模块</span></span>
+<span class="line"><span>4. 时间与时钟状态模块</span></span>
+<span class="line"><span>5. 任务调度模块</span></span>
+<span class="line"><span>6. 行情数据管理平台基础版</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>目标：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>能跑完整交易日，能完成盘前准备、盘中监控、盘后结算、日志归档和数据入库。</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br></div></div><h3 id="_12-3-p2-研发闭环" tabindex="-1">12.3 P2：研发闭环 <a class="header-anchor" href="#_12-3-p2-研发闭环" aria-label="Permalink to &quot;12.3 P2：研发闭环&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>1. 研究平台</span></span>
+<span class="line"><span>2. 回测分析模块</span></span>
+<span class="line"><span>3. 参数扫描模块</span></span>
+<span class="line"><span>4. 实验管理模块</span></span>
+<span class="line"><span>5. 行情数据查询与导出能力</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>目标：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>能支持策略研究、回测分析、参数扫描、实验记录和研究报告。</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br></div></div><hr><h2 id="_13-总结" tabindex="-1">13. 总结 <a class="header-anchor" href="#_13-总结" aria-label="Permalink to &quot;13. 总结&quot;">​</a></h2><p>自有机房侧建议以 <strong>管控平台为核心</strong>，把生产交易相关的控制、观测、配置、订单成交、PnL、结算、部署、权限、审计、日志、时间、任务调度、应急控制都纳入管控平台内部模块。</p><p>研究平台和行情数据管理平台独立建设：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>管控平台：面向生产交易管理。</span></span>
+<span class="line"><span>研究平台：面向策略研发和回测分析。</span></span>
+<span class="line"><span>行情数据管理平台：面向行情数据治理和数据查询。</span></span>
+<span class="line"><span>基础设施平台：面向底层计算、存储、网络、数据库、消息、权限和备份能力。</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>Colo 侧保持低延迟、轻量、稳定；自有机房侧承担完整的控制、观测、研发、数据、结算、运维和审计能力。</p></div></div></main><footer class="VPDocFooter" data-v-c4a21dec data-v-3a93a28b><!--[--><!--]--><div class="edit-info" data-v-3a93a28b><!----><div class="last-updated" data-v-3a93a28b><p class="VPLastUpdated" data-v-3a93a28b data-v-8003f1af>Last updated: <time datetime="2026-07-14T16:55:32.000Z" data-v-8003f1af></time></p></div></div><!----></footer><!--[--><!--[--><!--[--><section class="article-tags" aria-label="文章标签"><span class="article-tags__label">标签</span><nav class="article-tags__list" aria-label="查看同标签文章"><!--[--><a class="article-tag" href="/pages/tags#tag-ssv-geu-fj8-k5v-oor-p27">#量化交易系统</a><a class="article-tag" href="/pages/tags#tag-khi-kg4">#架构</a><!--]--></nav></section><!----><!--]--><!--]--><!--]--></div></div></div><!--[--><!--]--></div></div><footer class="VPFooter" data-v-cdc7d10c data-v-4d8695f4><div class="container" data-v-4d8695f4><p class="message" data-v-4d8695f4>基于 VitePress 构建 · 工程、交易与系统研究日志</p><p class="copyright" data-v-4d8695f4>Copyright © xunserver</p></div></footer><!--[--><!--]--></div><!----><!--]--></div>
+    <script>window.__VP_HASH_MAP__=JSON.parse("{\"index.md\":\"XhBXaiD1\",\"pages_about.md\":\"oQV9V7n2\",\"pages_ai.md\":\"DnMGRF4H\",\"pages_archives.md\":\"fqzepLj_\",\"pages_category.md\":\"k-VI3MdM\",\"pages_daily.md\":\"DNrFS3Oj\",\"pages_finance.md\":\"uBCyruFX\",\"pages_quant.md\":\"B4CGL2e8\",\"pages_tags.md\":\"CAXmbpwm\",\"pages_tech.md\":\"R78Vzl_w\",\"posts_a-share-market-data-infrastructure-1.md\":\"Bhyt8ylk\",\"posts_a-share-market-data-infrastructure-2.md\":\"CaJXTkih\",\"posts_a-share-market-data-infrastructure-3.md\":\"CzsTdn0B\",\"posts_daily-brief-2026-07-12.md\":\"uxbF__oh\",\"posts_daily-brief-2026-07-13.md\":\"DgPsqUus\",\"posts_daily-brief-2026-07-14.md\":\"DqmvwPoX\",\"posts_daliy-post-20260713.md\":\"CgeeJZRQ\",\"posts_openclash-mihomo-configuration-guide.md\":\"D7Pwzxbh\",\"posts_trade-system-colo-architecture.md\":\"BgKGgp96\",\"posts_trade-system-idc-architecture.md\":\"DkaxNdX9\",\"public_prompt_博客_博客创建流程.md\":\"Dv542lcn\",\"public_prompt_博客_文章模板_技术.md\":\"Ckd0AG8F\",\"public_prompt_博客_文章模板_杂项.md\":\"C8zSFoqT\",\"public_prompt_博客_文章模板_每日总结.md\":\"B4ghddfy\",\"public_prompt_博客_文章模板_量化交易系统架构.md\":\"DCgHDzze\",\"public_prompt_博客_文章模板_金融.md\":\"BPRvhS8P\"}");window.__VP_SITE_DATA__=JSON.parse("{\"lang\":\"zh-CN\",\"dir\":\"ltr\",\"title\":\"Bang\",\"description\":\"生活总会有惊喜\",\"base\":\"/\",\"head\":[],\"router\":{\"prefetchLinks\":true},\"appearance\":true,\"themeConfig\":{\"logo\":\"/logo.svg\",\"siteTitle\":\"Bang\",\"nav\":[{\"text\":\"首页\",\"link\":\"/\"},{\"text\":\"每日记录\",\"link\":\"/pages/daily\"},{\"text\":\"AI\",\"link\":\"/pages/ai\"},{\"text\":\"金融经济\",\"link\":\"/pages/finance\"},{\"text\":\"量化交易\",\"link\":\"/pages/quant\"},{\"text\":\"技术\",\"link\":\"/pages/tech\"}],\"search\":{\"provider\":\"local\"},\"outline\":{\"label\":\"目录\",\"level\":[2,4]},\"socialLinks\":[{\"icon\":\"github\",\"link\":\"https://github.com/xunserver\"}],\"footer\":{\"message\":\"基于 VitePress 构建 · 工程、交易与系统研究日志\",\"copyright\":\"Copyright © xunserver\"}},\"locales\":{},\"scrollOffset\":134,\"cleanUrls\":true}");</script>
+    
+  </body>
+</html>
