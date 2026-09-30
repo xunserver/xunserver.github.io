@@ -1,0 +1,49 @@
+{
+  "format": "xun-estate-vault",
+  "version": 1,
+  "kdf": {
+    "name": "PBKDF2",
+    "hash": "SHA-256",
+    "iterations": 600000
+  },
+  "cipher": {
+    "name": "AES-GCM",
+    "tagLength": 128
+  },
+  "recipients": [
+    {
+      "id": "hRjtBR2gXNzn5v5r",
+      "salt": "vvibxm95EfF5N6LHkWxYIw==",
+      "iv": "Pqqt90LBdu5Nr80z",
+      "wrappedKey": "uzn1nrcGKEG2dDlF+bIUt+nhlKcB/tobs30xgjZgvGw6WZ0sJMAv7R94dCHmFUyU"
+    },
+    {
+      "id": "nORLogwm1zzUJFuk",
+      "salt": "X47HWFuDKBXQp8/VycYeZw==",
+      "iv": "Annqep/VENp6CM2s",
+      "wrappedKey": "YTgz12xHR+xvnle6eRDEh3yYhPqZAVxs6GPcYl1gjTVY27XP32qwjC46195X6SgA"
+    },
+    {
+      "id": "MAKsAe1wMzgfCiqq",
+      "salt": "HCAUBNWP8hW+4rHk3+EZFg==",
+      "iv": "OS0sPOsf85PhBYIP",
+      "wrappedKey": "HS/Y4FHOpNibkDfyJDdQPe0OipfVLIYBmUINhQ8ysz+s+vPgoNxS4+7cMeafLML4"
+    },
+    {
+      "id": "DaTngJBeoj8ftP1G",
+      "salt": "sCCrYj1U7uWURKnCnGItUg==",
+      "iv": "vqObQ3R1qkzwg4Pf",
+      "wrappedKey": "apTA0/d4TSVqyhRcf5qeMrXsY2Gv542FxGMI6hVF7g6r/Y4sUXjuY/jq0XSSIzpT"
+    },
+    {
+      "id": "S9EEzmUqTku2W5Pt",
+      "salt": "MwKVaOB2XBdonycA8QUyfg==",
+      "iv": "QJczCJ8/GqkXs+qY",
+      "wrappedKey": "uzTxRaYovIm/apuHi7jytiAi/B17h7YAzzGpZCyr89UoHdH0zzME0t5WHjEqnmY/"
+    }
+  ],
+  "payload": {
+    "iv": "Gqi1cu4NwCt9thcC",
+    "ciphertext": "cpb3qAviKaBuE0wecEqb+cdYhsO6My2TkZKrnYq9fSRDgmMW7TNyhJAnIXsgD0eX71rHjw=="
+  }
+}
