@@ -25,6 +25,7 @@
 - 外层：Base64 文本
 - Vault 格式：xun-estate-vault v2
 - KDF：PBKDF2-HMAC-SHA256，600000 iterations
+- 推荐恢复密钥：256-bit random（网页“生成”按钮产生 32 random bytes）
 - KEK：256-bit AES key
 - DEK：256-bit random
 - DEK 包裹：AES-256-GCM
