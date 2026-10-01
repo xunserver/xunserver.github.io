@@ -1,0 +1,35 @@
+数字遗产离线恢复说明
+====================
+
+需要的文件：
+1. recovery.html
+2. data.dat
+3. 任意一个有效恢复密钥
+
+恢复步骤：
+1. 将 recovery.html 和 data.dat 保存到同一台电脑。
+2. 双击 recovery.html，用 Chrome、Edge、Firefox 或 Safari 打开。
+3. 点击“选择 data.dat”。
+4. 输入你持有的恢复密钥。
+5. 点击“解锁”。
+6. 解密后的内容只显示在当前电脑浏览器中。
+
+重要说明：
+- recovery.html 不需要联网。
+- recovery.html 不会向任何服务器上传 data.dat 或恢复密钥。
+- data.dat 可以公开保存；真正需要保护的是恢复密钥。
+- 不要把恢复密钥和 data.dat 只保存在同一个位置。
+- 如果网页版本已经不存在，仍然可以使用这个 recovery.html 离线恢复。
+
+当前格式：
+- 外层：Base64 文本
+- Vault 格式：xun-estate-vault v2
+- KDF：PBKDF2-HMAC-SHA256，600000 iterations
+- 推荐恢复密钥：256-bit random（网页“生成”按钮产生 32 random bytes）
+- 显示格式：EV2-XXXX-XXXX-XXXX...（Crockford Base32，全大写，每 4 位分组）
+- KEK：256-bit AES key
+- DEK：256-bit random
+- DEK 包裹：AES-256-GCM
+- 正文加密：AES-256-GCM
+- GCM IV：96-bit
+- GCM Tag：128-bit

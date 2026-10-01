@@ -1,0 +1,70 @@
+name: 发布密码人生 npm 恢复包
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: password-life-npm-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: 发布公开 npm 包
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 下载公开仓库
+        uses: actions/checkout@v6
+
+      - name: 配置 Node.js 24
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+
+      - name: 确保 npm 支持 Trusted Publishing
+        run: npm install --global "npm@^11.5.1"
+
+      - name: 准备 npm 包
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          test -f blog/npm-recovery/package.json
+          test -f blog/npm-recovery/data.dat
+          test -f blog/npm-recovery/recovery.html
+          test -f blog/npm-recovery/RECOVERY.txt
+
+          rm -rf .npm-package
+          cp -a blog/npm-recovery .npm-package
+
+          version="0.$(date -u +'%Y%m%d').${GITHUB_RUN_NUMBER}"
+          npm pkg set "version=$version" --prefix .npm-package
+
+          (
+            cd .npm-package
+            rm -f SHA256SUMS
+            find . -maxdepth 1 -type f ! -name package.json ! -name README.md ! -name SHA256SUMS -printf '%f\n' | sort | xargs -r sha256sum > SHA256SUMS
+            npm pack --dry-run
+          )
+
+          echo "NPM_PACKAGE_VERSION=$version" >> "$GITHUB_ENV"
+
+      - name: 发布到 npm
+        working-directory: .npm-package
+        run: npm publish --access public
+
+      - name: 输出发布摘要
+        run: |
+          {
+            echo "## npm 发布成功"
+            echo
+            echo "- 包：`@xunserver/password-life-recovery`"
+            echo "- 版本：`${NPM_PACKAGE_VERSION}`"
+            echo "- 获取：`npm pack @xunserver/password-life-recovery@latest`"
+          } >> "$GITHUB_STEP_SUMMARY"
