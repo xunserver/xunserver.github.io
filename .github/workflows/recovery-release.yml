@@ -1,0 +1,84 @@
+name: 发布密码人生公开恢复包
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'blog/assets/data.dat'
+      - 'blog/recovery.html'
+      - 'blog/RECOVERY.txt'
+      - 'blog/decrypt.sh'
+      - 'blog/decrypt.mjs'
+      - 'blog/decrypt.py'
+      - 'blog/FORMAT.md'
+      - '.github/workflows/recovery-release.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: password-life-public-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: 生成公开恢复包
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 下载公开仓库
+        uses: actions/checkout@v6
+
+      - name: 组装恢复包
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          required=(
+            "blog/assets/data.dat"
+            "blog/recovery.html"
+            "blog/RECOVERY.txt"
+          )
+
+          optional=(
+            "blog/decrypt.sh"
+            "blog/decrypt.mjs"
+            "blog/decrypt.py"
+            "blog/FORMAT.md"
+          )
+
+          rm -rf password-life-recovery
+          mkdir -p password-life-recovery
+
+          for file in "${required[@]}"; do
+            test -f "$file"
+            cp "$file" "password-life-recovery/$(basename "$file")"
+          done
+
+          for file in "${optional[@]}"; do
+            if [[ -f "$file" ]]; then
+              cp "$file" "password-life-recovery/$(basename "$file")"
+            fi
+          done
+
+          (
+            cd password-life-recovery
+            find . -maxdepth 1 -type f ! -name SHA256SUMS -printf '%f\n' | sort | xargs sha256sum > SHA256SUMS
+          )
+
+          zip -9 -r password-life-recovery.zip password-life-recovery
+          sha256sum password-life-recovery.zip > password-life-recovery.zip.sha256
+
+      - name: 创建公开 Release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          stamp=$(date -u +'%Y%m%dT%H%M%SZ')
+          short_sha="${GITHUB_SHA::7}"
+          tag="password-life-${stamp}-${short_sha}"
+
+          gh release create "$tag"             password-life-recovery.zip             password-life-recovery.zip.sha256             'blog/assets/data.dat#data.dat'             --target "$GITHUB_SHA"             --title "密码人生恢复包 ${stamp}"             --notes "公开加密恢复包。包含最新 data.dat、离线 recovery.html、使用说明以及当前可用的命令行恢复工具。恢复密钥不包含在 Release 中。"             --latest
