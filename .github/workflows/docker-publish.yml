@@ -1,0 +1,122 @@
+name: 发布密码人生 Docker Hub 恢复镜像
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'blog/assets/data.dat'
+      - 'blog/recovery.html'
+      - 'blog/RECOVERY.txt'
+      - 'blog/npm-recovery/**'
+      - 'blog/decrypt.sh'
+      - 'blog/decrypt.mjs'
+      - 'blog/decrypt.py'
+      - 'blog/FORMAT.md'
+      - '.github/workflows/docker-publish.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: password-life-dockerhub-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: 发布公开 Docker Hub 镜像
+    # 初次部署工作流时先跳过。设置 Docker Hub 凭据并启用变量后，push 会自动发布；
+    # 也可手动运行 workflow_dispatch 执行首次发布。
+    if: ${{ github.event_name == 'workflow_dispatch' || vars.DOCKERHUB_ENABLED == 'true' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 下载公开仓库
+        uses: actions/checkout@v6
+
+      - name: 准备最小镜像上下文
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          test -s blog/assets/data.dat
+          test -s blog/recovery.html
+          test -s blog/RECOVERY.txt
+          test -s blog/npm-recovery/data.dat
+          cmp blog/assets/data.dat blog/npm-recovery/data.dat
+
+          mkdir -p .recovery-image/recovery
+          cp blog/assets/data.dat .recovery-image/recovery/data.dat
+          cp blog/recovery.html .recovery-image/recovery/recovery.html
+          cp blog/RECOVERY.txt .recovery-image/recovery/RECOVERY.txt
+
+          for file in decrypt.sh decrypt.mjs decrypt.py FORMAT.md; do
+            if [[ -f "blog/$file" ]]; then
+              cp "blog/$file" ".recovery-image/recovery/$file"
+            fi
+          done
+
+          if [[ -f blog/npm-recovery/README.md ]]; then
+            cp blog/npm-recovery/README.md .recovery-image/recovery/README.md
+          fi
+
+          (
+            cd .recovery-image/recovery
+            find . -maxdepth 1 -type f ! -name SHA256SUMS -printf '%f\n' | sort |
+              xargs -r sha256sum > SHA256SUMS
+            sha256sum -c SHA256SUMS
+          )
+
+          cat > .recovery-image/Dockerfile <<'DOCKERFILE'
+          FROM scratch
+          ARG VCS_REF
+          LABEL org.opencontainers.image.title="密码人生离线恢复包"
+          LABEL org.opencontainers.image.description="只读加密恢复文件；无服务、无明文、无恢复密钥"
+          LABEL org.opencontainers.image.source="https://github.com/xunserver/xunserver.github.io"
+          LABEL org.opencontainers.image.revision="$VCS_REF"
+          COPY recovery/ /recovery/
+          DOCKERFILE
+
+      - name: 登录 Docker Hub
+        shell: bash
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          if [[ -z "$DOCKERHUB_USERNAME" || -z "$DOCKERHUB_TOKEN" ]]; then
+            echo "::error::请在公开仓库配置 DOCKERHUB_USERNAME 和 DOCKERHUB_TOKEN 两个 Actions secrets。"
+            exit 1
+          fi
+
+          printf '%s' "$DOCKERHUB_TOKEN" |
+            docker login --username "$DOCKERHUB_USERNAME" --password-stdin
+
+      - name: 发布多架构公开镜像
+        shell: bash
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        run: |
+          set -euo pipefail
+
+          namespace="${DOCKERHUB_USERNAME,,}"
+          image="docker.io/$namespace/password-life-recovery"
+          version="sha-${GITHUB_SHA:0:12}"
+
+          docker buildx create --driver docker-container --use --name password-life-builder
+          docker buildx build \
+            --platform linux/amd64,linux/arm64 \
+            --build-arg "VCS_REF=$GITHUB_SHA" \
+            --tag "$image:$version" \
+            --tag "$image:latest" \
+            --push .recovery-image
+
+          {
+            echo "## Docker Hub 镜像发布"
+            echo
+            echo "- 镜像：\`$image\`"
+            echo "- 版本：\`$version\`"
+            echo "- 获取：\`docker pull $image:latest\`"
+            echo "- 获取文件：\`docker create\` + \`docker cp\`（无需运行镜像）"
+          } >> "$GITHUB_STEP_SUMMARY"
