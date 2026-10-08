@@ -1,4 +1,5 @@
 name: 发布密码人生 npm 恢复包
+# one-time trusted publish trigger
 
 on:
   workflow_dispatch:
