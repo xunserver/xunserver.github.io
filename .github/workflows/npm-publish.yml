@@ -1,11 +1,11 @@
 name: 发布密码人生 npm 恢复包
-# one-time trusted publish trigger
 
 on:
   workflow_dispatch:
   push:
     branches: [main]
     paths:
+      - 'blog/npm-recovery/**'
       - '.github/workflows/npm-publish.yml'
 
 permissions:
