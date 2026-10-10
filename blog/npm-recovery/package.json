@@ -7,7 +7,7 @@
     "type": "git",
     "url": "git+https://github.com/xunserver/xunserver.github.io.git"
   },
-  "homepage": "https://page.xunserver.cn/blog/pages/vault",
+  "homepage": "https://xunserver.cn/blog/pages/vault",
   "keywords": ["password-life", "recovery", "encrypted-backup", "offline-recovery"],
   "files": ["data.dat", "recovery.html", "RECOVERY.txt", "decrypt.sh", "decrypt.mjs", "decrypt.py", "FORMAT.md", "SHA256SUMS"],
   "publishConfig": {
