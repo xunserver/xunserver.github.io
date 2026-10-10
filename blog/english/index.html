@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101b32">
+  <meta name="description" content="12 周美式英语口语课程、学习进度与间隔重复单词卡片">
+  <title>English Studio · 12 周美式英语 | Bang</title>
+  <link rel="icon" href="/blog/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="/blog/" aria-label="返回 Bang 博客"><span class="brand-symbol">B.</span><span class="brand-sub">Bang<span class="brand-divider">/</span>English Studio</span></a>
+        <div class="header-actions">
+          <span id="connection" class="connection"><span class="dot"></span>连接中</span>
+          <button id="account-button" class="text-button" type="button">登录</button>
+        </div>
+      </div>
+    </header>
+    <main class="layout">
+      <section class="intro">
+        <div class="intro-copy">
+          <p class="eyebrow">AMERICAN ENGLISH · 12-WEEK PROGRAM</p>
+          <h1>说得简单，<br><em>说得自然。</em></h1>
+          <p class="intro-lead">48 天系统练习，从自我介绍到真实交流。口语、对话和词汇，始终保持同步。</p>
+          <div class="intro-tags"><span>大学 CET4 起点</span><span>每周 4 天</span><span>每天 90 分钟</span></div>
+        </div>
+        <aside class="hero-note">
+          <span class="hero-note-label">YOUR DAILY ROUTINE</span>
+          <div class="routine-row"><span class="routine-icon blue">01</span><div><strong>Speak naturally</strong><small>口语练习 · 35 min</small></div></div>
+          <div class="routine-row"><span class="routine-icon teal">02</span><div><strong>Keep talking</strong><small>文字交流 · 30 min</small></div></div>
+          <div class="routine-row"><span class="routine-icon amber">03</span><div><strong>Make it stick</strong><small>单词记忆 · 25 min</small></div></div>
+          <div class="note-footer">SMALL STEPS. REAL PROGRESS.</div>
+        </aside>
+      </section>
+      <div id="notification" class="notification" role="status" aria-live="polite" hidden></div>
+      <div class="metrics" id="metrics">
+        <div class="metric"><div class="metric-label">已完成课程</div><div class="metric-value">— <span>/ 48</span></div><div class="metric-foot">登录后显示进度</div></div>
+        <div class="metric"><div class="metric-label">总练习时长</div><div class="metric-value">— <span>分钟</span></div><div class="metric-foot">语音 / Chat / 词汇</div></div>
+        <div class="metric"><div class="metric-label">已掌握词汇</div><div class="metric-value">— <span>/ 336</span></div><div class="metric-foot">根据背诵记录计算</div></div>
+        <div class="metric"><div class="metric-label">到期复习</div><div class="metric-value">— <span>条</span></div><div class="metric-foot">间隔重复</div></div>
+      </div>
+      <nav class="tab-bar" aria-label="英语学习功能">
+        <button type="button" data-tab="overview" class="tab active" aria-current="page">学习总览</button>
+        <button type="button" data-tab="courses" class="tab">课程计划</button>
+        <button type="button" data-tab="vocabulary" class="tab">单词卡片</button>
+      </nav>
+      <section id="panel-overview" class="panel" aria-label="学习总览">
+        <div class="section-heading"><div><p class="eyebrow">TODAY'S FOCUS</p><h2>继续当前课程</h2></div><button class="outline-button" data-tab="courses" type="button">查看全部课程 <span aria-hidden="true">↗</span></button></div>
+        <div id="current-lesson" class="loading-box">正在读取课程数据…</div>
+        <div class="section-heading second-heading"><div><p class="eyebrow">LEARNING STATUS</p><h2>练习进度</h2></div></div>
+        <div id="current-sessions" class="session-grid"></div>
+      </section>
+      <section id="panel-courses" class="panel" aria-label="课程计划" hidden>
+        <div class="section-heading"><div><p class="eyebrow">COURSE LIBRARY</p><h2>12 周 · 48 节课程</h2></div><span class="muted">点击课程查看详情</span></div>
+        <div class="course-layout"><div id="week-list" class="week-list"></div><div id="lesson-detail" class="lesson-detail"></div></div>
+      </section>
+      <section id="panel-vocabulary" class="panel" aria-label="单词卡片" hidden>
+        <div class="section-heading"><div><p class="eyebrow">SPACED REPETITION</p><h2>每天记住一点点</h2></div><span id="deck-counter" class="muted"></span></div>
+        <div class="deck-filters" role="group" aria-label="词卡范围">
+          <button class="filter active" type="button" data-deck="today">本课词汇</button>
+          <button class="filter" type="button" data-deck="due">到期复习</button>
+          <button class="filter" type="button" data-deck="all">全部词汇</button>
+        </div>
+        <div id="flashcards" class="flashcards"></div>
+      </section>
+      <footer class="footer"><span>English Studio · American English · CET4 → everyday conversation</span><a href="/blog/">返回博客首页 ↗</a></footer>
+    </main>
+  </div>
+  <dialog id="auth-dialog" class="auth-dialog">
+    <form id="auth-form" method="dialog" class="auth-form">
+      <div class="dialog-top"><h2>同步学习进度</h2><button class="icon-button" type="button" id="close-dialog" aria-label="关闭">×</button></div>
+      <p>课程内容可直接查看。登录 Supabase Auth 后，可以查看私人学习进度并在网页上背诵单词。</p>
+      <label for="auth-email">电子邮箱</label>
+      <input id="auth-email" type="email" placeholder="you@example.com" autocomplete="email" required>
+      <button id="send-login" type="submit" class="primary-button">发送邮箱登录链接</button>
+      <p id="auth-message" class="helper" role="status"></p>
+      <p class="helper">登录后首次使用需要输入一次性绑定码，将此网页账号与 ChatGPT 使用的学习记录关联。</p>
+    </form>
+  </dialog>
+</body>
+</html>
