@@ -4,12 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="referrer" content="no-referrer" />
-    <meta name="description" content="LifeVault 密码人生：兼容 v2 的浏览器端数字遗产保险库与离线恢复工具" />
+    <meta name="theme-color" content="#171717" />
+    <meta name="description" content="LifeVault 密码人生：浏览器端保险箱与开锁教程。" />
     <title>LifeVault · 密码人生</title>
-    <script type="module" crossorigin src="/life-vault/assets/index-BIx__kBC.js"></script>
-    <link rel="stylesheet" crossorigin href="/life-vault/assets/index-BzprcgzX.css">
+    <script>
+      (() => {
+        try {
+          const theme = localStorage.getItem('life-vault-theme')
+          const dark = theme === 'dark' || (theme === null && matchMedia('(prefers-color-scheme: dark)').matches)
+          document.documentElement.classList.toggle('dark', dark)
+        } catch {
+          document.documentElement.classList.toggle('dark', matchMedia('(prefers-color-scheme: dark)').matches)
+        }
+      })()
+    </script>
+    <script type="module" crossorigin src="/life-vault/assets/index-BHXFkhLk.js"></script>
+    <link rel="stylesheet" crossorigin href="/life-vault/assets/index-Iu-m8E6N.css">
   </head>
   <body>
-    <div id="app"></div>
+    <div id="root"></div>
   </body>
 </html>
