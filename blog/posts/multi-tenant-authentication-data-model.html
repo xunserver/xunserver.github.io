@@ -1,26 +1,63 @@
-<!DOCTYPE html>
-<html lang="zh-CN" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>多租户系统认证数据模型：User、Identifier、Credential、Passkey 与 SSO 的工程化设计 | Bang</title>
-    <meta name="description" content="从长期工程化视角设计多租户认证数据模型，拆分 User、Login Identifier、Credential、Password、Passkey、外部身份、认证策略与 Session，并明确共享主键继承、租户作用域和关键数据不变量。">
-    <meta name="generator" content="VitePress v1.6.4">
-    <link rel="preload stylesheet" href="/blog/assets/style.DNYGuMyi.css" as="style">
-    <link rel="preload stylesheet" href="/blog/vp-icons.css" as="style">
-    
-    <script type="module" src="/blog/assets/app.C02_tCX7.js"></script>
-    <link rel="preload" href="/blog/assets/inter-roman-latin.Di8DUHzh.woff2" as="font" type="font/woff2" crossorigin="">
-    <link rel="modulepreload" href="/blog/assets/chunks/framework.g_qimrob.js">
-    <link rel="modulepreload" href="/blog/assets/chunks/theme.EOWB0SYy.js">
-    <link rel="modulepreload" href="/blog/assets/chunks/mermaid.core.CXMlZU1F.js">
-    <link rel="modulepreload" href="/blog/assets/chunks/virtual_mermaid-config.SxEyMT6P.js">
-    <link rel="modulepreload" href="/blog/assets/posts_multi-tenant-authentication-data-model.md.GD5Z5kIq.lean.js">
-    <script id="check-dark-mode">(()=>{const e=localStorage.getItem("vitepress-theme-appearance")||"auto",a=window.matchMedia("(prefers-color-scheme: dark)").matches;(!e||e==="auto"?a:e==="dark")&&document.documentElement.classList.add("dark")})();</script>
-    <script id="check-mac-os">document.documentElement.classList.toggle("mac",/Mac|iPhone|iPod|iPad/i.test(navigator.platform));</script>
-  </head>
-  <body>
-    <div id="app"><!--[--><div class="Layout" data-v-090f7fb4><!--[--><!--]--><!--[--><span tabindex="-1" data-v-7a9d78e9></span><a href="#VPContent" class="VPSkipLink visually-hidden" data-v-7a9d78e9>Skip to content</a><!--]--><!----><header class="VPNav" data-v-090f7fb4 data-v-cde46c9b><div class="VPNavBar" data-v-cde46c9b data-v-71b9d225><div class="wrapper" data-v-71b9d225><div class="container" data-v-71b9d225><div class="title" data-v-71b9d225><div class="VPNavBarTitle" data-v-71b9d225 data-v-a65516c9><a class="title" href="/blog/" data-v-a65516c9><!--[--><!--[--><!--[--><!--[--><svg class="blog-brand-mark" viewBox="0 0 128 128" aria-hidden="true" focusable="false"><rect width="128" height="128" rx="28" fill="var(--primary)"></rect><path d="M33 92V36h33.5c11.2 0 18.5 6.4 18.5 15.2 0 6.2-3.5 10.9-9.5 13.1 7.2 1.9 11.8 7.2 11.8 14.2 0 8.7-7.1 13.5-18.8 13.5H33Zm14-33.1h17.1c4.7 0 7.5-2.5 7.5-6.2 0-3.8-2.8-6.1-7.5-6.1H47v12.3Zm0 22.5h19.5c4.9 0 7.7-2.4 7.7-6.4 0-4-2.8-6.6-7.8-6.6H47v13Z" fill="var(--primary-foreground)"></path></svg><!--]--><!--]--><!--]--><!--]--><!----><span data-v-a65516c9>Bang</span><!--[--><!--]--></a></div></div><div class="content" data-v-71b9d225><div class="content-body" data-v-71b9d225><!--[--><!--]--><div class="VPNavBarSearch search" data-v-71b9d225><!--[--><!----><div id="local-search"><button type="button" class="DocSearch DocSearch-Button" aria-label="Search"><span class="DocSearch-Button-Container"><span class="vp-icon DocSearch-Search-Icon"></span><span class="DocSearch-Button-Placeholder">Search</span></span><span class="DocSearch-Button-Keys"><kbd class="DocSearch-Button-Key"></kbd><kbd class="DocSearch-Button-Key">K</kbd></span></button></div><!--]--></div><nav aria-labelledby="main-nav-aria-label" class="VPNavBarMenu menu" data-v-71b9d225 data-v-7a2d40d8><span id="main-nav-aria-label" class="visually-hidden" data-v-7a2d40d8> Main Navigation </span><!--[--><!--[--><a class="VPLink link VPNavBarMenuLink" href="/blog/" tabindex="0" data-v-7a2d40d8 data-v-5452b9d9><!--[--><span data-v-5452b9d9>首页</span><!--]--></a><!--]--><!--[--><a class="VPLink link VPNavBarMenuLink" href="/blog/pages/ai" tabindex="0" data-v-7a2d40d8 data-v-5452b9d9><!--[--><span data-v-5452b9d9>AI</span><!--]--></a><!--]--><!--[--><a class="VPLink link VPNavBarMenuLink" href="/blog/pages/finance" tabindex="0" data-v-7a2d40d8 data-v-5452b9d9><!--[--><span data-v-5452b9d9>金融经济</span><!--]--></a><!--]--><!--[--><a class="VPLink link VPNavBarMenuLink" href="/blog/pages/quant" tabindex="0" data-v-7a2d40d8 data-v-5452b9d9><!--[--><span data-v-5452b9d9>量化交易</span><!--]--></a><!--]--><!--]--></nav><!----><div class="VPNavBarAppearance appearance" data-v-71b9d225 data-v-4773084b><button class="VPSwitch VPSwitchAppearance" type="button" role="switch" title aria-checked="false" data-v-4773084b data-v-eb5fca5a data-v-7042cd24><span class="check" data-v-7042cd24><span class="icon" data-v-7042cd24><!--[--><span class="vpi-sun sun" data-v-eb5fca5a></span><span class="vpi-moon moon" data-v-eb5fca5a></span><!--]--></span></span></button></div><div class="VPSocialLinks VPNavBarSocialLinks social-links" data-v-71b9d225 data-v-e6c212fc data-v-99672850><!--[--><a class="VPSocialLink no-icon" href="https://github.com/xunserver" aria-label="github" target="_blank" rel="noopener" data-v-99672850 data-v-8509ba84><span class="vpi-social-github"></span></a><!--]--></div><div class="VPFlyout VPNavBarExtra extra" data-v-71b9d225 data-v-eb82c98a data-v-62680944><button type="button" class="button" aria-haspopup="true" aria-expanded="false" aria-label="extra navigation" data-v-62680944><span class="vpi-more-horizontal icon" data-v-62680944></span></button><div class="menu" data-v-62680944><div class="VPMenu" data-v-62680944 data-v-08a0069b><!----><!--[--><!--[--><!----><div class="group" data-v-eb82c98a><div class="item appearance" data-v-eb82c98a><p class="label" data-v-eb82c98a>Appearance</p><div class="appearance-action" data-v-eb82c98a><button class="VPSwitch VPSwitchAppearance" type="button" role="switch" title aria-checked="false" data-v-eb82c98a data-v-eb5fca5a data-v-7042cd24><span class="check" data-v-7042cd24><span class="icon" data-v-7042cd24><!--[--><span class="vpi-sun sun" data-v-eb5fca5a></span><span class="vpi-moon moon" data-v-eb5fca5a></span><!--]--></span></span></button></div></div></div><div class="group" data-v-eb82c98a><div class="item social-links" data-v-eb82c98a><div class="VPSocialLinks social-links-list" data-v-eb82c98a data-v-99672850><!--[--><a class="VPSocialLink no-icon" href="https://github.com/xunserver" aria-label="github" target="_blank" rel="noopener" data-v-99672850 data-v-8509ba84><span class="vpi-social-github"></span></a><!--]--></div></div></div><!--]--><!--]--></div></div></div><!--[--><!--]--><button type="button" class="VPNavBarHamburger hamburger" aria-label="mobile navigation" aria-expanded="false" aria-controls="VPNavScreen" data-v-71b9d225 data-v-31bdc3bb><span class="container" data-v-31bdc3bb><span class="top" data-v-31bdc3bb></span><span class="middle" data-v-31bdc3bb></span><span class="bottom" data-v-31bdc3bb></span></span></button></div></div></div></div><div class="divider" data-v-71b9d225><div class="divider-line" data-v-71b9d225></div></div></div><!----></header><div class="VPLocalNav empty fixed" data-v-090f7fb4 data-v-fd07efb7><div class="container" data-v-fd07efb7><!----><div class="VPLocalNavOutlineDropdown" style="--vp-vh:0px;" data-v-fd07efb7 data-v-dbc75ead><button data-v-dbc75ead>Return to top</button><!----></div></div></div><!----><div class="VPContent" id="VPContent" data-v-090f7fb4 data-v-3a87da82><div class="VPDoc has-aside" data-v-3a87da82 data-v-2fe049d2><!--[--><!--]--><div class="container" data-v-2fe049d2><div class="aside" data-v-2fe049d2><div class="aside-curtain" data-v-2fe049d2></div><div class="aside-container" data-v-2fe049d2><div class="aside-content" data-v-2fe049d2><div class="VPDocAside" data-v-2fe049d2 data-v-b8d2f084><!--[--><!--]--><!--[--><!--]--><nav aria-labelledby="doc-outline-aria-label" class="VPDocAsideOutline" data-v-b8d2f084 data-v-cf58d911><div class="content" data-v-cf58d911><div class="outline-marker" data-v-cf58d911></div><div aria-level="2" class="outline-title" id="doc-outline-aria-label" role="heading" data-v-cf58d911>目录</div><ul class="VPDocOutlineItem root" data-v-cf58d911 data-v-e62634bb><!--[--><!--]--></ul></div></nav><!--[--><!--]--><div class="spacer" data-v-b8d2f084></div><!--[--><!--]--><!----><!--[--><!--]--><!--[--><!--]--></div></div></div></div><div class="content" data-v-2fe049d2><div class="content-container" data-v-2fe049d2><!--[--><!--[--><!--[--><section class="article-meta" aria-label="文章统计"><div class="article-meta__stats"><span class="article-meta__item"><span class="article-meta__label">字数</span><strong>3,018</strong></span><span class="article-meta__item"><span class="article-meta__label">阅读</span><strong aria-live="polite">—</strong><span>次</span></span></div></section><!--]--><!--]--><!--]--><main class="main" data-v-2fe049d2><div style="position:relative;" class="vp-doc _blog_posts_multi-tenant-authentication-data-model" data-v-2fe049d2><div><h1 id="多租户系统认证数据模型-user、identifier、credential、passkey-与-sso-的工程化设计" tabindex="-1">多租户系统认证数据模型：User、Identifier、Credential、Passkey 与 SSO 的工程化设计 <a class="header-anchor" href="#多租户系统认证数据模型-user、identifier、credential、passkey-与-sso-的工程化设计" aria-label="Permalink to &quot;多租户系统认证数据模型：User、Identifier、Credential、Passkey 与 SSO 的工程化设计&quot;">​</a></h1><blockquote><p>写作意图：这篇文章不以“当前只需要用户名密码”为目标，也不因为 ORM、数据库产品或查询复杂度而主动简化模型。目标是先把认证领域本身建模正确，让后续 Password、Passkey、WebAuthn、MFA、OIDC、LDAP、SSO、Session、Step-up Authentication 等能力都能在同一套边界内自然扩展。</p></blockquote><h2 id="一、先明确认证系统到底在建模什么" tabindex="-1">一、先明确认证系统到底在建模什么 <a class="header-anchor" href="#一、先明确认证系统到底在建模什么" aria-label="Permalink to &quot;一、先明确认证系统到底在建模什么&quot;">​</a></h2><p>认证系统最容易出现的问题，是把“用户”“登录名”“密码”“租户成员”“角色”“Session”全部压进一张 <code>users</code> 表。</p><p>从领域职责看，这些概念并不是一回事。</p><p>一个完整的认证模型至少要回答下面几个问题：</p><table tabindex="0"><thead><tr><th>概念</th><th>回答的问题</th></tr></thead><tbody><tr><td>User</td><td>系统中的稳定主体是谁</td></tr><tr><td>Login Identifier</td><td>通过什么标识找到这个 User</td></tr><tr><td>Credential / Authenticator</td><td>User 通过什么证明自己</td></tr><tr><td>External Identity</td><td>外部 IdP 认证后的主体如何映射到本地 User</td></tr><tr><td>Tenant Member</td><td>这个 User 在某个租户里是谁</td></tr><tr><td>Authentication Policy</td><td>这次认证需要满足哪些条件</td></tr><tr><td>Session</td><td>一次成功认证关系如何持续</td></tr></tbody></table><p>因此最核心的边界应该是：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>User</span></span>
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="从长期工程化视角设计多租户认证数据模型，拆分 User、Login Identifier、Credential、Password、Passkey、外部身份、认证策略与 Session，并明确共享主键继承、租户作用域和关键数据不变量。"><meta name="generator" content="Astro v6.4.8"><title>多租户系统认证数据模型：User、Identifier、Credential、Passkey 与 SSO 的工程化设计 · Bang</title><link rel="canonical" href="https://xunserver.cn/blog/posts/multi-tenant-authentication-data-model.html"><link rel="icon" type="image/svg+xml" href="/blog/logo.svg"><meta property="og:title" content="多租户系统认证数据模型：User、Identifier、Credential、Passkey 与 SSO 的工程化设计 · Bang"><meta property="og:description" content="从长期工程化视角设计多租户认证数据模型，拆分 User、Login Identifier、Credential、Password、Passkey、外部身份、认证策略与 Session，并明确共享主键继承、租户作用域和关键数据不变量。"><meta property="og:url" content="https://xunserver.cn/blog/posts/multi-tenant-authentication-data-model.html"><meta property="og:type" content="article"><meta property="og:locale" content="zh_CN"><script>
+      ;(() => {
+        let theme = 'system'
+        try {
+          theme = localStorage.getItem('blog-theme') || 'system'
+        } catch {}
+        document.documentElement.classList.toggle(
+          'dark',
+          theme === 'dark' ||
+            (theme !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches),
+        )
+      })()
+    </script><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"多租户系统认证数据模型：User、Identifier、Credential、Passkey 与 SSO 的工程化设计","description":"从长期工程化视角设计多租户认证数据模型，拆分 User、Login Identifier、Credential、Password、Passkey、外部身份、认证策略与 Session，并明确共享主键继承、租户作用域和关键数据不变量。","datePublished":"2026-08-25","author":{"@type":"Person","name":"xunserver"},"mainEntityOfPage":"https://xunserver.cn/blog/posts/multi-tenant-authentication-data-model","inLanguage":"zh-CN","wordCount":3018}</script><link rel="stylesheet" href="/blog/_astro/SiteLayout.0dQQMIla.css"></head> <body> <a class="skip-link" href="#main">跳至内容</a> <header class="site-header" data-pagefind-ignore> <div class="header-inner"> <a class="brand" href="/blog/" aria-label="Bang 首页"><span class="brand-mark" aria-hidden="true">B</span><span>Bang<span class="brand-period">.</span></span></a> <nav class="desktop-nav" aria-label="主导航"> <a href="/blog/"> 首页 </a><a href="/blog/pages/ai"> AI </a><a href="/blog/pages/finance"> 金融经济 </a><a href="/blog/pages/quant"> 量化交易 </a><a href="/blog/pages/archives"> 归档 </a> </nav> <style>astro-island,astro-slot,astro-static-slot{display:contents}</style><script>(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).load=e;window.dispatchEvent(new Event("astro:load"));})();</script><script>(()=>{var g=Object.defineProperty;var w=(c,s,d)=>s in c?g(c,s,{enumerable:!0,configurable:!0,writable:!0,value:d}):c[s]=d;var l=(c,s,d)=>w(c,typeof s!="symbol"?s+"":s,d);var E=new Set(["__proto__","constructor","prototype"]);{let c={0:t=>y(t),1:t=>d(t),2:t=>new RegExp(t),3:t=>new Date(t),4:t=>new Map(d(t)),5:t=>new Set(d(t)),6:t=>BigInt(t),7:t=>new URL(t),8:t=>new Uint8Array(t),9:t=>new Uint16Array(t),10:t=>new Uint32Array(t),11:t=>Number.POSITIVE_INFINITY*t},s=t=>{let[p,e]=t;return p in c?c[p](e):void 0},d=t=>t.map(s),y=t=>typeof t!="object"||t===null?t:Object.fromEntries(Object.entries(t).map(([p,e])=>[p,s(e)]));class f extends HTMLElement{constructor(){super(...arguments);l(this,"Component");l(this,"hydrator");l(this,"hydrate",async()=>{var b;if(!this.hydrator||!this.isConnected)return;let e=(b=this.parentElement)==null?void 0:b.closest("astro-island[ssr]");if(e){e.addEventListener("astro:hydrate",this.hydrate,{once:!0});return}let n=this.querySelectorAll("astro-slot"),r={},i=this.querySelectorAll("template[data-astro-template]");for(let o of i){let a=o.closest(this.tagName);a!=null&&a.isSameNode(this)&&(r[o.getAttribute("data-astro-template")||"default"]=o.innerHTML,o.remove())}for(let o of n){let a=o.closest(this.tagName);a!=null&&a.isSameNode(this)&&(r[o.getAttribute("name")||"default"]=o.innerHTML)}let u;try{u=this.hasAttribute("props")?y(JSON.parse(this.getAttribute("props"))):{}}catch(o){let a=this.getAttribute("component-url")||"<unknown>",v=this.getAttribute("component-export");throw v&&(a+=` (export ${v})`),console.error(`[hydrate] Error parsing props for component ${a}`,this.getAttribute("props"),o),o}let h;await this.hydrator(this)(this.Component,u,r,{client:this.getAttribute("client")}),this.removeAttribute("ssr"),this.dispatchEvent(new CustomEvent("astro:hydrate"))});l(this,"unmount",()=>{this.isConnected||this.dispatchEvent(new CustomEvent("astro:unmount"))})}disconnectedCallback(){document.removeEventListener("astro:after-swap",this.unmount),document.addEventListener("astro:after-swap",this.unmount,{once:!0})}connectedCallback(){if(!this.hasAttribute("await-children")||document.readyState==="interactive"||document.readyState==="complete")this.childrenConnectedCallback();else{let e=()=>{document.removeEventListener("DOMContentLoaded",e),n.disconnect(),this.childrenConnectedCallback()},n=new MutationObserver(()=>{var r;((r=this.lastChild)==null?void 0:r.nodeType)===Node.COMMENT_NODE&&this.lastChild.nodeValue==="astro:end"&&(this.lastChild.remove(),e())});n.observe(this,{childList:!0}),document.addEventListener("DOMContentLoaded",e)}}async childrenConnectedCallback(){let e=this.getAttribute("before-hydration-url");e&&await import(e),this.start()}getRetryImportUrl(e){let n=new URL(e,document.baseURI),r=`astro-retry=${Date.now()}`,i=n.hash.replace(/^#/,"");return n.hash=i?`${i}&${r}`:r,n.toString()}async importWithRetry(e){try{return await import(e)}catch(n){return await new Promise(r=>setTimeout(r,1e3)),import(this.getRetryImportUrl(e))}}handleHydrationError(e){let n=this.getAttribute("component-url"),r=new CustomEvent("astro:hydration-error",{cancelable:!0,bubbles:!0,composed:!0,detail:{error:e,componentUrl:n}});this.dispatchEvent(r)&&console.error(`[astro-island] Error hydrating ${n}`,e)}async start(){let e=JSON.parse(this.getAttribute("opts")),n=this.getAttribute("client");if(Astro[n]===void 0){window.addEventListener(`astro:${n}`,()=>this.start(),{once:!0});return}try{await Astro[n](async()=>{let r=this.getAttribute("renderer-url");try{let[i,{default:u}]=await Promise.all([this.importWithRetry(this.getAttribute("component-url")),r?this.importWithRetry(r):Promise.resolve({default:()=>()=>{}})]),h=this.getAttribute("component-export")||"default";if(h.includes(".")){this.Component=i;for(let m of h.split(".")){if(E.has(m)||!this.Component||typeof this.Component!="object"&&typeof this.Component!="function"||!Object.hasOwn(this.Component,m))throw new Error(`Invalid component export path: ${h}`);this.Component=this.Component[m]}}else{if(E.has(h))throw new Error(`Invalid component export path: ${h}`);this.Component=i[h]}return this.hydrator=u,this.hydrate}catch(i){return this.handleHydrationError(i),()=>{}}},e,this)}catch(r){this.handleHydrationError(r)}}attributeChangedCallback(){this.hydrate()}}l(f,"observedAttributes",["props"]),customElements.get("astro-island")||customElements.define("astro-island",f)}})();</script><astro-island uid="PCQHX" prefix="r1" component-url="/blog/_astro/HeaderControls.knWzQHsa.js" component-export="default" renderer-url="/blog/_astro/client.xM_7Onpa.js" props="{}" ssr client="load" opts="{&quot;name&quot;:&quot;HeaderControls&quot;,&quot;value&quot;:true}" await-children><div class="header-controls" data-ready="false"><button type="button" tabindex="0" data-slot="dialog-trigger" aria-label="搜索文章" data-base-ui-click-trigger="" id="base-ui-_r1R_1t_" aria-haspopup="dialog" aria-expanded="false" class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 size-8"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search" aria-hidden="true"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg></button><button type="button" tabindex="0" id="base-ui-_r1R_2_" role="combobox" aria-expanded="false" aria-haspopup="listbox" data-slot="select-trigger" data-size="default" aria-label="外观主题" class="flex w-fit items-center justify-between gap-1.5 rounded-lg border border-input bg-transparent py-2 pr-2 pl-2.5 text-sm whitespace-nowrap transition-colors outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 data-placeholder:text-muted-foreground data-[size=default]:h-8 data-[size=sm]:h-7 data-[size=sm]:rounded-[min(var(--radius-md),10px)] *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 dark:bg-input/30 dark:hover:bg-input/50 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4"><span aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-monitor" aria-hidden="true"><rect width="20" height="14" x="2" y="3" rx="2"></rect><line x1="8" x2="16" y1="21" y2="21"></line><line x1="12" x2="12" y1="17" y2="21"></line></svg></span><span data-slot="select-value" class="flex flex-1 text-left sr-only">跟随系统</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down pointer-events-none size-4 text-muted-foreground" aria-hidden="true"><path d="m6 9 6 6 6-6"></path>▼</svg></button><input id="base-ui-_r1R_2_-hidden-input" style="clip-path:inset(50%);overflow:hidden;white-space:nowrap;border:0;padding:0;width:1px;height:1px;margin:0;position:fixed;top:0;left:0" tabindex="-1" aria-hidden="true" value="system"/><div class="mobile-menu"><button type="button" tabindex="0" data-slot="sheet-trigger" aria-label="打开导航" data-base-ui-click-trigger="" id="base-ui-_r1R_1v_" aria-haspopup="dialog" aria-expanded="false" class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 size-8"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu" aria-hidden="true"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg></button></div></div><!--astro:end--></astro-island> </div> <noscript><nav class="fallback-nav" aria-label="移动导航"> <a href="/blog/">首页</a><a href="/blog/pages/ai">AI</a><a href="/blog/pages/finance">金融经济</a><a href="/blog/pages/quant">量化交易</a><a href="/blog/pages/archives">归档</a> </nav></noscript> </header> <main id="main" class="site-main">  <article class="article-layout" data-pagefind-body> <header class="article-heading"> <a class="eyebrow" href="/blog/pages/archives">← 所有文章</a><div class="article-meta"> <time datetime="2026-08-25">2026-08-25</time><a href="/blog/pages/category">技术</a><span>3,018 字 · 11 分钟阅读</span> </div><h1 data-pagefind-meta="title">多租户系统认证数据模型：User、Identifier、Credential、Passkey 与 SSO 的工程化设计</h1><p class="article-description"> 从长期工程化视角设计多租户认证数据模型，拆分 User、Login Identifier、Credential、Password、Passkey、外部身份、认证策略与 Session，并明确共享主键继承、租户作用域和关键数据不变量。 </p><div class="article-tags" data-pagefind-ignore> <a href="/blog/pages/tags#tag-hlm-o2n-jef"># 多租户</a><a href="/blog/pages/tags#tag-1t-39-38-2w-2t-32-38-2x-2r-2p-38-2x-33-32"># Authentication</a><a href="/blog/pages/tags#tag-k1c-jn2-kyp-haj"># 数据模型</a><a href="/blog/pages/tags#tag-1v-36-2t-2s-2t-32-38-2x-2p-30"># Credential</a><a href="/blog/pages/tags#tag-28-2p-37-37-2z-2t-3d"># Passkey</a><a href="/blog/pages/tags#tag-2f-2t-2q-1t-39-38-2w-32"># WebAuthn</a><a href="/blog/pages/tags#tag-2b-2b-27"># SSO</a> </div> </header> <aside class="article-toc" data-pagefind-ignore aria-label="文章目录"><div class="toc-inner"><p>本文目录</p><nav><a href="#一、先明确认证系统到底在建模什么" style="--depth:0">一、先明确认证系统到底在建模什么</a><a href="#二、user-稳定的认证主体" style="--depth:0">二、User：稳定的认证主体</a><a href="#三、login-identifier-负责-找到-user" style="--depth:0">三、Login Identifier：负责“找到 User”</a><a href="#identifier-为什么必须和-password-分开" style="--depth:1">Identifier 为什么必须和 Password 分开</a><a href="#四、identifier-的租户作用域" style="--depth:0">四、Identifier 的租户作用域</a><a href="#全局-identifier" style="--depth:1">全局 Identifier</a><a href="#tenant-scoped-identifier" style="--depth:1">Tenant Scoped Identifier</a><a href="#五、credential-统一的认证器实体" style="--depth:0">五、Credential：统一的认证器实体</a><a href="#六、为什么-credential-要使用父表-类型子表" style="--depth:0">六、为什么 Credential 要使用父表 + 类型子表</a><a href="#七、usercredential-与-passwordcredential-如何映射" style="--depth:0">七、UserCredential 与 PasswordCredential 如何映射</a><a href="#八、password-credential-的完整模型" style="--depth:0">八、Password Credential 的完整模型</a><a href="#九、passkey-webauthn-credential" style="--depth:0">九、Passkey / WebAuthn Credential</a><a href="#十、mfa-不应该再建一个平行的-身份体系" style="--depth:0">十、MFA 不应该再建一个平行的“身份体系”</a><a href="#十一、authentication-policy-必须与-credential-分离" style="--depth:0">十一、Authentication Policy 必须与 Credential 分离</a><a href="#十二、external-identity-oidc-sso-不等于本地-credential" style="--depth:0">十二、External Identity：OIDC / SSO 不等于本地 Credential</a><a href="#十三、多租户下认证和-tenantmember-的边界" style="--depth:0">十三、多租户下认证和 TenantMember 的边界</a><a href="#十四、tenant-如何参与-authentication" style="--depth:0">十四、Tenant 如何参与 Authentication</a><a href="#十五、session-认证成功后的独立实体" style="--depth:0">十五、Session：认证成功后的独立实体</a><a href="#十六、临时认证流程不要污染-credential-主表" style="--depth:0">十六、临时认证流程不要污染 Credential 主表</a><a href="#十七、认证尝试与安全审计" style="--depth:0">十七、认证尝试与安全审计</a><a href="#十八、核心数据库不变量" style="--depth:0">十八、核心数据库不变量</a><a href="#_1-identifier-唯一性" style="--depth:1">1. Identifier 唯一性</a><a href="#_2-external-identity-唯一性" style="--depth:1">2. External Identity 唯一性</a><a href="#_3-password-数量约束" style="--depth:1">3. Password 数量约束</a><a href="#_4-credential-子类型一致性" style="--depth:1">4. Credential 子类型一致性</a><a href="#_5-credential-子表不能脱离父表存在" style="--depth:1">5. Credential 子表不能脱离父表存在</a><a href="#_6-credential-创建必须原子化" style="--depth:1">6. Credential 创建必须原子化</a><a href="#十九、推荐的最终关系模型" style="--depth:0">十九、推荐的最终关系模型</a><a href="#二十、最终推荐表清单" style="--depth:0">二十、最终推荐表清单</a><a href="#principal" style="--depth:1">Principal</a><a href="#identifier" style="--depth:1">Identifier</a><a href="#credential" style="--depth:1">Credential</a><a href="#federation-sso" style="--depth:1">Federation / SSO</a><a href="#tenant-authentication" style="--depth:1">Tenant Authentication</a><a href="#session" style="--depth:1">Session</a><a href="#temporary-authentication-state" style="--depth:1">Temporary Authentication State</a><a href="#audit-security" style="--depth:1">Audit / Security</a><a href="#authorization-边界" style="--depth:1">Authorization 边界</a><a href="#二十一、正常认证路径" style="--depth:0">二十一、正常认证路径</a><a href="#password-登录" style="--depth:1">Password 登录</a><a href="#passkey-登录" style="--depth:1">Passkey 登录</a><a href="#oidc-sso-登录" style="--depth:1">OIDC / SSO 登录</a><a href="#二十二、不要让-orm-或数据库产品反向决定领域模型" style="--depth:0">二十二、不要让 ORM 或数据库产品反向决定领域模型</a><a href="#总结" style="--depth:0">总结</a></nav></div></aside><details class="mobile-toc" data-pagefind-ignore><summary>本文目录</summary><nav><a href="#一、先明确认证系统到底在建模什么" style="--depth:0">一、先明确认证系统到底在建模什么</a><a href="#二、user-稳定的认证主体" style="--depth:0">二、User：稳定的认证主体</a><a href="#三、login-identifier-负责-找到-user" style="--depth:0">三、Login Identifier：负责“找到 User”</a><a href="#identifier-为什么必须和-password-分开" style="--depth:1">Identifier 为什么必须和 Password 分开</a><a href="#四、identifier-的租户作用域" style="--depth:0">四、Identifier 的租户作用域</a><a href="#全局-identifier" style="--depth:1">全局 Identifier</a><a href="#tenant-scoped-identifier" style="--depth:1">Tenant Scoped Identifier</a><a href="#五、credential-统一的认证器实体" style="--depth:0">五、Credential：统一的认证器实体</a><a href="#六、为什么-credential-要使用父表-类型子表" style="--depth:0">六、为什么 Credential 要使用父表 + 类型子表</a><a href="#七、usercredential-与-passwordcredential-如何映射" style="--depth:0">七、UserCredential 与 PasswordCredential 如何映射</a><a href="#八、password-credential-的完整模型" style="--depth:0">八、Password Credential 的完整模型</a><a href="#九、passkey-webauthn-credential" style="--depth:0">九、Passkey / WebAuthn Credential</a><a href="#十、mfa-不应该再建一个平行的-身份体系" style="--depth:0">十、MFA 不应该再建一个平行的“身份体系”</a><a href="#十一、authentication-policy-必须与-credential-分离" style="--depth:0">十一、Authentication Policy 必须与 Credential 分离</a><a href="#十二、external-identity-oidc-sso-不等于本地-credential" style="--depth:0">十二、External Identity：OIDC / SSO 不等于本地 Credential</a><a href="#十三、多租户下认证和-tenantmember-的边界" style="--depth:0">十三、多租户下认证和 TenantMember 的边界</a><a href="#十四、tenant-如何参与-authentication" style="--depth:0">十四、Tenant 如何参与 Authentication</a><a href="#十五、session-认证成功后的独立实体" style="--depth:0">十五、Session：认证成功后的独立实体</a><a href="#十六、临时认证流程不要污染-credential-主表" style="--depth:0">十六、临时认证流程不要污染 Credential 主表</a><a href="#十七、认证尝试与安全审计" style="--depth:0">十七、认证尝试与安全审计</a><a href="#十八、核心数据库不变量" style="--depth:0">十八、核心数据库不变量</a><a href="#_1-identifier-唯一性" style="--depth:1">1. Identifier 唯一性</a><a href="#_2-external-identity-唯一性" style="--depth:1">2. External Identity 唯一性</a><a href="#_3-password-数量约束" style="--depth:1">3. Password 数量约束</a><a href="#_4-credential-子类型一致性" style="--depth:1">4. Credential 子类型一致性</a><a href="#_5-credential-子表不能脱离父表存在" style="--depth:1">5. Credential 子表不能脱离父表存在</a><a href="#_6-credential-创建必须原子化" style="--depth:1">6. Credential 创建必须原子化</a><a href="#十九、推荐的最终关系模型" style="--depth:0">十九、推荐的最终关系模型</a><a href="#二十、最终推荐表清单" style="--depth:0">二十、最终推荐表清单</a><a href="#principal" style="--depth:1">Principal</a><a href="#identifier" style="--depth:1">Identifier</a><a href="#credential" style="--depth:1">Credential</a><a href="#federation-sso" style="--depth:1">Federation / SSO</a><a href="#tenant-authentication" style="--depth:1">Tenant Authentication</a><a href="#session" style="--depth:1">Session</a><a href="#temporary-authentication-state" style="--depth:1">Temporary Authentication State</a><a href="#audit-security" style="--depth:1">Audit / Security</a><a href="#authorization-边界" style="--depth:1">Authorization 边界</a><a href="#二十一、正常认证路径" style="--depth:0">二十一、正常认证路径</a><a href="#password-登录" style="--depth:1">Password 登录</a><a href="#passkey-登录" style="--depth:1">Passkey 登录</a><a href="#oidc-sso-登录" style="--depth:1">OIDC / SSO 登录</a><a href="#二十二、不要让-orm-或数据库产品反向决定领域模型" style="--depth:0">二十二、不要让 ORM 或数据库产品反向决定领域模型</a><a href="#总结" style="--depth:0">总结</a></nav></details> <div class="prose article-body"><span id="多租户系统认证数据模型-user、identifier、credential、passkey-与-sso-的工程化设计" class="legacy-title-anchor" aria-hidden="true"></span>
+<blockquote>
+<p>写作意图：这篇文章不以“当前只需要用户名密码”为目标，也不因为 ORM、数据库产品或查询复杂度而主动简化模型。目标是先把认证领域本身建模正确，让后续 Password、Passkey、WebAuthn、MFA、OIDC、LDAP、SSO、Session、Step-up Authentication 等能力都能在同一套边界内自然扩展。</p>
+</blockquote>
+<h2 id="一、先明确认证系统到底在建模什么">一、先明确认证系统到底在建模什么</h2>
+<p>认证系统最容易出现的问题，是把“用户”“登录名”“密码”“租户成员”“角色”“Session”全部压进一张 <code>users</code> 表。</p>
+<p>从领域职责看，这些概念并不是一回事。</p>
+<p>一个完整的认证模型至少要回答下面几个问题：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>概念</th><th>回答的问题</th></tr></thead><tbody><tr><td>User</td><td>系统中的稳定主体是谁</td></tr><tr><td>Login Identifier</td><td>通过什么标识找到这个 User</td></tr><tr><td>Credential / Authenticator</td><td>User 通过什么证明自己</td></tr><tr><td>External Identity</td><td>外部 IdP 认证后的主体如何映射到本地 User</td></tr><tr><td>Tenant Member</td><td>这个 User 在某个租户里是谁</td></tr><tr><td>Authentication Policy</td><td>这次认证需要满足哪些条件</td></tr><tr><td>Session</td><td>一次成功认证关系如何持续</td></tr></tbody></table>
+<p>因此最核心的边界应该是：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>User</span></span>
 <span class="line"><span>├── Login Identifier</span></span>
 <span class="line"><span>├── Credential</span></span>
 <span class="line"><span>├── External Identity</span></span>
@@ -28,20 +65,40 @@
 <span class="line"><span></span></span>
 <span class="line"><span>User</span></span>
 <span class="line"><span>└── Tenant Member</span></span>
-<span class="line"><span>    └── Role / Permission</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><p>Authentication 解决“你是谁、你如何证明”；Authorization 解决“你在当前 Tenant 里能做什么”。二者不能混成同一个模型。</p><h2 id="二、user-稳定的认证主体" tabindex="-1">二、User：稳定的认证主体 <a class="header-anchor" href="#二、user-稳定的认证主体" aria-label="Permalink to &quot;二、User：稳定的认证主体&quot;">​</a></h2><p><code>users</code> 应该代表系统中的全局主体，而不是“用户名密码记录”。</p><p>推荐模型：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>users</span></span>
+<span class="line"><span>    └── Role / Permission</span></span></code></pre>
+<p>Authentication 解决“你是谁、你如何证明”；Authorization 解决“你在当前 Tenant 里能做什么”。二者不能混成同一个模型。</p>
+<h2 id="二、user-稳定的认证主体">二、User：稳定的认证主体</h2>
+<p><code>users</code> 应该代表系统中的全局主体，而不是“用户名密码记录”。</p>
+<p>推荐模型：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>users</span></span>
 <span class="line"><span>────────────────────────────</span></span>
 <span class="line"><span>id</span></span>
 <span class="line"><span>status</span></span>
 <span class="line"><span>created_at</span></span>
 <span class="line"><span>updated_at</span></span>
-<span class="line"><span>deleted_at</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p>它应该尽量稳定，不因为用户修改邮箱、手机号、用户名、密码或绑定新的 SSO 而变化。</p><p>因此不要把下面这些字段天然视为 User 本身：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>email</span></span>
+<span class="line"><span>deleted_at</span></span></code></pre>
+<p>它应该尽量稳定，不因为用户修改邮箱、手机号、用户名、密码或绑定新的 SSO 而变化。</p>
+<p>因此不要把下面这些字段天然视为 User 本身：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>email</span></span>
 <span class="line"><span>phone</span></span>
 <span class="line"><span>username</span></span>
 <span class="line"><span>password_hash</span></span>
-<span class="line"><span>provider_subject</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>这些都属于 User 的认证属性，而不是 User 的主身份。</p><p>在多租户系统中，User 通常是全局对象：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>User U001</span></span>
+<span class="line"><span>provider_subject</span></span></code></pre>
+<p>这些都属于 User 的认证属性，而不是 User 的主身份。</p>
+<p>在多租户系统中，User 通常是全局对象：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>User U001</span></span>
 <span class="line"><span>├── Tenant A / Member M001</span></span>
 <span class="line"><span>├── Tenant B / Member M002</span></span>
-<span class="line"><span>└── Tenant C / Member M003</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>这样 MFA、Passkey、Session、账号冻结、外部身份绑定都可以以 User 为统一主体管理，而租户内角色和组织关系则由 <code>tenant_members</code> 管理。</p><h2 id="三、login-identifier-负责-找到-user" tabindex="-1">三、Login Identifier：负责“找到 User” <a class="header-anchor" href="#三、login-identifier-负责-找到-user" aria-label="Permalink to &quot;三、Login Identifier：负责“找到 User”&quot;">​</a></h2><p>用户名、邮箱、手机号的本质都是 Identifier。</p><p>它们的职责只有一个：</p><blockquote><p>根据用户输入的登录标识，解析出一个稳定的 <code>user_id</code>。</p></blockquote><p>推荐表：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>user_login_identifiers</span></span>
+<span class="line"><span>└── Tenant C / Member M003</span></span></code></pre>
+<p>这样 MFA、Passkey、Session、账号冻结、外部身份绑定都可以以 User 为统一主体管理，而租户内角色和组织关系则由 <code>tenant_members</code> 管理。</p>
+<h2 id="三、login-identifier-负责-找到-user">三、Login Identifier：负责“找到 User”</h2>
+<p>用户名、邮箱、手机号的本质都是 Identifier。</p>
+<p>它们的职责只有一个：</p>
+<blockquote>
+<p>根据用户输入的登录标识，解析出一个稳定的 <code>user_id</code>。</p>
+</blockquote>
+<p>推荐表：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>user_login_identifiers</span></span>
 <span class="line"><span>────────────────────────────</span></span>
 <span class="line"><span>id</span></span>
 <span class="line"><span>user_id</span></span>
@@ -56,31 +113,73 @@
 <span class="line"><span>is_primary</span></span>
 <span class="line"><span>verified_at</span></span>
 <span class="line"><span>created_at</span></span>
-<span class="line"><span>updated_at</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><p>常见 <code>type</code>：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>username</span></span>
+<span class="line"><span>updated_at</span></span></code></pre>
+<p>常见 <code>type</code>：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>username</span></span>
 <span class="line"><span>email</span></span>
-<span class="line"><span>phone</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>例如：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>User U001</span></span>
+<span class="line"><span>phone</span></span></code></pre>
+<p>例如：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>User U001</span></span>
 <span class="line"><span>├── username = xun</span></span>
 <span class="line"><span>├── email    = xun@example.com</span></span>
-<span class="line"><span>└── phone    = +8613800138000</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>三个 Identifier 都指向同一个 User：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>xun ------------------┐</span></span>
-<span class="line"><span>xun@example.com ------┼──&gt; User U001</span></span>
-<span class="line"><span>+8613800138000 --------┘</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><h3 id="identifier-为什么必须和-password-分开" tabindex="-1">Identifier 为什么必须和 Password 分开 <a class="header-anchor" href="#identifier-为什么必须和-password-分开" aria-label="Permalink to &quot;Identifier 为什么必须和 Password 分开&quot;">​</a></h3><p>假设系统允许：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>username + password</span></span>
+<span class="line"><span>└── phone    = +8613800138000</span></span></code></pre>
+<p>三个 Identifier 都指向同一个 User：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>xun ------------------┐</span></span>
+<span class="line"><span>xun@example.com ------┼──> User U001</span></span>
+<span class="line"><span>+8613800138000 --------┘</span></span></code></pre>
+<h3 id="identifier-为什么必须和-password-分开">Identifier 为什么必须和 Password 分开</h3>
+<p>假设系统允许：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>username + password</span></span>
 <span class="line"><span>email    + password</span></span>
-<span class="line"><span>phone    + password</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>这并不意味着存在三套密码。</p><p>真实模型通常是：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>3 个 Identifier</span></span>
+<span class="line"><span>phone    + password</span></span></code></pre>
+<p>这并不意味着存在三套密码。</p>
+<p>真实模型通常是：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>3 个 Identifier</span></span>
 <span class="line"><span>      ↓</span></span>
 <span class="line"><span>同一个 User</span></span>
 <span class="line"><span>      ↓</span></span>
-<span class="line"><span>1 个 Password Credential</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>如果把 Identifier 与密码 Hash 混在同一行，就会变成：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>xun               -&gt; hash ABC</span></span>
-<span class="line"><span>xun@example.com   -&gt; hash ABC</span></span>
-<span class="line"><span>13800138000       -&gt; hash ABC</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>修改密码时必须同步修改三行，这会人为制造不变量和安全风险。</p><p>因此更合理的职责分离是：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>Identifier</span></span>
+<span class="line"><span>1 个 Password Credential</span></span></code></pre>
+<p>如果把 Identifier 与密码 Hash 混在同一行，就会变成：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>xun               -> hash ABC</span></span>
+<span class="line"><span>xun@example.com   -> hash ABC</span></span>
+<span class="line"><span>13800138000       -> hash ABC</span></span></code></pre>
+<p>修改密码时必须同步修改三行，这会人为制造不变量和安全风险。</p>
+<p>因此更合理的职责分离是：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>Identifier</span></span>
 <span class="line"><span>    ↓</span></span>
 <span class="line"><span>Resolve User</span></span>
 <span class="line"><span>    ↓</span></span>
 <span class="line"><span>Credential</span></span>
 <span class="line"><span>    ↓</span></span>
-<span class="line"><span>Verify</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h2 id="四、identifier-的租户作用域" tabindex="-1">四、Identifier 的租户作用域 <a class="header-anchor" href="#四、identifier-的租户作用域" aria-label="Permalink to &quot;四、Identifier 的租户作用域&quot;">​</a></h2><p>多租户系统并不只有一种 Identifier 唯一性模型。</p><h3 id="全局-identifier" tabindex="-1">全局 Identifier <a class="header-anchor" href="#全局-identifier" aria-label="Permalink to &quot;全局 Identifier&quot;">​</a></h3><p>例如：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>email = xun@example.com</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br></div></div><p>全平台唯一：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>UNIQUE(type, normalized_value)</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br></div></div><p>适用于典型 SaaS：用户先完成平台级登录，再选择或切换 Tenant。</p><h3 id="tenant-scoped-identifier" tabindex="-1">Tenant Scoped Identifier <a class="header-anchor" href="#tenant-scoped-identifier" aria-label="Permalink to &quot;Tenant Scoped Identifier&quot;">​</a></h3><p>例如两个企业都允许存在：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>Tenant A / username = admin</span></span>
-<span class="line"><span>Tenant B / username = admin</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><p>此时唯一约束应该是：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>UNIQUE(tenant_id, type, normalized_value)</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br></div></div><p>因此最完整的模型应该允许 Identifier 显式表达 scope，而不是把所有 Identifier 强行设计成全局唯一或租户内唯一。</p><p>一个常见实现是：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>scope_type = global | tenant</span></span>
-<span class="line"><span>tenant_id  = nullable</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><p>并通过数据库约束保证：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>scope_type = global  -&gt; tenant_id IS NULL</span></span>
-<span class="line"><span>scope_type = tenant  -&gt; tenant_id IS NOT NULL</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h2 id="五、credential-统一的认证器实体" tabindex="-1">五、Credential：统一的认证器实体 <a class="header-anchor" href="#五、credential-统一的认证器实体" aria-label="Permalink to &quot;五、Credential：统一的认证器实体&quot;">​</a></h2><p>Credential 解决的问题是：</p><blockquote><p>User 有哪些可以用于证明自己身份的认证器？</p></blockquote><p>推荐父表：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>user_credentials</span></span>
+<span class="line"><span>Verify</span></span></code></pre>
+<h2 id="四、identifier-的租户作用域">四、Identifier 的租户作用域</h2>
+<p>多租户系统并不只有一种 Identifier 唯一性模型。</p>
+<h3 id="全局-identifier">全局 Identifier</h3>
+<p>例如：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>email = xun@example.com</span></span></code></pre>
+<p>全平台唯一：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>UNIQUE(type, normalized_value)</span></span></code></pre>
+<p>适用于典型 SaaS：用户先完成平台级登录，再选择或切换 Tenant。</p>
+<h3 id="tenant-scoped-identifier">Tenant Scoped Identifier</h3>
+<p>例如两个企业都允许存在：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>Tenant A / username = admin</span></span>
+<span class="line"><span>Tenant B / username = admin</span></span></code></pre>
+<p>此时唯一约束应该是：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>UNIQUE(tenant_id, type, normalized_value)</span></span></code></pre>
+<p>因此最完整的模型应该允许 Identifier 显式表达 scope，而不是把所有 Identifier 强行设计成全局唯一或租户内唯一。</p>
+<p>一个常见实现是：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>scope_type = global | tenant</span></span>
+<span class="line"><span>tenant_id  = nullable</span></span></code></pre>
+<p>并通过数据库约束保证：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>scope_type = global  -> tenant_id IS NULL</span></span>
+<span class="line"><span>scope_type = tenant  -> tenant_id IS NOT NULL</span></span></code></pre>
+<h2 id="五、credential-统一的认证器实体">五、Credential：统一的认证器实体</h2>
+<p>Credential 解决的问题是：</p>
+<blockquote>
+<p>User 有哪些可以用于证明自己身份的认证器？</p>
+</blockquote>
+<p>推荐父表：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>user_credentials</span></span>
 <span class="line"><span>────────────────────────────</span></span>
 <span class="line"><span>id</span></span>
 <span class="line"><span>user_id</span></span>
@@ -93,64 +192,123 @@
 <span class="line"><span>verified_at</span></span>
 <span class="line"><span>last_used_at</span></span>
 <span class="line"><span>expires_at</span></span>
-<span class="line"><span>revoked_at</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><p>常见 <code>type</code>：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>password</span></span>
+<span class="line"><span>revoked_at</span></span></code></pre>
+<p>常见 <code>type</code>：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>password</span></span>
 <span class="line"><span>passkey</span></span>
 <span class="line"><span>totp</span></span>
 <span class="line"><span>certificate</span></span>
-<span class="line"><span>recovery_code</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>这一层只保存所有 Credential 的公共属性：</p><ul><li>属于哪个 User；</li><li>Credential 类型；</li><li>当前状态；</li><li>创建、验证、最近使用时间；</li><li>是否已撤销或过期；</li><li>用户可读标签，例如“MacBook Touch ID”。</li></ul><p>具体认证类型的数据不应该全部塞进一张大宽表。</p><h2 id="六、为什么-credential-要使用父表-类型子表" tabindex="-1">六、为什么 Credential 要使用父表 + 类型子表 <a class="header-anchor" href="#六、为什么-credential-要使用父表-类型子表" aria-label="Permalink to &quot;六、为什么 Credential 要使用父表 + 类型子表&quot;">​</a></h2><p>Password 和 Passkey 的数据结构完全不同。</p><p>Password 需要：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>password_hash</span></span>
+<span class="line"><span>recovery_code</span></span></code></pre>
+<p>这一层只保存所有 Credential 的公共属性：</p>
+<ul>
+<li>属于哪个 User；</li>
+<li>Credential 类型；</li>
+<li>当前状态；</li>
+<li>创建、验证、最近使用时间；</li>
+<li>是否已撤销或过期；</li>
+<li>用户可读标签，例如“MacBook Touch ID”。</li>
+</ul>
+<p>具体认证类型的数据不应该全部塞进一张大宽表。</p>
+<h2 id="六、为什么-credential-要使用父表-类型子表">六、为什么 Credential 要使用父表 + 类型子表</h2>
+<p>Password 和 Passkey 的数据结构完全不同。</p>
+<p>Password 需要：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>password_hash</span></span>
 <span class="line"><span>password_version</span></span>
-<span class="line"><span>changed_at</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>Passkey / WebAuthn 需要：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>external_credential_id</span></span>
+<span class="line"><span>changed_at</span></span></code></pre>
+<p>Passkey / WebAuthn 需要：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>external_credential_id</span></span>
 <span class="line"><span>public_key</span></span>
 <span class="line"><span>sign_count</span></span>
 <span class="line"><span>aaguid</span></span>
 <span class="line"><span>transports</span></span>
 <span class="line"><span>backup_eligible</span></span>
-<span class="line"><span>backup_state</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p>如果把所有字段都塞到 <code>user_credentials</code>：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>password_hash nullable</span></span>
+<span class="line"><span>backup_state</span></span></code></pre>
+<p>如果把所有字段都塞到 <code>user_credentials</code>：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>password_hash nullable</span></span>
 <span class="line"><span>public_key nullable</span></span>
 <span class="line"><span>sign_count nullable</span></span>
 <span class="line"><span>aaguid nullable</span></span>
-<span class="line"><span>...</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>很快就会形成大量互斥 Nullable 字段，而且数据库无法清晰表达某种 Credential 必须拥有哪些字段。</p><p>更完整的关系模型应该采用 Class Table Inheritance / Table-per-Type：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>user_credentials</span></span>
+<span class="line"><span>...</span></span></code></pre>
+<p>很快就会形成大量互斥 Nullable 字段，而且数据库无法清晰表达某种 Credential 必须拥有哪些字段。</p>
+<p>更完整的关系模型应该采用 Class Table Inheritance / Table-per-Type：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>user_credentials</span></span>
 <span class="line"><span>        │</span></span>
 <span class="line"><span>        ├── password_credentials</span></span>
 <span class="line"><span>        ├── passkey_credentials</span></span>
 <span class="line"><span>        ├── totp_credentials</span></span>
-<span class="line"><span>        └── certificate_credentials</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>父表表示统一 Credential，子表保存具体类型特有字段。</p><h2 id="七、usercredential-与-passwordcredential-如何映射" tabindex="-1">七、UserCredential 与 PasswordCredential 如何映射 <a class="header-anchor" href="#七、usercredential-与-passwordcredential-如何映射" aria-label="Permalink to &quot;七、UserCredential 与 PasswordCredential 如何映射&quot;">​</a></h2><p>核心采用 Shared Primary Key，也就是共享主键的一对一关系。</p><p>父表：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>user_credentials</span></span>
+<span class="line"><span>        └── certificate_credentials</span></span></code></pre>
+<p>父表表示统一 Credential，子表保存具体类型特有字段。</p>
+<h2 id="七、usercredential-与-passwordcredential-如何映射">七、UserCredential 与 PasswordCredential 如何映射</h2>
+<p>核心采用 Shared Primary Key，也就是共享主键的一对一关系。</p>
+<p>父表：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>user_credentials</span></span>
 <span class="line"><span>────────────────────────────</span></span>
 <span class="line"><span>id              PK</span></span>
 <span class="line"><span>user_id         FK</span></span>
 <span class="line"><span>type</span></span>
 <span class="line"><span>status</span></span>
-<span class="line"><span>...</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p>Password 子表：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>password_credentials</span></span>
+<span class="line"><span>...</span></span></code></pre>
+<p>Password 子表：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>password_credentials</span></span>
 <span class="line"><span>────────────────────────────</span></span>
 <span class="line"><span>credential_id   PK + FK</span></span>
 <span class="line"><span>password_hash</span></span>
 <span class="line"><span>password_version</span></span>
-<span class="line"><span>changed_at</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>其中：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>password_credentials.credential_id</span></span>
+<span class="line"><span>changed_at</span></span></code></pre>
+<p>其中：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>password_credentials.credential_id</span></span>
 <span class="line"><span>=</span></span>
-<span class="line"><span>user_credentials.id</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p><code>credential_id</code> 同时是：</p><ul><li>Password 子表的 Primary Key；</li><li>指向 <code>user_credentials.id</code> 的 Foreign Key。</li></ul><p>例如：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>user_credentials</span></span>
+<span class="line"><span>user_credentials.id</span></span></code></pre>
+<p><code>credential_id</code> 同时是：</p>
+<ul>
+<li>Password 子表的 Primary Key；</li>
+<li>指向 <code>user_credentials.id</code> 的 Foreign Key。</li>
+</ul>
+<p>例如：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>user_credentials</span></span>
 <span class="line"><span></span></span>
 <span class="line"><span>C001 | U001 | password | active</span></span>
 <span class="line"><span>C002 | U001 | passkey  | active</span></span>
-<span class="line"><span>C003 | U001 | passkey  | active</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>Password 子表：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>password_credentials</span></span>
+<span class="line"><span>C003 | U001 | passkey  | active</span></span></code></pre>
+<p>Password 子表：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>password_credentials</span></span>
 <span class="line"><span></span></span>
-<span class="line"><span>C001 | $argon2id$...</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>Passkey 子表：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>passkey_credentials</span></span>
+<span class="line"><span>C001 | $argon2id$...</span></span></code></pre>
+<p>Passkey 子表：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>passkey_credentials</span></span>
 <span class="line"><span></span></span>
 <span class="line"><span>C002 | credential-A | public-key-A | ...</span></span>
-<span class="line"><span>C003 | credential-B | public-key-B | ...</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>因此 <code>C001</code> 不是两条不同业务记录之间的关联 ID，而是同一个 Credential 在父表和具体类型表中的同一个身份。</p><p>关系基数为：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>User 1 : N UserCredential</span></span>
+<span class="line"><span>C003 | credential-B | public-key-B | ...</span></span></code></pre>
+<p>因此 <code>C001</code> 不是两条不同业务记录之间的关联 ID，而是同一个 Credential 在父表和具体类型表中的同一个身份。</p>
+<p>关系基数为：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>User 1 : N UserCredential</span></span>
 <span class="line"><span></span></span>
 <span class="line"><span>UserCredential 1 : 0..1 PasswordCredential</span></span>
-<span class="line"><span>UserCredential 1 : 0..1 PasskeyCredential</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>并且必须满足一个核心不变量：</p><blockquote><p>一个 UserCredential 只能落入与自身 <code>type</code> 匹配的一种具体 Credential 子表。</p></blockquote><h2 id="八、password-credential-的完整模型" tabindex="-1">八、Password Credential 的完整模型 <a class="header-anchor" href="#八、password-credential-的完整模型" aria-label="Permalink to &quot;八、Password Credential 的完整模型&quot;">​</a></h2><p>推荐：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>password_credentials</span></span>
+<span class="line"><span>UserCredential 1 : 0..1 PasskeyCredential</span></span></code></pre>
+<p>并且必须满足一个核心不变量：</p>
+<blockquote>
+<p>一个 UserCredential 只能落入与自身 <code>type</code> 匹配的一种具体 Credential 子表。</p>
+</blockquote>
+<h2 id="八、password-credential-的完整模型">八、Password Credential 的完整模型</h2>
+<p>推荐：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>password_credentials</span></span>
 <span class="line"><span>────────────────────────────</span></span>
 <span class="line"><span>credential_id</span></span>
 <span class="line"><span>password_hash</span></span>
 <span class="line"><span>password_version</span></span>
 <span class="line"><span>changed_at</span></span>
-<span class="line"><span>must_change_at nullable</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p><code>password_hash</code> 应保存完整的 Password Hash Encoding，例如 Argon2id 的 PHC String，而不是保存明文密码或可逆加密密码。</p><p>如果系统需要密码复用限制，可以增加：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>password_credential_history</span></span>
+<span class="line"><span>must_change_at nullable</span></span></code></pre>
+<p><code>password_hash</code> 应保存完整的 Password Hash Encoding，例如 Argon2id 的 PHC String，而不是保存明文密码或可逆加密密码。</p>
+<p>如果系统需要密码复用限制，可以增加：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>password_credential_history</span></span>
 <span class="line"><span>────────────────────────────</span></span>
 <span class="line"><span>id</span></span>
 <span class="line"><span>credential_id</span></span>
 <span class="line"><span>password_hash</span></span>
-<span class="line"><span>created_at</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>Password 本身是 Credential，不应该与 Email、Phone 或 Username 一一绑定。</p><p>完整登录流程：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>输入 email / phone / username</span></span>
+<span class="line"><span>created_at</span></span></code></pre>
+<p>Password 本身是 Credential，不应该与 Email、Phone 或 Username 一一绑定。</p>
+<p>完整登录流程：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>输入 email / phone / username</span></span>
 <span class="line"><span>        ↓</span></span>
 <span class="line"><span>user_login_identifiers</span></span>
 <span class="line"><span>        ↓</span></span>
@@ -160,7 +318,12 @@
 <span class="line"><span>        ↓</span></span>
 <span class="line"><span>password_credentials</span></span>
 <span class="line"><span>        ↓</span></span>
-<span class="line"><span>verify password hash</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><p>这样多个 Identifier 可以共享同一 Password Credential。</p><h2 id="九、passkey-webauthn-credential" tabindex="-1">九、Passkey / WebAuthn Credential <a class="header-anchor" href="#九、passkey-webauthn-credential" aria-label="Permalink to &quot;九、Passkey / WebAuthn Credential&quot;">​</a></h2><p>Passkey 不是“另一种密码字段”，而是独立 Credential 类型。</p><p>推荐子表：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>passkey_credentials</span></span>
+<span class="line"><span>verify password hash</span></span></code></pre>
+<p>这样多个 Identifier 可以共享同一 Password Credential。</p>
+<h2 id="九、passkey-webauthn-credential">九、Passkey / WebAuthn Credential</h2>
+<p>Passkey 不是“另一种密码字段”，而是独立 Credential 类型。</p>
+<p>推荐子表：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>passkey_credentials</span></span>
 <span class="line"><span>────────────────────────────</span></span>
 <span class="line"><span>credential_id</span></span>
 <span class="line"><span>rp_id</span></span>
@@ -171,21 +334,58 @@
 <span class="line"><span>transports</span></span>
 <span class="line"><span>backup_eligible</span></span>
 <span class="line"><span>backup_state</span></span>
-<span class="line"><span>created_at</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><p>其中要区分两个 ID：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>credential_id</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br></div></div><p>是系统内部 <code>user_credentials.id</code>。</p><p>而：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>external_credential_id</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br></div></div><p>是 WebAuthn 协议里的 Credential ID，由认证器生成。</p><p>一个用户可以拥有多个 Passkey：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>User U001</span></span>
+<span class="line"><span>created_at</span></span></code></pre>
+<p>其中要区分两个 ID：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>credential_id</span></span></code></pre>
+<p>是系统内部 <code>user_credentials.id</code>。</p>
+<p>而：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>external_credential_id</span></span></code></pre>
+<p>是 WebAuthn 协议里的 Credential ID，由认证器生成。</p>
+<p>一个用户可以拥有多个 Passkey：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>User U001</span></span>
 <span class="line"><span>├── Credential C001 / password</span></span>
 <span class="line"><span>├── Credential C002 / passkey / MacBook Touch ID</span></span>
 <span class="line"><span>├── Credential C003 / passkey / iPhone</span></span>
-<span class="line"><span>└── Credential C004 / passkey / Hardware Key</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>因此 Passkey 天然是：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>User 1 : N Passkey Credential</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br></div></div><h2 id="十、mfa-不应该再建一个平行的-身份体系" tabindex="-1">十、MFA 不应该再建一个平行的“身份体系” <a class="header-anchor" href="#十、mfa-不应该再建一个平行的-身份体系" aria-label="Permalink to &quot;十、MFA 不应该再建一个平行的“身份体系”&quot;">​</a></h2><p>从认证器角度看：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>Password</span></span>
+<span class="line"><span>└── Credential C004 / passkey / Hardware Key</span></span></code></pre>
+<p>因此 Passkey 天然是：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>User 1 : N Passkey Credential</span></span></code></pre>
+<h2 id="十、mfa-不应该再建一个平行的-身份体系">十、MFA 不应该再建一个平行的“身份体系”</h2>
+<p>从认证器角度看：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>Password</span></span>
 <span class="line"><span>Passkey</span></span>
 <span class="line"><span>TOTP</span></span>
-<span class="line"><span>Hardware Key</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>本质上都属于 Credential / Authenticator。</p><p>MFA 描述的不是“这是什么 Credential”，而是：</p><blockquote><p>一次 Authentication Flow 需要组合多少个、什么类型的 Factor 才算满足安全策略。</p></blockquote><p>因此不建议因为某个认证器用于 MFA，就把它放到完全独立的 <code>user_mfa_methods</code> 体系里。</p><p>更清晰的模型是：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>User</span></span>
+<span class="line"><span>Hardware Key</span></span></code></pre>
+<p>本质上都属于 Credential / Authenticator。</p>
+<p>MFA 描述的不是“这是什么 Credential”，而是：</p>
+<blockquote>
+<p>一次 Authentication Flow 需要组合多少个、什么类型的 Factor 才算满足安全策略。</p>
+</blockquote>
+<p>因此不建议因为某个认证器用于 MFA，就把它放到完全独立的 <code>user_mfa_methods</code> 体系里。</p>
+<p>更清晰的模型是：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>User</span></span>
 <span class="line"><span>└── Credentials</span></span>
 <span class="line"><span>    ├── Password</span></span>
 <span class="line"><span>    ├── Passkey</span></span>
 <span class="line"><span>    ├── TOTP</span></span>
-<span class="line"><span>    └── Hardware Key</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>然后由 Authentication Policy 决定：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>password</span></span>
+<span class="line"><span>    └── Hardware Key</span></span></code></pre>
+<p>然后由 Authentication Policy 决定：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>password</span></span>
 <span class="line"><span>+</span></span>
-<span class="line"><span>totp</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>或者：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>passkey</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br></div></div><p>是否已经达到当前所需的 Authentication Assurance Level。</p><h2 id="十一、authentication-policy-必须与-credential-分离" tabindex="-1">十一、Authentication Policy 必须与 Credential 分离 <a class="header-anchor" href="#十一、authentication-policy-必须与-credential-分离" aria-label="Permalink to &quot;十一、Authentication Policy 必须与 Credential 分离&quot;">​</a></h2><p>Credential 描述：</p><blockquote><p>用户拥有什么认证器。</p></blockquote><p>Authentication Policy 描述：</p><blockquote><p>当前系统、Tenant 或具体高风险操作要求使用哪些认证器。</p></blockquote><p>例如：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>tenant_auth_policies</span></span>
+<span class="line"><span>totp</span></span></code></pre>
+<p>或者：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>passkey</span></span></code></pre>
+<p>是否已经达到当前所需的 Authentication Assurance Level。</p>
+<h2 id="十一、authentication-policy-必须与-credential-分离">十一、Authentication Policy 必须与 Credential 分离</h2>
+<p>Credential 描述：</p>
+<blockquote>
+<p>用户拥有什么认证器。</p>
+</blockquote>
+<p>Authentication Policy 描述：</p>
+<blockquote>
+<p>当前系统、Tenant 或具体高风险操作要求使用哪些认证器。</p>
+</blockquote>
+<p>例如：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>tenant_auth_policies</span></span>
 <span class="line"><span>────────────────────────────</span></span>
 <span class="line"><span>id</span></span>
 <span class="line"><span>tenant_id</span></span>
@@ -196,14 +396,28 @@
 <span class="line"><span>session_max_age</span></span>
 <span class="line"><span>step_up_max_age</span></span>
 <span class="line"><span>created_at</span></span>
-<span class="line"><span>updated_at</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><p>实际项目通常还会把 Password Policy 独立出来：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>password_policies</span></span>
+<span class="line"><span>updated_at</span></span></code></pre>
+<p>实际项目通常还会把 Password Policy 独立出来：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>password_policies</span></span>
 <span class="line"><span>────────────────────────────</span></span>
 <span class="line"><span>tenant_id</span></span>
 <span class="line"><span>min_length</span></span>
 <span class="line"><span>history_count</span></span>
 <span class="line"><span>max_age_days</span></span>
 <span class="line"><span>lockout_threshold</span></span>
-<span class="line"><span>lockout_duration</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><p>这里的关键原则是：</p><blockquote><p>不要把“这个 Credential 是不是第二因素”固化成 Credential 自身属性；同一个 Passkey 在不同策略下可能作为单因素强认证，也可能参与 Step-up Authentication。</p></blockquote><h2 id="十二、external-identity-oidc-sso-不等于本地-credential" tabindex="-1">十二、External Identity：OIDC / SSO 不等于本地 Credential <a class="header-anchor" href="#十二、external-identity-oidc-sso-不等于本地-credential" aria-label="Permalink to &quot;十二、External Identity：OIDC / SSO 不等于本地 Credential&quot;">​</a></h2><p>OIDC、SAML、企业 SSO 与 Password/Passkey 有一个本质区别：</p><blockquote><p>本地系统不持有用户用于外部 IdP 登录的 Credential。</p></blockquote><p>例如 Microsoft Entra ID 已经完成了密码、MFA、风险控制等认证，本地系统验证的是 IdP 签发的 Assertion / Token。</p><p>因此推荐单独建模 Identity Provider：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>identity_providers</span></span>
+<span class="line"><span>lockout_duration</span></span></code></pre>
+<p>这里的关键原则是：</p>
+<blockquote>
+<p>不要把“这个 Credential 是不是第二因素”固化成 Credential 自身属性；同一个 Passkey 在不同策略下可能作为单因素强认证，也可能参与 Step-up Authentication。</p>
+</blockquote>
+<h2 id="十二、external-identity-oidc-sso-不等于本地-credential">十二、External Identity：OIDC / SSO 不等于本地 Credential</h2>
+<p>OIDC、SAML、企业 SSO 与 Password/Passkey 有一个本质区别：</p>
+<blockquote>
+<p>本地系统不持有用户用于外部 IdP 登录的 Credential。</p>
+</blockquote>
+<p>例如 Microsoft Entra ID 已经完成了密码、MFA、风险控制等认证，本地系统验证的是 IdP 签发的 Assertion / Token。</p>
+<p>因此推荐单独建模 Identity Provider：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>identity_providers</span></span>
 <span class="line"><span>────────────────────────────</span></span>
 <span class="line"><span>id</span></span>
 <span class="line"><span>tenant_id nullable</span></span>
@@ -215,7 +429,9 @@
 <span class="line"><span>metadata_url</span></span>
 <span class="line"><span>status</span></span>
 <span class="line"><span>created_at</span></span>
-<span class="line"><span>updated_at</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><p>用户和外部主体的映射：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>user_external_identities</span></span>
+<span class="line"><span>updated_at</span></span></code></pre>
+<p>用户和外部主体的映射：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>user_external_identities</span></span>
 <span class="line"><span>────────────────────────────</span></span>
 <span class="line"><span>id</span></span>
 <span class="line"><span>user_id</span></span>
@@ -223,7 +439,15 @@
 <span class="line"><span>subject</span></span>
 <span class="line"><span>email_snapshot nullable</span></span>
 <span class="line"><span>created_at</span></span>
-<span class="line"><span>last_login_at</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><p>核心唯一约束：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>UNIQUE(provider_id, subject)</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br></div></div><p>其中：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>provider + subject</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br></div></div><p>才是外部身份真正稳定的标识。</p><p>不要仅通过外部 IdP 返回的 Email 直接长期绑定用户，因为 Email 可能变化、复用，甚至不同 Provider 对 Email 的可信语义不同。</p><p>登录流程：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>Tenant / Domain Discovery</span></span>
+<span class="line"><span>last_login_at</span></span></code></pre>
+<p>核心唯一约束：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>UNIQUE(provider_id, subject)</span></span></code></pre>
+<p>其中：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>provider + subject</span></span></code></pre>
+<p>才是外部身份真正稳定的标识。</p>
+<p>不要仅通过外部 IdP 返回的 Email 直接长期绑定用户，因为 Email 可能变化、复用，甚至不同 Provider 对 Email 的可信语义不同。</p>
+<p>登录流程：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>Tenant / Domain Discovery</span></span>
 <span class="line"><span>        ↓</span></span>
 <span class="line"><span>选择 Identity Provider</span></span>
 <span class="line"><span>        ↓</span></span>
@@ -235,17 +459,44 @@
 <span class="line"><span>        ↓</span></span>
 <span class="line"><span>user_external_identities</span></span>
 <span class="line"><span>        ↓</span></span>
-<span class="line"><span>User</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><h2 id="十三、多租户下认证和-tenantmember-的边界" tabindex="-1">十三、多租户下认证和 TenantMember 的边界 <a class="header-anchor" href="#十三、多租户下认证和-tenantmember-的边界" aria-label="Permalink to &quot;十三、多租户下认证和 TenantMember 的边界&quot;">​</a></h2><p>推荐始终保持：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>User = 全局认证主体</span></span>
-<span class="line"><span>TenantMember = User 在 Tenant 内的成员身份</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><p>表关系：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>users</span></span>
+<span class="line"><span>User</span></span></code></pre>
+<h2 id="十三、多租户下认证和-tenantmember-的边界">十三、多租户下认证和 TenantMember 的边界</h2>
+<p>推荐始终保持：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>User = 全局认证主体</span></span>
+<span class="line"><span>TenantMember = User 在 Tenant 内的成员身份</span></span></code></pre>
+<p>表关系：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>users</span></span>
 <span class="line"><span>  │</span></span>
 <span class="line"><span>  └── tenant_members</span></span>
 <span class="line"><span>        ├── tenant_id</span></span>
 <span class="line"><span>        ├── user_id</span></span>
-<span class="line"><span>        └── status</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>认证成功只意味着：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>User U001 authenticated</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br></div></div><p>它不自动意味着：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>U001 可以访问 Tenant A</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br></div></div><p>进入 Tenant 时还必须校验：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>TenantMember exists</span></span>
-<span class="line"><span>status = active</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><p>这样可以自然表达：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>User U001 = active</span></span>
+<span class="line"><span>        └── status</span></span></code></pre>
+<p>认证成功只意味着：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>User U001 authenticated</span></span></code></pre>
+<p>它不自动意味着：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>U001 可以访问 Tenant A</span></span></code></pre>
+<p>进入 Tenant 时还必须校验：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>TenantMember exists</span></span>
+<span class="line"><span>status = active</span></span></code></pre>
+<p>这样可以自然表达：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>User U001 = active</span></span>
 <span class="line"><span></span></span>
 <span class="line"><span>Tenant A member = suspended</span></span>
-<span class="line"><span>Tenant B member = active</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>此时用户仍能登录平台，也能访问 Tenant B，但不能进入 Tenant A。</p><h2 id="十四、tenant-如何参与-authentication" tabindex="-1">十四、Tenant 如何参与 Authentication <a class="header-anchor" href="#十四、tenant-如何参与-authentication" aria-label="Permalink to &quot;十四、Tenant 如何参与 Authentication&quot;">​</a></h2><p>“User 是全局的”并不意味着 Tenant 永远不参与登录流程。</p><p>Tenant 仍然可能参与：</p><ul><li>Tenant Scoped Username；</li><li>企业专属 OIDC / SAML；</li><li>不同 Tenant 的 MFA Policy；</li><li>不同 Password Policy；</li><li>Domain Discovery；</li><li>Step-up Authentication 要求。</li></ul><p>因此完整认证流程可以是：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>输入登录上下文</span></span>
+<span class="line"><span>Tenant B member = active</span></span></code></pre>
+<p>此时用户仍能登录平台，也能访问 Tenant B，但不能进入 Tenant A。</p>
+<h2 id="十四、tenant-如何参与-authentication">十四、Tenant 如何参与 Authentication</h2>
+<p>“User 是全局的”并不意味着 Tenant 永远不参与登录流程。</p>
+<p>Tenant 仍然可能参与：</p>
+<ul>
+<li>Tenant Scoped Username；</li>
+<li>企业专属 OIDC / SAML；</li>
+<li>不同 Tenant 的 MFA Policy；</li>
+<li>不同 Password Policy；</li>
+<li>Domain Discovery；</li>
+<li>Step-up Authentication 要求。</li>
+</ul>
+<p>因此完整认证流程可以是：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>输入登录上下文</span></span>
 <span class="line"><span>        ↓</span></span>
 <span class="line"><span>解析 Tenant（可选）</span></span>
 <span class="line"><span>        ↓</span></span>
@@ -259,7 +510,12 @@
 <span class="line"><span>        ↓</span></span>
 <span class="line"><span>Authentication Success</span></span>
 <span class="line"><span>        ↓</span></span>
-<span class="line"><span>建立 Session</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br></div></div><p>Tenant 参与的是认证上下文和策略，而不是取代 User 成为认证主体。</p><h2 id="十五、session-认证成功后的独立实体" tabindex="-1">十五、Session：认证成功后的独立实体 <a class="header-anchor" href="#十五、session-认证成功后的独立实体" aria-label="Permalink to &quot;十五、Session：认证成功后的独立实体&quot;">​</a></h2><p>Credential 完成的是“证明身份”，Session 描述的是“一次认证成功关系”。</p><p>推荐：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>auth_sessions</span></span>
+<span class="line"><span>建立 Session</span></span></code></pre>
+<p>Tenant 参与的是认证上下文和策略，而不是取代 User 成为认证主体。</p>
+<h2 id="十五、session-认证成功后的独立实体">十五、Session：认证成功后的独立实体</h2>
+<p>Credential 完成的是“证明身份”，Session 描述的是“一次认证成功关系”。</p>
+<p>推荐：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>auth_sessions</span></span>
 <span class="line"><span>────────────────────────────</span></span>
 <span class="line"><span>id</span></span>
 <span class="line"><span>user_id</span></span>
@@ -272,21 +528,36 @@
 <span class="line"><span>idle_expires_at</span></span>
 <span class="line"><span>absolute_expires_at</span></span>
 <span class="line"><span>revoked_at</span></span>
-<span class="line"><span>status</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><p>如果系统需要精确记录一次 Session 使用了哪些 Factor，可以增加：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>auth_session_factors</span></span>
+<span class="line"><span>status</span></span></code></pre>
+<p>如果系统需要精确记录一次 Session 使用了哪些 Factor，可以增加：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>auth_session_factors</span></span>
 <span class="line"><span>────────────────────────────</span></span>
 <span class="line"><span>session_id</span></span>
 <span class="line"><span>credential_id nullable</span></span>
 <span class="line"><span>method_type</span></span>
 <span class="line"><span>verified_at</span></span>
-<span class="line"><span>authentication_context</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><p>例如：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>Session S001</span></span>
+<span class="line"><span>authentication_context</span></span></code></pre>
+<p>例如：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>Session S001</span></span>
 <span class="line"><span>├── Password Credential C001 / 10:00 verified</span></span>
-<span class="line"><span>└── Passkey Credential C003 / 10:01 verified</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>这对 Step-up Authentication 很重要。</p><p>例如用户在 10:00 已通过 Password 登录，但 10:30 发起资金划转时要求：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>AAL2</span></span>
-<span class="line"><span>且第二因素认证时间 &lt; 5 min</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><p>系统就可以判断是否需要重新挑战 Passkey / TOTP。</p><p>Access Token、Refresh Token 与 Session 的生命周期设计可继续沿用已有文章《Access Token 与 Refresh Token 的认证架构设计》中的分层模型。</p><h2 id="十六、临时认证流程不要污染-credential-主表" tabindex="-1">十六、临时认证流程不要污染 Credential 主表 <a class="header-anchor" href="#十六、临时认证流程不要污染-credential-主表" aria-label="Permalink to &quot;十六、临时认证流程不要污染 Credential 主表&quot;">​</a></h2><p>以下数据通常是临时状态：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>Email verification token</span></span>
+<span class="line"><span>└── Passkey Credential C003 / 10:01 verified</span></span></code></pre>
+<p>这对 Step-up Authentication 很重要。</p>
+<p>例如用户在 10:00 已通过 Password 登录，但 10:30 发起资金划转时要求：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>AAL2</span></span>
+<span class="line"><span>且第二因素认证时间 &#x3C; 5 min</span></span></code></pre>
+<p>系统就可以判断是否需要重新挑战 Passkey / TOTP。</p>
+<p>Access Token、Refresh Token 与 Session 的生命周期设计可继续沿用已有文章《Access Token 与 Refresh Token 的认证架构设计》中的分层模型。</p>
+<h2 id="十六、临时认证流程不要污染-credential-主表">十六、临时认证流程不要污染 Credential 主表</h2>
+<p>以下数据通常是临时状态：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>Email verification token</span></span>
 <span class="line"><span>Password reset token</span></span>
 <span class="line"><span>WebAuthn registration challenge</span></span>
 <span class="line"><span>WebAuthn authentication challenge</span></span>
 <span class="line"><span>OTP challenge</span></span>
-<span class="line"><span>Account recovery challenge</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>它们不是长期 Credential，应该单独放在 Challenge / Verification 体系中。</p><p>例如：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>auth_challenges</span></span>
+<span class="line"><span>Account recovery challenge</span></span></code></pre>
+<p>它们不是长期 Credential，应该单独放在 Challenge / Verification 体系中。</p>
+<p>例如：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>auth_challenges</span></span>
 <span class="line"><span>────────────────────────────</span></span>
 <span class="line"><span>id</span></span>
 <span class="line"><span>user_id nullable</span></span>
@@ -298,11 +569,18 @@
 <span class="line"><span>attempt_count</span></span>
 <span class="line"><span>expires_at</span></span>
 <span class="line"><span>consumed_at</span></span>
-<span class="line"><span>created_at</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><p>它们的生命周期通常是：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>created</span></span>
+<span class="line"><span>created_at</span></span></code></pre>
+<p>它们的生命周期通常是：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>created</span></span>
 <span class="line"><span>↓</span></span>
 <span class="line"><span>verified / consumed</span></span>
 <span class="line"><span>↓</span></span>
-<span class="line"><span>expired / deleted</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><p>而不是像 Credential 一样长期挂在 User 下。</p><h2 id="十七、认证尝试与安全审计" tabindex="-1">十七、认证尝试与安全审计 <a class="header-anchor" href="#十七、认证尝试与安全审计" aria-label="Permalink to &quot;十七、认证尝试与安全审计&quot;">​</a></h2><p>认证系统需要同时区分业务状态和安全事件。</p><p>推荐单独记录：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>authentication_attempts</span></span>
+<span class="line"><span>expired / deleted</span></span></code></pre>
+<p>而不是像 Credential 一样长期挂在 User 下。</p>
+<h2 id="十七、认证尝试与安全审计">十七、认证尝试与安全审计</h2>
+<p>认证系统需要同时区分业务状态和安全事件。</p>
+<p>推荐单独记录：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>authentication_attempts</span></span>
 <span class="line"><span>────────────────────────────</span></span>
 <span class="line"><span>id</span></span>
 <span class="line"><span>user_id nullable</span></span>
@@ -314,7 +592,9 @@
 <span class="line"><span>failure_reason</span></span>
 <span class="line"><span>ip</span></span>
 <span class="line"><span>user_agent</span></span>
-<span class="line"><span>created_at</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><p>以及更高层的：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>security_events</span></span>
+<span class="line"><span>created_at</span></span></code></pre>
+<p>以及更高层的：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>security_events</span></span>
 <span class="line"><span>────────────────────────────</span></span>
 <span class="line"><span>id</span></span>
 <span class="line"><span>user_id nullable</span></span>
@@ -325,7 +605,9 @@
 <span class="line"><span>event_type</span></span>
 <span class="line"><span>risk_level</span></span>
 <span class="line"><span>metadata</span></span>
-<span class="line"><span>created_at</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><p>事件包括：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>LOGIN_SUCCESS</span></span>
+<span class="line"><span>created_at</span></span></code></pre>
+<p>事件包括：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>LOGIN_SUCCESS</span></span>
 <span class="line"><span>LOGIN_FAILED</span></span>
 <span class="line"><span>CREDENTIAL_CREATED</span></span>
 <span class="line"><span>CREDENTIAL_REVOKED</span></span>
@@ -333,12 +615,49 @@
 <span class="line"><span>PASSKEY_REGISTERED</span></span>
 <span class="line"><span>MFA_STEP_UP</span></span>
 <span class="line"><span>SESSION_REVOKED</span></span>
-<span class="line"><span>EXTERNAL_IDENTITY_LINKED</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><p>Credential 本身只保存当前状态，不承担完整审计历史。</p><h2 id="十八、核心数据库不变量" tabindex="-1">十八、核心数据库不变量 <a class="header-anchor" href="#十八、核心数据库不变量" aria-label="Permalink to &quot;十八、核心数据库不变量&quot;">​</a></h2><p>认证表设计真正重要的不是“表有几张”，而是数据库能否持续维持下面这些不变量。</p><h3 id="_1-identifier-唯一性" tabindex="-1">1. Identifier 唯一性 <a class="header-anchor" href="#_1-identifier-唯一性" aria-label="Permalink to &quot;1. Identifier 唯一性&quot;">​</a></h3><p>全局 Identifier：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>(type, normalized_value)</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br></div></div><p>必须唯一。</p><p>Tenant Scoped Identifier：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>(tenant_id, type, normalized_value)</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br></div></div><p>必须唯一。</p><h3 id="_2-external-identity-唯一性" tabindex="-1">2. External Identity 唯一性 <a class="header-anchor" href="#_2-external-identity-唯一性" aria-label="Permalink to &quot;2. External Identity 唯一性&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>(provider_id, subject)</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br></div></div><p>必须唯一映射到一个 User。</p><h3 id="_3-password-数量约束" tabindex="-1">3. Password 数量约束 <a class="header-anchor" href="#_3-password-数量约束" aria-label="Permalink to &quot;3. Password 数量约束&quot;">​</a></h3><p>如果业务定义一个 User 只有一套本地密码，则必须保证：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>每个 user_id 最多一个 active password Credential</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br></div></div><p>不要只靠应用层约定。</p><h3 id="_4-credential-子类型一致性" tabindex="-1">4. Credential 子类型一致性 <a class="header-anchor" href="#_4-credential-子类型一致性" aria-label="Permalink to &quot;4. Credential 子类型一致性&quot;">​</a></h3><p>如果：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>user_credentials.type = password</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br></div></div><p>则只能存在对应的：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>password_credentials</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br></div></div><p>不能同时存在：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>passkey_credentials</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br></div></div><h3 id="_5-credential-子表不能脱离父表存在" tabindex="-1">5. Credential 子表不能脱离父表存在 <a class="header-anchor" href="#_5-credential-子表不能脱离父表存在" aria-label="Permalink to &quot;5. Credential 子表不能脱离父表存在&quot;">​</a></h3><p>共享主键 Foreign Key 必须保证：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>password_credentials.credential_id</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br></div></div><p>对应的：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>user_credentials.id</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br></div></div><p>一定存在。</p><h3 id="_6-credential-创建必须原子化" tabindex="-1">6. Credential 创建必须原子化 <a class="header-anchor" href="#_6-credential-创建必须原子化" aria-label="Permalink to &quot;6. Credential 创建必须原子化&quot;">​</a></h3><p>创建 Password 时应视为一个 Domain Transaction：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>BEGIN</span></span>
+<span class="line"><span>EXTERNAL_IDENTITY_LINKED</span></span></code></pre>
+<p>Credential 本身只保存当前状态，不承担完整审计历史。</p>
+<h2 id="十八、核心数据库不变量">十八、核心数据库不变量</h2>
+<p>认证表设计真正重要的不是“表有几张”，而是数据库能否持续维持下面这些不变量。</p>
+<h3 id="_1-identifier-唯一性">1. Identifier 唯一性</h3>
+<p>全局 Identifier：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>(type, normalized_value)</span></span></code></pre>
+<p>必须唯一。</p>
+<p>Tenant Scoped Identifier：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>(tenant_id, type, normalized_value)</span></span></code></pre>
+<p>必须唯一。</p>
+<h3 id="_2-external-identity-唯一性">2. External Identity 唯一性</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>(provider_id, subject)</span></span></code></pre>
+<p>必须唯一映射到一个 User。</p>
+<h3 id="_3-password-数量约束">3. Password 数量约束</h3>
+<p>如果业务定义一个 User 只有一套本地密码，则必须保证：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>每个 user_id 最多一个 active password Credential</span></span></code></pre>
+<p>不要只靠应用层约定。</p>
+<h3 id="_4-credential-子类型一致性">4. Credential 子类型一致性</h3>
+<p>如果：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>user_credentials.type = password</span></span></code></pre>
+<p>则只能存在对应的：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>password_credentials</span></span></code></pre>
+<p>不能同时存在：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>passkey_credentials</span></span></code></pre>
+<h3 id="_5-credential-子表不能脱离父表存在">5. Credential 子表不能脱离父表存在</h3>
+<p>共享主键 Foreign Key 必须保证：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>password_credentials.credential_id</span></span></code></pre>
+<p>对应的：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>user_credentials.id</span></span></code></pre>
+<p>一定存在。</p>
+<h3 id="_6-credential-创建必须原子化">6. Credential 创建必须原子化</h3>
+<p>创建 Password 时应视为一个 Domain Transaction：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>BEGIN</span></span>
 <span class="line"><span></span></span>
 <span class="line"><span>INSERT user_credentials(type=password)</span></span>
 <span class="line"><span>INSERT password_credentials(...)</span></span>
 <span class="line"><span></span></span>
-<span class="line"><span>COMMIT</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>如果任一步失败，则整个 Credential 不应处于半创建状态。</p><h2 id="十九、推荐的最终关系模型" tabindex="-1">十九、推荐的最终关系模型 <a class="header-anchor" href="#十九、推荐的最终关系模型" aria-label="Permalink to &quot;十九、推荐的最终关系模型&quot;">​</a></h2><p>完整主干可以压缩成：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>User</span></span>
+<span class="line"><span>COMMIT</span></span></code></pre>
+<p>如果任一步失败，则整个 Credential 不应处于半创建状态。</p>
+<h2 id="十九、推荐的最终关系模型">十九、推荐的最终关系模型</h2>
+<p>完整主干可以压缩成：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>User</span></span>
 <span class="line"><span>│</span></span>
 <span class="line"><span>├── Login Identifier</span></span>
 <span class="line"><span>│   ├── Username</span></span>
@@ -358,20 +677,64 @@
 <span class="line"><span>│   └── Session Factors</span></span>
 <span class="line"><span>│</span></span>
 <span class="line"><span>└── Tenant Member</span></span>
-<span class="line"><span>    └── Tenant</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br></div></div><p>对应 ER：</p><!----><h2 id="二十、最终推荐表清单" tabindex="-1">二十、最终推荐表清单 <a class="header-anchor" href="#二十、最终推荐表清单" aria-label="Permalink to &quot;二十、最终推荐表清单&quot;">​</a></h2><p>如果以完整工程化认证体系为目标，推荐至少保留下面这些边界。</p><h3 id="principal" tabindex="-1">Principal <a class="header-anchor" href="#principal" aria-label="Permalink to &quot;Principal&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>users</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br></div></div><h3 id="identifier" tabindex="-1">Identifier <a class="header-anchor" href="#identifier" aria-label="Permalink to &quot;Identifier&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>user_login_identifiers</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br></div></div><h3 id="credential" tabindex="-1">Credential <a class="header-anchor" href="#credential" aria-label="Permalink to &quot;Credential&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>user_credentials</span></span>
+<span class="line"><span>    └── Tenant</span></span></code></pre>
+<p>对应 ER：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#D73A49;--shiki-dark:#F97583">erDiagram</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">    USER</span><span style="color:#D73A49;--shiki-dark:#F97583"> ||--o{</span><span style="color:#E36209;--shiki-dark:#FFAB70"> USER_LOGIN_IDENTIFIER</span><span style="color:#D73A49;--shiki-dark:#F97583"> :</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> has</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">    USER</span><span style="color:#D73A49;--shiki-dark:#F97583"> ||--o{</span><span style="color:#E36209;--shiki-dark:#FFAB70"> USER_CREDENTIAL</span><span style="color:#D73A49;--shiki-dark:#F97583"> :</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> owns</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">    USER</span><span style="color:#D73A49;--shiki-dark:#F97583"> ||--o{</span><span style="color:#E36209;--shiki-dark:#FFAB70"> USER_EXTERNAL_IDENTITY</span><span style="color:#D73A49;--shiki-dark:#F97583"> :</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> maps</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">    USER</span><span style="color:#D73A49;--shiki-dark:#F97583"> ||--o{</span><span style="color:#E36209;--shiki-dark:#FFAB70"> AUTH_SESSION</span><span style="color:#D73A49;--shiki-dark:#F97583"> :</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> creates</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">    USER</span><span style="color:#D73A49;--shiki-dark:#F97583"> ||--o{</span><span style="color:#E36209;--shiki-dark:#FFAB70"> TENANT_MEMBER</span><span style="color:#D73A49;--shiki-dark:#F97583"> :</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> joins</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">    USER_CREDENTIAL</span><span style="color:#D73A49;--shiki-dark:#F97583"> ||--o|</span><span style="color:#E36209;--shiki-dark:#FFAB70"> PASSWORD_CREDENTIAL</span><span style="color:#D73A49;--shiki-dark:#F97583"> :</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> specializes</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">    USER_CREDENTIAL</span><span style="color:#D73A49;--shiki-dark:#F97583"> ||--o|</span><span style="color:#E36209;--shiki-dark:#FFAB70"> PASSKEY_CREDENTIAL</span><span style="color:#D73A49;--shiki-dark:#F97583"> :</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> specializes</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">    USER_CREDENTIAL</span><span style="color:#D73A49;--shiki-dark:#F97583"> ||--o|</span><span style="color:#E36209;--shiki-dark:#FFAB70"> TOTP_CREDENTIAL</span><span style="color:#D73A49;--shiki-dark:#F97583"> :</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> specializes</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">    IDENTITY_PROVIDER</span><span style="color:#D73A49;--shiki-dark:#F97583"> ||--o{</span><span style="color:#E36209;--shiki-dark:#FFAB70"> USER_EXTERNAL_IDENTITY</span><span style="color:#D73A49;--shiki-dark:#F97583"> :</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> provides</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">    AUTH_SESSION</span><span style="color:#D73A49;--shiki-dark:#F97583"> ||--o{</span><span style="color:#E36209;--shiki-dark:#FFAB70"> AUTH_SESSION_FACTOR</span><span style="color:#D73A49;--shiki-dark:#F97583"> :</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> contains</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">    USER_CREDENTIAL</span><span style="color:#D73A49;--shiki-dark:#F97583"> ||--o{</span><span style="color:#E36209;--shiki-dark:#FFAB70"> AUTH_SESSION_FACTOR</span><span style="color:#D73A49;--shiki-dark:#F97583"> :</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> verifies</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">    TENANT</span><span style="color:#D73A49;--shiki-dark:#F97583"> ||--o{</span><span style="color:#E36209;--shiki-dark:#FFAB70"> TENANT_MEMBER</span><span style="color:#D73A49;--shiki-dark:#F97583"> :</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> contains</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">    TENANT</span><span style="color:#D73A49;--shiki-dark:#F97583"> ||--o{</span><span style="color:#E36209;--shiki-dark:#FFAB70"> IDENTITY_PROVIDER</span><span style="color:#D73A49;--shiki-dark:#F97583"> :</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> configures</span></span>
+<span class="line"><span style="color:#E36209;--shiki-dark:#FFAB70">    TENANT</span><span style="color:#D73A49;--shiki-dark:#F97583"> ||--o{</span><span style="color:#E36209;--shiki-dark:#FFAB70"> TENANT_AUTH_POLICY</span><span style="color:#D73A49;--shiki-dark:#F97583"> :</span><span style="color:#032F62;--shiki-dark:#9ECBFF"> configures</span></span></code></pre>
+<h2 id="二十、最终推荐表清单">二十、最终推荐表清单</h2>
+<p>如果以完整工程化认证体系为目标，推荐至少保留下面这些边界。</p>
+<h3 id="principal">Principal</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>users</span></span></code></pre>
+<h3 id="identifier">Identifier</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>user_login_identifiers</span></span></code></pre>
+<h3 id="credential">Credential</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>user_credentials</span></span>
 <span class="line"><span>password_credentials</span></span>
 <span class="line"><span>passkey_credentials</span></span>
 <span class="line"><span>totp_credentials</span></span>
 <span class="line"><span>certificate_credentials</span></span>
-<span class="line"><span>password_credential_history</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><h3 id="federation-sso" tabindex="-1">Federation / SSO <a class="header-anchor" href="#federation-sso" aria-label="Permalink to &quot;Federation / SSO&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>identity_providers</span></span>
-<span class="line"><span>user_external_identities</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h3 id="tenant-authentication" tabindex="-1">Tenant Authentication <a class="header-anchor" href="#tenant-authentication" aria-label="Permalink to &quot;Tenant Authentication&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>tenant_auth_policies</span></span>
-<span class="line"><span>password_policies</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h3 id="session" tabindex="-1">Session <a class="header-anchor" href="#session" aria-label="Permalink to &quot;Session&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>auth_sessions</span></span>
+<span class="line"><span>password_credential_history</span></span></code></pre>
+<h3 id="federation-sso">Federation / SSO</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>identity_providers</span></span>
+<span class="line"><span>user_external_identities</span></span></code></pre>
+<h3 id="tenant-authentication">Tenant Authentication</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>tenant_auth_policies</span></span>
+<span class="line"><span>password_policies</span></span></code></pre>
+<h3 id="session">Session</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>auth_sessions</span></span>
 <span class="line"><span>auth_session_factors</span></span>
-<span class="line"><span>refresh_token_families</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><h3 id="temporary-authentication-state" tabindex="-1">Temporary Authentication State <a class="header-anchor" href="#temporary-authentication-state" aria-label="Permalink to &quot;Temporary Authentication State&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>auth_challenges</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br></div></div><h3 id="audit-security" tabindex="-1">Audit / Security <a class="header-anchor" href="#audit-security" aria-label="Permalink to &quot;Audit / Security&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>authentication_attempts</span></span>
-<span class="line"><span>security_events</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h3 id="authorization-边界" tabindex="-1">Authorization 边界 <a class="header-anchor" href="#authorization-边界" aria-label="Permalink to &quot;Authorization 边界&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>tenants</span></span>
+<span class="line"><span>refresh_token_families</span></span></code></pre>
+<h3 id="temporary-authentication-state">Temporary Authentication State</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>auth_challenges</span></span></code></pre>
+<h3 id="audit-security">Audit / Security</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>authentication_attempts</span></span>
+<span class="line"><span>security_events</span></span></code></pre>
+<h3 id="authorization-边界">Authorization 边界</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>tenants</span></span>
 <span class="line"><span>tenant_members</span></span>
 <span class="line"><span>roles</span></span>
-<span class="line"><span>permissions</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>其中 <code>tenant_members</code> 之后已经进入 Authorization / Organization Domain，不应重新塞回 Authentication Aggregate。</p><h2 id="二十一、正常认证路径" tabindex="-1">二十一、正常认证路径 <a class="header-anchor" href="#二十一、正常认证路径" aria-label="Permalink to &quot;二十一、正常认证路径&quot;">​</a></h2><h3 id="password-登录" tabindex="-1">Password 登录 <a class="header-anchor" href="#password-登录" aria-label="Permalink to &quot;Password 登录&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>Login Identifier</span></span>
+<span class="line"><span>permissions</span></span></code></pre>
+<p>其中 <code>tenant_members</code> 之后已经进入 Authorization / Organization Domain，不应重新塞回 Authentication Aggregate。</p>
+<h2 id="二十一、正常认证路径">二十一、正常认证路径</h2>
+<h3 id="password-登录">Password 登录</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>Login Identifier</span></span>
 <span class="line"><span>↓</span></span>
 <span class="line"><span>Resolve User</span></span>
 <span class="line"><span>↓</span></span>
@@ -385,7 +748,9 @@
 <span class="line"><span>↓</span></span>
 <span class="line"><span>Create Auth Session</span></span>
 <span class="line"><span>↓</span></span>
-<span class="line"><span>Issue AT / RT</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br></div></div><h3 id="passkey-登录" tabindex="-1">Passkey 登录 <a class="header-anchor" href="#passkey-登录" aria-label="Permalink to &quot;Passkey 登录&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>Resolve User / Discoverable Credential</span></span>
+<span class="line"><span>Issue AT / RT</span></span></code></pre>
+<h3 id="passkey-登录">Passkey 登录</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>Resolve User / Discoverable Credential</span></span>
 <span class="line"><span>↓</span></span>
 <span class="line"><span>Create WebAuthn Challenge</span></span>
 <span class="line"><span>↓</span></span>
@@ -397,7 +762,9 @@
 <span class="line"><span>↓</span></span>
 <span class="line"><span>Evaluate Authentication Policy</span></span>
 <span class="line"><span>↓</span></span>
-<span class="line"><span>Create Auth Session</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><h3 id="oidc-sso-登录" tabindex="-1">OIDC / SSO 登录 <a class="header-anchor" href="#oidc-sso-登录" aria-label="Permalink to &quot;OIDC / SSO 登录&quot;">​</a></h3><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>Resolve Tenant / Provider</span></span>
+<span class="line"><span>Create Auth Session</span></span></code></pre>
+<h3 id="oidc-sso-登录">OIDC / SSO 登录</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>Resolve Tenant / Provider</span></span>
 <span class="line"><span>↓</span></span>
 <span class="line"><span>Redirect to IdP</span></span>
 <span class="line"><span>↓</span></span>
@@ -413,17 +780,50 @@
 <span class="line"><span>↓</span></span>
 <span class="line"><span>Evaluate Local Authentication Policy</span></span>
 <span class="line"><span>↓</span></span>
-<span class="line"><span>Create Auth Session</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br></div></div><p>三个流程最终都收敛到同一个稳定主体：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>User</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br></div></div><p>并最终产生同一种结果：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>Auth Session</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br></div></div><p>这就是统一认证模型真正的价值。</p><h2 id="二十二、不要让-orm-或数据库产品反向决定领域模型" tabindex="-1">二十二、不要让 ORM 或数据库产品反向决定领域模型 <a class="header-anchor" href="#二十二、不要让-orm-或数据库产品反向决定领域模型" aria-label="Permalink to &quot;二十二、不要让 ORM 或数据库产品反向决定领域模型&quot;">​</a></h2><p>这套模型的原则是：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>先确定领域边界和数据不变量</span></span>
+<span class="line"><span>Create Auth Session</span></span></code></pre>
+<p>三个流程最终都收敛到同一个稳定主体：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>User</span></span></code></pre>
+<p>并最终产生同一种结果：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>Auth Session</span></span></code></pre>
+<p>这就是统一认证模型真正的价值。</p>
+<h2 id="二十二、不要让-orm-或数据库产品反向决定领域模型">二十二、不要让 ORM 或数据库产品反向决定领域模型</h2>
+<p>这套模型的原则是：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>先确定领域边界和数据不变量</span></span>
 <span class="line"><span>↓</span></span>
-<span class="line"><span>再选择 ORM / Database Adapter 的实现方式</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>而不是：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>因为 ORM Join 写起来麻烦</span></span>
+<span class="line"><span>再选择 ORM / Database Adapter 的实现方式</span></span></code></pre>
+<p>而不是：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>因为 ORM Join 写起来麻烦</span></span>
 <span class="line"><span>↓</span></span>
-<span class="line"><span>把 Identifier、Credential、Password 全塞回 users</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><p>AI 编程已经显著降低了 Schema、Migration、Repository、DTO、查询和测试代码的实现成本，但并没有降低领域模型错误带来的长期成本。</p><p>认证系统最应该避免的不是“表多”，而是：</p><ul><li>同一个概念承担多个职责；</li><li>Identifier 和 Credential 强耦合；</li><li>Tenant 和 User 身份混淆；</li><li>Password、Passkey、SSO 被塞进一套互相冲突的字段；</li><li>Credential 状态和 Authentication Policy 混在一起；</li><li>Session、Token 和 Credential 生命周期没有边界；</li><li>关键不变量只能依赖调用方“记得这么写”。</li></ul><p>因此在长期工程化设计中，优先保证模型正确，再考虑查询优化、缓存、ORM 映射和物理存储优化。</p><h2 id="总结" tabindex="-1">总结 <a class="header-anchor" href="#总结" aria-label="Permalink to &quot;总结&quot;">​</a></h2><p>多租户认证系统可以用下面几句话建立稳定心智模型：</p><blockquote><p><strong>User 是稳定的全局认证主体。</strong></p><p><strong>Login Identifier 负责找到 User。</strong></p><p><strong>Credential 负责证明 User。</strong></p><p><strong>Password、Passkey、TOTP 是 Credential 的具体类型。</strong></p><p><strong>External Identity 负责把外部 IdP 主体映射到本地 User。</strong></p><p><strong>Authentication Policy 决定一次登录必须满足哪些 Factor。</strong></p><p><strong>Session 是认证成功后持续存在的一次登录关系。</strong></p><p><strong>TenantMember 描述 User 在 Tenant 中的身份，属于认证之后的租户授权边界。</strong></p></blockquote><p>最终核心模型不是一张越来越大的 <code>users</code> 表，而是围绕稳定 <code>User</code> 建立几组职责明确、生命周期独立的数据：</p><div class="language-text vp-adaptive-theme line-numbers-mode"><button title="Copy Code" class="copy"></button><span class="lang">text</span><pre class="shiki shiki-themes github-light github-dark vp-code" tabindex="0"><code><span class="line"><span>User</span></span>
+<span class="line"><span>把 Identifier、Credential、Password 全塞回 users</span></span></code></pre>
+<p>AI 编程已经显著降低了 Schema、Migration、Repository、DTO、查询和测试代码的实现成本，但并没有降低领域模型错误带来的长期成本。</p>
+<p>认证系统最应该避免的不是“表多”，而是：</p>
+<ul>
+<li>同一个概念承担多个职责；</li>
+<li>Identifier 和 Credential 强耦合；</li>
+<li>Tenant 和 User 身份混淆；</li>
+<li>Password、Passkey、SSO 被塞进一套互相冲突的字段；</li>
+<li>Credential 状态和 Authentication Policy 混在一起；</li>
+<li>Session、Token 和 Credential 生命周期没有边界；</li>
+<li>关键不变量只能依赖调用方“记得这么写”。</li>
+</ul>
+<p>因此在长期工程化设计中，优先保证模型正确，再考虑查询优化、缓存、ORM 映射和物理存储优化。</p>
+<h2 id="总结">总结</h2>
+<p>多租户认证系统可以用下面几句话建立稳定心智模型：</p>
+<blockquote>
+<p><strong>User 是稳定的全局认证主体。</strong></p>
+<p><strong>Login Identifier 负责找到 User。</strong></p>
+<p><strong>Credential 负责证明 User。</strong></p>
+<p><strong>Password、Passkey、TOTP 是 Credential 的具体类型。</strong></p>
+<p><strong>External Identity 负责把外部 IdP 主体映射到本地 User。</strong></p>
+<p><strong>Authentication Policy 决定一次登录必须满足哪些 Factor。</strong></p>
+<p><strong>Session 是认证成功后持续存在的一次登录关系。</strong></p>
+<p><strong>TenantMember 描述 User 在 Tenant 中的身份，属于认证之后的租户授权边界。</strong></p>
+</blockquote>
+<p>最终核心模型不是一张越来越大的 <code>users</code> 表，而是围绕稳定 <code>User</code> 建立几组职责明确、生命周期独立的数据：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>User</span></span>
 <span class="line"><span>├── Identifiers</span></span>
 <span class="line"><span>├── Credentials</span></span>
 <span class="line"><span>├── External Identities</span></span>
 <span class="line"><span>├── Sessions</span></span>
-<span class="line"><span>└── Tenant Memberships</span></span></code></pre><div class="line-numbers-wrapper" aria-hidden="true"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>其中 Credential 再使用共享主键的一对一子类型模型表达 Password、Passkey 等具体认证器。这套结构可以在不推翻核心边界的情况下持续增加新的认证方式、企业 SSO、MFA、Step-up Authentication 和更严格的安全策略。</p></div></div></main><footer class="VPDocFooter" data-v-2fe049d2 data-v-f46d9421><!--[--><!--]--><div class="edit-info" data-v-f46d9421><!----><div class="last-updated" data-v-f46d9421><p class="VPLastUpdated" data-v-f46d9421 data-v-643b0aa7>Last updated: <time datetime="2026-10-15T02:55:53.000Z" data-v-643b0aa7></time></p></div></div><!----></footer><!--[--><!--[--><!--[--><section class="article-tags" aria-label="文章标签"><span class="article-tags__label">标签</span><nav class="article-tags__list" aria-label="查看同标签文章"><!--[--><a class="article-tag" href="/blog/pages/tags#tag-hlm-o2n-jef">#多租户</a><a class="article-tag" href="/blog/pages/tags#tag-1t-39-38-2w-2t-32-38-2x-2r-2p-38-2x-33-32">#Authentication</a><a class="article-tag" href="/blog/pages/tags#tag-k1c-jn2-kyp-haj">#数据模型</a><a class="article-tag" href="/blog/pages/tags#tag-1v-36-2t-2s-2t-32-38-2x-2p-30">#Credential</a><a class="article-tag" href="/blog/pages/tags#tag-28-2p-37-37-2z-2t-3d">#Passkey</a><a class="article-tag" href="/blog/pages/tags#tag-2f-2t-2q-1t-39-38-2w-32">#WebAuthn</a><a class="article-tag" href="/blog/pages/tags#tag-2b-2b-27">#SSO</a><!--]--></nav></section><!----><!--]--><!--]--><!--]--></div></div></div><!--[--><!--]--></div></div><footer class="VPFooter" data-v-090f7fb4 data-v-77408485><div class="container" data-v-77408485><p class="message" data-v-77408485>基于 VitePress 构建 · 工程、交易与系统研究日志</p><p class="copyright" data-v-77408485>Copyright © xunserver</p></div></footer><!--[--><!--]--></div><!----><!--]--></div>
-    <script>window.__VP_HASH_MAP__=JSON.parse("{\"index.md\":\"Dmznuge2\",\"pages_about.md\":\"ChDTEhwD\",\"pages_ai.md\":\"B7HkHjOj\",\"pages_archives.md\":\"C-yUqxss\",\"pages_category.md\":\"CRo-50KP\",\"pages_finance.md\":\"BvzHyXZt\",\"pages_quant.md\":\"_CRqWjgW\",\"pages_tags.md\":\"oU6sUPYY\",\"posts_a-share-market-data-infrastructure-1.md\":\"C6zxkqKo\",\"posts_a-share-market-data-infrastructure-2.md\":\"_YkQC9bX\",\"posts_a-share-market-data-infrastructure-3.md\":\"DVTH32ya\",\"posts_access-refresh-token-architecture.md\":\"DRBpuEhg\",\"posts_daily_20260712-daily-brief.md\":\"C1H8U7et\",\"posts_daily_20260713-daily-brief.md\":\"B6fBTnlU\",\"posts_daily_20260713-financial-market-daily.md\":\"Dk7qrow5\",\"posts_daily_20260714-daily-brief.md\":\"ByXmc4FG\",\"posts_daily_20260715-daily-brief.md\":\"CPc5GkKF\",\"posts_daily_20260728-ai-daily.md\":\"DbbwOm65\",\"posts_daily_20260728-ai-news.md\":\"Bjr4fwYV\",\"posts_daily_20260728-daily-economic-view.md\":\"BZyJJZJX\",\"posts_daily_20260729-ai-daily.md\":\"BnQ1Ebk2\",\"posts_daily_20260729-daily-economic-view.md\":\"D010pqPZ\",\"posts_daily_20260730-ai-daily.md\":\"CqzTBJ37\",\"posts_daily_20260730-daily-economic-view.md\":\"CSKtBjHN\",\"posts_daily_20260731-ai-daily.md\":\"D0Ph_a-3\",\"posts_daily_20260731-daily-economic-view.md\":\"aJMoo2Rb\",\"posts_daily_20260801-ai-daily.md\":\"BnKZ_FMW\",\"posts_daily_20260801-daily-economic-view.md\":\"CQzLSi--\",\"posts_daily_20260802-ai-daily.md\":\"DQtJ_pe_\",\"posts_daily_20260802-daily-economic-view.md\":\"DzcFC_p7\",\"posts_daily_20260803-ai-daily.md\":\"BLDTL5tJ\",\"posts_daily_20260803-daily-economic-view.md\":\"DtGCLy-t\",\"posts_daily_20260804-ai-daily.md\":\"BANnFXay\",\"posts_daily_20260804-daily-economic-view.md\":\"Begg4qRS\",\"posts_daily_20260805-ai-daily.md\":\"Bu9CLNxB\",\"posts_daily_20260805-daily-economic-view.md\":\"CEd505K0\",\"posts_daily_20260806-ai-daily.md\":\"BBtaj1K1\",\"posts_daily_20260806-daily-economic-view.md\":\"BsMKJMEL\",\"posts_daily_20260807-ai-daily.md\":\"Z0_PdX4e\",\"posts_daily_20260807-daily-economic-view.md\":\"CDMvhc8l\",\"posts_daily_20260808-ai-daily.md\":\"aQdwOzva\",\"posts_daily_20260808-daily-economic-view.md\":\"BmB_OCVY\",\"posts_daily_20260809-ai-daily.md\":\"umqZ3P5y\",\"posts_daily_20260809-daily-economic-view.md\":\"CMdDqlLt\",\"posts_daily_20260810-ai-daily.md\":\"CKSvEeJX\",\"posts_daily_20260810-daily-economic-view.md\":\"BX-7M-IP\",\"posts_daily_20260811-ai-daily.md\":\"qxSjB436\",\"posts_daily_20260811-daily-economic-view.md\":\"OIE3qKEp\",\"posts_daily_20260812-ai-daily.md\":\"C4TlkWEC\",\"posts_daily_20260812-daily-economic-view.md\":\"CvFwnQMR\",\"posts_daily_20260813-ai-daily.md\":\"CGyg0OWX\",\"posts_daily_20260813-daily-economic-view.md\":\"BgmdT7Sl\",\"posts_mihomo-core-configuration.md\":\"DlhS9VeZ\",\"posts_multi-tenant-authentication-data-model.md\":\"GD5Z5kIq\",\"posts_openclash-mihomo-configuration-guide.md\":\"DsUyIJk0\",\"posts_trade-system-colo-architecture.md\":\"DADvCp3N\",\"posts_trade-system-idc-architecture.md\":\"Ge9x2V9_\",\"public_prompt_博客_博客创建流程.md\":\"CssPPzEP\",\"public_prompt_博客_文章模板_技术.md\":\"DRdNWh03\",\"public_prompt_博客_文章模板_杂项.md\":\"CjZPeZTW\",\"public_prompt_博客_文章模板_每日总结.md\":\"XU8sN02C\",\"public_prompt_博客_文章模板_量化交易系统架构.md\":\"CupqRb66\",\"public_prompt_博客_文章模板_金融.md\":\"BKhWm6NP\"}");window.__VP_SITE_DATA__=JSON.parse("{\"lang\":\"zh-CN\",\"dir\":\"ltr\",\"title\":\"Bang\",\"description\":\"生活总会有惊喜\",\"base\":\"/blog/\",\"head\":[],\"router\":{\"prefetchLinks\":true},\"appearance\":true,\"themeConfig\":{\"siteTitle\":\"Bang\",\"nav\":[{\"text\":\"首页\",\"link\":\"/\"},{\"text\":\"AI\",\"link\":\"/pages/ai\"},{\"text\":\"金融经济\",\"link\":\"/pages/finance\"},{\"text\":\"量化交易\",\"link\":\"/pages/quant\"}],\"search\":{\"provider\":\"local\"},\"outline\":{\"label\":\"目录\",\"level\":[2,4]},\"socialLinks\":[{\"icon\":\"github\",\"link\":\"https://github.com/xunserver\"}],\"footer\":{\"message\":\"基于 VitePress 构建 · 工程、交易与系统研究日志\",\"copyright\":\"Copyright © xunserver\"}},\"locales\":{},\"scrollOffset\":134,\"cleanUrls\":true}");</script>
-    
-  </body>
-</html>
+<span class="line"><span>└── Tenant Memberships</span></span></code></pre>
+<p>其中 Credential 再使用共享主键的一对一子类型模型表达 Password、Passkey 等具体认证器。这套结构可以在不推翻核心边界的情况下持续增加新的认证方式、企业 SSO、MFA、Step-up Authentication 和更严格的安全策略。</p></div> <footer class="article-end" data-pagefind-ignore> <p>记录于 2026-08-25 · Bang</p><a href="/blog/pages/archives">继续阅读其他文章 ↗</a> </footer> </article> </main> <footer class="site-footer" data-pagefind-ignore> <div><a class="footer-brand" href="/blog/">Bang.</a><p>工程、交易与系统研究日志</p></div> <nav aria-label="页脚导航"> <a href="/blog/pages/category">分类</a><a href="/blog/pages/tags">标签</a><a href="/blog/pages/about">关于</a><a href="https://github.com/xunserver">GitHub ↗</a> </nav> <p class="footer-note">© 2026 xunserver · Built with Astro</p> </footer> </body></html> <script type="module" src="/blog/_astro/_...slug_.astro_astro_type_script_index_0_lang.C0Wmm0Wf.js"></script>
