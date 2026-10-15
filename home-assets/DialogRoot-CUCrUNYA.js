@@ -1,0 +1,1 @@
+import{c as a}from"./createLucideIcon-Kva39LBi.js";import{bQ as e}from"./index-Ch_5EGkV.js";import{u as n}from"./DialogTitle-BcqKhSJ3.js";const o={name:"x",size:24,node:[["path",{d:"M18 6 6 18",key:"1bl5f8"}],["path",{d:"m6 6 12 12",key:"d8bk6v"}]]};o.node;const m=a(o),d=e(function(t){return n("dialog",t)});export{d as D,m as X};
