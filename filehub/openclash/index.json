@@ -1,1 +1,12 @@
-{"version":1,"subscriptions":[]}
+{
+  "version": 1,
+  "subscriptions": [
+    {
+      "label": "详细规则",
+      "description": "已发布的 Age 加密订阅配置。",
+      "fileName": "vpn.yaml",
+      "url": "https://raw.githubusercontent.com/xunserver/xunserver.github.io/main/filehub/openclash/vpn.yaml",
+      "acceleratedUrl": "https://gh-proxy.com/https://raw.githubusercontent.com/xunserver/xunserver.github.io/main/filehub/openclash/vpn.yaml"
+    }
+  ]
+}
