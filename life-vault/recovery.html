@@ -199,55 +199,90 @@
     );
   }
 
+  function readSlot(slot) {
+    try {
+      const salt = base64ToBytes(slot.salt);
+      const iv = base64ToBytes(slot.iv);
+      const wrappedKey = base64ToBytes(slot.wrappedKey);
+      if (salt.byteLength !== 16 || iv.byteLength !== 12 || wrappedKey.byteLength !== DEK_LENGTH + 16) return null;
+      return { salt, iv, wrappedKey };
+    } catch {
+      return null;
+    }
+  }
+
   async function decryptVault(raw, inputSecret) {
     if (!globalThis.crypto?.subtle) {
       throw new Error('当前浏览器无法使用 Web Crypto。');
     }
 
     const record = parseStoredVault(raw);
+    const payloadDamaged = '保险箱内容已损坏。';
+    let sawCorrupt = false;
+    let sawMismatch = false;
 
     for (const slot of record.recipients) {
+      const material = readSlot(slot);
+      if (!material) {
+        sawCorrupt = true;
+        continue;
+      }
+
       try {
-        const kek = await deriveKek(inputSecret, base64ToBytes(slot.salt));
+        const kek = await deriveKek(inputSecret, material.salt);
         const dekBytes = await crypto.subtle.decrypt(
           {
             name: 'AES-GCM',
-            iv: base64ToBytes(slot.iv),
+            iv: material.iv,
             additionalData: encoder.encode(SLOT_AAD_PREFIX + slot.id),
             tagLength: TAG_LENGTH
           },
           kek,
-          base64ToBytes(slot.wrappedKey)
+          material.wrappedKey
         );
 
-        if (dekBytes.byteLength !== DEK_LENGTH) continue;
+        if (dekBytes.byteLength !== DEK_LENGTH) {
+          sawCorrupt = true;
+          continue;
+        }
 
-        const dek = await crypto.subtle.importKey(
-          'raw',
-          dekBytes,
-          'AES-GCM',
-          false,
-          ['decrypt']
-        );
+        const dek = await crypto.subtle.importKey('raw', dekBytes, 'AES-GCM', false, ['decrypt']);
+        let payloadIv;
+        let payloadBytes;
+        try {
+          payloadIv = base64ToBytes(record.payload.iv);
+          payloadBytes = base64ToBytes(record.payload.ciphertext);
+        } catch {
+          throw new Error(payloadDamaged);
+        }
+        if (payloadIv.byteLength !== 12) throw new Error(payloadDamaged);
 
-        const plain = await crypto.subtle.decrypt(
-          {
-            name: 'AES-GCM',
-            iv: base64ToBytes(record.payload.iv),
-            additionalData: encoder.encode(PAYLOAD_AAD),
-            tagLength: TAG_LENGTH
-          },
-          dek,
-          base64ToBytes(record.payload.ciphertext)
-        );
+        let plain;
+        try {
+          plain = await crypto.subtle.decrypt(
+            {
+              name: 'AES-GCM',
+              iv: payloadIv,
+              additionalData: encoder.encode(PAYLOAD_AAD),
+              tagLength: TAG_LENGTH
+            },
+            dek,
+            payloadBytes
+          );
+        } catch {
+          throw new Error(payloadDamaged);
+        }
 
         return decoder.decode(plain);
-      } catch {
-        // 当前钥匙不属于该 slot，继续尝试。
+      } catch (error) {
+        if (error instanceof Error && error.message === payloadDamaged) throw error;
+        sawMismatch = true;
       }
     }
 
-    throw new Error('钥匙不正确，或保险箱已经损坏。');
+    if (sawCorrupt && sawMismatch) throw new Error('钥匙不正确，且存在损坏的钥匙槽。');
+    if (sawCorrupt) throw new Error('钥匙槽已损坏。');
+    throw new Error('钥匙不正确。');
   }
 
   fileInput.addEventListener('change', async () => {

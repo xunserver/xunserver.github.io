@@ -10,16 +10,27 @@
     <script>
       (() => {
         try {
-          const theme = localStorage.getItem('shuati-theme')
-          const dark = theme === 'dark' || (theme === null && matchMedia('(prefers-color-scheme: dark)').matches)
+          const legacy = ['filehub-theme', 'life-vault-theme', 'shuati-theme']
+          let theme = localStorage.getItem('xunserver-theme')
+          if (theme !== 'dark' && theme !== 'light') {
+            for (const name of legacy) {
+              const value = localStorage.getItem(name)
+              if (value === 'dark' || value === 'light') {
+                theme = value
+                localStorage.setItem('xunserver-theme', value)
+                break
+              }
+            }
+          }
+          const dark = theme === 'dark' || (theme !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches)
           document.documentElement.classList.toggle('dark', dark)
         } catch {
           document.documentElement.classList.toggle('dark', matchMedia('(prefers-color-scheme: dark)').matches)
         }
       })()
     </script>
-    <script type="module" crossorigin src="/shuati/assets/index-CEY1oULx.js"></script>
-    <link rel="stylesheet" crossorigin href="/shuati/assets/index-Btt-SEy_.css">
+    <script type="module" crossorigin src="/shuati/assets/index-CJ9ACtHE.js"></script>
+    <link rel="stylesheet" crossorigin href="/shuati/assets/index-j3SDJN7J.css">
   </head>
   <body>
     <div id="root"></div>

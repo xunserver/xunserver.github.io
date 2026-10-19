@@ -4,10 +4,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home · xunserver</title>
+    <script>
+      (() => {
+        try {
+          const legacy = ['filehub-theme', 'life-vault-theme', 'shuati-theme']
+          let theme = localStorage.getItem('xunserver-theme')
+          if (theme !== 'dark' && theme !== 'light') {
+            for (const name of legacy) {
+              const value = localStorage.getItem(name)
+              if (value === 'dark' || value === 'light') {
+                theme = value
+                localStorage.setItem('xunserver-theme', value)
+                break
+              }
+            }
+          }
+          const dark = theme === 'dark' || (theme !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches)
+          document.documentElement.classList.toggle('dark', dark)
+        } catch {
+          document.documentElement.classList.toggle('dark', matchMedia('(prefers-color-scheme: dark)').matches)
+        }
+      })()
+    </script>
     <meta name="description" content="xunserver · 统一身份与应用门户" />
-    <script type="module" crossorigin src="/home-assets/index-Ch_5EGkV.js"></script>
+    <script type="module" crossorigin src="/home-assets/index-DI2F4uEv.js"></script>
     <link rel="modulepreload" crossorigin href="/home-assets/framework-DoEnvlU3.js">
-    <link rel="stylesheet" crossorigin href="/home-assets/index-K3fuu31k.css">
+    <link rel="stylesheet" crossorigin href="/home-assets/index-hlZu97-S.css">
   </head>
   <body>
     <div id="app"></div>

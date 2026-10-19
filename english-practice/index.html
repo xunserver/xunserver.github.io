@@ -5,8 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="referrer" content="no-referrer" />
     <title>English Practice</title>
-    <script type="module" crossorigin src="/english-practice/assets/index-BkiQjbXc.js"></script>
-    <link rel="stylesheet" crossorigin href="/english-practice/assets/index-B6P1SSgu.css">
+    <script>
+      (() => {
+        try {
+          const legacy = ['filehub-theme', 'life-vault-theme', 'shuati-theme']
+          let theme = localStorage.getItem('xunserver-theme')
+          if (theme !== 'dark' && theme !== 'light') {
+            for (const name of legacy) {
+              const value = localStorage.getItem(name)
+              if (value === 'dark' || value === 'light') {
+                theme = value
+                localStorage.setItem('xunserver-theme', value)
+                break
+              }
+            }
+          }
+          const dark = theme === 'dark' || (theme !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches)
+          document.documentElement.classList.toggle('dark', dark)
+        } catch {
+          document.documentElement.classList.toggle('dark', matchMedia('(prefers-color-scheme: dark)').matches)
+        }
+      })()
+    </script>
+    <script type="module" crossorigin src="/english-practice/assets/index-BeK_7hUK.js"></script>
+    <link rel="stylesheet" crossorigin href="/english-practice/assets/index-D9nI6sRi.css">
   </head>
   <body>
     <div id="app"></div>
