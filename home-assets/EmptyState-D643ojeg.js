@@ -1,0 +1,1 @@
+import{j as t}from"./index-Dj760ppu.js";import{E as m,a,b as p,c as n,d as E}from"./empty-sic7UgPp.js";function x({title:e,description:s,children:r}){return t.jsxs(m,{children:[t.jsxs(a,{children:[t.jsx(p,{children:e}),s&&t.jsx(n,{children:s})]}),r&&t.jsx(E,{children:r})]})}export{x as E};
