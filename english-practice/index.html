@@ -8,26 +8,31 @@
     <script>
       (() => {
         try {
-          const legacy = ['filehub-theme', 'life-vault-theme', 'shuati-theme']
-          let theme = localStorage.getItem('xunserver-theme')
-          if (theme !== 'dark' && theme !== 'light') {
+          const legacy = ["filehub-theme", "life-vault-theme", "shuati-theme"];
+          let theme = localStorage.getItem("xunserver-theme");
+          if (theme !== "dark" && theme !== "light") {
             for (const name of legacy) {
-              const value = localStorage.getItem(name)
-              if (value === 'dark' || value === 'light') {
-                theme = value
-                localStorage.setItem('xunserver-theme', value)
-                break
+              const value = localStorage.getItem(name);
+              if (value === "dark" || value === "light") {
+                theme = value;
+                localStorage.setItem("xunserver-theme", value);
+                break;
               }
             }
           }
-          const dark = theme === 'dark' || (theme !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches)
-          document.documentElement.classList.toggle('dark', dark)
+          const dark =
+            theme === "dark" ||
+            (theme !== "light" && matchMedia("(prefers-color-scheme: dark)").matches);
+          document.documentElement.classList.toggle("dark", dark);
         } catch {
-          document.documentElement.classList.toggle('dark', matchMedia('(prefers-color-scheme: dark)').matches)
+          document.documentElement.classList.toggle(
+            "dark",
+            matchMedia("(prefers-color-scheme: dark)").matches,
+          );
         }
-      })()
+      })();
     </script>
-    <script type="module" crossorigin src="/english-practice/assets/index-JcmHrbY-.js"></script>
+    <script type="module" crossorigin src="/english-practice/assets/index-DaBl7L4t.js"></script>
     <link rel="stylesheet" crossorigin href="/english-practice/assets/index-CjD9Bh9p.css">
   </head>
   <body>
