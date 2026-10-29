@@ -1,1 +1,0 @@
-import{f as n}from"./index-FAxHQIIQ.js";function u(e){return n(e.defaultTagName??"div",e,e)}export{u};
