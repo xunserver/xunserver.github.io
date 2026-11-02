@@ -1,12 +1,550 @@
 {
+  "port": 7890,
+  "socks-port": 7891,
+  "allow-lan": false,
   "mode": "rule",
+  "log-level": "info",
+  "geodata-mode": true,
+  "geo-auto-update": true,
+  "geodata-loader": "standard",
+  "geo-update-interval": 24,
+  "ipv6": false,
+  "dns": {
+    "enable": true,
+    "ipv6": false,
+    "respect-rules": true,
+    "prefer-h3": false,
+    "enhanced-mode": "fake-ip",
+    "direct-nameserver-follow-policy": false,
+    "default-nameserver": [
+      "223.6.6.6",
+      "119.29.29.29"
+    ],
+    "proxy-server-nameserver": [
+      "https://223.6.6.6/dns-query",
+      "https://doh.pub/dns-query"
+    ],
+    "nameserver-policy": {
+      "geosite:cn,private": [
+        "https://223.6.6.6/dns-query",
+        "https://doh.pub/dns-query"
+      ]
+    },
+    "nameserver": [
+      "https://dns.google/dns-query",
+      "https://cloudflare-dns.com/dns-query"
+    ],
+    "direct-nameserver": [
+      "https://223.6.6.6/dns-query",
+      "https://doh.pub/dns-query"
+    ]
+  },
   "proxies": [],
-  "proxy-groups": [],
-  "rules": [
-    "MATCH,REJECT"
+  "proxy-providers": {},
+  "proxy-groups": [
+    {
+      "name": "自动选择",
+      "type": "url-test",
+      "proxies": [],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": 600,
+      "lazy": false,
+      "tolerance": 100,
+      "use": [
+        "paofu",
+        "ss1",
+        "ss2",
+        "peiqian"
+      ]
+    },
+    {
+      "name": "大流量",
+      "type": "url-test",
+      "proxies": [],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": 600,
+      "lazy": false,
+      "tolerance": 100,
+      "use": [
+        "peiqian"
+      ]
+    },
+    {
+      "name": "美国地区",
+      "type": "url-test",
+      "proxies": [],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": 600,
+      "lazy": false,
+      "tolerance": 100,
+      "filter": "(?i)(美国)",
+      "use": [
+        "ss1",
+        "ss2",
+        "paofu"
+      ]
+    },
+    {
+      "name": "欧洲地区",
+      "type": "url-test",
+      "proxies": [],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": 600,
+      "lazy": false,
+      "tolerance": 100,
+      "filter": "(?i)(德国)",
+      "use": [
+        "ss1",
+        "ss2",
+        "paofu"
+      ]
+    },
+    {
+      "name": "日本地区",
+      "type": "url-test",
+      "proxies": [],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": 600,
+      "lazy": false,
+      "tolerance": 100,
+      "filter": "(?i)(日本)",
+      "use": [
+        "ss1",
+        "ss2",
+        "paofu"
+      ]
+    },
+    {
+      "name": "台湾地区",
+      "type": "url-test",
+      "proxies": [],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": 600,
+      "lazy": false,
+      "tolerance": 100,
+      "filter": "(?i)(台湾)",
+      "use": [
+        "ss1",
+        "ss2",
+        "paofu"
+      ]
+    },
+    {
+      "name": "香港地区",
+      "type": "url-test",
+      "proxies": [],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": 600,
+      "lazy": false,
+      "tolerance": 100,
+      "filter": "(?i)(香港)",
+      "use": [
+        "ss1",
+        "ss2",
+        "paofu"
+      ]
+    },
+    {
+      "name": "家宽出口",
+      "type": "select",
+      "proxies": [
+        "洛杉矶家宽"
+      ]
+    },
+    {
+      "name": "节点选择",
+      "type": "select",
+      "proxies": [
+        "自动选择",
+        "大流量",
+        "美国地区",
+        "欧洲地区",
+        "日本地区",
+        "台湾地区",
+        "香港地区",
+        "DIRECT",
+        "REJECT"
+      ],
+      "use": [
+        "ss1",
+        "ss2",
+        "paofu",
+        "peiqian"
+      ]
+    },
+    {
+      "name": "家宽入口",
+      "type": "select",
+      "proxies": [
+        "自动选择",
+        "节点选择",
+        "美国地区",
+        "欧洲地区",
+        "日本地区",
+        "台湾地区",
+        "香港地区",
+        "DIRECT",
+        "REJECT"
+      ],
+      "use": [
+        "ss1",
+        "ss2",
+        "paofu",
+        "peiqian"
+      ]
+    },
+    {
+      "name": "AI服务",
+      "type": "select",
+      "proxies": [
+        "家宽出口",
+        "美国地区",
+        "欧洲地区",
+        "日本地区",
+        "台湾地区",
+        "香港地区",
+        "DIRECT",
+        "REJECT"
+      ],
+      "use": [
+        "ss1",
+        "ss2",
+        "paofu",
+        "peiqian"
+      ]
+    },
+    {
+      "name": "GoogleGemini",
+      "type": "select",
+      "proxies": [
+        "家宽出口",
+        "美国地区",
+        "欧洲地区",
+        "日本地区",
+        "台湾地区",
+        "香港地区",
+        "DIRECT",
+        "REJECT"
+      ],
+      "use": [
+        "ss1",
+        "ss2",
+        "paofu",
+        "peiqian"
+      ]
+    },
+    {
+      "name": "局域网全局翻墙",
+      "type": "select",
+      "proxies": [
+        "家宽出口",
+        "美国地区",
+        "欧洲地区",
+        "日本地区",
+        "台湾地区",
+        "香港地区",
+        "DIRECT",
+        "REJECT"
+      ],
+      "use": [
+        "ss1",
+        "ss2",
+        "paofu",
+        "peiqian"
+      ]
+    },
+    {
+      "name": "海外金融",
+      "type": "select",
+      "proxies": [
+        "家宽出口",
+        "美国地区",
+        "欧洲地区",
+        "日本地区",
+        "台湾地区",
+        "香港地区",
+        "DIRECT",
+        "REJECT"
+      ],
+      "use": [
+        "ss1",
+        "ss2",
+        "paofu",
+        "peiqian"
+      ]
+    },
+    {
+      "name": "香港券商",
+      "type": "select",
+      "proxies": [
+        "家宽出口",
+        "香港地区",
+        "节点选择",
+        "自动选择",
+        "DIRECT",
+        "REJECT"
+      ],
+      "use": [
+        "ss1",
+        "ss2",
+        "paofu",
+        "peiqian"
+      ]
+    },
+    {
+      "name": "全球社交",
+      "type": "select",
+      "proxies": [
+        "家宽出口",
+        "美国地区",
+        "欧洲地区",
+        "日本地区",
+        "台湾地区",
+        "香港地区",
+        "DIRECT",
+        "REJECT"
+      ],
+      "use": [
+        "ss1",
+        "ss2",
+        "paofu",
+        "peiqian"
+      ]
+    },
+    {
+      "name": "WifiCall",
+      "type": "select",
+      "proxies": [
+        "家宽出口",
+        "美国地区",
+        "欧洲地区",
+        "日本地区",
+        "台湾地区",
+        "香港地区",
+        "节点选择",
+        "自动选择",
+        "DIRECT",
+        "REJECT"
+      ],
+      "use": [
+        "ss1",
+        "ss2",
+        "paofu",
+        "peiqian"
+      ]
+    },
+    {
+      "name": "漏网之鱼",
+      "type": "select",
+      "proxies": [
+        "节点选择",
+        "DIRECT",
+        "REJECT"
+      ],
+      "use": [
+        "ss1",
+        "ss2",
+        "paofu",
+        "peiqian"
+      ]
+    },
+    {
+      "name": "IP检测",
+      "type": "select",
+      "proxies": [
+        "家宽出口"
+      ],
+      "use": [
+        "ss1",
+        "ss2",
+        "paofu",
+        "peiqian"
+      ]
+    },
+    {
+      "name": "全局拦截",
+      "type": "select",
+      "proxies": [
+        "DIRECT",
+        "REJECT",
+        "自动选择"
+      ]
+    }
   ],
-  "x-filehub-age": {
+  "geox-url": {
+    "geoip": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat",
+    "geosite": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat",
+    "mmdb": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb",
+    "asn": "https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
+  },
+  "rule-providers": {
+    "private": {
+      "type": "http",
+      "format": "mrs",
+      "behavior": "domain",
+      "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs",
+      "path": "./ruleset/private.mrs",
+      "interval": 86400
+    },
+    "private-ip": {
+      "type": "http",
+      "format": "mrs",
+      "behavior": "ipcidr",
+      "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs",
+      "path": "./ruleset/private-ip.mrs",
+      "interval": 86400
+    },
+    "category-ai-!cn": {
+      "type": "http",
+      "format": "mrs",
+      "behavior": "domain",
+      "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ai-!cn.mrs",
+      "path": "./ruleset/category-ai-!cn.mrs",
+      "interval": 86400
+    },
+    "google-gemini": {
+      "type": "http",
+      "format": "mrs",
+      "behavior": "domain",
+      "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google-gemini.mrs",
+      "path": "./ruleset/google-gemini.mrs",
+      "interval": 86400
+    },
+    "google": {
+      "type": "http",
+      "format": "mrs",
+      "behavior": "domain",
+      "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs",
+      "path": "./ruleset/google.mrs",
+      "interval": 86400
+    },
+    "google-ip": {
+      "type": "http",
+      "format": "mrs",
+      "behavior": "ipcidr",
+      "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs",
+      "path": "./ruleset/google-ip.mrs",
+      "interval": 86400
+    },
+    "finance": {
+      "type": "http",
+      "format": "mrs",
+      "behavior": "domain",
+      "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-finance.mrs",
+      "path": "./ruleset/category-finance.mrs",
+      "interval": 86400
+    },
+    "social": {
+      "type": "http",
+      "format": "mrs",
+      "behavior": "domain",
+      "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-social-media-!cn.mrs",
+      "path": "./ruleset/category-social-media-!cn.mrs",
+      "interval": 86400
+    },
+    "telegram": {
+      "type": "http",
+      "format": "mrs",
+      "behavior": "domain",
+      "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs",
+      "path": "./ruleset/telegram.mrs",
+      "interval": 86400
+    },
+    "telegram-ip": {
+      "type": "http",
+      "format": "mrs",
+      "behavior": "ipcidr",
+      "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs",
+      "path": "./ruleset/telegram-ip.mrs",
+      "interval": 86400
+    },
+    "github": {
+      "type": "http",
+      "format": "mrs",
+      "behavior": "domain",
+      "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs",
+      "path": "./ruleset/github.mrs",
+      "interval": 86400
+    },
+    "category-dev": {
+      "type": "http",
+      "format": "mrs",
+      "behavior": "domain",
+      "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-dev.mrs",
+      "path": "./ruleset/category-dev.mrs",
+      "interval": 86400
+    },
+    "cn": {
+      "type": "http",
+      "format": "mrs",
+      "behavior": "domain",
+      "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs",
+      "path": "./ruleset/cn.mrs",
+      "interval": 86400
+    },
+    "cn-ip": {
+      "type": "http",
+      "format": "mrs",
+      "behavior": "ipcidr",
+      "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs",
+      "path": "./ruleset/cn-ip.mrs",
+      "interval": 86400
+    },
+    "longbridge": {
+      "type": "http",
+      "format": "mrs",
+      "behavior": "domain",
+      "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/longbridge.mrs",
+      "path": "./ruleset/longbridge.mrs",
+      "interval": 86400
+    },
+    "futu": {
+      "type": "http",
+      "format": "mrs",
+      "behavior": "domain",
+      "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/futu.mrs",
+      "path": "./ruleset/futu.mrs",
+      "interval": 86400
+    },
+    "ads": {
+      "type": "http",
+      "format": "mrs",
+      "behavior": "domain",
+      "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ads-all.mrs",
+      "path": "./ruleset/ads.mrs",
+      "interval": 86400
+    }
+  },
+  "rules": [
+    "RULE-SET,private,DIRECT",
+    "RULE-SET,private-ip,DIRECT,no-resolve",
+    "AND,((SRC-IP-CIDR,10.0.0.96/28),(DST-PORT,500)),WifiCall",
+    "AND,((SRC-IP-CIDR,10.0.0.96/28),(DST-PORT,4500)),WifiCall",
+    "SRC-IP-CIDR,10.0.0.96/28,局域网全局翻墙",
+    "DOMAIN-SUFFIX,ping0.cc,IP检测",
+    "DOMAIN-SUFFIX,home.xunserver.cn,DIRECT",
+    "DOMAIN-SUFFIX,edgeone.xunserver.cn,DIRECT",
+    "DOMAIN-SUFFIX,xunserver.cn,节点选择",
+    "RULE-SET,longbridge,香港券商",
+    "RULE-SET,futu,香港券商",
+    "RULE-SET,finance,海外金融",
+    "RULE-SET,google-gemini,GoogleGemini",
+    "RULE-SET,google,GoogleGemini",
+    "RULE-SET,google-ip,GoogleGemini,no-resolve",
+    "RULE-SET,category-ai-!cn,AI服务",
+    "RULE-SET,telegram,全球社交",
+    "RULE-SET,telegram-ip,全球社交,no-resolve",
+    "RULE-SET,social,全球社交",
+    "RULE-SET,ads,全局拦截",
+    "RULE-SET,cn,DIRECT",
+    "RULE-SET,cn-ip,DIRECT,no-resolve",
+    "MATCH,节点选择"
+  ],
+  "x-filehub-secrets": {
     "version": 1,
-    "ciphertext": "-----BEGIN AGE ENCRYPTED FILE-----\nYWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB2WWJ2SjhSL3h0S1p4Tnpa\nR1MvdTM4ZkdhcHY3QTNpZS83TXZ4dDFNTXlNCmw2NnJZNkd0WUJ0dnVzY2xNWHY4\nL1BrQko2SmNLYi9qcXdvbjZJSENyTzgKLS0tIHZDUUtLdmpENWxtQ04xd0s4Z1lv\nZXo5TFJGcDl3MWdseTZlQm5FVGlSVUEKSqbGsPrVDp+kbqZtERTN7H6QHcR2TNyl\nvuMux7x2P9ep2+7xZ1i2saMyVWGcI8kwvGQjTiG/UWNW86DFuR9d6M717n5oNr3G\nXM0TIwgr/m5OFPQJOhFt1rmm66TujfrWajZKlZwNNw/RbE87gB2kIV5kmb5YoWzt\nqYV4t+wBVNGkk9nAry20RP9+SSc0KoJqPVDgl7FhwCluiFv9+nbypVgkjeQNBvV4\n5l/IJEyyWVhAfy8xx4JFNhSWSuNj9AWetmgl3o5XeBzs4Cpx0ZFaf8W3WkwOikxd\nHJY4yi0M79dOg0JaFDEBq/+nyiJknzaZ3JoDcSw5RRtVBVnY2HZP9yps6qUovuKO\nQ3JZeoX/WTCT5FUWpv4SWV4ebTia8WjPhyqwXGR+trXHDsXG5mNwI5ieyU3Ff14r\n+tKDb4L7ac1A1E4kWTPqd4OysQjcqj89JotcIYrBuUMbaB6MDP/MwT6VVxHLhsxW\nzekLtVIlhx04MKS1q+eUWnNUmCBoWzY3k9TmKpwUEaII4yNyWX5c0nJUFwJkHj5I\nN2iaqotA4TEA2eYsifaMr0KrCkfBFvC1U8wuXrqhTQG/kHkfT25w9KiaJjhkU+wJ\no8/kWo75gIR6Zz3Cfy2hwiyJfvoDeAdE4UDb45cNLR3jpwGff0+X7sFB71B+tj00\nqf+970MugbpeQZRhJ2/FcwIH4Io3b2ZWiGiw6uPuF36iwzTF0TGmXVj63W6lmeal\nBL3SIJjri52IpZw3BSjd4rxASGlkQhEjr4tZHd7vr7g402qydYMAsik/bp4g1WGz\nVnAVCCzimZvRS215HdDKLCMRLh6UdW6qLgJrfv7QUaO8JVO0XpgFu6IiZaH8j2ya\nfrZ74AmvX9PlExO0zg/cKpSHNYSmC6GNqQLpwW+xPRDSS6WjG/6hUd0lr811StF3\n4etOYIc8UflOnuIdVcZOmgbKOUH+K/BCzNS/qbYNUd8LeG+I8/MIxTmoWP2HKuzh\n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\n-----END AGE ENCRYPTED FILE-----\n"
+    "cipher": "AES-GCM",
+    "tagLength": 128,
+    "iv": "vduliWgurtC0Rlp+",
+    "ciphertext": "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"
   }
 }
