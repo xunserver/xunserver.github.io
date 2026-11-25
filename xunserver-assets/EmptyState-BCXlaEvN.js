@@ -1,1 +1,0 @@
-import{j as t}from"./index-D4HJmUJG.js";import{E as m,a,b as p,d as n,e as E}from"./empty-DyswebLn.js";function x({title:r,description:s,children:e}){return t.jsxs(m,{children:[t.jsxs(a,{children:[t.jsx(p,{children:r}),s&&t.jsx(n,{children:s})]}),e&&t.jsx(E,{children:e})]})}export{x as E};
