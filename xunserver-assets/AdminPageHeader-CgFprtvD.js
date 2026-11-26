@@ -1,1 +1,0 @@
-import{j as e}from"./index-7Lw9vrmD.js";import{P as t}from"./page-intro-BD2vIM02.js";function n({title:a,description:r,children:s}){return e.jsxs("div",{className:"mb-7 flex flex-wrap items-end justify-between gap-4",children:[e.jsx(t,{eyebrow:"管理",title:a,description:r}),s?e.jsx("div",{className:"flex items-center gap-2",children:s}):null]})}export{n as A};
